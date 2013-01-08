@@ -4,6 +4,7 @@ library(zoo)
 library(chron)
 library(doBy)
 library(hydroGOF)
+library(HITHATStats)
 #library(dataRetrieval)
 
 sos_url="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
@@ -155,81 +156,9 @@ findrank <- function(n, p) {
   return(findrank)
 }
 
-ma1 <- function(x) {
-  ma1 <- mean(x$discharge,na.rm=TRUE)
-  return(ma1)
-}
-
-ma2 <- function(x) {
-  ma2 <- median(x$discharge,na.rm=TRUE)
-  return(ma2)
-}
-
 sdev <- function(x) {
   sdev <- sd(x$discharge,na.rm=TRUE)
   return(sdev)
-}
-
-ma3 <- function(qfiletempf, pref = "mean") {
-  sdbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                      FUN = sd, na.rm=TRUE)
-  colnames(sdbyyr) <- c("Year", "sdq")
-  meanbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                        mean, na.rm=TRUE)
-  colnames(meanbyyr) <- c("Year", "meanq")
-  dfcvbyyr <- data.frame(meanbyyr$Year, sdbyyr$sdq, 
-                         meanbyyr$meanq)
-  colnames(dfcvbyyr) <- c("Year", "sdq", "meanq")
-  cvbyyr <- dfcvbyyr$sdq/dfcvbyyr$meanq
-  dfcvbyyrf <- data.frame(dfcvbyyr, cvbyyr)
-  colnames(dfcvbyyrf) <- c("Year", "sdq", "meanq", 
-                           "cvq")
-  if (pref == "median") {
-    medcv <- median(dfcvbyyrf$cvq, na.rm=TRUE)
-    ma3 <- (medcv) * 100
-  }
-  else {
-    meancv <- mean(dfcvbyyrf$cvq, na.rm=TRUE)
-    ma3 <- (meancv) * 100
-  }
-  return(ma3)
-}
-
-ma4.11<-function(x) {
-  isolateq <- x$discharge
-  sortq <- sort(isolateq)
-  percentiles<-vector(length=19)
-  percentiles[1] <- floor(findrank(length(sortq), 0.05))  
-  percentiles[2] <- floor(findrank(length(sortq), 0.1))
-  percentiles[3] <- floor(findrank(length(sortq), 0.15))
-  percentiles[4] <- floor(findrank(length(sortq), 0.2))
-  percentiles[5] <- floor(findrank(length(sortq), 0.25))
-  percentiles[6] <- floor(findrank(length(sortq), 0.3))
-  percentiles[7] <- floor(findrank(length(sortq), 0.35))
-  percentiles[8] <- floor(findrank(length(sortq), 0.4))
-  percentiles[9] <- floor(findrank(length(sortq), 0.45))
-  percentiles[10] <- floor(findrank(length(sortq), 0.5))
-  percentiles[11] <- floor(findrank(length(sortq), 0.55))
-  percentiles[12] <- floor(findrank(length(sortq), 0.6))
-  percentiles[13] <- floor(findrank(length(sortq), 0.65))
-  percentiles[14] <- floor(findrank(length(sortq), 0.7))
-  percentiles[15] <- floor(findrank(length(sortq), 0.75))
-  percentiles[16] <- floor(findrank(length(sortq), 0.8))
-  percentiles[17] <- floor(findrank(length(sortq), 0.85))
-  percentiles[18] <- floor(findrank(length(sortq), 0.9))
-  percentiles[19] <- floor(findrank(length(sortq), 0.95))
-  mean <- mean(percentiles,na.rm=TRUE)
-  sdev <- sd(percentiles, na.rm=TRUE)
-  ma4 <- sdev/mean*100
-  ma5 <- ma1(x)/ma2(x)
-  ma6 <- percentiles[2]/percentiles[18]
-  ma7 <- percentiles[4]/percentiles[16]
-  ma8 <- percentiles[5]/percentiles[15]
-  ma9 <- (percentiles[18]-percentiles[2])/log10(ma2(x))
-  ma10 <- (percentiles[16]-percentiles[4])/log10(ma2(x))
-  ma11 <- (percentiles[15]-percentiles[5])/log10(ma2(x))
-  ma4.11 <- list(ma4,ma5,ma6,ma7,ma8,ma9,ma10,ma11)
-  return(ma4.11)
 }
 
 cv <- function(x) {
@@ -239,384 +168,10 @@ cv <- function(x) {
   return(skew)
 }
 
-ma12.23 <- function(qfiletempf, pref = "mean") {
-  if (pref == "median") {
-    medmon <- aggregate(qfiletempf$discharge, list(qfiletempf$month_val), 
-                        median, na.rm=TRUE)
-    ma12.23 <- data.frame(medmon)
-  }
-  else {
-    meanmon <- aggregate(qfiletempf$discharge, list(qfiletempf$month_val), 
-                         mean, na.rm=TRUE)
-    ma12.23 <- data.frame(meanmon)
-  }
-  return(ma12.23)
-}
-
 monthly.mean.ts <- function(qfiletempf,modsite) {
   meanmonts <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val,qfiletempf$month_val), FUN = mean, na.rm=TRUE)
   colnames(meanmonts) <- c("Year","Month","Mean_disch")
   return(meanmonts)
-}
-
-ma24.35 <- function(qfiletempf, pref = "mean") {
-  sdmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
-                                                    qfiletempf$month_val), FUN = sd, na.rm=TRUE)
-  colnames(sdmonbyyr) <- c("Year", "Month", "sdq")
-  meanmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
-                                                      qfiletempf$month_val), FUN = mean, na.rm=TRUE)
-  colnames(meanmonbyyr) <- c("Year", "Month", "meanq")
-  dfcvmonbyyr <- data.frame(meanmonbyyr$Year, meanmonbyyr$Month, 
-                            sdmonbyyr$sdq, meanmonbyyr$meanq)
-  colnames(dfcvmonbyyr) <- c("Year", "Month", "sdq", 
-                             "meanq")
-  cvmonbyyr <- dfcvmonbyyr$sdq/dfcvmonbyyr$meanq
-  dfcvmonbyyrf <- data.frame(dfcvmonbyyr, cvmonbyyr)
-  colnames(dfcvmonbyyrf) <- c("Year", "Month", "sdq", 
-                              "meanq", "cvq")
-  if (pref == "median") {
-    medmoncv <- aggregate(dfcvmonbyyrf$cvq, list(dfcvmonbyyrf$Month), 
-                          median, na.rm=TRUE)
-    ma24.35 <- data.frame(medmoncv[2] * 100)
-  }
-  else {
-    meanmoncv <- aggregate(dfcvmonbyyrf$cvq, list(dfcvmonbyyrf$Month), 
-                           mean, na.rm=TRUE)
-    ma24.35 <- data.frame(meanmoncv[2] * 100)
-  }
-  return(ma24.35)
-}
-
-ma36.40 <- function(qfiletemp) {
-  meanbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val), FUN = mean, na.rm=TRUE)
-  colnames(meanbymon) <- c("Month","meanmo")
-  maxbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val), FUN = max, na.rm=TRUE)
-  colnames(maxbymon) <- c("Month","maxmo")
-  minbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val), FUN = min, na.rm=TRUE)
-  colnames(minbymon) <- c("Month","minmo")
-  sortmeanbymon <- sort(meanbymon$meanmo)
-  perc_10 <- floor(findrank(length(sortmeanbymon), 0.1))
-  perc_25 <- floor(findrank(length(sortmeanbymon), 0.25))
-  perc_75 <- floor(findrank(length(sortmeanbymon), 0.75))
-  perc_90 <- floor(findrank(length(sortmeanbymon), 0.9))
-  ma36 <- (max(maxbymon$maxmo)-min(minbymon$minmo))/median(meanbymon$meanmo)
-  ma37 <- (perc_75-perc_25)/median(meanbymon$meanmo)
-  ma38 <- (perc_90-perc_10)/median(meanbymon$meanmo)
-  ma39 <- (sd(meanbymon$meanmo)*100)/mean(meanbymon$meanmo)
-  ma40 <- (mean(meanbymon$meanmo)-median(meanbymon$meanmo))/median(meanbymon$meanmo)
-  ma36.40 <- list(ma36,ma37,ma38,ma39,ma40)
-  return(ma36.40)
-}
-
-ma41.45 <- function(qfiletemp,drainarea) {
-  meanbyyr <- aggregate(qfiletemp$discharge, list(qfiletemp$year_val), FUN = mean, na.rm=TRUE)
-  colnames(meanbyyr) <- c("Year","meanyr")
-  sortmeanbyyr <- sort(meanbyyr$meanyr)
-  perc_10 <- floor(findrank(length(sortmeanbyyr), 0.1))
-  perc_25 <- floor(findrank(length(sortmeanbyyr), 0.25))
-  perc_75 <- floor(findrank(length(sortmeanbyyr), 0.75))
-  perc_90 <- floor(findrank(length(sortmeanbyyr), 0.9))
-  ma41 <- mean(meanbyyr$meanyr)/drainarea
-  ma42 <- (max(meanbyyr$meanyr)-min(meanbyyr$meanyr))/median(meanbyyr$meanyr)
-  ma43 <- (perc_75-perc_25)/median(meanbyyr$meanyr)
-  ma44 <- (perc_90-perc_10)/median(meanbyyr$meanyr)
-  ma45 <- (mean(meanbyyr$meanyr)-median(meanbyyr$meanyr))/median(meanbyyr$meanyr)
-  ma41.45 <- list(ma41,ma42,ma43,ma44,ma45)
-  return(ma41.45)
-}
-
-ml1.12 <- function(qfiletemp) {
-  minbymonyr <- aggregate(qfiletemp$discharge, list(qfiletemp$year_val, qfiletemp$month_val), FUN = min, na.rm=TRUE)
-  colnames(minbymonyr) <- c("Year","Month","minmo")
-  meanminbymon <- aggregate(minbymonyr$minmo, list(minbymonyr$Month), FUN = mean, na.rm=TRUE)
-  colnames(meanminbymon) <- c("Month","meanmin")
-  ml1 <- meanminbymon[1,2]
-  ml2 <- meanminbymon[2,2]
-  ml3 <- meanminbymon[3,2]
-  ml4 <- meanminbymon[4,2]
-  ml5 <- meanminbymon[5,2]
-  ml6 <- meanminbymon[6,2]
-  ml7 <- meanminbymon[7,2]
-  ml8 <- meanminbymon[8,2]
-  ml9 <- meanminbymon[9,2]
-  ml10 <- meanminbymon[10,2]
-  ml11 <- meanminbymon[11,2]
-  ml12 <- meanminbymon[12,2]
-  ml1.12 <- list(ml1,ml2,ml3,ml4,ml5,ml6,ml7,ml8,ml9,ml10,ml11,ml12)
-  return(ml1.12)
-}
-
-ml13 <- function(qfiletempf) {
-  minmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
-                                                     qfiletempf$month_val), FUN = min, na.rm=TRUE)
-  colnames(minmonbyyr) <- c("Year", "Month", "minmo")
-  sdminmonflows <- sd(minmonbyyr$minmo)
-  meanminmonflows <- mean(minmonbyyr$minmo)
-  ml13 <- (sdminmonflows * 100)/meanminmonflows
-  return(ml13)
-}
-
-ml14.16 <- function(qfiletempf) {
-  minbyyear <- aggregate(qfiletempf$discharge, 
-                             list(qfiletempf$year_val), min, na.rm=TRUE)
-  medflow <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       median, na.rm=TRUE)
-  meanflow <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), mean, na.rm=TRUE)
-  computeml14 <- merge(merge(minbyyear, medflow, by.x="Group.1", by.y="Group.1"),meanflow, by.x="Group.1", by.z="Group.1")
-  colnames(computeml14) <- c("year", "minbyyr", "medbyyr", "meanbyyr")
-  dfml14 <- computeml14$minbyyr/computeml14$medbyyr
-  dfml15 <- computeml14$minbyyr/computeml14$meanbyyr
-  ml14 <- mean(dfml14)
-  ml16 <- median(dfml14)
-  ml15 <- mean(dfml15)
-  ml14.16 <- list(ml14,ml15,ml16)
-  return(ml14.16)
-}
-
-ml17 <- function(qfiletempf, pref = "mean") {
-  bfibyyear <- bfi(qfiletempf)
-  if (pref == "median") {
-    ml17 <- median(bfibyyear)
-  }
-  else {
-    ml17 <- mean(bfibyyear)
-  }
-  return(ml17)
-}
-
-ml18 <- function(qfiletempf) {
-  bfibyyear <- bfi(qfiletempf)
-  sdbfi <- sd(bfibyyear)
-  meanbfi <- mean(bfibyyear)
-  ml18 <- (sdbfi*100)/meanbfi
-  return(ml18)
-}
-
-ml19 <- function(qfiletempf, pref = "mean") {
-  minbyyr <- aggregate(qfiletempf$discharge,list(qfiletempf$year_val),FUN=min,na.rm=TRUE)
-  colnames(minbyyr) <- c("Year","yrmin")
-  meanbyyr <- aggregate(qfiletempf$discharge,list(qfiletempf$year_val),FUN=mean,na.rm=TRUE)
-  colnames(meanbyyr) <- c("Year","yrmean")
-  ratiominmean <- minbyyr$yrmin/meanbyyr$yrmean
-  if (pref == "median") {
-    ml19 <- median(ratiominmean)
-  }
-  else {
-    ml19 <- mean(ratiominmean)
-  }
-  return(ml19)
-}
-
-ml20 <- function(x) {
-  sub_flow <- subset(x,x$discharge>0,na.rm=TRUE)
-  numdays <- nrow(sub_flow)
-  numsets <- ceiling(numdays/5)
-  sets <- c(1:numsets)
-  sets_merge <- as.data.frame(sort(rep.int(sets,5))[1:nrow(x)],stringsAsFactors=FALSE)
-  merge_data <- cbind(sub_flow,sets_merge)
-  colnames(merge_data) <- c("date","discharge","month_val","year_val","day_val","jul_val","wy_val","seq_num")
-  min5day <- aggregate(merge_data$discharge,list(merge_data$seq_num),FUN=min,na.rm=TRUE)
-  merge_data <- merge(min5day,merge_data,by.x="Group.1",by.y="seq_num")
-  colnames(merge_data) <- c("seq_num","base_flow","date","discharge","month_val","year_val","day_val","jul_val","wy_val")
-  base_flows <- unique(merge_data[, c("seq_num","base_flow")])
-  base_flows$base_flow <- 0.9*base_flows$base_flow
-  base_flows_lag <- unique(merge_data[, c("seq_num","base_flow")])
-  base_flows_lag$seq_num <- base_flows_lag$seq_num-1
-  base_flows_lead <- unique(merge_data[, c("seq_num","base_flow")])
-  base_flows_lead$seq_num <- base_flows_lead$seq_num+1
-  merge_base_flows_lag <- merge(base_flows,base_flows_lag,by="seq_num")
-  merge_base_flows_lead <- merge(base_flows,base_flows_lead,by="seq_num")
-  merge_base_flows <- merge(merge_base_flows_lag,merge_base_flows_lead,all=TRUE,by="seq_num")
-  colnames(merge_base_flows) <- c("seq_num","base_flow","base_flow_lag","base_flow1","base_flow_lead")
-  merge_base_flows["final_base_flow"] <- NA
-  merge_base_flows$final_base_flow[1:numsets-1] <- ifelse(merge_base_flows$base_flow[1:numsets-1]<merge_base_flows$base_flow_lag[1:numsets-1],merge_base_flows$base_flow[1:numsets-1],0)
-  merge_base_flows$final_base_flow[2:numsets] <- ifelse(merge_base_flows$base_flow1[2:numsets]<merge_base_flows$base_flow_lead[2:numsets],merge_base_flows$base_flow1[2:numsets],0)
-  base_flows <- merge_base_flows$final_base_flow[merge_base_flows$final_base_flow!=0]
-  base_flows_interp <- approx(merge_base_flows$seq_num[merge_base_flows$final_base_flow!=0],base_flows,xout=merge_base_flows$seq_num[merge_base_flows$final_base_flow==0],method="linear",rule=2)
-  merge_base_flows_interp <- merge(merge_base_flows,base_flows_interp,by.x="seq_num",by.y="x",all=TRUE)
-  merge_base_flows_interp[is.na(merge_base_flows_interp)] <- 0
-  merge_base_flows_interp["merge_bf"]<-0
-  merge_base_flows_interp$merge_bf <- ifelse(merge_base_flows_interp$final_base_flow>merge_base_flows_interp$y,merge_base_flows_interp$final_base_flow,merge_base_flows_interp$y)
-  bfi_sub <- merge_base_flows_interp[,c("seq_num","merge_bf")]
-  merge_data_final <- merge(merge_data,bfi_sub,by="seq_num")
-  total_bf <- sum(merge_data_final$merge_bf)
-  total_flow <- sum(merge_data_final$discharge)
-  ml20 <- total_flow/total_bf
-  return(ml20)
-}  
-ml21 <- function(x) {
-  minbyyr <- aggregate(x$discharge,list(x$year_val),FUN=min,na.rm=TRUE)
-  colnames(minbyyr) <- c("Year","yrmin")
-  ml21 <- (sd(minbyyr$yrmin)*100)/mean(sdminbyyr$yrmin)
-  return(ml21)
-}
-
-ml22 <- function(x,drainarea,pref = "mean") {
-  minbyyr <- aggregate(x$discharge,list(x$year_val),FUN=min,na.rm=TRUE)
-  colnames(minbyyr) <- c("Year","yrmin")
-  if (pref == "median") {
-    ml22 <- (median(minbyyr$yrmin))/drainarea
-  } 
-  else {
-    ml22 <- (mean(minbyyr$yrmin))/drainarea
-  }
-  return(ml22)
-}
-
-mh1.12 <- function(qfiletemp) {
-  maxbymonyr <- aggregate(qfiletemp$discharge, list(qfiletemp$year_val, qfiletemp$month_val), FUN = max, na.rm=TRUE)
-  colnames(minbymonyr) <- c("Year","Month","maxmo")
-  meanmaxbymon <- aggregate(maxbymonyr$minmo, list(maxbymonyr$Month), FUN = mean, na.rm=TRUE)
-  colnames(meanmaxbymon) <- c("Month","meanmax")
-  mh1 <- meanmaxbymon[1,2]
-  mh2 <- meanmaxbymon[2,2]
-  mh3 <- meanmaxbymon[3,2]
-  mh4 <- meanmaxbymon[4,2]
-  mh5 <- meanmaxbymon[5,2]
-  mh6 <- meanmaxbymon[6,2]
-  mh7 <- meanmaxbymon[7,2]
-  mh8 <- meanmaxbymon[8,2]
-  mh9 <- meanmaxbymon[9,2]
-  mh10 <- meanmaxbymon[10,2]
-  mh11 <- meanmaxbymon[11,2]
-  mh12 <- meanmaxbymon[12,2]
-  mh1.12 <- list(mh1,mh2,mh3,mh4,mh5,mh6,mh7,mh8,mh9,mh10,mh11,mh12)
-  return(mh1.12)
-}
-
-mh13 <- function(qfiletempf) {
-  maxmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
-                                                     qfiletempf$month_val), FUN = max, na.rm=TRUE)
-  colnames(maxmonbyyr) <- c("Year", "Month", "maxmo")
-  sdmaxmonflows <- sd(maxmonbyyr$maxmo)
-  meanmaxmonflows <- mean(maxmonbyyr$maxmo)
-  mh13 <- (sdmaxmonflows * 100)/meanmaxmonflows
-  return(mh13)
-}
-
-mh14 <- function(qfiletempf) {
-  maxmonbymoyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
-                                                       qfiletempf$month_val), FUN = max, na.rm=TRUE)
-  colnames(maxmonbymoyr) <- c("Year", "Month", "momax")
-  maxmonbyyrr <- aggregate(maxmonbymoyr$momax, list(maxmonbymoyr$Year), 
-                           FUN = max, na.rm=TRUE)
-  colnames(maxmonbyyrr) <- c("Year", "yrmax")
-  medflowbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                           FUN = median, na.rm=TRUE)
-  colnames(medflowbyyr) <- c("Year", "yrmed")
-  ratiomaxmed <- maxmonbyyrr$yrmax/medflowbyyr$yrmed
-  mh14 <- median(ratiomaxmed)
-  return(mh14)
-}
-
-mh15.17 <- function(qfiletempf) {
-  isolateq <- qfiletempf$discharge
-  sortq <- sort(isolateq)
-  frank10 <- floor(findrank(length(sortq), 0.1))
-  frank1 <- floor(findrank(length(sortq),0.01))
-  frank25 <- floor(findrank(length(sortq),0.25))
-  hfcrit10 <- sortq[frank10]
-  hfcrit1 <- sortq[frank1]
-  hfcrit25 <- sortq[frank25]
-  mh15 <- hfcrit1/ma2(qfiletempf)
-  mh16 <- hfcrit10/ma2(qfiletempf)
-  mh17 <- hfcrit25/ma2(qfiletempf)
-  mh15.17 <- list(mh15,mh16,mh17)
-  return(mh15.17)
-}
-
-mh18 <- function(x) {
-  maxbyyr <- aggregate(x$discharge,list(x$year_val),FUN=max,na.rm=TRUE)
-  colnames(maxbyyr) <- c("Year","yrmax")
-  log10maxbyyr <- log10(maxbyyr$yrmax)
-  mh18 <- (sd(log10maxbyyr)*100)/mean(log10maxbyyr)
-  return(mh18)
-}
-
-mh19 <- function(x) {
-  annmax <- aggregate(x$discharge,list(x$year_val),FUN=max,na.rm=TRUE)
-  log_disch <- log10(annmax$x)
-  sumq3 <- sum(log_disch^3)
-  sumq2 <- sum(log_disch^2)
-  sumq <- sum(log_disch)
-  num_years <- length(unique(x$year_val))
-  qstd <- sd(annmax$x)
-  mh19 <- ((num_years*num_years*sumq3) - (3*num_years*sumq*sumq2) + (2*sumq*sumq*sumq))/(num_years*(num_years-1)*(num_years-2)*qstd*qstd*qstd)
-  return(mh19)
-}
-
-mh20 <- function(x,drainarea,pref = "mean") {
-  maxbyyr <- aggregate(x$discharge,list(x$year_val),FUN=max,na.rm=TRUE)
-  colnames(maxbyyr) <- c("Year","yrmax")
-  if (pref == "median") {
-    mh20 <- (median(maxbyyr$yrmax))/drainarea
-  } 
-  else {
-    mh20 <- (mean(maxbyyr$yrmax))/drainarea
-  }
-  return(mh20)
-}
-
-mh21 <- function(x) {
-  thresh <- ma2(x)
-  exthresh <- subset(x$discharge,x$discharge > thresh)
-  avg_ex <- mean(exthresh)
-  mh21 <- avg_ex/thresh
-  return(mh21)
-}
-
-mh22 <- function(x) {
-  thresh <- 3*ma2(x)
-  exthresh <- subset(x$discharge,x$discharge > thresh)
-  avg_ex <- mean(exthresh)
-  mh22 <- avg_ex/ma2(x)
-  return(mh21)
-}
-
-mh23 <- function(x) {
-  thresh <- 7*ma2(x)
-  exthresh <- subset(x$discharge,x$discharge > thresh)
-  avg_ex <- mean(exthresh)
-  mh23 <- avg_ex/ma2(x)
-  return(mh21)
-}
-
-mh24 <- function(qfiletempf) {
-  hfcrit <- ma2(qfiletempf)
-  isolateq <- qfiletempf$discharge
-  exchfcrit <- subset(isolateq, isolateq > hfcrit)
-  meanex <- mean(exchfcrit)
-  mh24 <- meanex/ma2(qfiletempf)
-  return(mh26)
-}
-
-mh25 <- function(qfiletempf) {
-  hfcrit <- 3 * ma2(qfiletempf)
-  isolateq <- qfiletempf$discharge
-  exchfcrit <- subset(isolateq, isolateq > hfcrit)
-  meanex <- mean(exchfcrit)
-  mh25 <- meanex/ma2(qfiletempf)
-  return(mh26)
-}
-
-mh26 <- function(qfiletempf) {
-  hfcrit <- 7 * ma2(qfiletempf)
-  isolateq <- qfiletempf$discharge
-  exchfcrit <- subset(isolateq, isolateq > hfcrit)
-  meanex <- mean(exchfcrit)
-  mh26 <- meanex/ma2(qfiletempf)
-  return(mh26)
-}
-
-mh27 <- function(qfiletempf) {
-  isolateq <- qfiletempf$discharge
-  sortq <- sort(isolateq)
-  frank75 <- floor(findrank(length(sortq),0.75))
-  hfcrit75 <- sortq[frank75]
-  exchfcrit <- subset(isolateq, isolateq > hfcrit75)
-  meanex <- mean(exchfcrit)
-  mh27 <- meanex/ma2(qfiletempf)
-  return(mh27)
 }
 
 fl1.2 <- function(qfiletempf, pref = "mean") {
@@ -1052,6 +607,7 @@ setwd('/Users/jlthomps/Documents/R/')
 #a<-read.csv(header=F,colClasses=c("character"),text=sites)
 a<-read.csv("sites_waters_stat_part.txt",header=F,colClasses=c("character"))
 #a<-t(getAllSites(site_url))
+system("rm monthly*txt")
 al<-length(a)
 yv<-vector(length=al)
 ma1v<-vector(length=al)
@@ -1330,7 +886,7 @@ dfcvbyyrf_list[[as.character(sites)]]<-dfcvbyyrf
                     ml19v[i]<-ml19(obs_data)
                     ml20v[i]<-ml20(obs_data)
                     ml21v[i]<-ml21(obs_data)
-                    ml22v[i]<-ml22(obs_data)
+                    ml22v[i]<-ml22(obs_data,drain_area)
                     mh1v[i]<-unlist(mh1.12(obs_data)[1])
                     mh2v[i]<-unlist(mh1.12(obs_data)[2])
                     mh3v[i]<-unlist(mh1.12(obs_data)[3])
@@ -1350,7 +906,7 @@ dfcvbyyrf_list[[as.character(sites)]]<-dfcvbyyrf
                     mh17v[i]<-unlist(mh15.17(obs_data)[3])
                     mh18v[i]<-mh18(obs_data)
                     mh19v[i]<-mh19(obs_data)
-                    mh20v[i]<-mh20(obs_data)
+                    mh20v[i]<-mh20(obs_data,drain_area)
                     mh21v[i]<-mh21(obs_data)
                     mh22v[i]<-mh22(obs_data)
                     mh23v[i]<-mh23(obs_data)
@@ -1358,12 +914,10 @@ dfcvbyyrf_list[[as.character(sites)]]<-dfcvbyyrf
                     mh25v[i]<-mh25(obs_data)
                     mh26v[i]<-mh26(obs_data)
                     mh27v[i]<-mh27(obs_data)
-                    fl1.2v<-fl1.2(obs_data)
-                    fl1v[i]<-fl1.2v$fl1
-                    fl2v[i]<-fl1.2v$fl2
-                    fh1.2v<-fh1.2(obs_data)
-                    fh1v[i]<-fh1.2v$fh1
-                    fh2v[i]<-fh1.2v$fh2
+                    fl1v[i]<-fl1(obs_data)
+                    fl2v[i]<-fl2(obs_data)
+                    fh1v[i]<-fh1(obs_data)
+                    fh2v[i]<-fh2(obs_data)
                     fh3v[i]<-fh3(obs_data)
                     fh4v[i]<-fh4(obs_data)
                     dl1v[i]<-dl1(obs_data)
@@ -1376,12 +930,10 @@ dfcvbyyrf_list[[as.character(sites)]]<-dfcvbyyrf
                     dl18v[i]<-dl18(obs_data)
                     dh5v[i]<-dh5(obs_data)
                     dh10v[i]<-dh10(obs_data)
-                    tl1.2v<-tl1.2(obs_data)
-                    tl1v[i]<-tl1.2v$tl1
-                    tl2v[i]<-tl1.2v$tl2
-                    th1.2v<-th1.2(obs_data)
-                    th1v[i]<-th1.2v$th1
-                    th2v[i]<-th1.2v$th2
+                    tl1v[i]<-tl1(obs_data)
+                    tl2v[i]<-tl2(obs_data)
+                    th1v[i]<-th1(obs_data)
+                    th2v[i]<-th2(obs_data)
                     ra1v[i]<-ra1(obs_data)
                     ra3v[i]<-ra3(obs_data)
                     ra4v[i]<-ra4(obs_data)
@@ -1417,7 +969,7 @@ statsout<-data.frame(t(a),yv,ymaxv,mean_flow,med_flow,cv_flow,
                      ma37v,ma38v,ma39v,ma40v,ma41v,ma42v,ma43v,ma44v,ma45v,ml1v,ml2v,ml3v,ml4v,ml5v,ml6v,ml7v,ml8v,ml9v,
                      ml10v,ml11v,ml12v,ml13v,ml14v,ml15v,ml16v,ml17v,ml18v,ml19v,ml20v,ml21v,ml22v,mh1v,mh2v,mh3v,mh4v,mh5v,
                      mh6v,mh7v,mh8v,mh9v,mh10v,mh11v,mh12v,mh13v,mh14v,mh15v,mh16v,mh17v,mh18v,mh19v,mh20v,mh21v,
-                     mh22v,mh23v,mh24v,mh25v,mh26v,mh27,
+                     mh22v,mh23v,mh24v,mh25v,mh26v,mh27v,
                      fl1v,fl2v,fh1v,fh2v,fh3v,
                      fh4v,dl1v,dl2v,dl4v,dl5v,
                      dl6v,dl9v,dl10v,dl18v,dh5v,

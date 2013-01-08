@@ -1,0 +1,23 @@
+#' Function to return the MH13 hydrologic indicator statistic for a given data frame
+#' 
+#' This function accepts a data frame that contains columns named "discharge", "year_val" and "month_val" and 
+#' calculates MH13. Variability across maximum monthly flow values. Compute the mean and standard deviation 
+#' for the maximum monthly flows over the entire flow record. MH13 is the standard deviation times 100 
+#' divided by the mean maximum monthly flow for all years.
+#' 
+#' @param x data frame containing a "discharge" column containing daily flow values
+#' @return mh13 numeric value of the standard deviation times 100 divided by the mean maximum monthly flow for the given data frame
+#' @export
+#' @examples
+#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
+#' x<-read.csv(load_data)
+#' mh13(x)
+mh13 <- function(qfiletempf) {
+  maxmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
+                                                     qfiletempf$month_val), FUN = max, na.rm=TRUE)
+  colnames(maxmonbyyr) <- c("Year", "Month", "maxmo")
+  sdmaxmonflows <- sd(maxmonbyyr$maxmo)
+  meanmaxmonflows <- mean(maxmonbyyr$maxmo)
+  mh13 <- (sdmaxmonflows * 100)/meanmaxmonflows
+  return(mh13)
+}

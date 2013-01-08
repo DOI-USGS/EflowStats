@@ -1,0 +1,73 @@
+* using log directory ‘/Users/jlthomps/WaterSMART/src/main/R/RProjects/HITHATStats.Rcheck’
+* using R version 2.15.2 (2012-10-26)
+* using platform: x86_64-apple-darwin9.8.0 (64-bit)
+* using session charset: UTF-8
+* checking for file ‘HITHATStats/DESCRIPTION’ ... OK
+* checking extension type ... Package
+* this is package ‘HITHATStats’ version ‘1.0’
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking whether package ‘HITHATStats’ can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking for portable file names ... OK
+* checking for sufficient/correct file permissions ... OK
+* checking DESCRIPTION meta-information ... WARNING
+Non-standard license specification:
+  What license is it under?
+Standardizable: FALSE
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking for unstated dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+getXMLWML1.1Data: no visible global function definition for
+  ‘xmlTreeParse’
+getXMLWML1.1Data: no visible global function definition for
+  ‘xpathSApply’
+getXMLWML1.1Data : <anonymous>: no visible global function definition
+  for ‘xmlValue’
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking examples ... ERROR
+Running examples in ‘HITHATStats-Ex.R’ failed
+The error most likely occurred in:
+
+> ### Name: getXMLWML1.1Data
+> ### Title: Function to return data from the NWISWeb WaterML1.1 daily values
+> ###   service
+> ### Aliases: getXMLWML1.1Data
+> 
+> ### ** Examples
+> 
+> url<-"http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
+> sites<-"02177000"
+> startdate<-"1900-01-01"
+> enddate<-"2012-10-01"
+> offering='00003'
+> property='00060'
+> obs_url<-paste(url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')
+> getXMLWML1.1Data(obs_url)
+Error: could not find function "getXMLWML1.1Data"
+Execution halted

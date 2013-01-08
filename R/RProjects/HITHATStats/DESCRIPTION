@@ -1,0 +1,56 @@
+Package: HITHATStats
+Type: Package
+Title: Returns HIT/HAT Hydrologic Indicator stats for a given set of data
+Version: 1.0
+Date: 2012-12-21
+Author: Jessica Thompson
+Maintainer: Who to complain to <jlthomps@usgs.gov>
+Depends:
+    R (>= 2.15.0),
+    zoo,
+    chron,
+    doBy,
+    XML
+Description: Uses USGS NWISWeb web services to fetch data for the user's
+    desired USGS NWIS stations; calculates all HIT/HAT hydrologic indicator
+    statistics; and returns these statistics in a text output file.
+License: What license is it under?
+Collate:
+    'getXMLWML1.1Data.R'
+    'getDrainageArea.R'
+    'ma1.R'
+    'includedData.R'
+    'ma2.R'
+    'ma3.R'
+    'ma4.11.R'
+    'findrank.R'
+    'ma12.23.R'
+    'ma24.35.R'
+    'ma36.40.R'
+    'ma41.45.R'
+    'bfi.R'
+    'ml1.12.R'
+    'ml13.R'
+    'ml14.16.R'
+    'meanflowbyyear.R'
+    'ml17.R'
+    'ml18.R'
+    'ml19.R'
+    'ml20.R'
+    'medflowbyyear.R'
+    'ml21.R'
+    'ml22.R'
+    'mh1.12.R'
+    'mh13.R'
+    'mh14.R'
+    'mh15.17.R'
+    'mh18.R'
+    'mh19.R'
+    'mh20.R'
+    'mh21.R'
+    'mh22.R'
+    'mh23.R'
+    'mh24.R'
+    'mh25.R'
+    'mh26.R'
+    'mh27.R'

@@ -1,0 +1,2 @@
+getXMLWML1.1Data        Function to return data from the NWISWeb
+                        WaterML1.1 daily values service

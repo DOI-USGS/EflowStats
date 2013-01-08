@@ -1,0 +1,12 @@
+Package: HITHATStats
+Type: Package
+Title: Returns HIT/HAT Hydrologic Indicator stats for a given set of
+        data
+Version: 1.0
+Date: 2012-12-21
+Author: Jessica Thompson
+Maintainer: Who to complain to <jlthomps@usgs.gov>
+Description: Uses USGS NWISWeb web services to fetch data for the user's desired USGS NWIS stations; calculates all HIT/HAT hydrologic indicator statistics; and returns these statistics in a text output file.
+License: What license is it under?
+Collate: 'getXMLWML1.1Data.R'
+Packaged: 2012-12-21 17:38:16 UTC; jlthomps
