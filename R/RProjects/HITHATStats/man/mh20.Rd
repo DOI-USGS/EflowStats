@@ -10,6 +10,9 @@
 
   \item{drainarea}{numeric value of drainage area for a
   site}
+
+  \item{pref}{string containing a "mean" or "median"
+  preference}
 }
 \value{
   mh20 numeric value of the mean or median of annual

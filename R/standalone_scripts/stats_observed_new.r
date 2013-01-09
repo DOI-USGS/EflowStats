@@ -59,28 +59,6 @@ getAllSites <- function(site_url){
   return (all_sites)
 }
 
-getXMLWML1.1Data <- function(obs_url){
-  cat(paste("Retrieving data from: \n", obs_url, "\n", sep = " "))
-  doc<-xmlTreeParse(obs_url, getDTD=F, useInternalNodes=TRUE)
-  values<-xpathSApply(doc, "//ns1:timeSeries//ns1:value")
-  values2<-sapply(values,function(x) as.numeric(xmlValue(x)))
-  dateSet<-xpathSApply(doc, "//@dateTime")
-  dateSet2<-sapply(dateSet,function(x) toString(substr(x,1,10)))
-  Daily<-as.data.frame(matrix(ncol=2,nrow=length(values2)))
-  colnames(Daily)<-c('date','discharge')
-  Daily$discharge<-values2
-  if (length(dateSet)>2) {
-    Daily$date<-dateSet}
-  return (Daily)
-}
-
-getDrainageArea <- function(drain_url){
-  cat(paste("Retrieving data from: \n", drain_url, "\n", sep=" "))
-  site_service<-read.delim(drain_url, header=TRUE, quote="\"", dec=".", sep="\t", colClasses=c("character"), fill=TRUE, comment.char="#")
-  site_service<-site_service[2,]
-  drain_area<-as.numeric(site_service$drain_area_va)
-}
-
 # This function computes the Nash-Sutcliffe value between two data series
 nse<-function(timeseries1,timeseries2) {
   numerat<-sum((timeseries1-timeseries2)^2,na.rm=TRUE)
@@ -123,39 +101,6 @@ rmse<-function(timeseries1,timeseries2) {
   return(rmse)
 }
 
-medflowbyyear <- function(qfiletempf) {
-  medflowbyyear<-aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-            median, na.rm=TRUE)
-  return(medflowbyyear)
-}
-
-meanflowbyyear <- function(qfiletempf) {
-  meanflowbyyear<-aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-            mean, na.rm=TRUE)
-  return(meanflowbyyear)
-}
-
-bfi <- function(qfiletempf) {
-  day7mean <- rollmean(qfiletempf$discharge, 7, align = "right", 
-                       na.pad = TRUE)
-  rollingavg <- data.frame(qfiletempf, day7mean)
-  rollingavgs7day <- subset(rollingavg, rollingavg$day7mean != 
-    "NA")
-  min7daybyyear <- aggregate(rollingavgs7day$day7mean, 
-                             list(rollingavgs7day$year_val), min)
-  meanflow <- meanflowbyyear(qfiletempf)
-  compbfi <- merge(min7daybyyear, meanflow, by = "Group.1")
-  colnames(compbfi) <- c("year", "day7min", "meandaily")
-  bfi <- compbfi$day7min/compbfi$meandaily
-  return(bfi)
-}
-
-findrank <- function(n, p) {
-  r <- (1 - p) * (n + 1)
-  findrank <- floor(r)
-  return(findrank)
-}
-
 sdev <- function(x) {
   sdev <- sd(x$discharge,na.rm=TRUE)
   return(sdev)
@@ -172,393 +117,6 @@ monthly.mean.ts <- function(qfiletempf,modsite) {
   meanmonts <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val,qfiletempf$month_val), FUN = mean, na.rm=TRUE)
   colnames(meanmonts) <- c("Year","Month","Mean_disch")
   return(meanmonts)
-}
-
-fl1.2 <- function(qfiletempf, pref = "mean") {
-  isolateq <- qfiletempf$discharge
-  sortq <- sort(isolateq)
-  frank <- floor(findrank(length(sortq), 0.75))
-  lfcrit <- sortq[frank]
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  lfcountbyyr <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.character(noyears$Year[1]):as.character(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-      i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge < 
-      lfcrit)
-    counter <- counter + 1
-    lfcountbyyr[counter] <- length(echfcrit$discharge)
-  }
-  lfcntbyyr <- lfcountbyyr
-  meanfl1 <- mean(lfcntbyyr)
-  stdevfl1 <- sd(lfcntbyyr)
-  fl2 <- (stdevfl1 * 100)/meanfl1
-  if (pref == "median") {
-    fl1 <- median(lfcntbyyr)
-  }
-  else {
-    fl1 <- mean(lfcntbyyr)
-  }
-  fl1.2<-list(fl1=fl1,fl2=fl2)
-  return(fl1.2)
-}
-
-fh1.2 <- function(qfiletempf, pref = "mean") {
-  isolateq <- qfiletempf$discharge
-  sortq <- sort(isolateq)
-  frank <- floor(findrank(length(sortq), 0.25))
-  hfcrit <- sortq[frank]
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountbyyr <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-      i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge > 
-      hfcrit)
-    counter <- counter + 1
-    hfcountbyyr[counter] <- length(echfcrit$discharge)
-  }
-  hfcntbyyr <- hfcountbyyr
-  meanfh1<-mean(hfcntbyyr)
-  stdevfh1<-sd(hfcntbyyr)
-  fh2<-(stdevfh1*100)/meanfh1
-  if (pref == "median") {
-    fh1 <- median(hfcntbyyr)
-  }
-  else {
-    fh1 <- mean(hfcntbyyr)
-  }
-  fh1.2<-list(fh1=fh1,fh2=fh2)
-  return(fh1.2)
-}
-
-fh3 <- function(qfiletempf, pref = "mean") {
-  hfcrit <- 3 * ma2(qfiletempf)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountbyyrfh3 <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-      i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge > 
-      hfcrit)
-    counter <- counter + 1
-    hfcountbyyrfh3[counter] <- length(echfcrit$discharge)
-  }
-  hfcntbyyrfh3 <- hfcountbyyrfh3
-  if (pref == "median") {
-    fh3 <- median(hfcntbyyrfh3)
-  }
-  else {
-    fh3 <- mean(hfcntbyyrfh3)
-  }
-  return(fh3)
-}
-
-fh4 <- function(qfiletempf, pref = "mean") {
-  hfcrit <- 7 * ma2(qfiletempf)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountbyyrfh4 <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-      i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge > 
-      hfcrit)
-    counter <- counter + 1
-    hfcountbyyrfh4[counter] <- length(echfcrit$discharge)
-  }
-  hfcntbyyrfh4 <- hfcountbyyrfh4
-  if (pref == "median") {
-    fh4 <- median(hfcntbyyrfh4)
-  }
-  else {
-    fh4 <- mean(hfcntbyyrfh4)
-  }
-  return(fh4)
-}
-
-dl1 <- function(qfiletempf, pref = "mean") {
-  day1mean <- rollmean(qfiletempf$discharge, 1, align = "right", 
-                       na.pad = TRUE)
-  day1rollingavg <- data.frame(qfiletempf, day1mean)
-  rollingavgs1day <- subset(day1rollingavg, day1rollingavg$day1mean != 
-    "NA")
-  min1daybyyear <- aggregate(rollingavgs1day$day1mean, 
-                              list(rollingavgs1day$year_val), min, na.rm=TRUE)
-  if (pref == "median") {
-    dl1 <- median(min1daybyyear$x)
-  }
-  else {
-    dl1 <- mean(min1daybyyear$x)
-  }
-  return(dl1)
-}
-
-dl2 <- function(qfiletempf, pref = "mean") {
-  day3mean <- rollmean(qfiletempf$discharge, 3, align = "right", 
-                       na.pad = TRUE)
-  day3rollingavg <- data.frame(qfiletempf, day3mean)
-  rollingavgs3day <- subset(day3rollingavg, day3rollingavg$day3mean != 
-    "NA")
-  min3daybyyear <- aggregate(rollingavgs3day$day3mean, 
-                              list(rollingavgs3day$year_val), min, na.rm=TRUE)
-  if (pref == "median") {
-    dl2 <- median(min3daybyyear$x)
-  }
-  else {
-    dl2 <- mean(min3daybyyear$x)
-  }
-  return(dl2)
-}
-
-dl4 <- function(qfiletempf, pref = "mean") {
-  day30mean <- rollmean(qfiletempf$discharge, 30, align = "right", 
-                        na.pad = TRUE)
-  day30rollingavg <- data.frame(qfiletempf, day30mean)
-  rollingavgs30day <- subset(day30rollingavg, day30rollingavg$day30mean != 
-    "NA")
-  min30daybyyear <- aggregate(rollingavgs30day$day30mean, 
-                               list(rollingavgs30day$year_val), min, na.rm=TRUE)
-  if (pref == "median") {
-    dl4 <- median(min30daybyyear$x)
-  }
-  else {
-    dl4 <- mean(min30daybyyear$x)
-  }
-  return(dl4)
-}
-
-dl5 <- function(qfiletempf, pref = "mean") {
-  day90mean <- rollmean(qfiletempf$discharge, 90, align = "right", 
-                        na.pad = TRUE)
-  day90rollingavg <- data.frame(qfiletempf, day90mean)
-  rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
-    "NA")
-  min90daybyyear <- aggregate(rollingavgs90day$day90mean, 
-                               list(rollingavgs90day$year_val), min, na.rm=TRUE)
-  if (pref == "median") {
-    dl5 <- median(min90daybyyear$x)
-  }
-  else {
-    dl5 <- mean(min90daybyyear$x)
-  }
-  return(dl5)
-}
-
-dl6 <- function(qfiletempf) {
-  meandl6 <- dl1(qfiletempf, pref = "mean")
-  day1mean <- rollmean(qfiletempf$discharge, 1, align = "right", 
-                       na.pad = TRUE)
-  day1rollingavg <- data.frame(qfiletempf, day1mean)
-  rollingavgs1day <- subset(day1rollingavg, day1rollingavg$day1mean != 
-    "NA")
-  min1daybyyear <- aggregate(rollingavgs1day$day1mean, 
-                             list(rollingavgs1day$year_val), min, na.rm=TRUE)
-  sddl6 <- sd(min1daybyyear$x)
-  dl6 <- (sddl6 * 100)/meandl6
-  return(dl6)
-}
-
-dl9 <- function(qfiletempf) {
-  meandl9 <- dl4(qfiletempf, pref = "mean")
-  day30mean <- rollmean(qfiletempf$discharge, 30, align = "right", 
-                        na.pad = TRUE)
-  day30rollingavg <- data.frame(qfiletempf, day30mean)
-  rollingavgs30day <- subset(day30rollingavg, day30rollingavg$day30mean != 
-    "NA")
-  min30daybyyear <- aggregate(rollingavgs30day$day30mean, 
-                              list(rollingavgs30day$year_val), min, na.rm=TRUE)
-  sddl9 <- sd(min30daybyyear$x)
-  dl9 <- (sddl9 * 100)/meandl9
-  return(dl9)
-}
-
-dl10 <- function(qfiletempf) {
-  meandl10 <- dl5(qfiletempf, pref = "mean")
-  day90mean <- rollmean(qfiletempf$discharge, 90, align = "right", 
-                        na.pad = TRUE)
-  day90rollingavg <- data.frame(qfiletempf, day90mean)
-  rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
-    "NA")
-  min90daybyyear <- aggregate(rollingavgs90day$day90mean, 
-                              list(rollingavgs90day$year_val), min, na.rm=TRUE)
-  sddl10 <- sd(min90daybyyear$x)
-  dl10 <- (sddl10 * 100)/meandl10
-  return(dl10)
-}
-
-dl18 <- function(qfiletempf, pref = "mean") {
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountzeros <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, qfiletempf$year_val == 
-      i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge < 
-      0.001)
-    counter <- counter + 1
-    hfcountzeros[counter] <- length(echfcrit$discharge)
-  }
-  hfcntzeros <- hfcountzeros
-  if (pref == "median") {
-    dl18 <- median(hfcntzeros)
-  }
-  else {
-    dl18 <- mean(hfcntzeros)
-  }
-  return(dl18)
-}
-
-dh5 <- function(qfiletempf, pref = "mean") {
-  day90mean <- rollmean(qfiletempf$discharge, 90, align = "right", 
-                        na.pad = TRUE)
-  day90rollingavg <- data.frame(qfiletempf, day90mean)
-  rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
-    "NA")
-  max90daybyyear <- aggregate(rollingavgs90day$day90mean, 
-                               list(rollingavgs90day$year_val), max, na.rm=TRUE)
-  if (pref == "median") {
-    dh5 <- median(max90daybyyear$x)
-  }
-  else {
-    dh5 <- mean(max90daybyyear$x)
-  }
-  return(dh5)
-}
-
-dh10 <- function(qfiletempf) {
-  meandh10 <- dh5(qfiletempf, pref = "mean")
-  day90mean <- rollmean(qfiletempf$discharge, 90, align = "right", 
-                        na.pad = TRUE)
-  day90rollingavg <- data.frame(qfiletempf, day90mean)
-  rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
-    "NA")
-  max90daybyyear <- aggregate(rollingavgs90day$day90mean, 
-                              list(rollingavgs90day$year_val), max, na.rm=TRUE)
-  sddh10 <- sd(max90daybyyear$x)
-  dh10 <- (sddh10 * 100)/meandh10
-  return(dh10)
-}
-
-tl1.2 <- function(qfiletempf, pref = "mean") {
-  min1daybyyear <- aggregate(qfiletempf$discharge, 
-                             list(qfiletempf$year_val), min, na.rm=TRUE)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momin")
-  noyrs <- length(noyears$Year)
-  juldaymin <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    counter <- counter + 1
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-      i)
-    findjulday <- subset(subsetyr, subsetyr$discharge == 
-      min1daybyyear$x[counter])
-    juldaymin[counter] <- findjulday$jul_val[1]
-  }
-  minjulday <- juldaymin
-  meantl2<-mean(minjulday)
-  sddtl2<-sd(minjulday)
-  tl2<-(sddtl2*100)/meantl2
-  if (pref == "median") {
-    tl1 <- median(minjulday)
-  }
-  else {
-    tl1 <- mean(minjulday)
-  }
-  tl1.2<-list(tl1=tl1,tl2=tl2)
-  return(tl1.2)
-}
-
-th1.2 <- function(qfiletempf, pref = "mean") {
-  max1daybyyear <- aggregate(qfiletempf$discharge, 
-                             list(qfiletempf$year_val), max, na.rm=TRUE)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  juldaymax <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    counter <- counter + 1
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-      i)
-    findjulday <- subset(subsetyr, subsetyr$discharge == 
-      max1daybyyear$x[counter])
-    juldaymax[counter] <- findjulday$jul_val[1]
-  }
-  maxjulday <- juldaymax
-  meanth2<-mean(maxjulday)
-  sddth2<-sd(maxjulday)
-  th2<-(sddth2*100)/meanth2
-  if (pref == "median") {
-    th1 <- median(maxjulday)
-  }
-  else {
-    th1 <- mean(maxjulday)
-  }
-  th1.2<-list(th1=th1,th2=th2)
-  return(th1.2)
-}
-
-ra1 <- function(qfiletempf, pref = "mean") {
-  diffbtdays <- diff(qfiletempf$discharge, lag = 1, 
-                     differences = 1)
-  findrisevalues <- subset(diffbtdays, diffbtdays > 
-    0)
-  if (pref == "median") {
-    ra1 <- median(findrisevalues)
-  }
-  else {
-    ra1 <- mean(findrisevalues)
-  }
-  return(ra1)
-}
-
-ra3 <- function(qfiletempf, pref = "mean") {
-  diffbtdays <- diff(qfiletempf$discharge, lag = 1, 
-                     differences = 1)
-  findfallvalueneg <- subset(diffbtdays, diffbtdays < 
-    0)
-  findfallvalues <- abs(findfallvalueneg)
-  if (pref == "median") {
-    ra3 <- median(findfallvalues)
-  }
-  else {
-    ra3 <- mean(findfallvalues)
-  }
-  return(ra3)
-}
-
-ra4 <- function(qfiletempf) {
-  meanra4 <- ra3(qfiletempf, pref = "mean")
-  diffbtdays <- diff(qfiletempf$discharge, lag = 1, 
-                     differences = 1)
-  findfallvalueneg <- subset(diffbtdays, diffbtdays < 
-    0)
-  findfallvalues <- abs(findfallvalueneg)
-  sddra4 <- sd(findfallvalues)
-  ra4 <- (sddra4 * 100)/meanra4
-  return(ra4)
 }
 
 l7Q10 <- function(qfiletempf) {
@@ -712,19 +270,28 @@ fh3v<-vector(length=al)
 fh4v<-vector(length=al)
 dl1v<-vector(length=al)
 dl2v<-vector(length=al)
+dl3v<-vector(length=al)
 dl4v<-vector(length=al)
 dl5v<-vector(length=al)
 dl6v<-vector(length=al)
+dl7v<-vector(length=al)
+dl8v<-vector(length=al)
 dl9v<-vector(length=al)
 dl10v<-vector(length=al)
 dl18v<-vector(length=al)
+dh1v<-vector(length=al)
+dh2v<-vector(length=al)
+dh3v<-vector(length=al)
+dh4v<-vector(length=al)
 dh5v<-vector(length=al)
 dh10v<-vector(length=al)
+dh11v<-vector(length=al)
 tl1v<-vector(length=al)
 tl2v<-vector(length=al)
 th1v<-vector(length=al)
 th2v<-vector(length=al)
 ra1v<-vector(length=al)
+ra2v<-vector(length=al)
 ra3v<-vector(length=al)
 ra4v<-vector(length=al)
 l7Q10v<-vector(length=al)
@@ -914,27 +481,36 @@ dfcvbyyrf_list[[as.character(sites)]]<-dfcvbyyrf
                     mh25v[i]<-mh25(obs_data)
                     mh26v[i]<-mh26(obs_data)
                     mh27v[i]<-mh27(obs_data)
-                    fl1v[i]<-fl1(obs_data)
-                    fl2v[i]<-fl2(obs_data)
-                    fh1v[i]<-fh1(obs_data)
-                    fh2v[i]<-fh2(obs_data)
+                    fl1v[i]<-unlist(fl1.2(obs_data)[1])
+                    fl2v[i]<-unlist(fl1.2(obs_data)[2])
+                    fh1v[i]<-unlist(fh1.2(obs_data)[1])
+                    fh2v[i]<-unlist(fh1.2(obs_data)[2])
                     fh3v[i]<-fh3(obs_data)
                     fh4v[i]<-fh4(obs_data)
                     dl1v[i]<-dl1(obs_data)
                     dl2v[i]<-dl2(obs_data)
+                    dl3v[i]<-dl3(obs_data)
                     dl4v[i]<-dl4(obs_data)
                     dl5v[i]<-dl5(obs_data)
                     dl6v[i]<-dl6(obs_data)
+                    dl7v[i]<-dl7(obs_data)
+                    dl8v[i]<-dl8(obs_data)
                     dl9v[i]<-dl9(obs_data)
                     dl10v[i]<-dl10(obs_data)
                     dl18v[i]<-dl18(obs_data)
+                    dh1v[i]<-dh1(obs_data)
+                    dh2v[i]<-dh2(obs_data)
+                    dh3v[i]<-dh3(obs_data)
+                    dh4v[i]<-dh4(obs_data)
                     dh5v[i]<-dh5(obs_data)
                     dh10v[i]<-dh10(obs_data)
-                    tl1v[i]<-tl1(obs_data)
-                    tl2v[i]<-tl2(obs_data)
-                    th1v[i]<-th1(obs_data)
-                    th2v[i]<-th2(obs_data)
+                    dh11v[i]<-dh11(obs_data)
+                    tl1v[i]<-unlist(tl1.2(obs_data)[1])
+                    tl2v[i]<-unlist(tl1.2(obs_data)[2])
+                    th1v[i]<-unlist(th1.2(obs_data)[1])
+                    th2v[i]<-unlist(th1.2(obs_data)[2])
                     ra1v[i]<-ra1(obs_data)
+                    ra2v[i]<-ra2(obs_data)
                     ra3v[i]<-ra3(obs_data)
                     ra4v[i]<-ra4(obs_data)
                     l7Q10v[i]<-l7Q10(obs_data)
@@ -971,10 +547,10 @@ statsout<-data.frame(t(a),yv,ymaxv,mean_flow,med_flow,cv_flow,
                      mh6v,mh7v,mh8v,mh9v,mh10v,mh11v,mh12v,mh13v,mh14v,mh15v,mh16v,mh17v,mh18v,mh19v,mh20v,mh21v,
                      mh22v,mh23v,mh24v,mh25v,mh26v,mh27v,
                      fl1v,fl2v,fh1v,fh2v,fh3v,
-                     fh4v,dl1v,dl2v,dl4v,dl5v,
-                     dl6v,dl9v,dl10v,dl18v,dh5v,
-                     dh10v,tl1v,tl2v,th1v,th2v,
-                     ra1v,ra3v,ra4v,l7Q10v,l7Q2v,return_10v,
+                     fh4v,dl1v,dl2v,dl3v,dl4v,dl5v,
+                     dl6v,dl7v,dl8v,dl9v,dl10v,dl18v,dh1v,dh2v,dh3v,dh4v,dh5v,
+                     dh10v,dh11v,tl1v,tl2v,th1v,th2v,
+                     ra1v,ra2v,ra3v,ra4v,l7Q10v,l7Q2v,return_10v,
                      comment)
 colnames(statsout)<-c('site_no','min_date','max_date','mean_of_annual_flows','median_of_annual_flows','cv_of_annual_flows',
                       'flow_10_obs,','flow_25_obs','flow_50_obs','flow_75_obs','flow_90_obs',
@@ -987,10 +563,10 @@ colnames(statsout)<-c('site_no','min_date','max_date','mean_of_annual_flows','me
                       'mh1','mh2','mh3','mh4','mh5','mh6','mh7','mh8','mh9','mh10','mh11','mh12','mh13','mh14_med_annual_max',
                       'mh15','mh16_high_flow_index','mh17','mh18','mh19','mh20','mh21','mh22','mh23','mh24','mh25','mh26_high_peak_flow','mh27',
                       'fl1_low_flood_pulse','fl2_low_pulse_var','fh1_high_pulse_count','fh2_high_pulse_var','fh3_high_pulse_count_three',
-                      'fh4_high_pulse_count_seven','dl1_min_daily_flow','dl2_min_3_day_avg','dl4_min_30_day_avg','dl5_min_90_day_avg',
-                      'dl6_min_flow_var','dl9_min_30_day_var','dl10_min_90_day_var','dl18_zero_flow_days','dh5_max_90_day_avg',
-                      'dh10_max_90_day_var','tl1_min_flow_julian_day','tl2_min_julian_var','th1_max_flow_julian_day','th2_max_julian_var',
-                      'ra1_rise_rate','ra3_fall_rate','ra4_fall_rate_var','7Q10_obs','7Q2_obs','10_year_return_max_obs',
+                      'fh4_high_pulse_count_seven','dl1_min_daily_flow','dl2_min_3_day_avg','dl3','dl4_min_30_day_avg','dl5_min_90_day_avg',
+                      'dl6_min_flow_var','dl7','dl8','dl9_min_30_day_var','dl10_min_90_day_var','dl18_zero_flow_days','dh1','dh2','dh3','dh4','dh5_max_90_day_avg',
+                      'dh10_max_90_day_var','dh11','tl1_min_flow_julian_day','tl2_min_julian_var','th1_max_flow_julian_day','th2_max_julian_var',
+                      'ra1_rise_rate','ra2_rise_rate_var','ra3_fall_rate','ra4_fall_rate_var','7Q10_obs','7Q2_obs','10_year_return_max_obs',
                       'comment')
 output="output.txt"
 write.table(statsout,file="output.txt",col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")

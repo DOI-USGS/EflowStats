@@ -5,8 +5,8 @@
   ma36.40(qfiletemp)
 }
 \arguments{
-  \item{x}{data frame containing a "discharge" column
-  containing daily flow values}
+  \item{qfiletemp}{data frame containing a "discharge"
+  column containing daily flow values}
 }
 \value{
   ma36.40 list containing MA36-MA40 for the given data
@@ -31,7 +31,7 @@
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-ma36.40(x)
+qfiletemp<-read.csv(load_data)
+ma36.40(qfiletemp)
 }
 

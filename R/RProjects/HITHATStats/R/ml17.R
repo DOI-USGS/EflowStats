@@ -5,13 +5,14 @@
 #' flow for each year and divide them by the mean annual flow for that year. ML17 is the mean (or median - 
 #' use preference option) of ratios. 
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
+#' @param pref string containing a "mean" or "median" preference
 #' @return ml17 numeric value of the mean annual flow for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ml17(x)
+#' qfiletempf<-read.csv(load_data)
+#' ml17(qfiletempf)
 ml17 <- function(qfiletempf, pref = "mean") {
   bfibyyear <- bfi(qfiletempf)
   if (pref == "median") {

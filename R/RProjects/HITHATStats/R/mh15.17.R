@@ -6,13 +6,13 @@
 #' exceedence value divided by the median flow for the entire record. MH17 is the 25% exceedence value 
 #' divided by the median flow for the entire record. 
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @return mh15.17 list of numeric value of the 1%, 10% and 25% exceedence values divided by median flow for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' mh15.17(x)
+#' qfiletempf<-read.csv(load_data)
+#' mh15.17(qfiletempf)
 mh15.17 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge
   sortq <- sort(isolateq)

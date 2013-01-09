@@ -1,15 +1,15 @@
 # Build the package:
 library(devtools)
-setwd("C:/Users/jlthomps/Desktop/git/WaterSMART/src/main/R/RProjects/")
+setwd("C:/Users/jlthomps/Desktop/git/USGS-NWC/R/RProjects/")
 # setwd("/users/jlthomps/WaterSMART/src/main/R/RProjects/")
 load_all("HITHATStats/",reset = TRUE)
-setwd("C:/Users/jlthomps/Desktop/git/WaterSMART/src/main/R/RProjects/HITHATStats")
+setwd("C:/Users/jlthomps/Desktop/git/USGS-NWC/R/RProjects/HITHATStats")
 # setwd("/users/jlthomps/WaterSMART/src/main/R/RProjects/HITHATStats")
 document()
 check()  
 run_examples()
 # test()   Assumes testthat type tests in GLRI/inst/tests
-setwd("C:/Users/jlthomps/Desktop/git/WaterSMART/src/main/R/RProjects/")
+setwd("C:/Users/jlthomps/Desktop/git/USGS-NWC/R/RProjects/")
 # setwd("/users/jlthomps/WaterSMART/src/main/R/RProjects/")
 build("HITHATStats")
 install("HITHATStats")

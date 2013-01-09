@@ -5,13 +5,13 @@
 #' for the minimum monthly flows over the entire record. ML13 is the standard deviation times 100 divided 
 #' by the mean minimum monthly flow.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @return ml13 numeric value of the variability of minimum monthly flow for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ml13(x)
+#' qfiletempf<-read.csv(load_data)
+#' ml13(qfiletempf)
 ml13 <- function(qfiletempf) {
   minmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
                                                      qfiletempf$month_val), FUN = min, na.rm=TRUE)

@@ -5,8 +5,8 @@
   medflowbyyear(qfiletempf)
 }
 \arguments{
-  \item{x}{data frame containing a "discharge" column
-  containing daily flow values}
+  \item{qfiletempf}{data frame containing a "discharge"
+  column containing daily flow values}
 }
 \value{
   medflowbyyear numeric value of the median flow by year
@@ -19,7 +19,7 @@
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-medflowbyyear(x)
+qfiletempf<-read.csv(load_data)
+medflowbyyear(qfiletempf)
 }
 

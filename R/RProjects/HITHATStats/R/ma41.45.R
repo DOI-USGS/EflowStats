@@ -8,16 +8,16 @@
 #' Skewness in the annual flows. MA45 is the mean of the annual flow means minus the median of the annual 
 #' flows divided by the median of the annual means.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletemp data frame containing a "discharge" column containing daily flow values
 #' @param drain_area numeric containing the drainage area of the selected site
 #' @return ma41.45 list of MA41-MA45 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
+#' qfiletemp<-read.csv(load_data)
 #' drain_area<-56.5
-#' ma41.45(x,drain_area)
-ma41.45 <- function(qfiletemp,drainarea) {
+#' ma41.45(qfiletemp,drain_area)
+ma41.45 <- function(qfiletemp,drain_area) {
   meanbyyr <- aggregate(qfiletemp$discharge, list(qfiletemp$year_val), FUN = mean, na.rm=TRUE)
   colnames(meanbyyr) <- c("Year","meanyr")
   sortmeanbyyr <- sort(meanbyyr$meanyr)
@@ -25,7 +25,7 @@ ma41.45 <- function(qfiletemp,drainarea) {
   perc_25 <- floor(findrank(length(sortmeanbyyr), 0.25))
   perc_75 <- floor(findrank(length(sortmeanbyyr), 0.75))
   perc_90 <- floor(findrank(length(sortmeanbyyr), 0.9))
-  ma41 <- mean(meanbyyr$meanyr)/drainarea
+  ma41 <- mean(meanbyyr$meanyr)/drain_area
   ma42 <- (max(meanbyyr$meanyr)-min(meanbyyr$meanyr))/median(meanbyyr$meanyr)
   ma43 <- (perc_75-perc_25)/median(meanbyyr$meanyr)
   ma44 <- (perc_90-perc_10)/median(meanbyyr$meanyr)

@@ -4,13 +4,14 @@
 #' calculates the base flow. Compute the ratios of the minimum annual flow to mean annual flow for 
 #' each year. ML19 is the mean (or median - use preference option) of these ratios times 100.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
+#' @param pref string containing a "mean" or "median" preference
 #' @return ml19 numeric value of the min annual flow/mean annual flow for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ml19(x)
+#' qfiletempf<-read.csv(load_data)
+#' ml19(qfiletempf)
 ml19 <- function(qfiletempf, pref = "mean") {
   minbyyr <- aggregate(qfiletempf$discharge,list(qfiletempf$year_val),FUN=min,na.rm=TRUE)
   colnames(minbyyr) <- c("Year","yrmin")

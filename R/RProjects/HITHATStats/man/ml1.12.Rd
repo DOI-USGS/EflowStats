@@ -5,8 +5,8 @@
   ml1.12(qfiletemp)
 }
 \arguments{
-  \item{x}{data frame containing a "discharge" column
-  containing daily flow values}
+  \item{qfiletemp}{data frame containing a "discharge"
+  column containing daily flow values}
 }
 \value{
   ml1.12 data frame containing the mean or medians for each
@@ -22,7 +22,7 @@
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-ml1.12(x)
+qfiletemp<-read.csv(load_data)
+ml1.12(qfiletemp)
 }
 

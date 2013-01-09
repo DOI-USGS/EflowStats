@@ -6,13 +6,13 @@
 #' annual flows to the mean for for each year. ML16; Median of annual minimum flows. ML16 is the median of 
 #' the ratios of minimum annual flows to the median flow for each year. 
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @return ml14.16 list of ml14-ml16 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ml14.16(x)
+#' qfiletempf<-read.csv(load_data)
+#' ml14.16(qfiletempf)
 ml14.16 <- function(qfiletempf) {
   minbyyear <- aggregate(qfiletempf$discharge, 
                          list(qfiletempf$year_val), min, na.rm=TRUE)

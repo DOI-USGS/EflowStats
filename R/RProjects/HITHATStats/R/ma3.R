@@ -5,13 +5,14 @@
 #' (standard deviation/mean) for each year. Compute the coefficent of variation for each year 
 #' of daily flows. Compute the mean/median of these.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
+#' @param pref string containing a "mean" or "median" preference
 #' @return ma3 numeric value of the mean or median of the cvs for each year for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ma3(x)
+#' qfiletempf<-read.csv(load_data)
+#' ma3(qfiletempf)
 ma3 <- function(qfiletempf, pref = "mean") {
   sdbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
                       FUN = sd, na.rm=TRUE)

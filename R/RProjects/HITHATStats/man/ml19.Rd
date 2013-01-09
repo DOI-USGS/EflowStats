@@ -5,8 +5,11 @@
   ml19(qfiletempf, pref = "mean")
 }
 \arguments{
-  \item{x}{data frame containing a "discharge" column
-  containing daily flow values}
+  \item{qfiletempf}{data frame containing a "discharge"
+  column containing daily flow values}
+
+  \item{pref}{string containing a "mean" or "median"
+  preference}
 }
 \value{
   ml19 numeric value of the min annual flow/mean annual
@@ -22,7 +25,7 @@
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-ml19(x)
+qfiletempf<-read.csv(load_data)
+ml19(qfiletempf)
 }
 

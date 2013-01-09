@@ -5,13 +5,13 @@
 #' average flows to mean annual flows for each year. ML18 is the standard deviation time 100 divided by 
 #' the mean of the ratios.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @return ml18 numeric value of the variability in base flow for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ml18(x)
+#' qfiletempf<-read.csv(load_data)
+#' ml18(qfiletempf)
 ml18 <- function(qfiletempf) {
   bfibyyear <- bfi(qfiletempf)
   sdbfi <- sd(bfibyyear)

@@ -5,8 +5,8 @@
   ml18(qfiletempf)
 }
 \arguments{
-  \item{x}{data frame containing a "discharge" column
-  containing daily flow values}
+  \item{qfiletempf}{data frame containing a "discharge"
+  column containing daily flow values}
 }
 \value{
   ml18 numeric value of the variability in base flow for
@@ -22,7 +22,7 @@
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-ml18(x)
+qfiletempf<-read.csv(load_data)
+ml18(qfiletempf)
 }
 

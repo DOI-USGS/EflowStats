@@ -9,13 +9,13 @@
 #' of the monthly means. MA40; Skewness in the monthly flows. MA40 is the mean of the monthly flow means 
 #' minus the median of the monthly means divided by the median of the monthly means.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletemp data frame containing a "discharge" column containing daily flow values
 #' @return ma36.40 list containing MA36-MA40 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ma36.40(x)
+#' qfiletemp<-read.csv(load_data)
+#' ma36.40(qfiletemp)
 ma36.40 <- function(qfiletemp) {
   meanbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val), FUN = mean, na.rm=TRUE)
   colnames(meanbymon) <- c("Month","meanmo")

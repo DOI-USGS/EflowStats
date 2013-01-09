@@ -4,13 +4,13 @@
 #' calculates the mean (or median - use preference option) maximum flows for each month across all years. 
 #' Compute the maximums for each month. For example, MH1 is the mean of the maximums of all January flow values.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletemp data frame containing a "discharge" column containing daily flow values
 #' @return mh1.12 data frame containing the mean or medians for each month
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' mh1.12(x)
+#' qfiletemp<-read.csv(load_data)
+#' mh1.12(qfiletemp)
 mh1.12 <- function(qfiletemp) {
   maxbymonyr <- aggregate(qfiletemp$discharge, list(qfiletemp$year_val, qfiletemp$month_val), FUN = max, na.rm=TRUE)
   colnames(maxbymonyr) <- c("Year","Month","maxmo")

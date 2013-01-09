@@ -4,13 +4,13 @@
 #' calculates the means (or medians - use preference option) minimum flows for each month across all years. 
 #' Compute the minimums for each month. For example, ML1 is the mean of the minimums of all January flow values.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletemp data frame containing a "discharge" column containing daily flow values
 #' @return ml1.12 data frame containing the mean or medians for each month
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ml1.12(x)
+#' qfiletemp<-read.csv(load_data)
+#' ml1.12(qfiletemp)
 ml1.12 <- function(qfiletemp) {
   minbymonyr <- aggregate(qfiletemp$discharge, list(qfiletemp$year_val, qfiletemp$month_val), FUN = min, na.rm=TRUE)
   colnames(minbymonyr) <- c("Year","Month","minmo")

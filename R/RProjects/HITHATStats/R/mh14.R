@@ -5,13 +5,13 @@
 #' flows. Compute the ratio of annual maximum flow to median annual flow for each year. MH14 is the median 
 #' of these ratios. 
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @return mh14 numeric value of the ratio of annual maximum flow to median annual flow for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' mh14(x)
+#' qfiletempf<-read.csv(load_data)
+#' mh14(qfiletempf)
 mh14 <- function(qfiletempf) {
   maxmonbymoyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
                                                        qfiletempf$month_val), FUN = max, na.rm=TRUE)

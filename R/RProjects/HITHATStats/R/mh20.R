@@ -6,6 +6,7 @@
 #' 
 #' @param x data frame containing a "discharge" column containing daily flow values
 #' @param drainarea numeric value of drainage area for a site
+#' @param pref string containing a "mean" or "median" preference
 #' @return mh20 numeric value of the mean or median of annual maximum flows divided by the drainage area for the given data frame
 #' @export
 #' @examples

@@ -144,349 +144,6 @@ rmse<-function(timeseries1,timeseries2) {
   return(rmse)
 }
 
-fl1 <- function(qfiletempf, pref = "mean") {
-  isolateq <- qfiletempf$discharge
-  sortq <- sort(isolateq)
-  frank <- floor(findrank(length(sortq), 0.75))
-  lfcrit <- sortq[frank]
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  lfcountbyyr <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.character(noyears$Year[1]):as.character(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge < 
-                         lfcrit)
-    counter <- counter + 1
-    lfcountbyyr[counter] <- length(echfcrit$discharge)
-  }
-  lfcntbyyr <<- lfcountbyyr
-  if (pref == "median") {
-    fl1 <- median(lfcntbyyr)
-  }
-  else {
-    fl1 <- mean(lfcntbyyr)
-  }
-}
-
-fl2 <- function(qfiletempf) {
-  meanfl1 <- fl1(qfiletempf, pref = "mean")
-  stdevfl1 <- sd(lfcntbyyr)
-  fl2 <- (stdevfl1 * 100)/meanfl1
-}
-
-fh1 <- function(qfiletempf, pref = "mean") {
-  isolateq <- qfiletempf$discharge
-  sortq <- sort(isolateq)
-  frank <- floor(findrank(length(sortq), 0.25))
-  hfcrit <- sortq[frank]
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountbyyr <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge > 
-                         hfcrit)
-    counter <- counter + 1
-    hfcountbyyr[counter] <- length(echfcrit$discharge)
-  }
-  hfcntbyyr <<- hfcountbyyr
-  if (pref == "median") {
-    fh1 <- median(hfcntbyyr)
-  }
-  else {
-    fh1 <- mean(hfcntbyyr)
-  }
-}
-
-fh2 <- function(qfiletempf) {
-  meanfh1 <- fh1(qfiletempf, pref = "mean")
-  stdevfl1 <- sd(hfcntbyyr)
-  fh2 <- (stdevfl1 * 100)/meanfh1
-}
-
-fh3 <- function(qfiletempf, pref = "mean") {
-  hfcrit <- 3 * ma2(qfiletempf)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountbyyrfh3 <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge > 
-                         hfcrit)
-    counter <- counter + 1
-    hfcountbyyrfh3[counter] <- length(echfcrit$discharge)
-  }
-  hfcntbyyrfh3 <<- hfcountbyyrfh3
-  if (pref == "median") {
-    fh3 <- median(hfcntbyyrfh3)
-  }
-  else {
-    fh3 <- mean(hfcntbyyrfh3)
-  }
-}
-
-fh4 <- function(qfiletempf, pref = "mean") {
-  hfcrit <- 7 * ma2(qfiletempf)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountbyyrfh4 <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge > 
-                         hfcrit)
-    counter <- counter + 1
-    hfcountbyyrfh4[counter] <- length(echfcrit$discharge)
-  }
-  hfcntbyyrfh4 <<- hfcountbyyrfh4
-  if (pref == "median") {
-    fh4 <- median(hfcntbyyrfh4)
-  }
-  else {
-    fh4 <- mean(hfcntbyyrfh4)
-  }
-}
-
-dl1 <- function(qfiletempf, pref = "mean") {
-  day1mean <- rollmean(qfiletempf$discharge, 1, align = "right", 
-                       na.pad = TRUE)
-  day1rollingavg <- data.frame(qfiletempf, day1mean)
-  rollingavgs1day <- subset(day1rollingavg, day1rollingavg$day1mean != 
-                              "NA")
-  min1daybyyear <<- aggregate(rollingavgs1day$day1mean, 
-                              list(rollingavgs1day$year_val), min, na.rm=TRUE)
-  if (pref == "median") {
-    dl1 <- median(min1daybyyear$x)
-  }
-  else {
-    dl1 <- mean(min1daybyyear$x)
-  }
-}
-
-dl2 <- function(qfiletempf, pref = "mean") {
-  day3mean <- rollmean(qfiletempf$discharge, 3, align = "right", 
-                       na.pad = TRUE)
-  day3rollingavg <- data.frame(qfiletempf, day3mean)
-  rollingavgs3day <- subset(day3rollingavg, day3rollingavg$day3mean != 
-                              "NA")
-  min3daybyyear <<- aggregate(rollingavgs3day$day3mean, 
-                              list(rollingavgs3day$year_val), min, na.rm=TRUE)
-  if (pref == "median") {
-    dl2 <- median(min3daybyyear$x)
-  }
-  else {
-    dl2 <- mean(min3daybyyear$x)
-  }
-}
-
-dl4 <- function(qfiletempf, pref = "mean") {
-  day30mean <- rollmean(qfiletempf$discharge, 30, align = "right", 
-                        na.pad = TRUE)
-  day30rollingavg <- data.frame(qfiletempf, day30mean)
-  rollingavgs30day <- subset(day30rollingavg, day30rollingavg$day30mean != 
-                               "NA")
-  min30daybyyear <<- aggregate(rollingavgs30day$day30mean, 
-                               list(rollingavgs30day$year_val), min, na.rm=TRUE)
-  if (pref == "median") {
-    dl5 <- median(min30daybyyear$x)
-  }
-  else {
-    dl5 <- mean(min30daybyyear$x)
-  }
-}
-
-dl5 <- function(qfiletempf, pref = "mean") {
-  day90mean <- rollmean(qfiletempf$discharge, 90, align = "right", 
-                        na.pad = TRUE)
-  day90rollingavg <- data.frame(qfiletempf, day90mean)
-  rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
-                               "NA")
-  min90daybyyear <<- aggregate(rollingavgs90day$day90mean, 
-                               list(rollingavgs90day$year_val), min, na.rm=TRUE)
-  if (pref == "median") {
-    dl5 <- median(min90daybyyear$x)
-  }
-  else {
-    dl5 <- mean(min90daybyyear$x)
-  }
-}
-
-dl6 <- function(qfiletempf) {
-  meandl6 <- dl1(qfiletempf, pref = "mean")
-  sddl6 <- sd(min1daybyyear$x)
-  dl6 <- (sddl6 * 100)/meandl6
-}
-
-dl9 <- function(qfiletempf) {
-  meandl9 <- dl4(qfiletempf, pref = "mean")
-  sddl9 <- sd(min30daybyyear$x)
-  dl9 <- (sddl9 * 100)/meandl9
-}
-
-dl10 <- function(qfiletempf) {
-  meandl10 <- dl5(qfiletempf, pref = "mean")
-  sddl10 <- sd(min90daybyyear$x)
-  dl10 <- (sddl10 * 100)/meandl10
-}
-
-dl18 <- function(qfiletempf, pref = "mean") {
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountzeros <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, qfiletempf$year_val == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge < 
-                         0.001)
-    counter <- counter + 1
-    hfcountzeros[counter] <- length(echfcrit$discharge)
-  }
-  hfcntzeros <<- hfcountzeros
-  if (pref == "median") {
-    dl18 <- median(hfcntzeros)
-  }
-  else {
-    dl18 <- mean(hfcntzeros)
-  }
-}
-
-dh5 <- function(qfiletempf, pref = "mean") {
-  day90mean <- rollmean(qfiletempf$discharge, 90, align = "right", 
-                        na.pad = TRUE)
-  day90rollingavg <- data.frame(qfiletempf, day90mean)
-  rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
-                               "NA")
-  max90daybyyear <<- aggregate(rollingavgs90day$day90mean, 
-                               list(rollingavgs90day$year_val), max, na.rm=TRUE)
-  if (pref == "median") {
-    dh5 <- median(max90daybyyear$x)
-  }
-  else {
-    dh5 <- mean(max90daybyyear$x)
-  }
-}
-
-dh10 <- function(qfiletempf) {
-  meandh10 <- dh5(qfiletempf, pref = "mean")
-  sddh10 <- sd(max90daybyyear$x)
-  dh10 <- (sddh10 * 100)/meandh10
-}
-
-tl1 <- function(qfiletempf, pref = "mean") {
-  min1daybyyear <- aggregate(qfiletempf$discharge, 
-                             list(qfiletempf$year_val), min, na.rm=TRUE)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momin")
-  noyrs <- length(noyears$Year)
-  juldaymin <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    counter <- counter + 1
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    findjulday <- subset(subsetyr, subsetyr$discharge == 
-                           min1daybyyear$x[counter])
-    juldaymin[counter] <- findjulday$jul_val[1]
-  }
-  minjulday <<- juldaymin
-  if (pref == "median") {
-    tl1 <- median(minjulday)
-  }
-  else {
-    tl1 <- mean(minjulday)
-  }
-}
-
-tl2 <- function(qfiletempf) {
-  meantl2 <- tl1(qfiletempf, pref = "mean")
-  sddtl2 <- sd(minjulday)
-  tl2 <- (sddtl2 * 100)/meantl2
-}
-
-th1 <- function(qfiletempf, pref = "mean") {
-  max1daybyyear <- aggregate(qfiletempf$discharge, 
-                             list(qfiletempf$year_val), max, na.rm=TRUE)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  juldaymax <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    counter <- counter + 1
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    findjulday <- subset(subsetyr, subsetyr$discharge == 
-                           max1daybyyear$x[counter])
-    juldaymax[counter] <- findjulday$jul_val[1]
-  }
-  maxjulday <<- juldaymax
-  if (pref == "median") {
-    th1 <- median(maxjulday)
-  }
-  else {
-    th1 <- mean(maxjulday)
-  }
-}
-
-th2 <- function(qfiletempf) {
-  meanth2 <- th1(qfiletempf, pref = "mean")
-  sddth2 <- sd(maxjulday)
-  th2 <- (sddth2 * 100)/meanth2
-}
-
-ra1 <- function(qfiletempf, pref = "mean") {
-  diffbtdays <- diff(qfiletempf$discharge, lag = 1, 
-                     differences = 1)
-  findrisevalues <<- subset(diffbtdays, diffbtdays > 
-                              0)
-  if (pref == "median") {
-    ra1 <- median(findrisevalues)
-  }
-  else {
-    ra1 <- mean(findrisevalues)
-  }
-}
-
-ra3 <- function(qfiletempf, pref = "mean") {
-  diffbtdays <- diff(qfiletempf$discharge, lag = 1, 
-                     differences = 1)
-  findfallvalueneg <- subset(diffbtdays, diffbtdays < 
-                               0)
-  findfallvalues <<- abs(findfallvalueneg)
-  if (pref == "median") {
-    ra3 <- median(findfallvalues)
-  }
-  else {
-    ra3 <- mean(findfallvalues)
-  }
-}
-
-ra4 <- function(qfiletempf) {
-  meanra4 <- ra3(qfiletempf, pref = "mean")
-  sddra4 <- sd(findfallvalues)
-  ra4 <- (sddra4 * 100)/meanra4
-}
-
 l7Q10 <- function(qfiletempf) {
   day7mean <- rollmean(qfiletempf$discharge, 7, align = "right", 
                        na.pad = TRUE)
@@ -674,19 +331,28 @@ fh3v<-vector(length=al)
 fh4v<-vector(length=al)
 dl1v<-vector(length=al)
 dl2v<-vector(length=al)
+dl3v<-vector(length=al)
 dl4v<-vector(length=al)
 dl5v<-vector(length=al)
 dl6v<-vector(length=al)
+dl7v<-vector(length=al)
+dl8v<-vector(length=al)
 dl9v<-vector(length=al)
 dl10v<-vector(length=al)
 dl18v<-vector(length=al)
+dh1v<-vector(length=al)
+dh2v<-vector(length=al)
+dh3v<-vector(length=al)
+dh4v<-vector(length=al)
 dh5v<-vector(length=al)
 dh10v<-vector(length=al)
+dh11v<-vector(length=al)
 tl1v<-vector(length=al)
 tl2v<-vector(length=al)
 th1v<-vector(length=al)
 th2v<-vector(length=al)
 ra1v<-vector(length=al)
+ra2v<-vector(length=al)
 ra3v<-vector(length=al)
 ra4v<-vector(length=al)
 l7Q10v<-vector(length=al)
@@ -798,19 +464,28 @@ fh3v2<-vector(length=al)
 fh4v2<-vector(length=al)
 dl1v2<-vector(length=al)
 dl2v2<-vector(length=al)
+dl3v2<-vector(length=al)
 dl4v2<-vector(length=al)
 dl5v2<-vector(length=al)
 dl6v2<-vector(length=al)
+dl7v2<-vector(length=al)
+dl8v2<-vector(length=al)
 dl9v2<-vector(length=al)
 dl10v2<-vector(length=al)
 dl18v2<-vector(length=al)
+dh1v2<-vector(length=al)
+dh2v2<-vector(length=al)
+dh3v2<-vector(length=al)
+dh4v2<-vector(length=al)
 dh5v2<-vector(length=al)
 dh10v2<-vector(length=al)
+dh11v2<-vector(length=al)
 tl1v2<-vector(length=al)
 tl2v2<-vector(length=al)
 th1v2<-vector(length=al)
 th2v2<-vector(length=al)
 ra1v2<-vector(length=al)
+ra2v2<-vector(length=al)
 ra3v2<-vector(length=al)
 ra4v2<-vector(length=al)
 l7Q10v2<-vector(length=al)
@@ -918,21 +593,30 @@ fh1diff<-vector(length=al)
 fh2diff<-vector(length=al)
 fh3diff<-vector(length=al)
 fh4diff<-vector(length=al)
-dl1diff<-vector(length=al)
-dl2diff<-vector(length=al)
-dl4diff<-vector(length=al)
-dl5diff<-vector(length=al)
-dl6diff<-vector(length=al)
-dl9diff<-vector(length=al)
-dl10diff<-vector(length=al)
-dl18diff<-vector(length=al)
-dh5diff<-vector(length=al)
-dh10diff<-vector(length=al)
+dl1vdiff<-vector(length=al)
+dl2vdiff<-vector(length=al)
+dl3vdiff<-vector(length=al)
+dl4vdiff<-vector(length=al)
+dl5vdiff<-vector(length=al)
+dl6vdiff<-vector(length=al)
+dl7vdiff<-vector(length=al)
+dl8vdiff<-vector(length=al)
+dl9vdiff<-vector(length=al)
+dl10vdiff<-vector(length=al)
+dl18vdiff<-vector(length=al)
+dh1vdiff<-vector(length=al)
+dh2vdiff<-vector(length=al)
+dh3vdiff<-vector(length=al)
+dh4vdiff<-vector(length=al)
+dh5vdiff<-vector(length=al)
+dh10vdiff<-vector(length=al)
+dh11vdiff<-vector(length=al)
 tl1diff<-vector(length=al)
 tl2diff<-vector(length=al)
 th1diff<-vector(length=al)
 th2diff<-vector(length=al)
 ra1diff<-vector(length=al)
+ra2diff<-vector(length=al)
 ra3diff<-vector(length=al)
 ra4diff<-vector(length=al)
 l7Q10diff<-vector(length=al)
@@ -1217,27 +901,36 @@ mh24v[i]<-mh24(obs_data)
 mh25v[i]<-mh25(obs_data)
 mh26v[i]<-mh26(obs_data)
 mh27v[i]<-mh27(obs_data)
-fl1v[i]<-fl1(obs_data)
-fl2v[i]<-fl2(obs_data)
-fh1v[i]<-fh1(obs_data)
-fh2v[i]<-fh2(obs_data)
+fl1v[i]<-unlist(fl1.2(obs_data)[1])
+fl2v[i]<-unlist(fl1.2(obs_data)[2])
+fh1v[i]<-unlist(fh1.2(obs_data)[1])
+fh2v[i]<-unlist(fh1.2(obs_data)[2])
 fh3v[i]<-fh3(obs_data)
 fh4v[i]<-fh4(obs_data)
 dl1v[i]<-dl1(obs_data)
 dl2v[i]<-dl2(obs_data)
+dl3v[i]<-dl3(obs_data)
 dl4v[i]<-dl4(obs_data)
 dl5v[i]<-dl5(obs_data)
 dl6v[i]<-dl6(obs_data)
+dl7v[i]<-dl7(obs_data)
+dl8v[i]<-dl8(obs_data)
 dl9v[i]<-dl9(obs_data)
 dl10v[i]<-dl10(obs_data)
 dl18v[i]<-dl18(obs_data)
+dh1v[i]<-dh1(obs_data)
+dh2v[i]<-dh2(obs_data)
+dh3v[i]<-dh3(obs_data)
+dh4v[i]<-dh4(obs_data)
 dh5v[i]<-dh5(obs_data)
 dh10v[i]<-dh10(obs_data)
-tl1v[i]<-tl1(obs_data)
-tl2v[i]<-tl2(obs_data)
-th1v[i]<-th1(obs_data)
-th2v[i]<-th2(obs_data)
+dh11v[i]<-dh11(obs_data)
+tl1v[i]<-unlist(tl1.2(obs_data)[1])
+tl2v[i]<-unlist(tl1.2(obs_data)[2])
+th1v[i]<-unlist(th1.2(obs_data)[1])
+th2v[i]<-unlist(th1.2(obs_data)[2])
 ra1v[i]<-ra1(obs_data)
+ra2v[i]<-ra2(obs_data)
 ra3v[i]<-ra3(obs_data)
 ra4v[i]<-ra4(obs_data)
 l7Q10v[i]<-l7Q10(obs_data)
@@ -1338,27 +1031,36 @@ mh24v2[i]<-mh24(mod_data)
 mh25v2[i]<-mh25(mod_data)
 mh26v2[i]<-mh26(mod_data)
 mh27v2[i]<-mh27(mod_data)
-fl1v2[i]<-fl1(mod_data)
-fl2v2[i]<-fl2(mod_data)
-fh1v2[i]<-fh1(mod_data)
-fh2v2[i]<-fh2(mod_data)
+fl1v2[i]<-unlist(fl1.2(mod_data)[1])
+fl2v2[i]<-unlist(fl1.2(mod_data)[2])
+fh1v2[i]<-unlist(fh1.2(mod_data)[1])
+fh2v2[i]<-unlist(fh1.2(mod_data)[2])
 fh3v2[i]<-fh3(mod_data)
 fh4v2[i]<-fh4(mod_data)
 dl1v2[i]<-dl1(mod_data)
 dl2v2[i]<-dl2(mod_data)
+dl3v2[i]<-dl3(mod_data)
 dl4v2[i]<-dl4(mod_data)
 dl5v2[i]<-dl5(mod_data)
 dl6v2[i]<-dl6(mod_data)
+dl7v2[i]<-dl7(mod_data)
+dl8v2[i]<-dl8(mod_data)
 dl9v2[i]<-dl9(mod_data)
 dl10v2[i]<-dl10(mod_data)
 dl18v2[i]<-dl18(mod_data)
+dh1v2[i]<-dh1(mod_data)
+dh2v2[i]<-dh2(mod_data)
+dh3v2[i]<-dh3(mod_data)
+dh4v2[i]<-dh4(mod_data)
 dh5v2[i]<-dh5(mod_data)
 dh10v2[i]<-dh10(mod_data)
-tl1v2[i]<-tl1(mod_data)
-tl2v2[i]<-tl2(mod_data)
-th1v2[i]<-th1(mod_data)
-th2v2[i]<-th2(mod_data)
+dh11v2[i]<-dh11(mod_data)
+tl1v2[i]<-unlist(tl1.2(mod_data)[1])
+tl2v2[i]<-unlist(tl1.2(mod_data)[2])
+th1v2[i]<-unlist(th1.2(mod_data)[1])
+th2v2[i]<-unlist(th1.2(mod_data)[2])
 ra1v2[i]<-ra1(mod_data)
+ra2v2[i]<-ra2(mod_data)
 ra3v2[i]<-ra3(mod_data)
 ra4v2[i]<-ra4(mod_data)
 l7Q10v2[i]<-l7Q10(mod_data)
@@ -1516,19 +1218,28 @@ fh3vdiff<-abs(fh3v-fh3v2)
 fh4vdiff<-abs(fh4v-fh4v2)
 dl1vdiff<-abs(dl1v-dl1v2)
 dl2vdiff<-abs(dl2v-dl2v2)
+dl3vdiff<-abs(dl3v-dl3v2)
 dl4vdiff<-abs(dl4v-dl4v2)
 dl5vdiff<-abs(dl5v-dl5v2)
 dl6vdiff<-abs(dl6v-dl6v2)
+dl7vdiff<-abs(dl7v-dl7v2)
+dl8vdiff<-abs(dl8v-dl8v2)
 dl9vdiff<-abs(dl9v-dl9v2)
 dl10vdiff<-abs(dl10v-dl10v2)
 dl18vdiff<-abs(dl18v-dl18v2)
+dh1vdiff<-abs(dh1v-dh1v2)
+dh2vdiff<-abs(dh2v-dh2v2)
+dh3vdiff<-abs(dh3v-dh3v2)
+dh4vdiff<-abs(dh4v-dh4v2)
 dh5vdiff<-abs(dh5v-dh5v2)
 dh10vdiff<-abs(dh10v-dh10v2)
+dh11vdiff<-abs(dh11v-dh11v2)
 tl1vdiff<-abs(tl1v-tl1v2)
 tl2vdiff<-abs(tl2v-tl2v2)
 th1vdiff<-abs(th1v-th1v2)
 th2vdiff<-abs(th2v-th2v2)
 ra1vdiff<-abs(ra1v-ra1v2)
+ra2vdiff<-abs(ra2v-ra2v2)
 ra3vdiff<-abs(ra3v-ra3v2)
 ra4vdiff<-abs(ra4v-ra4v2)
 l7Q10diff<-abs(l7Q10v-l7Q10v2)
@@ -1558,10 +1269,10 @@ statsout<-data.frame(t(a),nsev,nselogv,rmsev,yv,ymaxv,mean_flow,med_flow,cv_flow
                      mh6v,mh7v,mh8v,mh9v,mh10v,mh11v,mh12v,mh13v,mh14v,mh15v,mh16v,mh17v,mh18v,mh19v,mh20v,mh21v,
                      mh22v,mh23v,mh24v,mh25v,mh26v,mh27v,
                      fl1v,fl2v,fh1v,fh2v,fh3v,
-                     fh4v,dl1v,dl2v,dl4v,dl5v,
-                     dl6v,dl9v,dl10v,dl18v,dh5v,
-                     dh10v,tl1v,tl2v,th1v,th2v,
-                     ra1v,ra3v,ra4v,l7Q10v,l7Q2v,return_10v,
+                     fh4v,dl1v,dl2v,dl3v,dl4v,dl5v,
+                     dl6v,dl7v,dl8v,dl9v,dl10v,dl18v,dh1v,dh2v,dh3v,dh4v,dh5v,
+                     dh10v,dh11v,tl1v,tl2v,th1v,th2v,
+                     ra1v,ra2v,ra3v,ra4v,l7Q10v,l7Q2v,return_10v,
                      mean_flow_mod,med_flow_mod,cv_flow_mod,cv_daily_mod,
                      flow_10_mod,flow_25_mod,flow_50_mod,flow_75_mod,flow_90_mod,
                      ma1v2,ma2v2,ma3v2,ma4v2,ma5v2,ma6v2,ma7v2,ma8v2,ma9v2,ma10v2,ma11v2,ma12v2,ma13v2,
@@ -1573,10 +1284,10 @@ statsout<-data.frame(t(a),nsev,nselogv,rmsev,yv,ymaxv,mean_flow,med_flow,cv_flow
                      mh6v2,mh7v2,mh8v2,mh9v2,mh10v2,mh11v2,mh12v2,mh13v2,mh14v2,mh15v2,mh16v2,mh17v2,mh18v2,mh19v2,mh20v2,mh21v2,
                      mh22v,mh23v,mh24v,mh25v,mh26v,mh27v2,
                      fl1v2,fl2v2,fh1v2,fh2v2,fh3v2,
-                     fh4v2,dl1v2,dl2v2,dl4v2,dl5v2,
-                     dl6v2,dl9v2,dl10v2,dl18v2,dh5v2,
-                     dh10v2,tl1v2,tl2v2,th1v2,th2v2,
-                     ra1v2,ra3v2,ra4v2,l7Q10v2,l7Q2v2,return_10v2,mean_flow_diff,med_flow_diff,cv_flow_diff,cv_daily_diff,
+                     fh4v2,dl1v2,dl2v2,dl3v2,dl4v2,dl5v2,
+                     dl6v2,dl7v2,dl8v2,dl9v2,dl10v2,dl18v2,dh1v2,dh2v2,dh3v2,dh4v2,dh5v2,
+                     dh10v2,dh11v2,tl1v2,tl2v2,th1v2,th2v2,
+                     ra1v2,ra2v2,ra3v2,ra4v2,l7Q10v2,l7Q2v2,return_10v2,mean_flow_diff,med_flow_diff,cv_flow_diff,cv_daily_diff,
                      flow_10_diff,flow_25_diff,flow_50_diff,flow_75_diff,flow_90_diff,
                      ma1vdiff,ma2vdiff,ma3vdiff,ma4vdiff,ma5vdiff,ma6vdiff,ma7vdiff,ma8vdiff,ma9vdiff,ma10vdiff,ma11vdiff,ma12vdiff,ma13vdiff,
                      ma14vdiff,ma15vdiff,ma16vdiff,ma17vdiff,ma18vdiff,ma19vdiff,ma20vdiff,
@@ -1587,10 +1298,10 @@ statsout<-data.frame(t(a),nsev,nselogv,rmsev,yv,ymaxv,mean_flow,med_flow,cv_flow
                      mh6vdiff,mh7vdiff,mh8vdiff,mh9vdiff,mh10vdiff,mh11vdiff,mh12vdiff,mh13vdiff,mh14vdiff,mh15vdiff,mh16vdiff,mh17vdiff,mh18vdiff,mh19vdiff,mh20vdiff,mh21vdiff,
                      mh22v,mh23v,mh24v,mh25v,mh26v,mh27vdiff,
                      fl1vdiff,fl2vdiff,fh1vdiff,fh2vdiff,fh3vdiff,
-                     fh4vdiff,dl1vdiff,dl2vdiff,dl4vdiff,dl5vdiff,
-                     dl6vdiff,dl9vdiff,dl10vdiff,dl18vdiff,dh5vdiff,
-                     dh10vdiff,tl1vdiff,tl2vdiff,th1vdiff,th2vdiff,
-                     ra1vdiff,ra3vdiff,ra4vdiff,l7Q10diff,l7Q2diff,return_10diff,pbiasv,comment)
+                     fh4vdiff,dl1vdiff,dl2vdiff,dl3vdiff,dl4vdiff,dl5vdiff,
+                     dl6vdiff,dl7vdiff,dl8vdiff,dl9vdiff,dl10vdiff,dl18vdiff,dh1vdiff,dh2vdiff,dh3vdiff,dh4vdiff,dh5vdiff,
+                     dh10vdiff,dh11vdiff,tl1vdiff,tl2vdiff,th1vdiff,th2vdiff,
+                     ra1vdiff,ra2vdiff,ra3vdiff,ra4vdiff,l7Q10diff,l7Q2diff,return_10diff,pbiasv,comment)
 colnames(statsout)<-c('site_no','nse','nselog','rmse','min_date','max_date','mean_of_annual_flows','median_of_annual_flows','cv_of_annual_flows',
                       'nse_90','nse_75_90','nse_50_75','nse_25_50','nse_10_25','nse_10',
                       'rmse_90','rmse_75_90','rmse_50_75','rmse_25_50','rmse_10_25','rmse_10',
@@ -1605,10 +1316,10 @@ colnames(statsout)<-c('site_no','nse','nselog','rmse','min_date','max_date','mea
                       'mh1','mh2','mh3','mh4','mh5','mh6','mh7','mh8','mh9','mh10','mh11','mh12','mh13','mh14_med_annual_max',
                       'mh15','mh16_high_flow_index','mh17','mh18','mh19','mh20','mh21','mh22','mh23','mh24','mh25','mh26_high_peak_flow','mh27',
                       'fl1_low_flood_pulse','fl2_low_pulse_var','fh1_high_pulse_count','fh2_high_pulse_var','fh3_high_pulse_count_three',
-                      'fh4_high_pulse_count_seven','dl1_min_daily_flow','dl2_min_3_day_avg','dl4_min_30_day_avg','dl5_min_90_day_avg',
-                      'dl6_min_flow_var','dl9_min_30_day_var','dl10_min_90_day_var','dl18_zero_flow_days','dh5_max_90_day_avg',
-                      'dh10_max_90_day_var','tl1_min_flow_julian_day','tl2_min_julian_var','th1_max_flow_julian_day','th2_max_julian_var',
-                      'ra1_rise_rate','ra3_fall_rate','ra4_fall_rate_var','7Q10_obs','7Q2_obs','10_year_return_max_obs',
+                      'fh4_high_pulse_count_seven','dl1_min_daily_flow','dl2_min_3_day_avg','dl3','dl4_min_30_day_avg','dl5_min_90_day_avg',
+                      'dl6_min_flow_var','dl7','dl8','dl9_min_30_day_var','dl10_min_90_day_var','dl18_zero_flow_days','dh1','dh2','dh3','dh4','dh5_max_90_day_avg',
+                      'dh10_max_90_day_var','dh11','tl1_min_flow_julian_day','tl2_min_julian_var','th1_max_flow_julian_day','th2_max_julian_var',
+                      'ra1_rise_rate','ra2_rise_rate_var','ra3_fall_rate','ra4_fall_rate_var','7Q10_obs','7Q2_obs','10_year_return_max_obs',
                       'mean_of_annual_flows_mod','median_of_annual_flows_mod','cv_of_annual_flows_mod','cv_daily_flows_mod',
                       'flow_10_mod_mod','flow_25_mod_mod','flow_50_mod_mod','flow_75_mod_mod','flow_90_mod_mod','ma1_mean_disc_mod','ma2_median_disc_mod','ma3_mean_annual_var_mod','ma4_mod','ma5_skew_mod','ma6_mod','ma7_mod','ma8_mod','ma9_mod','ma10_mod','ma11_mod','ma12_jan_mean_mod','ma13_feb_mean_mod',
                       'ma14_mar_mean_mod','ma15_apr_mean_mod','ma16_may_mean_mod','ma17_june_mean_mod','ma18_july_mean_mod','ma19_aug_mean_mod','ma20_sep_mean_mod',
@@ -1619,10 +1330,10 @@ colnames(statsout)<-c('site_no','nse','nselog','rmse','min_date','max_date','mea
                       'mh1_mod','mh2_mod','mh3_mod','mh4_mod','mh5_mod','mh6_mod','mh7_mod','mh8_mod','mh9_mod','mh10_mod','mh11_mod','mh12_mod','mh13_mod','mh14_med_annual_max_mod',
                       'mh15_mod','mh16_high_flow_index_mod','mh17_mod','mh18_mod','mh19_mod','mh20_mod','mh21_mod','mh22_mod','mh23_mod','mh24_mod','mh25_mod','mh26_high_peak_flow_mod','mh27_mod',
                       'fl1_low_flood_pulse_mod','fl2_low_pulse_var_mod','fh1_high_pulse_count_mod','fh2_high_pulse_var_mod','fh3_high_pulse_count_three_mod',
-                      'fh4_high_pulse_count_seven_mod','dl1_min_daily_flow_mod','dl2_min_3_day_avg_mod','dl4_min_30_day_avg_mod','dl5_min_90_day_avg_mod',
-                      'dl6_min_flow_var_mod','dl9_min_30_day_var_mod','dl10_min_90_day_var_mod','dl18_zero_flow_days_mod','dh5_max_90_day_avg_mod',
-                      'dh10_max_90_day_var_mod','tl1_min_flow_julian_day_mod','tl2_min_julian_var_mod','th1_max_flow_julian_day_mod','th2_max_julian_var_mod',
-                      'ra1_rise_rate_mod','ra3_fall_rate_mod','ra4_fall_rate_var_mod','7Q10_mod_mod','7Q2_mod_mod','10_year_return_max_mod_mod','mean_flow_diff_mod','med_flow_diff_mod','cv_flow_diff_mod','cv_daily_diff_mod',
+                      'fh4_high_pulse_count_seven_mod','dl1_min_daily_flow_mod','dl2_min_3_day_avg_mod','dl3_mod','dl4_min_30_day_avg_mod','dl5_min_90_day_avg_mod',
+                      'dl6_min_flow_var_mod','dl7_mod','dl8_mod','dl9_min_30_day_var_mod','dl10_min_90_day_var_mod','dl18_zero_flow_days_mod','dh1_mod','dh2_mod','dh3_mod','dh4_mod','dh5_max_90_day_avg_mod',
+                      'dh10_max_90_day_var_mod','dh11_mod','tl1_min_flow_julian_day_mod','tl2_min_julian_var_mod','th1_max_flow_julian_day_mod','th2_max_julian_var_mod',
+                      'ra1_rise_rate_mod','ra2_rise_rate_var_mod','ra3_fall_rate_mod','ra4_fall_rate_var_mod','7Q10_mod_mod','7Q2_mod_mod','10_year_return_max_mod_mod','mean_flow_diff_mod','med_flow_diff_mod','cv_flow_diff_mod','cv_daily_diff_mod',
                       'flow_10_diff','flow_25_diff','flow_50_diff','flow_75_diff','flow_90_diff',
                       'ma1_mean_disc_diff','ma2_median_disc_diff','ma3_mean_annual_var_diff','ma4_diff','ma5_skew_diff','ma6_diff','ma7_diff','ma8_diff','ma9_diff','ma10_diff','ma11_diff','ma12_jan_mean_diff','ma13_feb_mean_diff',
                       'ma14_mar_mean_diff','ma15_apr_mean_diff','ma16_may_mean_diff','ma17_june_mean_diff','ma18_july_mean_diff','ma19_aug_mean_diff','ma20_sep_mean_diff',
@@ -1633,10 +1344,10 @@ colnames(statsout)<-c('site_no','nse','nselog','rmse','min_date','max_date','mea
                       'mh1_diff','mh2_diff','mh3_diff','mh4_diff','mh5_diff','mh6_diff','mh7_diff','mh8_diff','mh9_diff','mh10_diff','mh11_diff','mh12_diff','mh13_diff','mh14_med_annual_max_diff',
                       'mh15_diff','mh16_high_flow_index_diff','mh17_diff','mh18_diff','mh19_diff','mh20_diff','mh21_diff','mh22_diff','mh23_diff','mh24_diff','mh25_diff','mh26_high_peak_flow_diff','mh27_diff',
                       'fl1_low_flood_pulse_diff','fl2_low_pulse_var_diff','fh1_high_pulse_count_diff','fh2_high_pulse_var_diff','fh3_high_pulse_count_three_diff',
-                      'fh4_high_pulse_count_seven_diff','dl1_min_daily_flow_diff','dl2_min_3_day_avg_diff','dl4_min_30_day_avg_diff','dl5_min_90_day_avg_diff',
-                      'dl6_min_flow_var_diff','dl9_min_30_day_var_diff','dl10_min_90_day_var_diff','dl18_zero_flow_days_diff','dh5_max_90_day_avg_diff',
-                      'dh10_max_90_day_var_diff','tl1_min_flow_julian_day_diff','tl2_min_julian_var_diff','th1_max_flow_julian_day_diff','th2_max_julian_var_diff',
-                      'ra1_rise_rate_diff','ra3_fall_rate_diff','ra4_fall_rate_var_diff','7Q10_diff','7Q2_diff','10_year_return_max_diff','percent_bias','comment')
+                      'fh4_high_pulse_count_seven_diff','dl1_min_daily_flow_diff','dl2_min_3_day_avg_diff','dl3_diff','dl4_min_30_day_avg_diff','dl5_min_90_day_avg_diff',
+                      'dl6_min_flow_var_diff','dl7_diff','dl8_diff','dl9_min_30_day_var_diff','dl10_min_90_day_var_diff','dl18_zero_flow_days_diff','dh1_diff','dh2_diff','dh3_diff','dh4_diff','dh5_max_90_day_avg_diff',
+                      'dh10_max_90_day_var_diff','dh11_diff','tl1_min_flow_julian_day_diff','tl2_min_julian_var_diff','th1_max_flow_julian_day_diff','th2_max_julian_var_diff',
+                      'ra1_rise_rate_diff','ra2_rise_rate_var_diff','ra3_fall_rate_diff','ra4_fall_rate_var_diff','7Q10_diff','7Q2_diff','10_year_return_max_diff','percent_bias','comment')
 output="output.zip"
 if (i==length(a2)) {
 write.table(statsout,file="output.txt",col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")

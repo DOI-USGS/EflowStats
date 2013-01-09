@@ -4,13 +4,14 @@
 #' calculates the means (or medians - use preference option) of monthly flow values. Compute the means 
 #' for each month over the entire record. For examples, MA12 is the mean of all January flow values.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
+#' @param pref string containing a "mean" or "median" preference
 #' @return ma12.23 data frame containing the mean or medians for each month
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ma12.23(x)
+#' qfiletempf<-read.csv(load_data)
+#' ma12.23(qfiletempf)
 ma12.23 <- function(qfiletempf, pref = "mean") {
   if (pref == "median") {
     medmon <- aggregate(qfiletempf$discharge, list(qfiletempf$month_val), 

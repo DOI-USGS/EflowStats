@@ -8,6 +8,9 @@
   \item{x}{data frame containing a "discharge" column
   containing daily flow values}
 
+  \item{pref}{string containing a "mean" or "median"
+  preference}
+
   \item{drainarea}{numeric value of the drainage area for a
   given site}
 }

@@ -5,8 +5,11 @@
   ma3(qfiletempf, pref = "mean")
 }
 \arguments{
-  \item{x}{data frame containing a "discharge" column
-  containing daily flow values}
+  \item{qfiletempf}{data frame containing a "discharge"
+  column containing daily flow values}
+
+  \item{pref}{string containing a "mean" or "median"
+  preference}
 }
 \value{
   ma3 numeric value of the mean or median of the cvs for
@@ -22,7 +25,7 @@
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-ma3(x)
+qfiletempf<-read.csv(load_data)
+ma3(qfiletempf)
 }
 

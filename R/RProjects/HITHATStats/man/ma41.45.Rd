@@ -2,11 +2,11 @@
 \alias{ma41.45}
 \title{Function to return the MA41.45 hydrologic indicator statistics for a given data frame}
 \usage{
-  ma41.45(qfiletemp, drainarea)
+  ma41.45(qfiletemp, drain_area)
 }
 \arguments{
-  \item{x}{data frame containing a "discharge" column
-  containing daily flow values}
+  \item{qfiletemp}{data frame containing a "discharge"
+  column containing daily flow values}
 
   \item{drain_area}{numeric containing the drainage area of
   the selected site}
@@ -30,8 +30,8 @@
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
+qfiletemp<-read.csv(load_data)
 drain_area<-56.5
-ma41.45(x,drain_area)
+ma41.45(qfiletemp,drain_area)
 }
 

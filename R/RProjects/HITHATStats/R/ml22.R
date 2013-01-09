@@ -5,6 +5,7 @@
 #' of the annual minimum flows divided by the drainage area.
 #' 
 #' @param x data frame containing a "discharge" column containing daily flow values
+#' @param pref string containing a "mean" or "median" preference
 #' @param drainarea numeric value of the drainage area for a given site
 #' @return ml22 numeric value of the mean of annual minimum flows divided by the drainage area for the given data frame
 #' @export

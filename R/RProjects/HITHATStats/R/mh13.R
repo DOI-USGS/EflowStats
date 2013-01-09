@@ -5,13 +5,13 @@
 #' for the maximum monthly flows over the entire flow record. MH13 is the standard deviation times 100 
 #' divided by the mean maximum monthly flow for all years.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
+#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @return mh13 numeric value of the standard deviation times 100 divided by the mean maximum monthly flow for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' mh13(x)
+#' qfiletempf<-read.csv(load_data)
+#' mh13(qfiletempf)
 mh13 <- function(qfiletempf) {
   maxmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
                                                      qfiletempf$month_val), FUN = max, na.rm=TRUE)
