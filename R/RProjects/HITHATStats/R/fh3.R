@@ -13,26 +13,17 @@
 #' fh3(qfiletempf)
 fh3 <- function(qfiletempf, pref = "mean") {
   hfcrit <- 3 * ma2(qfiletempf)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountbyyrfh3 <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge > 
-                         hfcrit)
-    counter <- counter + 1
-    hfcountbyyrfh3[counter] <- length(echfcrit$discharge)
-  }
-  hfcntbyyrfh3 <- hfcountbyyrfh3
+  highflow <- subset(qfiletempf,qfiletempf$discharge>hfcrit)
+  if (nrow(highflow)>0) {
+  highbyyr <- aggregate(highflow$discharge,list(highflow$year_val),FUN=length)
   if (pref == "median") {
-    fh3 <- median(hfcntbyyrfh3)
+    fh3 <- median(highbyyr)
   }
   else {
-    fh3 <- mean(hfcntbyyrfh3)
+    fh3 <- mean(highbyyr)
+  }}
+  else {
+    fh3 <- 'NA'
   }
   return(fh3)
 }
