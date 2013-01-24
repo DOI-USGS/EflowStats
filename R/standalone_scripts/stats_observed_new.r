@@ -324,37 +324,10 @@ url2<-paste(sos_url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',off
 x_obs <- getXMLWML1.1Data(url2)
 #x_obs <- getXMLDV2Data(sos_url,sites,property,offering,startdate,enddate,interval,latest)
 if (nrow(x_obs)>2) {
-x2<-(x_obs$date)
-x_obs<-data.frame(strptime(x2, "%Y-%m-%d"),x_obs$discharge)
-colnames(x_obs)<-c("date","discharge")
+obs_data <- get_obsdata(x_obs)
 drain_url<-paste(drainage_url,sites,sep="")
 drain_area<-getDrainageArea(drain_url)
 
-selqfile<-x_obs
-tempdatafr<-NULL
-tempdatafr<-data.frame(selqfile)
-month_val<-rep(0,length(tempdatafr$date))
-year_val<-rep(0,length(tempdatafr$date))
-day_val<-rep(0,length(tempdatafr$date))
-jul_val<-rep(0,length(tempdatafr$date))
-wy_val<-rep(0,length(tempdatafr$date))
-ones_val<-rep(1,length(tempdatafr$date))
-qfiletempf<-data.frame(tempdatafr$date,tempdatafr$discharge,month_val,year_val,day_val,jul_val,wy_val)
-colnames(qfiletempf)<-c('date','discharge','month_val','year_val','day_val','jul_val','wy_val')
-qfiletempf$month_val<-substr(x_obs$date,6,7)
-as.numeric(qfiletempf$month_val)
-qfiletempf$year_val<-substr(x_obs$date,3,4)
-as.numeric(qfiletempf$year_val)
-qfiletempf$day_val<-substr(x_obs$date,9,10)
-as.numeric(qfiletempf$day_val)
-qfiletempf$jul_val<-strptime(x_obs$date, "%Y-%m-%d")$yday+1
-as.numeric(qfiletempf$jul_val)
-qfiletempf$wy_val<-ifelse(as.numeric(qfiletempf$month_val)>=10,as.character(as.numeric(qfiletempf$year_val)+ones_val),qfiletempf$year_val) 
-
-countbyyr<-aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), length)
-colnames(countbyyr)<-c('wy','num_samples')
-sub_countbyyr<-subset(countbyyr,num_samples >= 365)
-obs_data<-merge(qfiletempf,sub_countbyyr,by.x="wy_val",by.y="wy")
 if (length(obs_data$discharge)<4) { 
   comment[i]<-"No complete water years of data available"
 } else {
@@ -365,27 +338,14 @@ dates<-as.Date(obs_data$date)
 file<-paste("monthly_mean_ts_obs",toString(sites),".txt",sep="")
 monthly_mean<-monthly.mean.ts(obs_data,sites)
 write.table(monthly_mean,file=file,col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
-sdbyyr <- aggregate(obs_data$discharge, list(obs_data$year_val), 
-                    sd)
-colnames(sdbyyr) <- c("Year", "sdq")
+
 meanbyyr <- aggregate(obs_data$discharge, list(obs_data$year_val), 
                       mean, na.rm=TRUE)
 colnames(meanbyyr) <- c("Year", "meanq")
-medbyyr <- aggregate(obs_data$discharge, list(obs_data$year_val), 
-                      median, na.rm=TRUE)
-colnames(medbyyr) <- c("Year","medq")
-dfcvbyyr <- data.frame(meanbyyr$Year, sdbyyr$sdq, 
-                       meanbyyr$meanq, medbyyr$medq)
-colnames(dfcvbyyr) <- c("Year", "sdq", "meanq", "medq")
-cvbyyr <- dfcvbyyr$sdq/dfcvbyyr$meanq
-dfcvbyyrf <- data.frame(dfcvbyyr, cvbyyr)
-colnames(dfcvbyyrf) <- c("Year", "sdq", "meanq", "medq", 
-                         "cvq")
-dfcvbyyrf_list[[as.character(sites)]]<-dfcvbyyrf
 
-  mean_flow[i]<-mean(dfcvbyyrf$meanq,na.rm=TRUE)
-  med_flow[i]<-median(dfcvbyyrf$meanq,na.rm=TRUE)
-  cv_flow[i]<-sd(dfcvbyyrf$meanq,na.rm=TRUE)/mean(dfcvbyyrf$meanq,na.rm=TRUE)
+  mean_flow[i]<-mean(meanbyyr$meanq,na.rm=TRUE)
+  med_flow[i]<-median(meanbyyr$meanq,na.rm=TRUE)
+  cv_flow[i]<-sd(meanbyyr$meanq,na.rm=TRUE)/mean(meanbyyr$meanq,na.rm=TRUE)
   cv_daily[i]<-cv(obs_data)
                     ma1v[i]<-ma1(obs_data)
                     ma2v[i]<-ma2(obs_data)
