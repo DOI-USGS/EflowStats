@@ -19,7 +19,7 @@ bfi <- function(qfiletempf) {
   min7daybyyear <- aggregate(rollingavgs7day$day7mean, 
                              list(rollingavgs7day$year_val), min)
   meanflow <- meanflowbyyear(qfiletempf)
-  compbfi <- merge(min7daybyyear, meanflow, by = "Group.1")
+  compbfi <- merge(min7daybyyear, meanflow, by.x = "Group.1", by.y = "Year")
   colnames(compbfi) <- c("year", "day7min", "meandaily")
   bfi <- compbfi$day7min/compbfi$meandaily
   return(bfi)

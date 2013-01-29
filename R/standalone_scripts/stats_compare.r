@@ -7,6 +7,7 @@ library(chron)
 library(doBy)
 library(hydroGOF)
 library(HITHATStats)
+library(NWCCompare)
 
 #model_url="http://cida.usgs.gov/gdp/proxy/http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/thredds/sos/watersmart/afinch/afinch-Special-0.3.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 #model_url="http://cida.usgs.gov/gdp/proxy/http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/thredds/sos/watersmart/stats/stats-Special-0.3.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
@@ -14,191 +15,12 @@ library(HITHATStats)
 model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/stats/stats-SE-DENSE1-2.03.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 #model_url="http://cida.usgs.gov/gdp/proxy/http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/thredds/sos/watersmart/waters/waters-Special-0.3.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 
-
 sos_url_temp="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
 offering_temp='00003'
 property_temp='00060'
 drainage_url="http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
 
 scenario_url=paste(substr(model_url,1,regexpr("Get",model_url)-1),"GetCapabilities&service=SOS&version=1.0.0",sep="")
-
-SWE_CSV_IHA <- function(input) {
-  cat(paste("Retrieving data from: \n", input, "\n", 
-            sep = " "))
-  content<-paste(readLines(input,warn=FALSE))
-  if (length(sapply(content,nchar))>1) { 
-    flow <- read.delim(header = F, comment.char = "", 
-                       as.is = T, sep = ",", text = xpathApply(xmlParse(input), 
-                                                               "//swe:values", xmlValue)[[1]])
-    nms <- c("date", "discharge")
-    names(flow) <- nms
-    flow$date <- as.POSIXct(strptime(flow$date, format = "%Y-%m-%dT%H:%M:%SZ"))
-    flow$discharge <- as.numeric(flow$discharge)
-    flow <- as.data.frame(flow)
-    attr(flow, "SRC") <- input
-    class(flow) <- c("flow", "data.frame")
-    cat("Finished!\n")
-    return(flow)
-  } else {
-    cat("No data available for site\n")
-    flow<-""
-    return(flow)}
-}
-
-getXMLDV2Data <- function(sos_url,sites,property,offering,startdate,enddate,interval,latest){
-  
-  baseURL <- sos_url
-  
-  url <- paste(baseURL,sites, "&observedProperty=",property, "&offering=", offering, sep = "")
-  
-  if (nzchar(startdate)) {
-    url <- paste(url,"&beginPosition=",startdate,sep="")
-  } else url <- paste(url,"&beginPosition=","1851-01-01",sep="")
-  
-  if (nzchar(enddate)) {
-    url <- paste(url,"&endPosition=",enddate,sep="")
-  }
-  if (nzchar(interval)) {
-    url <- paste(url,"&Interval=",interval,sep="")
-  }
-  if (nzchar(latest)) {
-    url <- paste(url,"&Latest",sep="")
-  }
-  cat(paste("Retrieving data from: \n", url, "\n", sep = " "))
-  
-  # Imports the XML:
-  doc <- xmlTreeParse(url, getDTD = F, useInternalNodes=TRUE)
-  
-  values <- xpathSApply(doc, "//om:result//wml2:value")
-  values <- sapply(values, function(x) as.numeric(xmlValue(x)))
-  dateSet <- getNodeSet(doc, "//om:result//wml2:time")
-  dateSet <- lapply(dateSet, function(x) xmlSApply(x, xmlValue))
-  dates <- strptime(substr(dateSet,1,10), "%Y-%m-%d")
-  Daily <- as.data.frame(matrix(ncol=2,nrow=length(values)))
-  colnames(Daily) <- c('date','discharge')
-  Daily$discharge <- values
-  Daily$date <- dates
-  return (Daily)
-}
-
-getAllSites <- function(site_url){
-  cat(paste("Retrieving data from: \n", site_url, "\n", sep = " "))
-  doc<-xmlTreeParse(site_url, getDTD=F, useInternalNodes=TRUE)
-  values<-xpathSApply(doc, "//gml:featureMember//nwc:site_no")
-  values<-sapply(values, function(x) toString(xmlValue(x)))
-  all_sites<-vector(length=length(values))
-  all_sites<-values
-  return (all_sites)
-}
-
-getScenarioSites <- function(scenario_url){
-  cat(paste("Retrieving list of sites in scenario from: \n", scenario_url, "\n", sep=" "))
-  doc<-xmlTreeParse(scenario_url, getDTD=F, useInternalNodes=TRUE)
-  sites<-xpathSApply(doc, "//@gml:id")
-  scenario_sites<-vector(length=length(sites))
-  scenario_sites<-unname(sites)
-  modprop<-xpathSApply(doc, "//*[local-name() = 'observedProperty']/@xlink:href")[["href"]]
-  getcap<-list(scenario_sites=scenario_sites,modprop=modprop)
-  return (getcap)
-}
-
-# This function computes the Nash-Sutcliffe value between two data series
-nse<-function(timeseries1,timeseries2) {
-  numerat<-sum((timeseries1-timeseries2)^2,na.rm=TRUE)
-  denomin<-sum((timeseries1-mean(timeseries1,na.rm=TRUE))^2,na.rm=TRUE)  #6/18/11: NSE value calculation has been fixed
-  nse<-(1-(numerat/denomin))
-  return(nse)
-}
-
-# This function computes the Nash-Sutcliffe value for the natural
-# logarithms of the two timeseries. Zeros are removed from the data series first.
-nselog<-function(timeseries1,timeseries2) {
-  # Count of zeros in dataset
-  sszeros<<-subset(timeseries1,timeseries1==0)
-  czeros<<-length(sszeros)
-  
-  # Put timeseries1 and timeseries2 into a data frame  and add header
-  obsestq<-data.frame(timeseries1,timeseries2)
-  colnames(obsestq)<-c("obs","est")
-  #attach(obsestq)
-  
-  # If zeroes in timeseries1, display message and delete zeroes
-  if (czeros>0) {
-    cat("\n", czeros, "streamflows with a zero value were detected in this dataset. \nThese values will be removed before computing the \nNash-Sutcliffe efficiency value from the natural logs \nof the streamflows.")
-  } else {} #Do nothing if no zeros
-  nozeros<-subset(obsestq,obsestq$obs>0)
-  
-  # Compute NS
-  numerat<-sum((log(nozeros$obs)-log(nozeros$est))^2,na.rm=TRUE)
-  denomin<-sum((log(nozeros$obs)-mean(log(nozeros$obs),na.rm=TRUE))^2,na.rm=TRUE)
-  nselog<-(1-(numerat/denomin))
-  return(nselog)
-}
-
-# This function computes the root-mean-square error between two data series
-rmse<-function(timeseries1,timeseries2) {
-  sqerror<-(timeseries1-timeseries2)^2
-  sumsqerr<-sum(sqerror)
-  n<-length(timeseries1)
-  rmse<-sqrt(sumsqerr/n)
-  return(rmse)
-}
-
-l7Q10 <- function(qfiletempf) {
-  day7mean <- rollmean(qfiletempf$discharge, 7, align = "right", 
-                       na.pad = TRUE)
-  day7rollingavg <- data.frame(qfiletempf, day7mean)
-  rollingavgs7day <- subset(day7rollingavg, day7rollingavg$day7mean != 
-                              "NA")
-  min7daybyyear <<- aggregate(rollingavgs7day$day7mean, 
-                              list(rollingavgs7day$year_val), min, na.rm=TRUE)
-  sort_7day<-sort(min7daybyyear$x)
-  rank_90<-floor(findrank(length(sort_7day),0.90))
-  if (rank_90 > 0) { 
-    l7Q10<-sort_7day[rank_90]
-  } else { 
-    l7Q10<-FALSE 
-  }
-}
-
-l7Q2 <- function(qfiletempf) {
-  day7mean <- rollmean(qfiletempf$discharge, 7, align = "right", 
-                       na.pad = TRUE)
-  day7rollingavg <- data.frame(qfiletempf, day7mean)
-  rollingavgs7day <- subset(day7rollingavg, day7rollingavg$day7mean != 
-                              "NA")
-  min7daybyyear <<- aggregate(rollingavgs7day$day7mean, 
-                              list(rollingavgs7day$year_val), min, na.rm=TRUE)
-  sort_7day<-sort(min7daybyyear$x)
-  rank_50<-floor(findrank(length(sort_7day),0.50))
-  if (rank_50 > 0) { 
-    l7Q2<-sort_7day[rank_50] 
-  } else { 
-    l7Q2<-FALSE 
-  }
-}
-return_10 <- function(qfiletempf) {
-  annual_max <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), max, na.rm=TRUE)
-  sort_annual_max <- sort(annual_max$x)
-  rank_10 <- floor(findrank(length(sort_annual_max),0.10))
-  return_10 <- sort_annual_max[rank_10]
-}
-cv <- function(x) {
-  x1 <- ma1(x)
-  x2 <- sdev(x)
-  skew <- x2/x1
-  return(skew)
-}
-sdev <- function(x) {
-  sdev <- sd(x$discharge,na.rm=TRUE)
-  return(sdev)
-}
-
-monthly.mean.ts <- function(qfiletempf,modsite) {
-  meanmonts <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val,qfiletempf$month_val), FUN = mean, na.rm=TRUE)
-  colnames(meanmonts) <- c("Year","Month","Mean_disch")
-  return(meanmonts)
-}
 
 setwd('/Users/jlthomps/Documents/R/')
 system("rm graph*png")
@@ -757,10 +579,10 @@ ggof(x_modz,x_obsz,na.rm=FALSE,dates,main=modsites)
 dev.copy(png,file)
 dev.off()
 file<-paste("monthly_mean_ts_obs",toString(sites),".txt",sep="")
-monthly_mean<-monthly.mean.ts(obs_data,sites)
+monthly_mean<-monthly.mean.ts(obs_data)
 write.table(monthly_mean,file=file,col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
 file<-paste("monthly_mean_ts_mod",toString(sites),".txt",sep="")
-monthly_mean<-monthly.mean.ts(mod_data,sites)
+monthly_mean<-monthly.mean.ts(mod_data)
 write.table(monthly_mean,file=file,col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
 
 #flowdatal<-data.frame(qfiletempf2$date,qfiletempf2$discharge,qfiletempf2$month_val,qfiletempf2$year_val,qfiletempf2$day_val,qfiletempf2$jul_val)  
