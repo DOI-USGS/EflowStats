@@ -33,7 +33,7 @@ qfiletempf<-data.frame(tempdatafr$date,tempdatafr$discharge,month_val,year_val,d
 colnames(qfiletempf)<-c('date','discharge','month_val','year_val','day_val','jul_val','wy_val')
 qfiletempf$month_val<-substr(x_obs$date,6,7)
 as.numeric(qfiletempf$month_val)
-qfiletempf$year_val<-substr(x_obs$date,3,4)
+qfiletempf$year_val<-substr(x_obs$date,1,4)
 as.numeric(qfiletempf$year_val)
 qfiletempf$day_val<-substr(x_obs$date,9,10)
 as.numeric(qfiletempf$day_val)
