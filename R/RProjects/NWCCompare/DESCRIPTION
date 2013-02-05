@@ -13,7 +13,7 @@ Depends:
     XML,
     HITHATStats
 Description: Calculates comparison stats for two timeseries.
-License: What license is it under?
+License: file LICENSE
 Collate:
     'SWE_CSV_IHA.R'
     'getScenarioSites.R'
