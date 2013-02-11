@@ -18,7 +18,7 @@ SWE_CSV_IHA <- function(input) {
                                                                "//swe:values", xmlValue)[[1]])
     nms <- c("date", "discharge")
     names(flow) <- nms
-    flow$date <- as.POSIXct(strptime(flow$date, format = "%Y-%m-%dT%H:%M:%SZ"))
+    flow$date <- as.Date(strptime(flow$date, format = "%Y-%m-%dT%H:%M:%SZ"))
     flow$discharge <- as.numeric(flow$discharge)
     flow <- as.data.frame(flow)
     attr(flow, "SRC") <- input

@@ -2,7 +2,7 @@ library(hydroGOF)
 library(HITHATStats)
 library(NWCCompare)
 
-sos_url="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
+sos_url="http://waterservices.usgs.gov/nwis/dv/?format=rdb,1.0&sites="
 offering='00003'
 property='00060'
 drainage_url="http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
@@ -165,7 +165,7 @@ for (i in 1:length(sites)){
   enddate<-"2012-10-01"
   sites=a[i]
   url2<-paste(sos_url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,'&access=3',sep='')
-  x_obs <- getXMLWML1.1Data(url2)
+  x_obs <- retrieveNWISData(url2)
 
   if (nrow(x_obs)>2) {
     obs_data <- get_obsdata(x_obs)
@@ -180,7 +180,7 @@ for (i in 1:length(sites)){
       x_obsz<-obs_data$discharge
       dates<-as.Date(obs_data$date)
       file<-paste("monthly_mean_ts_obs",toString(sites),".txt",sep="")
-      monthly_mean<-monthly.mean.ts(obs_data,sites)
+      monthly_mean<-monthly.mean.ts(obs_data)
       write.table(monthly_mean,file=file,col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
 
       meanbyyr <- aggregate(obs_data$discharge, list(obs_data$year_val), 

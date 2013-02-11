@@ -18,7 +18,7 @@
 #' get_obsdata(x_obs)
 get_obsdata <- function(x_obs) {
 x2<-(x_obs$date)
-x_obs<-data.frame(strptime(x2, "%Y-%m-%d"),x_obs$discharge)
+x_obs<-data.frame(x2,x_obs$discharge)
 colnames(x_obs)<-c("date","discharge")
 selqfile<-x_obs
 tempdatafr<-NULL
@@ -32,13 +32,9 @@ ones_val<-rep(1,length(tempdatafr$date))
 qfiletempf<-data.frame(tempdatafr$date,tempdatafr$discharge,month_val,year_val,day_val,jul_val,wy_val)
 colnames(qfiletempf)<-c('date','discharge','month_val','year_val','day_val','jul_val','wy_val')
 qfiletempf$month_val<-substr(x_obs$date,6,7)
-as.numeric(qfiletempf$month_val)
 qfiletempf$year_val<-substr(x_obs$date,1,4)
-as.numeric(qfiletempf$year_val)
 qfiletempf$day_val<-substr(x_obs$date,9,10)
-as.numeric(qfiletempf$day_val)
 qfiletempf$jul_val<-strptime(x_obs$date, "%Y-%m-%d")$yday+1
-as.numeric(qfiletempf$jul_val)
 qfiletempf$wy_val<-ifelse(as.numeric(qfiletempf$month_val)>=10,as.character(as.numeric(qfiletempf$year_val)+ones_val),qfiletempf$year_val) 
 
 countbyyr<-aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), length)

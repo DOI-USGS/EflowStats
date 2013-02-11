@@ -101,3 +101,4 @@ Collate:
     'fh9.R'
     'fl3.R'
     'get_obsdata.R'
+    'retrieveNWISData.R'

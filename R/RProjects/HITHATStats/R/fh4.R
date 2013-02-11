@@ -17,10 +17,10 @@ fh4 <- function(qfiletempf, pref = "mean") {
   if (nrow(highflow)>0) {
   highbyyr <- aggregate(highflow$discharge,list(highflow$year_val),FUN=length)
   if (pref == "median") {
-    fh4 <- median(highbyyr)
+    fh4 <- median(highbyyr$x)
   }
   else {
-    fh4 <- mean(highbyyr)
+    fh4 <- mean(highbyyr$x)
   }}
   else {
     fh3 <- 'NA'
