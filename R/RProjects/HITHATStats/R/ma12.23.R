@@ -12,6 +12,7 @@
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 #' qfiletempf<-read.csv(load_data)
 #' ma12.23(qfiletempf)
+#' ma12.23(qfiletempf,pref="median")
 ma12.23 <- function(qfiletempf, pref = "mean") {
   if (pref == "median") {
     medmon <- aggregate(qfiletempf$discharge, list(qfiletempf$month_val), 

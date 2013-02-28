@@ -12,7 +12,7 @@
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
+#' x<-read.csv(load_data,stringsAsFactors=FALSE)
 #' ml20(x)
 ml20 <- function(x) {
   sub_flow <- subset(x,x$discharge>0,na.rm=TRUE)
@@ -21,10 +21,10 @@ ml20 <- function(x) {
   sets <- c(1:numsets)
   sets_merge <- as.data.frame(sort(rep.int(sets,5))[1:nrow(sub_flow)],stringsAsFactors=FALSE)
   merge_data <- cbind(sub_flow,sets_merge)
-  colnames(merge_data) <- c("wy_val","date","discharge","month_val","year_val","day_val","jul_val","num_samples","seq_num")
+  colnames(merge_data) <- c("wy_val","date","discharge","month_val","year_val","day_val","jul_val","seq_num")
   min5day <- aggregate(merge_data$discharge,list(merge_data$seq_num),FUN=min,na.rm=TRUE)
   merge_data <- merge(min5day,merge_data,by.x="Group.1",by.y="seq_num")
-  colnames(merge_data) <- c("seq_num","base_flow","wy_val","date","discharge","month_val","year_val","day_val","jul_val","num_samples")
+  colnames(merge_data) <- c("seq_num","base_flow","wy_val","date","discharge","month_val","year_val","day_val","jul_val")
   base_flows <- unique(merge_data[, c("seq_num","base_flow")])
   base_flows$base_flow <- 0.9*base_flows$base_flow
   base_flows_lag <- unique(merge_data[, c("seq_num","base_flow")])

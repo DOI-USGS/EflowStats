@@ -23,7 +23,7 @@ fh4 <- function(qfiletempf, pref = "mean") {
     fh4 <- mean(highbyyr$x)
   }}
   else {
-    fh3 <- 'NA'
+    fh4 <- 'NA'
   }
   return(fh4)
 }

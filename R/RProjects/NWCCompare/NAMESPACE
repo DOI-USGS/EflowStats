@@ -1,4 +1,8 @@
+export(FlowStats)
+export(MonthlyAnnualGoF)
+export(RegionalGoF)
 export(SWE_CSV_IHA)
+export(SiteGoF)
 export(cv)
 export(getScenarioSites)
 export(l7Q10)

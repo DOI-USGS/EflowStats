@@ -11,6 +11,7 @@ Depends:
     chron,
     doBy,
     XML,
+    hydroGOF,
     HITHATStats
 Description: Calculates comparison stats for two timeseries.
 License: file LICENSE
@@ -28,3 +29,7 @@ Collate:
     'sdev.R'
     'includedData.R'
     'skew.R'
+    'FlowStats.R'
+    'MonthlyAnnualGoF.R'
+    'RegionalGoF.R'
+    'SiteGoF.R'

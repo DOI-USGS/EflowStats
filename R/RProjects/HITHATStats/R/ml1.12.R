@@ -1,7 +1,7 @@
 #' Function to return the ML1-ML12 hydrologic indicator statistics for a given data frame
 #' 
 #' This function accepts a data frame that contains columns named "discharge", "year_val" and "month_val" and 
-#' calculates the means (or medians - use preference option) minimum flows for each month across all years. 
+#' calculates the mean minimum flows for each month across all years. 
 #' Compute the minimums for each month. For example, ML1 is the mean of the minimums of all January flow values.
 #' 
 #' @param qfiletemp data frame containing a "discharge" column containing daily flow values

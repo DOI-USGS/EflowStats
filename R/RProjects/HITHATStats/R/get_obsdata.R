@@ -37,9 +37,6 @@ qfiletempf$day_val<-substr(x_obs$date,9,10)
 qfiletempf$jul_val<-strptime(x_obs$date, "%Y-%m-%d")$yday+1
 qfiletempf$wy_val<-ifelse(as.numeric(qfiletempf$month_val)>=10,as.character(as.numeric(qfiletempf$year_val)+ones_val),qfiletempf$year_val) 
 
-countbyyr<-aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), length)
-colnames(countbyyr)<-c('wy','num_samples')
-sub_countbyyr<-subset(countbyyr,countbyyr$num_samples >= 365)
-obs_data<-merge(qfiletempf,sub_countbyyr,by.x="wy_val",by.y="wy")
+obs_data<-qfiletempf
 return(obs_data)
 }
