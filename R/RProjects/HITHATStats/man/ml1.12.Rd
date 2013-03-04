@@ -15,10 +15,10 @@
 \description{
   This function accepts a data frame that contains columns
   named "discharge", "year_val" and "month_val" and
-  calculates the means (or medians - use preference option)
-  minimum flows for each month across all years. Compute
-  the minimums for each month. For example, ML1 is the mean
-  of the minimums of all January flow values.
+  calculates the mean minimum flows for each month across
+  all years. Compute the minimums for each month. For
+  example, ML1 is the mean of the minimums of all January
+  flow values.
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

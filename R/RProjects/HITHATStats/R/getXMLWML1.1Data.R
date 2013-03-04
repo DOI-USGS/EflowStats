@@ -16,18 +16,23 @@
 #' \dontrun{property<-'00060'}
 #' \dontrun{obs_url<-paste(url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')}
 #' \dontrun{getXMLWML1.1Data(obs_url)}
-getXMLWML1.1Data <-
-function(obs_url){
-cat(paste("Retrieving data from: \n", obs_url, "\n", sep = " "))
-doc<-xmlTreeParse(obs_url, getDTD=F, useInternalNodes=TRUE)
-values<-xpathSApply(doc, "//ns1:timeSeries//ns1:value")
-values2<-sapply(values,function(x) as.numeric(xmlValue(x)))
-dateSet<-xpathSApply(doc, "//@dateTime")
-dateSet2<-sapply(dateSet,function(x) toString(substr(x,1,10)))
-Daily<-as.data.frame(matrix(ncol=2,nrow=length(values2)))
-colnames(Daily)<-c('date','discharge')
-Daily$discharge<-values2
-if (length(dateSet)>2) {
-Daily$date<-dateSet}
-return (Daily)
+getXMLWML1.1Data <- function(obs_url){
+  cat(paste("Retrieving data from: \n", obs_url, "\n", sep = " "))
+  content <- getURLContent(obs_url,.opts=list(timeout.ms=50000))
+  test <- capture.output(tryCatch(xmlTreeParse(content, getDTD=F, useInternalNodes=TRUE),"XMLParserErrorList" = function(e) {cat("incomplete",e$message)}))
+  while (length(grep("<?xml",test))==0) {
+    content <- getURLContent(obs_url,.opts=list(timeout.ms=50000))
+    test <- capture.output(tryCatch(xmlTreeParse(content, getDTD=F, useInternalNodes=TRUE),"XMLParserErrorList" = function(e) {cat("incomplete",e$message)}))
+  }
+  doc <- htmlTreeParse(content, asText=TRUE, useInternalNodes=TRUE)
+  values<-xpathSApply(doc, "//timeseries//value")
+  values2<-sapply(values,function(x) as.numeric(xmlValue(x)))
+  dateSet<-xpathSApply(doc, "//@datetime")
+  dateSet2<-sapply(dateSet,function(x) toString(substr(x,1,10)))
+  Daily<-as.data.frame(matrix(ncol=2,nrow=length(values2)))
+  colnames(Daily)<-c('date','discharge')
+  Daily$discharge<-values2
+  if (length(dateSet)>2) {
+    Daily$date<-as.Date(dateSet2)}
+  return (Daily)
 }

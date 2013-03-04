@@ -6,6 +6,7 @@ library(zoo)
 library(chron)
 library(doBy)
 library(hydroGOF)
+library(RCurl)
 library(HITHATStats)
 library(NWCCompare)
 
@@ -16,7 +17,7 @@ library(NWCCompare)
 model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/afinch/afinch-SE-SPARSE1-0.1.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 #model_url="http://cida.usgs.gov/gdp/proxy/http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/thredds/sos/watersmart/waters/waters-Special-0.3.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 
-sos_url_temp="http://waterservices.usgs.gov/nwis/dv/?format=rdb,1.0&sites="
+sos_url_temp="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
 offering_temp='00003'
 property_temp='00060'
 drainage_url="http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
@@ -55,7 +56,7 @@ for (i in 1:length(a2)){
     latest<-''
     sites=a[i]
     url2<-paste(sos_url_temp,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering_temp,'&parameterCd=',property_temp,'&access=3',sep='')
-    x_obs <- retrieveNWISData(url2)
+    x_obs <- getXMLWML1.1Data(url2)
 
     if (nrow(x_obs)>2) {
       obs_data <- get_obsdata(x_obs)

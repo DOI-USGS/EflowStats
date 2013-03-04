@@ -10,7 +10,8 @@ Depends:
     zoo,
     chron,
     doBy,
-    XML
+    XML,
+    RCurl
 Description: Uses USGS NWISWeb web services to fetch data for the user's
     desired USGS NWIS stations; calculates all HIT/HAT hydrologic indicator
     statistics; and returns these statistics in a text output file.

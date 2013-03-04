@@ -27,5 +27,6 @@
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 qfiletempf<-read.csv(load_data)
 ma12.23(qfiletempf)
+ma12.23(qfiletempf,pref="median")
 }
 
