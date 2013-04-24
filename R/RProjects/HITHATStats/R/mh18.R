@@ -12,7 +12,7 @@
 #' x<-read.csv(load_data)
 #' mh18(x)
 mh18 <- function(x) {
-  maxbyyr <- aggregate(x$discharge,list(x$year_val),FUN=max,na.rm=TRUE)
+  maxbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=max,na.rm=TRUE)
   colnames(maxbyyr) <- c("Year","yrmax")
   log10maxbyyr <- log10(maxbyyr$yrmax)
   mh18 <- (sd(log10maxbyyr)*100)/mean(log10maxbyyr)

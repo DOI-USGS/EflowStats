@@ -15,10 +15,29 @@
 mh27 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge
   sortq <- sort(isolateq)
-  frank75 <- floor(findrank(length(sortq),0.75))
+  frank75 <- floor(findrank(length(sortq),0.25))
   hfcrit75 <- sortq[frank75]
-  exchfcrit <- subset(isolateq, isolateq > hfcrit75)
-  meanex <- mean(exchfcrit)
+  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
+                       FUN = median, na.rm=TRUE)
+  colnames(noyears) <- c("Year", "momax")
+  noyrs <- length(noyears$Year)
+  peak <- rep(0,nrow(qfiletempf))
+  nevents <- 1
+  for (i in 1:noyrs) {
+    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    flag <- 0
+    peak[i] <- 0
+    for (j in 1:nrow(subsetyr)) {
+      if (subsetyr$discharge[j]>hfcrit75) {
+        flag <- flag+1
+        temp <- subsetyr$discharge[j]
+        nevents <- ifelse(flag==1,nevents+1,nevents)
+        peak[nevents] <- ifelse(temp>peak[nevents],temp,peak[nevents])
+      } else {flag <- 0}
+    }
+  }
+  peak_sub <- subset(peak,peak>0)
+  meanex <- mean(peak_sub)
   mh27 <- meanex/ma2(qfiletempf)
   return(mh27)
 }

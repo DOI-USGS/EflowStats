@@ -17,20 +17,20 @@
 #' qfiletemp<-read.csv(load_data)
 #' ma36.40(qfiletemp)
 ma36.40 <- function(qfiletemp) {
-  meanbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val), FUN = mean, na.rm=TRUE)
-  colnames(meanbymon) <- c("Month","meanmo")
-  maxbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val), FUN = max, na.rm=TRUE)
-  colnames(maxbymon) <- c("Month","maxmo")
-  minbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val), FUN = min, na.rm=TRUE)
-  colnames(minbymon) <- c("Month","minmo")
+  meanbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletempf$year_val), FUN = mean, na.rm=TRUE)
+  colnames(meanbymon) <- c("Month","Year","meanmo")
+  maxbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletempf$year_val), FUN = max, na.rm=TRUE)
+  colnames(maxbymon) <- c("Month","Year","maxmo")
+  minbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletempf$year_val), FUN = min, na.rm=TRUE)
+  colnames(minbymon) <- c("Month","Year","minmo")
   sortmeanbymon <- sort(meanbymon$meanmo)
-  perc_10 <- floor(findrank(length(sortmeanbymon), 0.1))
-  perc_25 <- floor(findrank(length(sortmeanbymon), 0.25))
-  perc_75 <- floor(findrank(length(sortmeanbymon), 0.75))
-  perc_90 <- floor(findrank(length(sortmeanbymon), 0.9))
-  ma36 <- (max(maxbymon$maxmo)-min(minbymon$minmo))/median(meanbymon$meanmo)
-  ma37 <- (perc_75-perc_25)/median(meanbymon$meanmo)
-  ma38 <- (perc_90-perc_10)/median(meanbymon$meanmo)
+  perc_10 <- sortmeanbymon[floor(findrank(length(sortmeanbymon), 0.1))]
+  perc_25 <- sortmeanbymon[floor(findrank(length(sortmeanbymon), 0.25))]
+  perc_75 <- sortmeanbymon[floor(findrank(length(sortmeanbymon), 0.75))]
+  perc_90 <- sortmeanbymon[floor(findrank(length(sortmeanbymon), 0.9))]
+  ma36 <- (max(meanbymon$meanmo)-min(meanbymon$meanmo))/median(meanbymon$meanmo)
+  ma37 <- (perc_25-perc_75)/median(meanbymon$meanmo)
+  ma38 <- (perc_10-perc_90)/median(meanbymon$meanmo)
   ma39 <- (sd(meanbymon$meanmo)*100)/mean(meanbymon$meanmo)
   ma40 <- (mean(meanbymon$meanmo)-median(meanbymon$meanmo))/median(meanbymon$meanmo)
   ma36.40 <- list(ma36,ma37,ma38,ma39,ma40)

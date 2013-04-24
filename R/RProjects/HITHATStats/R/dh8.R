@@ -18,7 +18,7 @@ dh8 <- function(qfiletempf) {
   rollingavgs7day <- subset(day7rollingavg, day7rollingavg$day7mean != 
                                "NA")
   max7daybyyear <- aggregate(rollingavgs7day$day7mean, 
-                              list(rollingavgs7day$year_val), max, na.rm=TRUE)
+                              list(rollingavgs7day$wy_val), max, na.rm=TRUE)
   sddh8 <- sd(max7daybyyear$x)
   dh8 <- (sddh8 * 100)/meandh8
   return(dh8)

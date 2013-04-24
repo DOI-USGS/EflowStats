@@ -14,10 +14,10 @@
 #' qfiletempf<-read.csv(load_data)
 #' ma3(qfiletempf)
 ma3 <- function(qfiletempf, pref = "mean") {
-  sdbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
+  sdbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                       FUN = sd, na.rm=TRUE)
   colnames(sdbyyr) <- c("Year", "sdq")
-  meanbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
+  meanbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                         mean, na.rm=TRUE)
   colnames(meanbyyr) <- c("Year", "meanq")
   dfcvbyyr <- data.frame(meanbyyr$Year, sdbyyr$sdq, 

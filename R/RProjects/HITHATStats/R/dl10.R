@@ -18,7 +18,7 @@ dl10 <- function(qfiletempf) {
   rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
                                "NA")
   min90daybyyear <- aggregate(rollingavgs90day$day90mean, 
-                              list(rollingavgs90day$year_val), min, na.rm=TRUE)
+                              list(rollingavgs90day$wy_val), min, na.rm=TRUE)
   sddl10 <- sd(min90daybyyear$x)
   dl10 <- (sddl10 * 100)/meandl10
   return(dl10)

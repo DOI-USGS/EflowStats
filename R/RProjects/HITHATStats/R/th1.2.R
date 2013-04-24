@@ -13,30 +13,19 @@
 #' th1.2(qfiletempf)
 th1.2 <- function(qfiletempf, pref = "mean") {
   max1daybyyear <- aggregate(qfiletempf$discharge, 
-                             list(qfiletempf$year_val), max, na.rm=TRUE)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  juldaymax <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    counter <- counter + 1
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    findjulday <- subset(subsetyr, subsetyr$discharge == 
-                           max1daybyyear$x[counter])
-    juldaymax[counter] <- findjulday$jul_val[1]
-  }
-  maxjulday <- juldaymax
-  meanth2<-mean(maxjulday)
-  sddth2<-sd(maxjulday)
+                             list(qfiletempf$wy_val), max, na.rm=TRUE)
+  colnames(max1daybyyear) <- c("wy_val","discharge")
+  maxjulbyyear <- aggregate(qfiletempf$jul_val, list(qfiletempf$wy_val,qfiletempf$discharge),max,na.rm=TRUE)
+  colnames(maxjulbyyear) <- c("wy_val","discharge","jul_val")
+  maxjulday <- merge(maxjulbyyear,max1daybyyear,by = c("wy_val","discharge"))
+  meanth2<-mean(maxjulday$jul_val)
+  sddth2<-sd(maxjulday$jul_val)
   th2<-(sddth2*100)/meanth2
   if (pref == "median") {
-    th1 <- median(maxjulday)
+    th1 <- median(maxjulday$jul_val)
   }
   else {
-    th1 <- mean(maxjulday)
+    th1 <- mean(maxjulday$jul_val)
   }
   th1.2<-list(th1=th1,th2=th2)
   return(th1.2)

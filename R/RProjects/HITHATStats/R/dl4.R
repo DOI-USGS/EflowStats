@@ -18,7 +18,7 @@ dl4 <- function(qfiletempf, pref = "mean") {
   rollingavgs30day <- subset(day30rollingavg, day30rollingavg$day30mean != 
                                "NA")
   min30daybyyear <- aggregate(rollingavgs30day$day30mean, 
-                              list(rollingavgs30day$year_val), min, na.rm=TRUE)
+                              list(rollingavgs30day$wy_val), min, na.rm=TRUE)
   if (pref == "median") {
     dl4 <- median(min30daybyyear$x)
   }

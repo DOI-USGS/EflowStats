@@ -15,13 +15,30 @@ tl3 <- function(qfiletempf) {
   sortq <- sort(isolateq)
   frank <- floor(findrank(length(sortq), 0.80))
   lfcrit <- sortq[frank]
-  subset_crit <- subset(qfiletempf, qfiletempf$discharge<lfcrit)
-  num_year <- aggregate(subset_crit$discharge, list(subset_crit$year_val,subset_crit$month_val), function(x) sum(!is.na(x)))
-  names(num_year) <- c('year_val','month_val','num_days')
-  ones_val<-rep(1,length(num_year$year_val))
-  num_year$wy_val<-ifelse(as.numeric(num_year$month_val)>=10,as.character(as.numeric(num_year$year_val)+ones_val),num_year$year_val) 
-  num_year$season <- ifelse(num_year$month_val==10,10,ifelse(num_year$month_val==11,10,ifelse(num_year$month_val==12,12,ifelse(num_year$month_val==1,12,ifelse(num_year$month_val==2,2,ifelse(num_year$month_val==3,2,ifelse(num_year$month_val==4,4,ifelse(num_year$month_val==5,4,ifelse(num_year$month_val==6,6,ifelse(num_year$month_val==7,6,ifelse(num_year$month_val==8,8,ifelse(num_year$month_val==9,8,99))))))))))))
-  num_season <- aggregate(num_year$num_days, list(num_year$wy_val,num_year$season), sum)
+  nomonyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val,qfiletempf$month_val), 
+                          FUN = median, na.rm=TRUE)
+  colnames(nomonyears) <- c("Year","month", "momax")
+  nomonyrs <- length(nomonyears$Year)
+  dur <- data.frame(Year = rep(0,nrow(nomonyears)), month = rep(0,nrow(nomonyears)), dur = rep(1,nrow(nomonyears)))
+  for (i in 1:nomonyrs) {
+    monyears <- nomonyears[i,]
+    colnames(monyears) <- c("wy_val","month_val","momax")
+    subsetyr <- merge(qfiletempf,monyears,by = c("wy_val","month_val"))
+    flag <- 0
+    nevents <- 0
+    for (j in 1:nrow(subsetyr)) {
+      if (subsetyr$discharge[j]<lfcrit) {
+        flag <- flag+1
+        nevents <- ifelse(flag==1,nevents+1,nevents)
+        dur$Year[i] <- subsetyr$wy_val[j]
+        dur$month[i] <- subsetyr$month_val[j]
+        dur$dur[i] <- nevents
+      } else {flag <- 0}
+    }
+  }
+  dur$season <- ifelse(as.numeric(dur$month)==10,10,ifelse(as.numeric(dur$month)==11,10,ifelse(as.numeric(dur$month)==12,12,ifelse(as.numeric(dur$month)==1,12,ifelse(as.numeric(dur$month)==2,2,ifelse(as.numeric(dur$month)==3,2,ifelse(as.numeric(dur$month)==4,4,ifelse(as.numeric(dur$month)==5,4,ifelse(as.numeric(dur$month)==6,6,ifelse(as.numeric(dur$month)==7,6,ifelse(as.numeric(dur$month)==8,8,ifelse(as.numeric(dur$month)==9,8,99))))))))))))
+  dur <- dur[!dur$season==99,]
+  num_season <- aggregate(dur$dur, list(dur$Year,dur$month), sum)
   tl3 <- max(num_season$x)/sum(num_season$x)
   return(tl3)
 }

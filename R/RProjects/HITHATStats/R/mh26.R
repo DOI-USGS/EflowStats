@@ -14,9 +14,27 @@
 #' mh26(qfiletempf)
 mh26 <- function(qfiletempf) {
   hfcrit <- 7 * ma2(qfiletempf)
-  isolateq <- qfiletempf$discharge
-  exchfcrit <- subset(isolateq, isolateq > hfcrit)
-  meanex <- mean(exchfcrit)
+  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
+                       FUN = median, na.rm=TRUE)
+  colnames(noyears) <- c("Year", "momax")
+  noyrs <- length(noyears$Year)
+  peak <- rep(0,nrow(qfiletempf))
+  nevents <- 1
+  for (i in 1:noyrs) {
+    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    flag <- 0
+    peak[i] <- 0
+    for (j in 1:nrow(subsetyr)) {
+      if (subsetyr$discharge[j]>hfcrit) {
+        flag <- flag+1
+        temp <- subsetyr$discharge[j]
+        nevents <- ifelse(flag==1,nevents+1,nevents)
+        peak[nevents] <- ifelse(temp>peak[nevents],temp,peak[nevents])
+      } else {flag <- 0}
+    }
+  }
+  peak_sub <- subset(peak,peak>0)
+  meanex <- mean(peak_sub)
   mh26 <- meanex/ma2(qfiletempf)
   return(mh26)
 }

@@ -16,29 +16,28 @@ fl1.2 <- function(qfiletempf, pref = "mean") {
   sortq <- sort(isolateq)
   frank <- floor(findrank(length(sortq), 0.75))
   lfcrit <- sortq[frank]
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
+  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                        FUN = median, na.rm=TRUE)
   colnames(noyears) <- c("Year", "momax")
   noyrs <- length(noyears$Year)
-  lfcountbyyr <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.character(noyears$Year[1]):as.character(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge < 
-                         lfcrit)
-    counter <- counter + 1
-    lfcountbyyr[counter] <- length(echfcrit$discharge)
-  }
-  lfcntbyyr <- lfcountbyyr
-  meanfl1 <- mean(lfcntbyyr)
-  stdevfl1 <- sd(lfcntbyyr)
-  fl2 <- (stdevfl1 * 100)/meanfl1
+  counter <- rep(0,noyrs)
+  for (i in 1:noyrs) {
+    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    flag <- 0
+    counter[i] <- 0
+    for (j in 1:nrow(subsetyr)) {
+    if (subsetyr$discharge[j]<lfcrit) {
+      flag <- flag+1
+      counter[i] <- ifelse(flag==1,counter[i]+1,counter[i])
+    } else {flag <- 0}
+  }}
+  stdevfl1 <- sd(counter)
+  fl2 <- (stdevfl1 * 100)/mean(counter)
   if (pref == "median") {
-    fl1 <- median(lfcntbyyr)
+    fl1 <- median(counter)
   }
   else {
-    fl1 <- mean(lfcntbyyr)
+    fl1 <- mean(counter)
   }
   fl1.2<-list(fl1=fl1,fl2=fl2)
   return(fl1.2)

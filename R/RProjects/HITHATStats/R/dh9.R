@@ -18,7 +18,7 @@ dh9 <- function(qfiletempf) {
   rollingavgs30day <- subset(day30rollingavg, day30rollingavg$day30mean != 
                                "NA")
   max30daybyyear <- aggregate(rollingavgs30day$day30mean, 
-                              list(rollingavgs30day$year_val), max, na.rm=TRUE)
+                              list(rollingavgs30day$wy_val), max, na.rm=TRUE)
   sddh9 <- sd(max30daybyyear$x)
   dh9 <- (sddh9 * 100)/meandh9
   return(dh9)

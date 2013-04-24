@@ -12,23 +12,23 @@
 #' qfiletempf<-read.csv(load_data)
 #' fh10(qfiletempf)
 fh10 <- function(qfiletempf, pref = "mean") {
-  minbyyear <- aggregate(qfiletempf$discharge,list(qfiletempf$year_val),FUN=min,na.rm=TRUE)
+  minbyyear <- aggregate(qfiletempf$discharge,list(qfiletempf$wy_val),FUN=min,na.rm=TRUE)
   medmin <- median(minbyyear$x)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
+  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                        FUN = median, na.rm=TRUE)
   colnames(noyears) <- c("Year", "momax")
   noyrs <- length(noyears$Year)
   hfcountbyyrfh4 <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge > 
-                         medmin)
-    counter <- counter + 1
-    hfcountbyyrfh4[counter] <- length(echfcrit$discharge)
+  for (i in 1:noyrs) {
+    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    flag <- 0
+    for (j in 1:nrow(subsetyr)) {
+      if (subsetyr$discharge[j]>medmin) {
+        flag <- flag+1
+        hfcountbyyrfh4[i] <- ifelse(flag==1,hfcountbyyrfh4[i]+1,hfcountbyyrfh4[i])
+      } else {flag<-0}
+    }
   }
-  hfcntbyyrfh4 <- hfcountbyyrfh4
   if (pref == "median") {
     fh10 <- median(hfcntbyyrfh4)
   }

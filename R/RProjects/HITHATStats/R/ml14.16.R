@@ -15,10 +15,10 @@
 #' ml14.16(qfiletempf)
 ml14.16 <- function(qfiletempf) {
   minbyyear <- aggregate(qfiletempf$discharge, 
-                         list(qfiletempf$year_val), min, na.rm=TRUE)
-  medflow <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
+                         list(qfiletempf$wy_val), min, na.rm=TRUE)
+  medflow <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                        median, na.rm=TRUE)
-  meanflow <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), mean, na.rm=TRUE)
+  meanflow <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), mean, na.rm=TRUE)
   computeml14 <- merge(merge(minbyyear, medflow, by.x="Group.1", by.y="Group.1"),meanflow, by.x="Group.1", by.z="Group.1")
   colnames(computeml14) <- c("year", "minbyyr", "medbyyr", "meanbyyr")
   dfml14 <- computeml14$minbyyr/computeml14$medbyyr

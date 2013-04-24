@@ -13,7 +13,7 @@
 dh6 <- function(qfiletempf) {
   meandh6 <- dh1(qfiletempf, pref = "mean")
   maxbyyear <- aggregate(qfiletempf$discharge, 
-                             list(qfiletempf$year_val), max, na.rm=TRUE)
+                             list(qfiletempf$wy_val), max, na.rm=TRUE)
   sddh6 <- sd(maxbyyear$x)
   dh6 <- (sddh6 * 100)/meandh6
   return(dh6)

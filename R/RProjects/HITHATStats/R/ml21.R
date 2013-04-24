@@ -12,7 +12,7 @@
 #' x<-read.csv(load_data)
 #' ml21(x)
 ml21 <- function(x) {
-  minbyyr <- aggregate(x$discharge,list(x$year_val),FUN=min,na.rm=TRUE)
+  minbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=min,na.rm=TRUE)
   colnames(minbyyr) <- c("Year","yrmin")
   ml21 <- (sd(minbyyr$yrmin)*100)/mean(minbyyr$yrmin)
   return(ml21)

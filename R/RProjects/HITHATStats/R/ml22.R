@@ -15,7 +15,7 @@
 #' drainarea<-56.5
 #' ml22(x,drainarea)
 ml22 <- function(x,drainarea,pref = "mean") {
-  minbyyr <- aggregate(x$discharge,list(x$year_val),FUN=min,na.rm=TRUE)
+  minbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=min,na.rm=TRUE)
   colnames(minbyyr) <- c("Year","yrmin")
   if (pref == "median") {
     ml22 <- (median(minbyyr$yrmin))/drainarea

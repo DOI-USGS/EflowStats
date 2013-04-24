@@ -11,14 +11,14 @@
 #' qfiletempf<-read.csv(load_data)
 #' dl19(qfiletempf)
 dl19 <- function(qfiletempf) {
-  zeroflow <- subset(qfiletempf,qfiletempf$discharge==0)
-  if (nrow(zeroflow)>0) {
-  zerocntbyyr <- aggregate(zeroflow$discharge,list(zeroflow$year_val),FUN=length)
-  meanzero <- mean(zerocntbyyr)
-  sdzero <- sd(zerocntbyyr)
+  subset_zero <- subset(qfiletempf,qfiletempf$discharge==0)
+  if (nrow(subset_zero)>0) {
+    subset_zero$discharge <- subset_zero$discharge+1
+    zero_cnts <- aggregate(subset_zero$discharge, list(qfiletempf$wy_val), sum)
+  meanzero <- mean(zero_cnts$x)
+  sdzero <- sd(zero_cnts$x)
   dl19 <- (100*sdzero)/meanzero
-  } 
-  else {
+  } else {
     dl19 <- 'NA'
   }
   return(dl19)

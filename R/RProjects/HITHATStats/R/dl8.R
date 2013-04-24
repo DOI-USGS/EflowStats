@@ -18,7 +18,7 @@ dl8 <- function(qfiletempf) {
   rollingavgs7day <- subset(day7rollingavg, day7rollingavg$day7mean != 
                               "NA")
   min7daybyyear <- aggregate(rollingavgs7day$day7mean, 
-                             list(rollingavgs7day$year_val), min, na.rm=TRUE)
+                             list(rollingavgs7day$wy_val), min, na.rm=TRUE)
   sddl8 <- sd(min7daybyyear$x)
   dl8 <- (sddl8 * 100)/meandl8
   return(dl8)

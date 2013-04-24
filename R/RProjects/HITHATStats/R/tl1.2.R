@@ -13,30 +13,19 @@
 #' tl1.2(qfiletempf)
 tl1.2 <- function(qfiletempf, pref = "mean") {
   min1daybyyear <- aggregate(qfiletempf$discharge, 
-                             list(qfiletempf$year_val), min, na.rm=TRUE)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momin")
-  noyrs <- length(noyears$Year)
-  juldaymin <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    counter <- counter + 1
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    findjulday <- subset(subsetyr, subsetyr$discharge == 
-                           min1daybyyear$x[counter])
-    juldaymin[counter] <- findjulday$jul_val[1]
-  }
-  minjulday <- juldaymin
-  meantl2<-mean(minjulday)
-  sddtl2<-sd(minjulday)
+                             list(qfiletempf$wy_val), min, na.rm=TRUE)
+  colnames(min1daybyyear) <- c("wy_val","discharge")
+  minjulbyyear <- aggregate(qfiletempf$jul_val, list(qfiletempf$wy_val,qfiletempf$discharge),min,na.rm=TRUE)
+  colnames(minjulbyyear) <- c("wy_val","discharge","jul_val")
+  minjulday <- merge(minjulbyyear,min1daybyyear,by = c("wy_val","discharge"))
+  meantl2<-mean(minjulday$jul_val)
+  sddtl2<-sd(minjulday$jul_val)
   tl2<-(sddtl2*100)/meantl2
   if (pref == "median") {
-    tl1 <- median(minjulday)
+    tl1 <- median(minjulday$jul_val)
   }
   else {
-    tl1 <- mean(minjulday)
+    tl1 <- mean(minjulday$jul_val)
   }
   tl1.2<-list(tl1=tl1,tl2=tl2)
   return(tl1.2)

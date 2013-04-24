@@ -18,7 +18,7 @@ dl9 <- function(qfiletempf) {
   rollingavgs30day <- subset(day30rollingavg, day30rollingavg$day30mean != 
                                "NA")
   min30daybyyear <- aggregate(rollingavgs30day$day30mean, 
-                              list(rollingavgs30day$year_val), min, na.rm=TRUE)
+                              list(rollingavgs30day$wy_val), min, na.rm=TRUE)
   sddl9 <- sd(min30daybyyear$x)
   dl9 <- (sddl9 * 100)/meandl9
   return(dl9)

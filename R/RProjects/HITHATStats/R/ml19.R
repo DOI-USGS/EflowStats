@@ -17,7 +17,7 @@ ml19 <- function(qfiletempf, pref = "mean") {
   colnames(minbyyr) <- c("Year","yrmin")
   meanbyyr <- aggregate(qfiletempf$discharge,list(qfiletempf$year_val),FUN=mean,na.rm=TRUE)
   colnames(meanbyyr) <- c("Year","yrmean")
-  ratiominmean <- minbyyr$yrmin/meanbyyr$yrmean
+  ratiominmean <- (minbyyr$yrmin/meanbyyr$yrmean)*100
   if (pref == "median") {
     ml19 <- median(ratiominmean)
   }

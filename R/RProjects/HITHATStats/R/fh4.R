@@ -15,7 +15,7 @@ fh4 <- function(qfiletempf, pref = "mean") {
   hfcrit <- 7 * ma2(qfiletempf)
   highflow <- subset(qfiletempf,qfiletempf$discharge>hfcrit)
   if (nrow(highflow)>0) {
-  highbyyr <- aggregate(highflow$discharge,list(highflow$year_val),FUN=length)
+  highbyyr <- aggregate(highflow$discharge,list(highflow$wy_val),FUN=length)
   if (pref == "median") {
     fh4 <- median(highbyyr$x)
   }

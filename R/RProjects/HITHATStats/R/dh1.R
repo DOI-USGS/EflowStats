@@ -12,12 +12,12 @@
 #' qfiletempf<-read.csv(load_data)
 #' dh1(qfiletempf)
 dh1 <- function(qfiletempf, pref = "mean") {
-  maxbyyear <- aggregate(qfiletempf$discharge,list(qfiletempf$year_val),max,na.rm=TRUE)
+  annualmax <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), max)
   if (pref == "median") {
-    dh1 <- median(maxbyyear$x)
+    dh1 <- median(annualmax$x)
   }
   else {
-    dh1 <- mean(maxbyyear$x)
+    dh1 <- mean(annualmax$x)
   }
   return(dh1)
 }

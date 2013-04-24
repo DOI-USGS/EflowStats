@@ -18,7 +18,7 @@ dh5 <- function(qfiletempf, pref = "mean") {
   rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
                                "NA")
   max90daybyyear <- aggregate(rollingavgs90day$day90mean, 
-                              list(rollingavgs90day$year_val), max, na.rm=TRUE)
+                              list(rollingavgs90day$wy_val), max, na.rm=TRUE)
   if (pref == "median") {
     dh5 <- median(max90daybyyear$x)
   }

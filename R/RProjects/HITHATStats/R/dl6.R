@@ -12,14 +12,8 @@
 #' dl6(qfiletempf)
 dl6 <- function(qfiletempf) {
   meandl6 <- dl1(qfiletempf, pref = "mean")
-  day1mean <- rollmean(qfiletempf$discharge, 1, align = "right", 
-                       na.pad = TRUE)
-  day1rollingavg <- data.frame(qfiletempf, day1mean)
-  rollingavgs1day <- subset(day1rollingavg, day1rollingavg$day1mean != 
-                              "NA")
-  min1daybyyear <- aggregate(rollingavgs1day$day1mean, 
-                             list(rollingavgs1day$year_val), min, na.rm=TRUE)
-  sddl6 <- sd(min1daybyyear$x)
+  annualminimum <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), min)
+  sddl6 <- sd(annualminimum$x)
   dl6 <- (sddl6 * 100)/meandl6
   return(dl6)
 }

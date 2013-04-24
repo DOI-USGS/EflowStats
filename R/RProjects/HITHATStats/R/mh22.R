@@ -14,8 +14,18 @@
 #' mh22(x)
 mh22 <- function(x) {
   thresh <- 3*ma2(x)
-  exthresh <- subset(x$discharge,x$discharge > thresh)
-  avg_ex <- mean(exthresh)
+  nevents <- 0
+  flag <- 0
+  total <- 0
+  for (i in 1:nrow(x)) {
+    temp <- x$discharge[i]-thresh
+    if (temp>0) {
+      total <- total + temp
+      flag <- flag+1
+      nevents <- ifelse(flag==1,nevents+1,nevents)
+    } else {flag <- 0}
+  }
+  avg_ex <- total/nevents
   mh22 <- avg_ex/ma2(x)
   return(mh22)
 }

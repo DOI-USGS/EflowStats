@@ -18,7 +18,7 @@ dl5 <- function(qfiletempf, pref = "mean") {
   rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
                                "NA")
   min90daybyyear <- aggregate(rollingavgs90day$day90mean, 
-                              list(rollingavgs90day$year_val), min, na.rm=TRUE)
+                              list(rollingavgs90day$wy_val), min, na.rm=TRUE)
   if (pref == "median") {
     dl5 <- median(min90daybyyear$x)
   }

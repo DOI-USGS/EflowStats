@@ -18,7 +18,7 @@ dh4 <- function(qfiletempf, pref = "mean") {
   rollingavgs30day <- subset(day30rollingavg, day30rollingavg$day30mean != 
                                "NA")
   max30daybyyear <- aggregate(rollingavgs30day$day30mean, 
-                              list(rollingavgs30day$year_val), max, na.rm=TRUE)
+                              list(rollingavgs30day$wy_val), max, na.rm=TRUE)
   if (pref == "median") {
     dh4 <- median(max30daybyyear$x)
   }

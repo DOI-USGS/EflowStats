@@ -13,13 +13,13 @@
 #' qfiletempf<-read.csv(load_data)
 #' mh14(qfiletempf)
 mh14 <- function(qfiletempf) {
-  maxmonbymoyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 
+  maxmonbymoyr <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val, 
                                                        qfiletempf$month_val), FUN = max, na.rm=TRUE)
   colnames(maxmonbymoyr) <- c("Year", "Month", "momax")
   maxmonbyyrr <- aggregate(maxmonbymoyr$momax, list(maxmonbymoyr$Year), 
                            FUN = max, na.rm=TRUE)
   colnames(maxmonbyyrr) <- c("Year", "yrmax")
-  medflowbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
+  medflowbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                            FUN = median, na.rm=TRUE)
   colnames(medflowbyyr) <- c("Year", "yrmed")
   ratiomaxmed <- maxmonbyyrr$yrmax/medflowbyyr$yrmed

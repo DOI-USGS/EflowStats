@@ -18,17 +18,17 @@
 #' drain_area<-56.5
 #' ma41.45(qfiletemp,drain_area)
 ma41.45 <- function(qfiletemp,drain_area) {
-  meanbyyr <- aggregate(qfiletemp$discharge, list(qfiletemp$year_val), FUN = mean, na.rm=TRUE)
+  meanbyyr <- aggregate(qfiletemp$discharge, list(qfiletemp$wy_val), FUN = mean, na.rm=TRUE)
   colnames(meanbyyr) <- c("Year","meanyr")
   sortmeanbyyr <- sort(meanbyyr$meanyr)
-  perc_10 <- floor(findrank(length(sortmeanbyyr), 0.1))
-  perc_25 <- floor(findrank(length(sortmeanbyyr), 0.25))
-  perc_75 <- floor(findrank(length(sortmeanbyyr), 0.75))
-  perc_90 <- floor(findrank(length(sortmeanbyyr), 0.9))
+  perc_10 <- sortmeanbyyr[floor(findrank(length(sortmeanbyyr), 0.1))]
+  perc_25 <- sortmeanbyyr[floor(findrank(length(sortmeanbyyr), 0.25))]
+  perc_75 <- sortmeanbyyr[floor(findrank(length(sortmeanbyyr), 0.75))]
+  perc_90 <- sortmeanbyyr[ifelse(floor(findrank(length(sortmeanbyyr), 0.9))==0,1,0)]
   ma41 <- mean(meanbyyr$meanyr)/drain_area
   ma42 <- (max(meanbyyr$meanyr)-min(meanbyyr$meanyr))/median(meanbyyr$meanyr)
-  ma43 <- (perc_75-perc_25)/median(meanbyyr$meanyr)
-  ma44 <- (perc_90-perc_10)/median(meanbyyr$meanyr)
+  ma43 <- (perc_25-perc_75)/median(meanbyyr$meanyr)
+  ma44 <- (perc_10-perc_90)/median(meanbyyr$meanyr)
   ma45 <- (mean(meanbyyr$meanyr)-median(meanbyyr$meanyr))/median(meanbyyr$meanyr)
   ma41.45 <- list(ma41,ma42,ma43,ma44,ma45)
   return(ma41.45)

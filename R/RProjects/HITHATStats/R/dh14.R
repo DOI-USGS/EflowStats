@@ -11,7 +11,7 @@
 #' qfiletempf<-read.csv(load_data)
 #' dh14(qfiletempf)
 dh14 <- function(qfiletempf) {
-  meanmonthly <- aggregate(qfiletempf$discharge, list(qfiletempf$month_val), mean, na.rm=TRUE)
+  meanmonthly <- aggregate(qfiletempf$discharge, list(qfiletempf$month_val,qfiletempf$wy_val), mean, na.rm=TRUE)
   meanflow <- mean(meanmonthly$x)
   isolateq <- meanmonthly$x
   sortq <- sort(isolateq)

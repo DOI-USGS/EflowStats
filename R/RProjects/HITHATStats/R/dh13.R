@@ -12,14 +12,7 @@
 #' dh13(qfiletempf)
 dh13 <- function(qfiletempf) {
   medianflow <- median(qfiletempf$discharge,na.rm=TRUE)
-  day30mean <- rollmean(qfiletempf$discharge, 30, align = "right", 
-                        na.pad = TRUE)
-  day30rollingavg <- data.frame(qfiletempf, day30mean)
-  rollingavgs30day <- subset(day30rollingavg, day30rollingavg$day30mean != 
-                               "NA")
-  max30daybyyear <- aggregate(rollingavgs30day$day30mean, 
-                              list(rollingavgs30day$year_val), max, na.rm=TRUE)
-  meanmax30day <- mean(max30daybyyear$x)
+  meanmax30day <- dh4(qfiletempf)
   dh13 <- meanmax30day/medianflow
   return(dh13)
 }

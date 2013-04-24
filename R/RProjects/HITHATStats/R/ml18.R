@@ -13,9 +13,9 @@
 #' qfiletempf<-read.csv(load_data)
 #' ml18(qfiletempf)
 ml18 <- function(qfiletempf) {
-  bfibyyear <- bfi(qfiletempf)
+  bfibyyear <- bfi(qfiletempf)  
   sdbfi <- sd(bfibyyear)
   meanbfi <- mean(bfibyyear)
-  ml18 <- (sdbfi*100)/meanbfi
+  ml18 <- (sdbfi/meanbfi)*100
   return(ml18)
 }

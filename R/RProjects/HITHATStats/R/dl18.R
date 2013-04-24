@@ -12,26 +12,16 @@
 #' qfiletempf<-read.csv(load_data)
 #' dl18(qfiletempf)
 dl18 <- function(qfiletempf, pref = "mean") {
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  hfcountzeros <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, qfiletempf$year_val == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge < 
-                         0.001)
-    counter <- counter + 1
-    hfcountzeros[counter] <- length(echfcrit$discharge)
-  }
-  hfcntzeros <- hfcountzeros
+  subset_zero <- subset(qfiletempf,qfiletempf$discharge==0)
+  if (nrow(subset_zero)>0) {
+  subset_zero$discharge <- subset_zero$discharge+1
+  zero_cnts <- aggregate(subset_zero$discharge, list(qfiletempf$wy_val), sum)
+  } else {zero_cnts <- data.frame(x=rep(0,1))}
   if (pref == "median") {
-    dl18 <- median(hfcntzeros)
+    dl18 <- median(zero_cnts$x)
   }
   else {
-    dl18 <- mean(hfcntzeros)
+    dl18 <- mean(zero_cnts$x)
   }
   return(dl18)
 }

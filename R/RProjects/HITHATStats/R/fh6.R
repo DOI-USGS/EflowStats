@@ -13,26 +13,26 @@
 #' fh6(qfiletempf)
 fh6 <- function(qfiletempf, pref = "mean") {
   hfcrit <- 3*ma2(qfiletempf)
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
+  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                        FUN = median, na.rm=TRUE)
   colnames(noyears) <- c("Year", "momax")
   noyrs <- length(noyears$Year)
-  hfcountbyyrfh4 <- rep(0, noyrs)
-  counter <- 0
-  for (i in as.numeric(noyears$Year[1]):as.numeric(noyears$Year[noyrs])) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$year_val) == 
-                         i)
-    echfcrit <- subset(subsetyr, subsetyr$discharge > 
-                         hfcrit)
-    counter <- counter + 1
-    hfcountbyyrfh4[counter] <- length(echfcrit$discharge)
-  }
-  hfcntbyyrfh4 <- hfcountbyyrfh4
+  counter <- rep(0,noyrs)
+  for (i in 1:noyrs) {
+    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    flag <- 0
+    counter[i] <- 0
+    for (j in 1:nrow(subsetyr)) {
+      if (subsetyr$discharge[j]>hfcrit) {
+        flag <- flag+1
+        counter[i] <- ifelse(flag==1,counter[i]+1,counter[i])
+      } else {flag <- 0}
+    }}
   if (pref == "median") {
-    fh6 <- median(hfcntbyyrfh4)
+    fh6 <- median(counter)
   }
   else {
-    fh6 <- mean(hfcntbyyrfh4)
+    fh6 <- mean(counter)
   }
   return(fh6)
 }

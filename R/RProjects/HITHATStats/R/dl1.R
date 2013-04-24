@@ -12,18 +12,12 @@
 #' qfiletempf<-read.csv(load_data)
 #' dl1(qfiletempf)
 dl1 <- function(qfiletempf, pref = "mean") {
-  day1mean <- rollmean(qfiletempf$discharge, 1, align = "right", 
-                       na.pad = TRUE)
-  day1rollingavg <- data.frame(qfiletempf, day1mean)
-  rollingavgs1day <- subset(day1rollingavg, day1rollingavg$day1mean != 
-                              "NA")
-  min1daybyyear <- aggregate(rollingavgs1day$day1mean, 
-                             list(rollingavgs1day$year_val), min, na.rm=TRUE)
+  annualminimum <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), min)
   if (pref == "median") {
-    dl1 <- median(min1daybyyear$x)
+    dl1 <- median(annualminimum$x)
   }
   else {
-    dl1 <- mean(min1daybyyear$x)
+    dl1 <- mean(annualminimum$x)
   }
   return(dl1)
 }

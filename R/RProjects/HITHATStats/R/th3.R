@@ -18,10 +18,12 @@ th3 <- function(qfiletempf) {
   qfiletempf$diff <- (qfiletempf$discharge-lfcrit)
   jul_day_sum <- aggregate(qfiletempf$diff, list(qfiletempf$jul_val), sum)
   maxdur <- rep(0,nrow(jul_day_sum))
+  flag <- 0
   for (i in 1:365) {
     if (!is.na(jul_day_sum$x[i])==TRUE) {
     if (jul_day_sum$x[i]<=0) {
-      maxdur[i]<-maxdur[i-1]+1 
+      flag <- flag+1
+      maxdur[i]<-flag 
     }} else {
       maxdur[i] <- 0
     }
