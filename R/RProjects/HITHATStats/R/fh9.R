@@ -32,10 +32,10 @@ fh9 <- function(qfiletempf, pref = "mean") {
       } else {flag <- 0}
     }}
   if (pref == "median") {
-    fh9 <- median(hfcntbyyrfh4)
+    fh9 <- median(counter)
   }
   else {
-    fh9 <- mean(hfcntbyyrfh4)
+    fh9 <- mean(counter)
   }
   return(fh9)
 }

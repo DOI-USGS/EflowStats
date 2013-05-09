@@ -17,11 +17,11 @@
 #' qfiletemp<-read.csv(load_data)
 #' ma36.40(qfiletemp)
 ma36.40 <- function(qfiletemp) {
-  meanbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletempf$year_val), FUN = mean, na.rm=TRUE)
+  meanbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletemp$year_val), FUN = mean, na.rm=TRUE)
   colnames(meanbymon) <- c("Month","Year","meanmo")
-  maxbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletempf$year_val), FUN = max, na.rm=TRUE)
+  maxbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletemp$year_val), FUN = max, na.rm=TRUE)
   colnames(maxbymon) <- c("Month","Year","maxmo")
-  minbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletempf$year_val), FUN = min, na.rm=TRUE)
+  minbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletemp$year_val), FUN = min, na.rm=TRUE)
   colnames(minbymon) <- c("Month","Year","minmo")
   sortmeanbymon <- sort(meanbymon$meanmo)
   perc_10 <- sortmeanbymon[floor(findrank(length(sortmeanbymon), 0.1))]

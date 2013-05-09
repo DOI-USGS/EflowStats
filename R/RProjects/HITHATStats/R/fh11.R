@@ -12,8 +12,8 @@
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 #' qfiletempf<-read.csv(load_data)
 #' sites<-"02178400"
-#' peakDaily<-getPeakData(sites)
-#' thresh<-getPeakThresh(qfiletempf,peakDaily)
+#' peakValues<-getPeakData(sites)
+#' thresh<-1161
 #' fh11(qfiletempf,thresh)
 fh11 <- function(qfiletempf, thresh, pref = "mean") {
   lfcrit <- thresh
@@ -33,10 +33,10 @@ fh11 <- function(qfiletempf, thresh, pref = "mean") {
     }
   }
   if (pref == "median") {
-    fh11 <- median(hfcntbyyrfh4)
+    fh11 <- median(hfcountbyyrfh4)
   }
   else {
-    fh11 <- mean(hfcntbyyrfh4)
+    fh11 <- mean(hfcountbyyrfh4)
   }
   return(fh11)
 }

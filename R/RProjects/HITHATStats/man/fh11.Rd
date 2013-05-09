@@ -28,8 +28,8 @@
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 qfiletempf<-read.csv(load_data)
 sites<-"02178400"
-peakDaily<-getPeakData(sites)
-thresh<-getPeakThresh(qfiletempf,peakDaily)
+peakValues<-getPeakData(sites)
+thresh<-1161
 fh11(qfiletempf,thresh)
 }
 
