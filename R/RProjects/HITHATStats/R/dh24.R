@@ -36,6 +36,6 @@ dh24 <- function(qfiletempf) {
   subset_dur <- dur[1:nevents ,]
   meanbyyr <- aggregate(subset_dur$dur, list(subset_dur$Year), mean)
   colnames(meanbyyr) <- c("Year", "num_mean")
-  dh24 <- mean(num_year$x)
+  dh24 <- mean(meanbyyr$num_mean)
   return(dh24)
 }
