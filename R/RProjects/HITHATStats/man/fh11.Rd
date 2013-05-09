@@ -2,11 +2,17 @@
 \alias{fh11}
 \title{Function to return the FH11 hydrologic indicator statistic for a given data frame}
 \usage{
-  fh11(qfiletempf)
+  fh11(qfiletempf, thresh, pref = "mean")
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
   column containing daily flow values}
+
+  \item{thresh}{numeric containing 1.67-year flood
+  threshold calculated by getPeakThresh}
+
+  \item{pref}{string containing a "mean" or "median"
+  preference}
 }
 \value{
   fh11 numeric containing the median number of flow evens
