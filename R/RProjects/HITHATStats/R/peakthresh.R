@@ -13,7 +13,7 @@
 #' sites<-"02178400"
 #' peakDaily<-getPeakData(sites)
 #' getPeakThresh(obs_data,peakDaily)
-getPeakData <- function(obs_data,peakDaily) {
+getPeakThresh <- function(obs_data,peakDaily) {
 peakDaily <- aggregate(obs_data$discharge,list(obs_data$wy_val),max)
 colnames(peakDaily) <- c("wy_val","discharge")
 peakInst <- peakValues[as.numeric(peakValues$wy_val)>=min(as.numeric(peakDaily$wy_val)) & as.numeric(peakValues$wy_val)<=max(as.numeric(peakDaily$wy_val)),]
