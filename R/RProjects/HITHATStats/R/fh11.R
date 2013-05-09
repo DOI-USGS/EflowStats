@@ -11,7 +11,10 @@
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 #' qfiletempf<-read.csv(load_data)
-#' fh11(qfiletempf)
+#' sites<-"02178400"
+#' peakDaily<-getPeakData(sites)
+#' thresh<-getPeakThresh(qfiletempf,peakDaily)
+#' fh11(qfiletempf,thresh)
 fh11 <- function(qfiletempf, thresh, pref = "mean") {
   lfcrit <- thresh
   noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
