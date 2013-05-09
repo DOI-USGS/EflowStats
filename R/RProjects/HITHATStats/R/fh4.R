@@ -16,11 +16,14 @@ fh4 <- function(qfiletempf, pref = "mean") {
   highflow <- subset(qfiletempf,qfiletempf$discharge>hfcrit)
   if (nrow(highflow)>0) {
   highbyyr <- aggregate(highflow$discharge,list(highflow$wy_val),FUN=length)
+  numrows <- nrow(highbyyr)
+  numyrs <- length(unique(qfiletempf$wy_val))
+  if (numrows<numyrs) { highbyyr_x <- c(highbyyr$x,rep(0,numyrs-numrows)) } else { highbyyr_x <- highbyyr$x}
   if (pref == "median") {
-    fh4 <- median(highbyyr$x)
+    fh4 <- median(highbyyr_x)
   }
   else {
-    fh4 <- mean(highbyyr$x)
+    fh4 <- mean(highbyyr_x)
   }}
   else {
     fh4 <- 'NA'

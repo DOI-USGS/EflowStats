@@ -13,7 +13,7 @@
 dl14 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge
   sortq <- sort(isolateq)
-  frank <- floor(findrank(length(sortq), 0.25))
+  frank <- floor(findrank(length(sortq), 0.75))
   hfcrit <- sortq[frank]
   medianq <- median(qfiletempf$discharge)
   dl14 <- hfcrit/medianq
