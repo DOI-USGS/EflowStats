@@ -9,8 +9,8 @@
   containing daily flow values}
 }
 \value{
-  ml20 numeric value of the ratio of total flow to total
-  base flow for the given data frame
+  ml20 numeric value of the ratio of total base flow to
+  total flow for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
@@ -22,7 +22,7 @@
   set it to zero. Fill in the zero values using linear
   interpolation. Compute the total flow for the entire
   record and the total base flow for the entire record.
-  ML20 is the ratio of total flow to total base flow.
+  ML20 is the ratio of total base flow to total flow.
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

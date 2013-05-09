@@ -126,3 +126,5 @@ Collate:
     'ra6.R'
     'ra7.R'
     'ra8.9.R'
+    'peakflow.R'
+    'peakthresh.R'

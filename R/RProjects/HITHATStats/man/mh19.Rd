@@ -9,13 +9,13 @@
   containing daily flow values}
 }
 \value{
-  mh19 numeric value of the mean daily flow for the given
-  data frame
+  mh19 numeric value of the skewness of log of maximum
+  annual flows for the given data frame
 }
 \description{
   This function accepts a data frame that contains columns
   named "discharge" and "year_val" and calculates the
-  skewness in annual maximum flows.
+  skewness in log of annual maximum flows.
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
