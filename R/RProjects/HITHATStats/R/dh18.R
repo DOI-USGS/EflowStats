@@ -33,6 +33,7 @@ dh18 <- function(qfiletempf) {
   subset_dur <- dur[1:nevents ,]
   meanbyyr <- aggregate(subset_dur$dur, list(subset_dur$Year), mean)
   colnames(meanbyyr) <- c("Year", "num_mean")
+  if (nrow(meanbyyr)>0) {
   dh18 <- mean(meanbyyr$num_mean) 
   } else { dh18<-'NA'}
   return(dh18)
