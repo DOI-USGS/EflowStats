@@ -10,7 +10,7 @@
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 #' qfiletempf<-read.csv(load_data)
-#' dh24(qfiletempf)
+#' dh24(qfiletempf, 1158)
 dh24 <- function(qfiletempf, thresh) {
   lfcrit <- thresh
   noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
