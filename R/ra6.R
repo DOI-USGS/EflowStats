@@ -11,11 +11,11 @@
 #' qfiletempf<-read.csv(load_data)
 #' ra6(qfiletempf)
 ra6 <- function(qfiletempf) {
-  disch_log10 <- ifelse(qfiletempf$discharge>0,log10(qfiletempf$discharge),log10(.01))
-  diffbtdays <- diff(disch_log10, lag = 1, 
+  disch_log <- ifelse(qfiletempf$discharge>0,log(qfiletempf$discharge),log(.01))
+  diffbtdays <- diff(disch_log, lag = 1, 
                      differences = 1)
   findrisevalues <- subset(diffbtdays, diffbtdays > 
                              0)
-  ra6 <- median(findrisevalues)
+  ra6 <- median(abs(findrisevalues))
   return(ra6)
 }
