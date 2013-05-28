@@ -2,11 +2,14 @@
 \alias{th3}
 \title{Function to return the TH3 hydrologic indicator statistic for a given data frame}
 \usage{
-  th3(qfiletempf)
+  th3(qfiletempf, thresh)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
   column containing daily flow values}
+
+  \item{thresh}{numeric containing 1.67-year flood
+  threshold calculated by getPeakThresh}
 }
 \value{
   tl4 numeric containing the ratio of maximum duration
