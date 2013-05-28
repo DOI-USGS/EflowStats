@@ -10,7 +10,7 @@
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 #' qfiletempf<-read.csv(load_data)
-#' ta3(qfiletempf)
+#' ta3(qfiletempf, 1158)
 ta3 <- function(qfiletempf, thresh) {
   lfcrit <- thresh
   nomonyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val,qfiletempf$month_val), 
