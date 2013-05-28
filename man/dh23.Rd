@@ -2,11 +2,14 @@
 \alias{dh23}
 \title{Function to return the DH23 hydrologic indicator statistic for a given data frame}
 \usage{
-  dh23(qfiletempf)
+  dh23(qfiletempf, thresh)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
   column containing daily flow values}
+
+  \item{thresh}{numeric containing 1.67-year flood
+  threshold calculated by getPeakThresh}
 }
 \value{
   dh23 list containing the mean annual flood days for the
@@ -21,6 +24,6 @@
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 qfiletempf<-read.csv(load_data)
-dh23(qfiletempf)
+dh23(qfiletempf, 1158)
 }
 
