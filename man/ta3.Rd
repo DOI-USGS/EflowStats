@@ -2,11 +2,14 @@
 \alias{ta3}
 \title{Function to return the TA3 hydrologic indicator statistic for a given data frame}
 \usage{
-  ta3(qfiletempf)
+  ta3(qfiletempf, thresh)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
   column containing daily flow values}
+
+  \item{thresh}{numeric containing 1.67-year flood
+  threshold calculated by getPeakThresh}
 }
 \value{
   ta3 numeric containing the max floods in a period over
