@@ -15,16 +15,15 @@
   given site}
 }
 \value{
-  ml22 numeric value of the mean of annual minimum flows
-  divided by the drainage area for the given data frame
+  ml22 numeric value of ML22 for the given data frame
 }
 \description{
   This function accepts a data frame that contains columns
   named "discharge" and "year_val" and a numeric drainage
-  area and calculates ML22. Specific mean annual minimum
-  flow. ML22 is the mean (or median - use preference
-  option) of the annual minimum flows divided by the
-  drainage area.
+  area and calculates ML22, specific mean annual minimum
+  flow.  ML22 is the mean (or median-Use Preference option)
+  of the annual minimum flows divided by the drainage area
+  (cubic feet per second/square mile-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

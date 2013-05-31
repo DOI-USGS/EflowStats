@@ -1,12 +1,12 @@
 #' Function to return the ML19 hydrologic indicator statistic for a given data frame
 #' 
 #' This function accepts a data frame that contains columns named "discharge" and "year_val" and 
-#' calculates the base flow. Compute the ratios of the minimum annual flow to mean annual flow for 
-#' each year. ML19 is the mean (or median - use preference option) of these ratios times 100.
+#' calculates the base flow index ML19. Compute the ratios of the minimum annual flow to mean annual flow for 
+#' each year. ML19 is the mean (or median-Use Preference option) of these ratios times 100 (dimensionless-temporal).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @param pref string containing a "mean" or "median" preference
-#' @return ml19 numeric value of the min annual flow/mean annual flow for the given data frame
+#' @return ml19 numeric value of ML19 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

@@ -9,16 +9,16 @@
   column containing daily flow values}
 }
 \value{
-  mh24 numeric value of the mean daily flow for the given
-  data frame
+  mh24 numeric value of MH24 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates MH24. High peak flow.
+  named "discharge" and calculates MH24, high peak flow.
   Compute the average peak flow value for flow events above
-  a threshold equal to the median for for the entire
+  a threshold equal to the median flow for the entire
   record. MH24 is the average peak flow divided by the
-  median flow for the entire record.
+  median flow for the entire record
+  (dimensionless-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

@@ -1,11 +1,13 @@
 #' Function to return the FH3 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the high flood pulse count (above 3 times the median) for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' FH3; High flood pulse count. Compute the average number of days per year that the flow is above a threshold equal 
+#' to three times the median flow for the entire record. FH3 is the mean (or median-Use Preference option) of the 
+#' annual number of days for all years (number of days/year-temporal).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @param pref string containing a "mean" or "median" preference
-#' @return fh3 numeric value of high flood pulse count for the given data frame
+#' @return fh3 numeric value of FH3 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

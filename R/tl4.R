@@ -1,20 +1,21 @@
 #' Function to return the TL4 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the predictability of flow above the 20th percentile for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and a threshold value obtained 
+#' using the peakdata and getPeakThresh functions and calculates 
+#' TL4; Seasonal predictability of non-low flow. Compute the number of days that flow is above the 5-year flood 
+#' threshold as the ratio of number of days to 365 or 366 (leap year) for each year. TL4 is the maximum of the yearly 
+#' ratios (dimensionless-spatial).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
-#' @return tl4 numeric containing the maximum of annual ratios of days above the 20th pctl to days in the year for the given data frame
+#' @param thresh value containing the 5-year recurrence value for the site
+#' @return tl4 numeric containing TL4 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 #' qfiletempf<-read.csv(load_data)
-#' tl4(qfiletempf)
-tl4 <- function(qfiletempf) {
-  isolateq <- qfiletempf$discharge
-  sortq <- sort(isolateq)
-  frank <- floor(findrank(length(sortq), 0.80))
-  lfcrit <- sortq[frank]
+#' tl4(qfiletempf, 1161.38)
+tl4 <- function(qfiletempf, thresh) {
+  lfcrit <- thresh
   subset_crit <- subset(qfiletempf, qfiletempf$discharge>lfcrit)
   num_year <- aggregate(subset_crit$discharge, list(subset_crit$wy_val), function(x) sum(!is.na(x)))
   names(num_year) <- c('wy_val','num_days')

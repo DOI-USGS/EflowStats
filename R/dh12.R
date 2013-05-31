@@ -1,10 +1,12 @@
 #' Function to return the DH12 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the annual 7-day moving average maximum flow divided by the median flow of the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' DH12; Annual maximum of 7-day moving average flows divided by the median for the entire record. Compute the 
+#' maximum daily average flow for each year. DH12 is the mean of these values divided by the median for the 
+#' entire record (dimensionless-spatial).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
-#' @return dh12 numeric containing the annual 7-day moving average maximum flow divided by the median flow for the given data frame
+#' @return dh12 numeric containing DH12 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

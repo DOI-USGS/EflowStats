@@ -1,10 +1,12 @@
 #' Function to return the RA7 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the median change in log of discharge for days with negative change for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' RA7; Change of flow. Compute the loge of the flows for the entire flow record. Compute the change in log of 
+#' flow for days in which the change is negative for the entire flow record. RA7 is the median of these log 
+#' values (cubic feet per second/day-temporal).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
-#' @return ra7 numeric containing the median log of discharge change for days with negative change for the given data frame
+#' @return ra7 numeric containing RA7 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

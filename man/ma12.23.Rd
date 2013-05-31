@@ -20,8 +20,9 @@
   named "discharge" and "month_val" and calculates the
   means (or medians - use preference option) of monthly
   flow values. Compute the means for each month over the
-  entire record. For examples, MA12 is the mean of all
-  January flow values.
+  entire record. For example, MA12 is the mean of all
+  January flow values over the entire record (cubic feet
+  per second - temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

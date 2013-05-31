@@ -9,16 +9,18 @@
   column containing daily flow values}
 }
 \value{
-  mh1.12 data frame containing the mean or medians for each
-  month
+  mh1.12 data frame containing the mean or median maximum
+  flows for each month
 }
 \description{
   This function accepts a data frame that contains columns
   named "discharge", "year_val" and "month_val" and
-  calculates the mean (or median - use preference option)
+  calculates the mean (or median-Use Preference option)
   maximum flows for each month across all years. Compute
-  the maximums for each month. For example, MH1 is the mean
-  of the maximums of all January flow values.
+  the maximum daily flow for each month over the entire
+  flow record. For example, MH1 is the mean of the maximums
+  of all January flow values over the entire record (cubic
+  feet per second-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

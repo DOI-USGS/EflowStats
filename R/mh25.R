@@ -1,12 +1,12 @@
 #' Function to return the MH25 hydrologic indicator statistic for a given data frame
 #' 
 #' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates MH25. High peak flow. Compute the average peak flow value for flow events above a 
-#' threshold equal to three times the median for for the entire record. MH25 is the average peak flow divided by 
-#' the median flow for the entire record.
+#' calculates MH25, high peak flow. Compute the average peak-flow value for flow events above a threshold equal 
+#' to three times the median flow for the entire record. MH25 is the average peak flow divided by the median flow 
+#' for the entire record (dimensionless-temporal).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
-#' @return mh25 numeric value of the mean daily flow for the given data frame
+#' @return mh25 numeric value of MH25 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

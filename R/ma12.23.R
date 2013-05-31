@@ -2,7 +2,8 @@
 #' 
 #' This function accepts a data frame that contains columns named "discharge" and "month_val" and 
 #' calculates the means (or medians - use preference option) of monthly flow values. Compute the means 
-#' for each month over the entire record. For examples, MA12 is the mean of all January flow values.
+#' for each month over the entire record. For example, MA12 is the mean of all January flow values over the 
+#' entire record (cubic feet per second - temporal).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @param pref string containing a "mean" or "median" preference

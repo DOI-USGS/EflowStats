@@ -12,14 +12,18 @@
   threshold calculated by getPeakThresh}
 }
 \value{
-  tl4 numeric containing the ratio of maximum duration
-  across years of flow below the 60th pctl to days in the
-  year for the given data frame
+  tl4 numeric containing TH3 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the predictability of
-  flow below the 60th percentile for the entire record
+  named "discharge" and a threshold value obtained using
+  the peakdata and getPeakThresh functions and calculates
+  TH3; Seasonal predictability of nonflooding. Computed as
+  the maximum proportion of a 365-day year that the flow is
+  less than the 1.67-year flood threshold and also occurs
+  in all years. Accumulate nonflood days that span all
+  years. TH3 is maximum length of those flood-free periods
+  divided by 365 (dimensionless-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

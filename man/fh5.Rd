@@ -12,13 +12,16 @@
   preference}
 }
 \value{
-  fh5 numeric value of high flood pulse count for the given
-  data frame
+  fh5 numeric value of FH5 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the high flood pulse
-  count (above the median) for the entire record
+  named "discharge" and calculates FH5; Flood frequency.
+  Compute the average number of flow events with flows
+  above a threshold equal to the median flow value for the
+  entire flow record. FH5 is the average (or median - Use
+  Preference option) number of events (number of
+  events/year-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

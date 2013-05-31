@@ -12,13 +12,15 @@
   preference}
 }
 \value{
-  ra1 numeric containing the mean of the rise rate for the
-  given data frame
+  ra1 numeric containing RA1 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the mean of the rise
-  rate for the entire record
+  named "discharge" and calculates RA1; Rise rate. Compute
+  the change in flow for days in which the change is
+  positive for the entire flow record. RA1 is the mean (or
+  median-Use Preference option) of these values (cubic feet
+  per second/day-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

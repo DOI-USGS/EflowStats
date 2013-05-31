@@ -9,16 +9,16 @@
   column containing daily flow values}
 }
 \value{
-  ml18 numeric value of the variability in base flow for
-  the given data frame
+  ml18 numeric value of ML18 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
   named "discharge" and calculates the variability in base
-  flow. Compute the standard deviation for the ratios of
-  7-day moving average flows to mean annual flows for each
-  year. ML18 is the standard deviation time 100 divided by
-  the mean of the ratios.
+  flow index 1. Compute the standard deviation for the
+  ratios of minimum 7-day moving average flows to mean
+  annual flows for each year.  ML18 is the standard
+  deviation times 100 divided by the mean of the ratios.
+  (percent-spatial)
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

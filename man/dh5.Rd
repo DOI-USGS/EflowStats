@@ -12,13 +12,15 @@
   preference}
 }
 \value{
-  dh5 numeric containing the mean of the annual maximum
-  30-day moving average flow for the given data frame
+  dh5 numeric containing DH5 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the mean of the annual
-  maximum 30-day moving average flow for the entire record
+  named "discharge" and calculates DH5; Annual maximum of
+  90-day moving average flows. Compute the maximum of a
+  90-day moving average flow for each year. DH5 is the mean
+  (or median-Use Preference option) of these values (cubic
+  feet per second-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

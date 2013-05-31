@@ -1,11 +1,13 @@
 #' Function to return the DH4 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the mean of the annual maximum 30-day moving average flow for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' DH4; Annual maximum of 30-day moving average flows. Compute the maximum of 30-day moving average flows. Compute 
+#' the maximum of a 30-day moving average flow for each year. DH4 is the mean (or median-Use Preference option) 
+#' of these values (cubic feet per second-temporal).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @param pref string containing a "mean" or "median" preference
-#' @return dh4 numeric containing the mean of the annual maximum 30-day moving average flow for the given data frame
+#' @return dh4 numeric containing DH4 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

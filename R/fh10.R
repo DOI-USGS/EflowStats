@@ -1,11 +1,13 @@
 #' Function to return the FH10 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the average number of annual flow events above a threshold (the median of the annual minima) for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' FH10; Flood frequency. Compute the average number of flow events with flows above a threshold equal to 
+#' median of the annual minima for the entire flow record. FH10 is the average (or median-Use Preference option) 
+#' number of events (number of events/year-temporal).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @param pref string containing a "mean" or "median" preference
-#' @return fh10 numeric value of average annual flow events above a threshold for the given data frame
+#' @return fh10 numeric value of FH10 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

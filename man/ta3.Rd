@@ -12,14 +12,19 @@
   threshold calculated by getPeakThresh}
 }
 \value{
-  ta3 numeric containing the max floods in a period over
-  total floods for the given data frame
+  ta3 numeric containing TA3 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the seasonal
-  predictability of floods above the 60th percentile for
-  the entire record
+  named "discharge" and threshold value obtained using the
+  peakdata and peakthresh functions and calculates TA3;
+  Seasonal predictability of flooding. Divide years up into
+  2-month periods (that is, Oct-Nov, Dec-Jan, and so
+  forth). Count the number of flood days (flow events with
+  flows > 1.67-year flood) in each period over the entire
+  flow record. TA3 is the maximum number of flood days in
+  any one period divided by the total number of flood days
+  (dimensionless-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

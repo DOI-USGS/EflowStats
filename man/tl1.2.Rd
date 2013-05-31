@@ -9,15 +9,23 @@
   column containing daily flow values}
 }
 \value{
-  tl1.2 list containing the mean and variability of the
-  Julian date of the annual minimum flow for the given data
+  tl1.2 list containing TL1 and TL2 for the given data
   frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the mean and variability
-  of the Julian date of the annual minimum flow for the
-  entire record
+  named "discharge" and calculates TL1; Julian date of
+  annual minimum. Determine the Julian date that the
+  minimum flow occurs for each water year. Transform the
+  dates to relative values on a circular scale (radians or
+  degrees). Compute the x and y components for each year
+  and average them across all years. Compute the mean angle
+  as the arc tangent of y-mean divided by x-mean. Transform
+  the resultant angle back to Julian date (Julian
+  day-spatial). and TL2; Variability in Julian date of
+  annual minima. Compute the coefficient of variation for
+  the mean x and y components and convert to a date (Julian
+  day-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

@@ -17,8 +17,12 @@
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the high flood pulse
-  count (above 7 times the median) for the entire record
+  named "discharge" and calculates FH4; High flood pulse
+  count. Compute the average number of days per year that
+  the flow is above a threshold equal to seven times the
+  median flow for the entire record. FH4 is the mean (or
+  median - Use Preference option) of the annual number of
+  days for all years (number of days/year-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

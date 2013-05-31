@@ -12,13 +12,15 @@
   preference}
 }
 \value{
-  dl3 numeric containing the mean of the annual minimum
-  7-day average flows for the given data frame
+  dl3 numeric containing DL3 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the mean of the annual
-  minimum 7-day average flows for the entire record
+  named "discharge" and calculates DL3; Annual minimum of
+  7-day moving average flow. Compute the minimum of a 7-day
+  moving average flow for each year. DL3 is the mean (or
+  median-Use Preference option) of these values (cubic feet
+  per second-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

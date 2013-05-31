@@ -9,13 +9,14 @@
   column containing daily flow values}
 }
 \value{
-  dl20 numeric containing the number of zero-flow months
-  for the given data frame
+  dl20 numeric containing DL20 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the number of zero-flow
-  months for the entire record
+  named "discharge" and calculates DL20; Number of
+  zero-flow months. While computing the mean monthly flow
+  values, count the number of months in which there was no
+  flow over the entire flow record (percent-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

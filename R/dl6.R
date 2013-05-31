@@ -1,10 +1,11 @@
 #' Function to return the DL6 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the variability of the annual minimum daily average flow for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' DL6; Variability of annual minimum daily average flow. Compute the standard deviation for the minimum daily 
+#' average flow. DL6 is 100 times the standard deviation divided by the mean (percent-spatial).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
-#' @return dl6 numeric containing the variability of the annual minimum daily average flow for the given data frame
+#' @return dl6 numeric containing DL6 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

@@ -12,13 +12,16 @@
   preference}
 }
 \value{
-  fl3 numeric containing the average number of events with
-  flows below 5% of mean for the given data frame
+  fl3 numeric containing FL3 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the average number of
-  events with flows below 5% of mean for the entire record
+  named "discharge" and calculates FL3; Frequency of low
+  pulse spells. Compute the average number of flow events
+  with flows below a threshold equal to 5 percent of the
+  mean flow value for the entire flow record. FL3 is the
+  average (or median-Use Preference option) number of
+  events (number of events/year-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

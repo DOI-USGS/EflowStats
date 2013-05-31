@@ -1,10 +1,10 @@
 #' Function to return data from the NWISWeb peak values service
 #' 
-#' This function accepts a sites parameter that contains the desired 
-#' NWIS site. It returns a data frame containing "Date" and "Discharge"
+#' This function accepts a sites parameter that contains the desired NWIS site. It returns a data frame 
+#' containing peak instantaneous annual flow data for the site. 
 #' 
 #' @param sites string containing the site for the retrieval
-#' @return Peak a data frame containing columns 'Date' and 'Discharge'
+#' @return peakValues a data frame containing columns 'Date' and 'Discharge'
 #' @export
 #' @examples
 #' sites<-"02178400"

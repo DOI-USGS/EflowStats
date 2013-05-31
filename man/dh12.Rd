@@ -9,15 +9,15 @@
   column containing daily flow values}
 }
 \value{
-  dh12 numeric containing the annual 7-day moving average
-  maximum flow divided by the median flow for the given
-  data frame
+  dh12 numeric containing DH12 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the annual 7-day moving
-  average maximum flow divided by the median flow of the
-  entire record
+  named "discharge" and calculates DH12; Annual maximum of
+  7-day moving average flows divided by the median for the
+  entire record. Compute the maximum daily average flow for
+  each year. DH12 is the mean of these values divided by
+  the median for the entire record (dimensionless-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

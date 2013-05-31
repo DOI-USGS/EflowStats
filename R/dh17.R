@@ -1,10 +1,12 @@
 #' Function to return the DH17 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the mean average pulse duration for each year of flow above the median flow for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' DH17; High flow duration. Compute the average duration of flow events with flows above a threshold equal to 
+#' the median flow value for the entire flow record. DH17 is the average (or median-Use Preference option) duration 
+#' of the events (days-temporal).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
-#' @return dh17 numeric containing the mean duration of high pulse flow for the given data frame
+#' @return dh17 numeric containing DH17 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

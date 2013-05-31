@@ -1,11 +1,12 @@
 #' Function to return the MH21 hydrologic indicator statistic for a given data frame
 #' 
 #' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates MH21. High flow volume index. Compute the average volume for flow events above a threshold 
-#' equal to the median flow for the entire record. MH21 is the average volume divided by the median flow for the entire record.
+#' calculates MH21, high flow volume index. Compute the average volume for flow events above a threshold equal to 
+#' the median flow for the entire record. MH21 is the average volume divided by the median flow for the entire 
+#' record (days-temporal).
 #' 
 #' @param x data frame containing a "discharge" column containing daily flow values
-#' @return mh21 numeric value of the average volume of exceedence events divided by the median flow for the given data frame
+#' @return mh21 numeric value of MH21 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

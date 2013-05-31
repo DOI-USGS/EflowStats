@@ -15,7 +15,7 @@
 \description{
   This function accepts a data frame that contains a column
   named "discharge" and calculates the median of the daily
-  flow values for the entire record
+  flow values for the entire record (cubic feet per second)
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

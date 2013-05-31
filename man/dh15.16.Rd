@@ -9,14 +9,21 @@
   column containing daily flow values}
 }
 \value{
-  dh15.16 list containing the median duration of high pulse
-  flow and variability for the given data frame
+  dh15.16 list containing DH15 and DH16 for the given data
+  frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the variability and
-  median average pulse duration for each year of flow above
-  the 75th percentile for the entire record
+  named "discharge" and calculates DH15; High flow pulse
+  duration. Compute the average duration for flow events
+  with flows above a threshold equal to the 75th percentile
+  value for each year in the flow record. DH15 is the
+  median of the yearly average durations
+  (days/year-temporal). and DH16; Variability in high flow
+  pulse duration. Compute the standard deviation for the
+  yearly average high pulse durations. DH16 is 100 times
+  the standard deviation divided by the mean of the yearly
+  average high pulse durations (percent-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

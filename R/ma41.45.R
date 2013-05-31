@@ -1,12 +1,19 @@
 #' Function to return the MA41.45 hydrologic indicator statistics for a given data frame
 #' 
-#' This function accepts a data frame that contains columns named "discharge" and "year_val" and 
-#' calculates MA41; annual runoff. Compute the annual mean daily flows. MA41 is the mean of the annual 
-#' means divided by the drainage area. MA42; Variability across annual flows. MA42 is the maximum annual 
-#' flow minus the minimum annual flow divided by the median annual flow. MA43; Same as MA42, but using the 
-#' 25th and 75th percentiles. MA44; Same as MA42, but using the 10th and 90th percentiles. MA45; 
-#' Skewness in the annual flows. MA45 is the mean of the annual flow means minus the median of the annual 
-#' flows divided by the median of the annual means.
+#' This function accepts a data frame that contains columns named "discharge" and "year_val" and a value "drain_area" 
+#' containing the drainage area (in square miles) and calculates 
+#' MA41; Annual runoff. Compute the annual mean daily flows. MA41 is the mean of the annual means divided 
+#' by the drainage area (cubic feet per second/square mile-temporal). 
+#' MA42; Variability across annual flows.  MA42 is the maximum annual flow minus the minimum annual flow divided by 
+#' the median of mean annual flows (dimensionless-spatial). 
+#' MA43; Variability across annual flows.  Compute the first (25th percentile) and third (75th percentile) quartiles 
+#' and the 10th and 90th percentiles for the annual means (every year in the flow record). MA43 is the third quartile 
+#' minus the first quartile divided by the median of the annual means (dimensionless-spatial). 
+#' MA44; Variability across annual flows.  Compute the first (25th percentile) and third (75th percentile) quartiles 
+#' and the 10th and 90th percentiles for the annual means (every year in the flow record). MA44 is the 90th percentile 
+#' minus the 10th percentile divided by the median of the annual means (dimensionless-spatial). 
+#' MA45; Skewness in the annual flows. MA45 is the mean of the annual flow means minus the median of the annual means 
+#' divided by the median of the annual means (dimensionless-spatial).
 #' 
 #' @param qfiletemp data frame containing a "discharge" column containing daily flow values
 #' @param drain_area numeric containing the drainage area of the selected site

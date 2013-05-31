@@ -12,8 +12,7 @@
   preference}
 }
 \value{
-  ml17 numeric value of the mean annual flow for the given
-  data frame
+  ml17 numeric value of ML17 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
@@ -21,7 +20,8 @@
   the mean annual flows. Compute the minimum of a 7-day
   moving average flow for each year and divide them by the
   mean annual flow for that year. ML17 is the mean (or
-  median - use preference option) of ratios.
+  median-Use Preference option) of those ratios
+  (dimensionless-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

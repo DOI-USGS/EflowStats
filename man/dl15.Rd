@@ -9,14 +9,15 @@
   column containing daily flow values}
 }
 \value{
-  dl15 numeric containing the 90 percent exceedance value
-  divided by the median for the given data frame
+  dl15 numeric containing DL15 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the 90 percent
-  exceedance value divided by the median for the entire
-  record
+  named "discharge" and calculates DL15; Low exceedence
+  flows. Compute the 90-percent exceedence value for the
+  entire flow record. DL15 is the exceedence value divided
+  by the median for the entire record
+  (dimensionless-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

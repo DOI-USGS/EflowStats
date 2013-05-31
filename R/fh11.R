@@ -1,19 +1,22 @@
 #' Function to return the FH11 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the mean number of flow events with flows above the 60th percentile for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and a threshold value calculated 
+#' for the site using the peakdata and peakthresh functions and calculates 
+#' FH11; Flood frequency. Compute the average number of flow events with flows above a threshold equal to flow 
+#' corresponding to a 1.67-year recurrence interval. FH11 is the average (or median-Use Preference option) number 
+#' of events (number of events/year-temporal).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @param thresh numeric containing 1.67-year flood threshold calculated by getPeakThresh
 #' @param pref string containing a "mean" or "median" preference
-#' @return fh11 numeric containing the median number of flow evens above the 60th percentile for the given data frame
+#' @return fh11 numeric containing FH11 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
 #' qfiletempf<-read.csv(load_data)
 #' sites<-"02178400"
 #' peakValues<-getPeakData(sites)
-#' thresh<-1161
+#' thresh<-1158.495
 #' fh11(qfiletempf,thresh)
 fh11 <- function(qfiletempf, thresh, pref = "mean") {
   lfcrit <- thresh

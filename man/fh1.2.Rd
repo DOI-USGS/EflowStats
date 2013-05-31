@@ -12,14 +12,20 @@
   preference}
 }
 \value{
-  fh1.2 list of high flood pulse count and variability for
-  the given data frame
+  fh1.2 list of FH1 and FH2 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the high flood pulse
-  count (above 75th percentile) and variability in high
-  flood pulse count for the entire record
+  named "discharge" and calculates FH1; High flood pulse
+  count. Compute the average number of flow events with
+  flows above a threshold equal to the 75th percentile
+  value for the entire flow record. FH1 is the average (or
+  median-Use Preference option) number of events (number of
+  events/year-temporal). FH2; Variability in high pulse
+  count. Compute the standard deviation in the annual pulse
+  counts for FH1. FH2 is 100 times the standard deviation
+  divided by the mean pulse count (number of
+  events/year-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

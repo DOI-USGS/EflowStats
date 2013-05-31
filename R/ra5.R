@@ -1,10 +1,11 @@
 #' Function to return the RA5 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the ratio of gain days to total number of days for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' RA5; Number of day rises. Compute the number of days in which the flow is greater than the previous day. RA5 
+#' is the number of positive gain days divided by the total number of days in the flow record (dimensionless-spatial).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
-#' @return ra5 numeric containing the ratio of gain days to total days for the given data frame
+#' @return ra5 numeric containing RA5 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

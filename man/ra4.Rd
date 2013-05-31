@@ -9,13 +9,14 @@
   column containing daily flow values}
 }
 \value{
-  ra4 numeric containing the variability of the fall rate
-  for the given data frame
+  ra4 numeric containing RA4 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the variability of the
-  fall rate for the entire record
+  named "discharge" and calculates RA4; Variability in fall
+  rate. Compute the standard deviation for the negative
+  flow changes. RA4 is 100 times the standard deviation
+  divided by the mean (percent-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

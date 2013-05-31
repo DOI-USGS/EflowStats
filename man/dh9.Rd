@@ -9,15 +9,15 @@
   column containing daily flow values}
 }
 \value{
-  dh9 numeric containing the variability of the annual
-  maximum 30-day moving average flow for the given data
-  frame
+  dh9 numeric containing DH9 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the variability of the
-  annual maximum 30-day moving average flow for the entire
-  record
+  named "discharge" and calculates DH9; Variability of
+  annual maximum of 30-day moving average flows. Compute
+  the standard deviation for the maximum 30-day moving
+  averages. DH9 is 100 times the standard deviation divided
+  by the mean (percent-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

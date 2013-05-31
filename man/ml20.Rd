@@ -9,20 +9,20 @@
   containing daily flow values}
 }
 \value{
-  ml20 numeric value of the ratio of total base flow to
-  total flow for the given data frame
+  ml20 numeric value of ML20 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates ML20. Divide the daily
-  flow record into 5-day blocks. Find the minimum flow for
-  each block. Assign the minimum flow as a base flow for
-  that block if 90% of that minimum flow is less than the
-  minimum flows for the blocks on eitherside. Otherwise,
-  set it to zero. Fill in the zero values using linear
-  interpolation. Compute the total flow for the entire
-  record and the total base flow for the entire record.
-  ML20 is the ratio of total base flow to total flow.
+  named "discharge" and calculates base flow index ML20.
+  Divide the daily flow record into 5-day blocks. Find the
+  minimum flow for each block. Assign the minimum flow as a
+  base flow for that block if 90 percent of that minimum
+  flow is less than the minimum flows for the blocks on
+  either side. Otherwise, set it to zero. Fill in the zero
+  values using linear interpolation. Compute the total flow
+  for the entire record and the total base flow for the
+  entire record. ML20 is the ratio of total base flow to
+  total flow (dimensionless-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

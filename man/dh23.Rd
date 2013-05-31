@@ -12,14 +12,18 @@
   threshold calculated by getPeakThresh}
 }
 \value{
-  dh23 list containing the mean annual flood days for the
-  given data frame
+  dh23 list containing DH23 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the mean duration of
-  flow events above the 60th percentile for the entire
-  record
+  named "discharge" and a threshold value obtained using
+  the peakdata and peakthresh functions and calculates
+  DH23; Flood duration. Compute the flood threshold as the
+  flow equivalent for a flood recurrence of 1.67 years.
+  Determine the number of days each year that the flow
+  remains above the flood threshold. DH23 is the mean (or
+  median-Use Preference option) of the number of flood days
+  for years in which floods occur (days-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

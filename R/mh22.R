@@ -1,12 +1,12 @@
 #' Function to return the MH22 hydrologic indicator statistic for a given data frame
 #' 
 #' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates MH22. High flow volume. Compute the average volume for flow events above a threshold equal 
-#' to three times the median flow for the entire record. MH22 is the average volume divided by the 
-#' median flow for the entire record.
+#' calculates MH22, high flow volume. Compute the average volume for flow events above a threshold equal to three 
+#' times the median flow for the entire record. MH22 is the average volume divided by the median flow for the 
+#' entire record (days-temporal).
 #' 
 #' @param x data frame containing a "discharge" column containing daily flow values
-#' @return mh22 numeric value of the average volume of threshold event divided by median flow for the given data frame
+#' @return mh22 numeric value of MH22 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

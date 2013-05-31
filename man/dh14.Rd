@@ -9,15 +9,15 @@
   column containing daily flow values}
 }
 \value{
-  dh14 numeric containing the 95th percentile of mean
-  monthly flows divided by the mean of mean monthly flows
-  for the given data frame
+  dh14 numeric containing DH14 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the 95th percentile of
-  mean monthly flows divided by the mean of mean monthly
-  flows
+  named "discharge" and calculates DH14; Flood duration.
+  Compute the mean of the mean monthly flow values. Find
+  the 95th percentile for the mean monthly flows. DH14 is
+  the 95th percentile value divided by the mean of the
+  monthly means (dimensionless-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

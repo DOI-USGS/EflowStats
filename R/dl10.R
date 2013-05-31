@@ -1,10 +1,11 @@
 #' Function to return the DL10 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the variability of the annual minimum 90-day average flows for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' DL10; Variability of annual minimum of 90-day moving average flow. Compute the standard deviation for the 
+#' minimum 90-day moving averages. DL10 is 100 times the standard deviation divided by the mean (percent-spatial).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
-#' @return dl10 numeric containing the variability of the annual minimum 90-day average flows for the given data frame
+#' @return dl10 numeric containing DL10 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

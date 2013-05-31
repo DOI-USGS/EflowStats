@@ -15,16 +15,15 @@
   preference}
 }
 \value{
-  mh20 numeric value of the mean or median of annual
-  maximum flows divided by the drainage area for the given
-  data frame
+  mh20 numeric value of MH20 for the given data frame
 }
 \description{
   This function accepts a data frame that contains columns
-  named "discharge" and "year_val" and calculates NH20.
-  Specific mean annual maximum flow. MH20 is the mean (or
-  median - use preference option) of the annual maximum
-  flows divided by the drainage area.
+  named "discharge" and "year_val" and calculates MH20,
+  specific mean annual maximum flow. MH20 is the mean (or
+  median-Use Preference option) of the annual maximum flows
+  divided by the drainage area (cubic feet per
+  second/square mile-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

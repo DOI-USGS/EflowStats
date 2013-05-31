@@ -9,14 +9,17 @@
   column containing daily flow values}
 }
 \value{
-  dh20 list containing the mean duration of high pulse flow
-  for the given data frame
+  dh20 list containing DH20 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the mean duration of
-  flow events above the 75th percentile for the entire
-  record
+  named "discharge" and calculates DH20; High flow
+  duration. Compute the 75th percentile value for the
+  entire flow record. Compute the average duration of flow
+  events with flows above a threshold equal to the 75th
+  percentile value for the median annual flows. DH20 is the
+  average (or median-Use Preference option) duration of the
+  events (days-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

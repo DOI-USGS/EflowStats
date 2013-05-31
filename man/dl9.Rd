@@ -9,13 +9,15 @@
   column containing daily flow values}
 }
 \value{
-  dl9 numeric containing the variability of the annual
-  minimum 30-day average flows for the given data frame
+  dl9 numeric containing DL9 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the variability of the
-  annual minimum 30-day average flows for the entire record
+  named "discharge" and calculates DL9; Variability of
+  annual minimum of 30-day moving average flow. Compute the
+  standard deviation for the minimum 30-day moving
+  averages. DL9 is 100 times the standard deviation divided
+  by the mean (percent-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

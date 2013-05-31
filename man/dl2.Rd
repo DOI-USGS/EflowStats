@@ -12,13 +12,15 @@
   preference}
 }
 \value{
-  dl2 numeric containing the mean of the annual minimum
-  3-day average flows for the given data frame
+  dl2 numeric containing DL2 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the mean of the annual
-  minimum 3-day average flows for the entire record
+  named "discharge" and calculates DL2; Annual minimum of
+  3-day moving average flow. Compute the minimum of a 3-day
+  moving average flow for each year. DL2 is the mean (or
+  median-Use Preference option) of these values (cubic feet
+  per second-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

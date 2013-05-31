@@ -9,13 +9,14 @@
   column containing daily flow values}
 }
 \value{
-  ra2 numeric containing the variability of the rise rate
-  for the given data frame
+  ra2 numeric containing RA2 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the variability of the
-  rise rate for the entire record
+  named "discharge" and calculates RA2; Variability in rise
+  rate. Compute the standard deviation for the positive
+  flow changes. RA2 is 100 times the standard deviation
+  divided by the mean (percent-spatial).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

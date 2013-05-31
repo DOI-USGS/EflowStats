@@ -12,14 +12,16 @@
   preference}
 }
 \value{
-  fh10 numeric value of average annual flow events above a
-  threshold for the given data frame
+  fh10 numeric value of FH10 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the average number of
-  annual flow events above a threshold (the median of the
-  annual minima) for the entire record
+  named "discharge" and calculates FH10; Flood frequency.
+  Compute the average number of flow events with flows
+  above a threshold equal to median of the annual minima
+  for the entire flow record. FH10 is the average (or
+  median-Use Preference option) number of events (number of
+  events/year-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

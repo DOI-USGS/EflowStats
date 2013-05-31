@@ -12,14 +12,16 @@
   preference}
 }
 \value{
-  fh9 numeric value of high flood pulse count for the given
-  data frame
+  fh9 numeric value of FH9 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates the high flood pulse
-  count (above the 75 percent exceedance value) for the
-  entire record
+  named "discharge" and calculates FH9; Flood frequency.
+  Compute the average number of flow events with flows
+  above a threshold equal to 75-percent exceedence value
+  for the entire flow record. FH9 is the average (or
+  median-Use Preference option) number of events (number of
+  events/year-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

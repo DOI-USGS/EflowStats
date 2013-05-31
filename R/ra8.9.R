@@ -1,10 +1,13 @@
 #' Function to return the RA8 and RA9 hydrologic indicator statistics for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the variability and mean annual changes in flow from one day to the next for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' RA8; Number of reversals. Compute the number of days in each year when the change in flow from one day to the 
+#' next changes direction. RA8 is the average (or median - Use Preference option) of the yearly values (days-temporal).
+#' RA9; Variability in reversals. Compute the standard deviation for the yearly reversal values. RA9 is 100 times the 
+#' standard deviation divided by the mean (percent-spatial).
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
-#' @return ra8.9 list containing the variability and mean annual changes in flow from one day to the next for the given data frame
+#' @return ra8.9 list containing RA8 and RA9 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

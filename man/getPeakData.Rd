@@ -9,13 +9,13 @@
   retrieval}
 }
 \value{
-  Peak a data frame containing columns 'Date' and
+  peakValues a data frame containing columns 'Date' and
   'Discharge'
 }
 \description{
   This function accepts a sites parameter that contains the
   desired NWIS site. It returns a data frame containing
-  "Date" and "Discharge"
+  peak instantaneous annual flow data for the site.
 }
 \examples{
 sites<-"02178400"

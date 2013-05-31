@@ -1,11 +1,12 @@
 #' Function to return the DL3 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates the mean of the annual minimum 7-day average flows for the entire record
+#' This function accepts a data frame that contains a column named "discharge" and calculates 
+#' DL3; Annual minimum of 7-day moving average flow. Compute the minimum of a 7-day moving average flow for 
+#' each year. DL3 is the mean (or median-Use Preference option) of these values (cubic feet per second-temporal). 
 #' 
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @param pref string containing a "mean" or "median" preference
-#' @return dl3 numeric containing the mean of the annual minimum 7-day average flows for the given data frame
+#' @return dl3 numeric containing DL3 for the given data frame
 #' @export
 #' @examples
 #' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")

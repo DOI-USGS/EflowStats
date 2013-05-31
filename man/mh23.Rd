@@ -9,16 +9,15 @@
   containing daily flow values}
 }
 \value{
-  mh23 numeric value of the average volume of threshold
-  event divided by median flow for the given data frame
+  mh23 numeric value of MH23 for the given data frame
 }
 \description{
   This function accepts a data frame that contains a column
-  named "discharge" and calculates MH23. High flow volume.
+  named "discharge" and calculates MH23, high flow volume.
   Compute the average volume for flow events above a
   threshold equal to seven times the median flow for the
   entire record. MH23 is the average volume divided by the
-  median flow for the entire record.
+  median flow for the entire record (days-temporal).
 }
 \examples{
 load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
