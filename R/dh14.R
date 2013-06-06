@@ -17,8 +17,7 @@ dh14 <- function(qfiletempf) {
   meanflow <- mean(meanmonthly$x)
   isolateq <- meanmonthly$x
   sortq <- sort(isolateq)
-  frank <- floor(findrank(length(sortq), 0.05))
-  hfcrit <- sortq[frank]
+  hfcrit <- quantile(sortq,.95,type=6)
   dh14 <- hfcrit/meanflow
   return(dh14)
 }

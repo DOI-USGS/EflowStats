@@ -16,8 +16,7 @@
 fh9 <- function(qfiletempf, pref = "mean") {
   isolateq <- qfiletempf$discharge
   sortq <- sort(isolateq)
-  frank <- floor(findrank(length(sortq), 0.75))
-  hfcrit <- sortq[frank]
+  hfcrit <- quantile(sortq,.25,type=6)
   noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                        FUN = median, na.rm=TRUE)
   colnames(noyears) <- c("Year", "momax")

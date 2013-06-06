@@ -13,18 +13,22 @@
 #' qfiletempf<-read.csv(load_data)
 #' dl5(qfiletempf)
 dl5 <- function(qfiletempf, pref = "mean") {
-  day90mean <- rollmean(qfiletempf$discharge, 90, align = "right", 
-                        na.pad = TRUE)
-  day90rollingavg <- data.frame(qfiletempf, day90mean)
-  rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
-                               "NA")
-  min90daybyyear <- aggregate(rollingavgs90day$day90mean, 
-                              list(rollingavgs90day$wy_val), min, na.rm=TRUE)
+  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
+                       FUN = median, na.rm=TRUE)
+  colnames(noyears) <- c("Year", "momax")
+  noyrs <- length(noyears$Year)
+  min90daybyyear <- rep(0,noyrs)
+  for (i in 1:noyrs) {
+    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    day90mean <- rollmean(subsetyr$discharge, 90, align = "right", 
+                         na.pad = FALSE)
+    min90daybyyear[i] <- min(day90mean, na.rm=TRUE)
+  }
   if (pref == "median") {
-    dl5 <- median(min90daybyyear$x)
+    dl5 <- median(min90daybyyear)
   }
   else {
-    dl5 <- mean(min90daybyyear$x)
+    dl5 <- mean(min90daybyyear)
   }
   return(dl5)
 }

@@ -13,14 +13,18 @@
 #' dl10(qfiletempf)
 dl10 <- function(qfiletempf) {
   meandl10 <- dl5(qfiletempf, pref = "mean")
-  day90mean <- rollmean(qfiletempf$discharge, 90, align = "right", 
-                        na.pad = TRUE)
-  day90rollingavg <- data.frame(qfiletempf, day90mean)
-  rollingavgs90day <- subset(day90rollingavg, day90rollingavg$day90mean != 
-                               "NA")
-  min90daybyyear <- aggregate(rollingavgs90day$day90mean, 
-                              list(rollingavgs90day$wy_val), min, na.rm=TRUE)
-  sddl10 <- sd(min90daybyyear$x)
+  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
+                       FUN = median, na.rm=TRUE)
+  colnames(noyears) <- c("Year", "momax")
+  noyrs <- length(noyears$Year)
+  min90daybyyear <- rep(0,noyrs)
+  for (i in 1:noyrs) {
+    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    day90mean <- rollmean(subsetyr$discharge, 90, align = "right", 
+                         na.pad = FALSE)
+    min90daybyyear[i] <- min(day90mean, na.rm=TRUE)
+  }
+  sddl10 <- sd(min90daybyyear)
   dl10 <- (sddl10 * 100)/meandl10
   return(dl10)
 }

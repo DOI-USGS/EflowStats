@@ -19,12 +19,9 @@
 mh15.17 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge
   sortq <- sort(isolateq)
-  frank10 <- floor(findrank(length(sortq), 0.1))
-  frank1 <- floor(findrank(length(sortq),0.01))
-  frank25 <- floor(findrank(length(sortq),0.25))
-  hfcrit10 <- sortq[frank10]
-  hfcrit1 <- sortq[frank1]
-  hfcrit25 <- sortq[frank25]
+  hfcrit10 <- quantile(sortq,.9,type=6)
+  hfcrit1 <- quantile(sortq,.99,type=6)
+  hfcrit25 <- quantile(sortq,.75,type=6)
   mh15 <- hfcrit1/ma2(qfiletempf)
   mh16 <- hfcrit10/ma2(qfiletempf)
   mh17 <- hfcrit25/ma2(qfiletempf)

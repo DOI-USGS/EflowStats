@@ -34,25 +34,25 @@ ma4.11<-function(x) {
   isolateq <- x$discharge
   sortq <- sort(isolateq)
   percentiles<-vector(length=19)
-  percentiles[1] <- sortq[floor(findrank(length(sortq), 0.05))]  
-  percentiles[2] <- sortq[floor(findrank(length(sortq), 0.1))]
-  percentiles[3] <- sortq[floor(findrank(length(sortq), 0.15))]
-  percentiles[4] <- sortq[floor(findrank(length(sortq), 0.2))]
-  percentiles[5] <- sortq[floor(findrank(length(sortq), 0.25))]
-  percentiles[6] <- sortq[floor(findrank(length(sortq), 0.3))]
-  percentiles[7] <- sortq[floor(findrank(length(sortq), 0.35))]
-  percentiles[8] <- sortq[floor(findrank(length(sortq), 0.4))]
-  percentiles[9] <- sortq[floor(findrank(length(sortq), 0.45))]
-  percentiles[10] <- sortq[floor(findrank(length(sortq), 0.5))]
-  percentiles[11] <- sortq[floor(findrank(length(sortq), 0.55))]
-  percentiles[12] <- sortq[floor(findrank(length(sortq), 0.6))]
-  percentiles[13] <- sortq[floor(findrank(length(sortq), 0.65))]
-  percentiles[14] <- sortq[floor(findrank(length(sortq), 0.7))]
-  percentiles[15] <- sortq[floor(findrank(length(sortq), 0.75))]
-  percentiles[16] <- sortq[floor(findrank(length(sortq), 0.8))]
-  percentiles[17] <- sortq[floor(findrank(length(sortq), 0.85))]
-  percentiles[18] <- sortq[floor(findrank(length(sortq), 0.9))]
-  percentiles[19] <- sortq[floor(findrank(length(sortq), 0.95))]
+  percentiles[1] <- quantile(sortq,.95,type=6)  
+  percentiles[2] <- quantile(sortq,.90,type=6)
+  percentiles[3] <- quantile(sortq,.85,type=6)
+  percentiles[4] <- quantile(sortq,.80,type=6)
+  percentiles[5] <- quantile(sortq,.75,type=6)
+  percentiles[6] <- quantile(sortq,.7,type=6)
+  percentiles[7] <- quantile(sortq,.65,type=6)
+  percentiles[8] <- quantile(sortq,.6,type=6)
+  percentiles[9] <- quantile(sortq,.55,type=6)
+  percentiles[10] <- quantile(sortq,.5,type=6)
+  percentiles[11] <- quantile(sortq,.45,type=6)
+  percentiles[12] <- quantile(sortq,.4,type=6)
+  percentiles[13] <- quantile(sortq,.35,type=6)
+  percentiles[14] <- quantile(sortq,.3,type=6)
+  percentiles[15] <- quantile(sortq,.25,type=6)
+  percentiles[16] <- quantile(sortq,.2,type=6)
+  percentiles[17] <- quantile(sortq,.15,type=6)
+  percentiles[18] <- quantile(sortq,.1,type=6)
+  percentiles[19] <- quantile(sortq,.05,type=6)
   mean <- mean(percentiles,na.rm=TRUE)
   sdev <- sd(percentiles, na.rm=TRUE)
   ma4 <- (sdev/mean)*100

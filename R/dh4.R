@@ -14,18 +14,22 @@
 #' qfiletempf<-read.csv(load_data)
 #' dh4(qfiletempf)
 dh4 <- function(qfiletempf, pref = "mean") {
-  day30mean <- rollmean(qfiletempf$discharge, 30, align = "right", 
-                        na.pad = TRUE)
-  day30rollingavg <- data.frame(qfiletempf, day30mean)
-  rollingavgs30day <- subset(day30rollingavg, day30rollingavg$day30mean != 
-                               "NA")
-  max30daybyyear <- aggregate(rollingavgs30day$day30mean, 
-                              list(rollingavgs30day$wy_val), max, na.rm=TRUE)
+  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
+                       FUN = median, na.rm=TRUE)
+  colnames(noyears) <- c("Year", "momax")
+  noyrs <- length(noyears$Year)
+  max30daybyyear <- rep(0,noyrs)
+  for (i in 1:noyrs) {
+    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    day30mean <- rollmean(subsetyr$discharge, 30, align = "right", 
+                         na.pad = TRUE)
+    max30daybyyear[i] <- max(day30mean, na.rm=TRUE)
+  }
   if (pref == "median") {
-    dh4 <- median(max30daybyyear$x)
+    dh4 <- median(max30daybyyear)
   }
   else {
-    dh4 <- mean(max30daybyyear$x)
+    dh4 <- mean(max30daybyyear)
   }
   return(dh4)
 }

@@ -14,8 +14,7 @@
 dl15 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge
   sortq <- sort(isolateq)
-  frank <- floor(findrank(length(sortq), 0.90))
-  hfcrit <- sortq[frank]
+  hfcrit <- quantile(sortq,.1,type=6)
   medianq <- median(qfiletempf$discharge)
   dl15 <- hfcrit/medianq
   return(dl15)

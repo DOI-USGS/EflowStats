@@ -30,13 +30,13 @@ ma36.40 <- function(qfiletemp) {
   minbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletemp$year_val), FUN = min, na.rm=TRUE)
   colnames(minbymon) <- c("Month","Year","minmo")
   sortmeanbymon <- sort(meanbymon$meanmo)
-  perc_10 <- sortmeanbymon[floor(findrank(length(sortmeanbymon), 0.1))]
-  perc_25 <- sortmeanbymon[floor(findrank(length(sortmeanbymon), 0.25))]
-  perc_75 <- sortmeanbymon[floor(findrank(length(sortmeanbymon), 0.75))]
-  perc_90 <- sortmeanbymon[floor(findrank(length(sortmeanbymon), 0.9))]
+  perc_10 <- quantile(sortmeanbymon,.1,type=6)
+  perc_25 <- quantile(sortmeanbymon,.25,type=6)
+  perc_75 <- quantile(sortmeanbymon,.75,type=6)
+  perc_90 <- quantile(sortmeanbymon,.9,type=6)
   ma36 <- (max(meanbymon$meanmo)-min(meanbymon$meanmo))/median(meanbymon$meanmo)
-  ma37 <- (perc_25-perc_75)/median(meanbymon$meanmo)
-  ma38 <- (perc_10-perc_90)/median(meanbymon$meanmo)
+  ma37 <- (perc_75-perc_25)/median(meanbymon$meanmo)
+  ma38 <- (perc_90-perc_10)/median(meanbymon$meanmo)
   ma39 <- (sd(meanbymon$meanmo)*100)/mean(meanbymon$meanmo)
   ma40 <- (mean(meanbymon$meanmo)-median(meanbymon$meanmo))/median(meanbymon$meanmo)
   ma36.40 <- list(ma36,ma37,ma38,ma39,ma40)

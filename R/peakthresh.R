@@ -32,8 +32,7 @@ b <- num/denom
 a <- dailyMean - (b*instMean)
 isolateq <- peakInst$logval
 sortq <- sort(isolateq)
-frank <- floor(findrank(length(sortq), perc))
-lfcrit <- sortq[frank]
+lfcrit <- quantile(sortq,perc,type=6)
 lq167 <- a + (b*lfcrit)
 thresh <- 10^(lq167)
 return(thresh)
