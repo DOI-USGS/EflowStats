@@ -11,16 +11,19 @@
 #' qfiletempf<-read.csv(load_data)
 #' bfi(qfiletempf)
 bfi <- function(qfiletempf) {
-  day7mean <- rollmean(qfiletempf$discharge, 7, align = "right", 
-                       na.pad = TRUE)
-  rollingavg <- data.frame(qfiletempf, day7mean)
-  rollingavgs7day <- subset(rollingavg, rollingavg$day7mean != 
-                              "NA")
-  min7daybyyear <- aggregate(rollingavgs7day$day7mean, 
-                             list(rollingavgs7day$wy_val), min)
-  meanflow <- meanflowbyyear(qfiletempf)
-  compbfi <- merge(min7daybyyear, meanflow, by.x = "Group.1", by.y = "Year")
-  colnames(compbfi) <- c("year", "day7min", "meandaily")
-  bfi <- compbfi$day7min/compbfi$meandaily
+  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
+                       FUN = median, na.rm=TRUE)
+  colnames(noyears) <- c("Year", "momax")
+  noyrs <- length(noyears$Year)
+  compbfi <- rep(0,noyrs)
+  for (i in 1:noyrs) {
+    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    day7mean <- rollmean(subsetyr$discharge, 7, align = "right", 
+                         na.pad = FALSE)
+    min7daybyyear <- min(day7mean)
+    meanflow <- mean(subsetyr$discharge)
+    compbfi[i] <- min7daybyyear/meanflow 
+  }
+  bfi <- compbfi
   return(bfi)
 }
