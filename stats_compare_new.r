@@ -33,15 +33,17 @@ system("rm monthly*txt")
 #a2<-read.csv("sites_waters_stat.txt",header=F,colClasses=c("character"))
 getcap<-getScenarioSites(scenario_url)
 modprop<-getcap$modprop
-a<-t(getcap$scenario_sites)
+a<-t(getcap$scenario_sites[1:10])
 a2<-a
 al<-length(a)
 
 comment<-vector(length=al)
-ObsFlowStats <- matrix(nrow=al,ncol=138)
+ObsFlowStats <- matrix(nrow=al,ncol=28)
 ModFlowStats <- matrix(nrow=nrow(ObsFlowStats),ncol=ncol(ObsFlowStats))
+magnifSevenObs <- matrix(nrow=nrow(ObsFlowStats),ncol=7)
+magnifSevenMod <- matrix(nrow=nrow(ObsFlowStats),ncol=7)
 GoFMetrics <- matrix(nrow=nrow(ObsFlowStats),ncol=108)
-MonAnnGoF <- matrix(nrow=nrow(ObsFlowStats),ncol=84)
+#MonAnnGoF <- matrix(nrow=nrow(ObsFlowStats),ncol=84)
 yv<-vector(length=al)
 ymaxv<-vector(length=al)
 
@@ -103,9 +105,11 @@ for (i in 1:length(a2)){
       mod_data <- mod_data[,c('wy_val','date','discharge','month_val','year_val','day_val','jul_val')]
       ObsFlowStats[i,] <- FlowStats(obs_data,drain_area)
       ModFlowStats[i,] <- FlowStats(mod_data,drain_area)
+      magnifSevenObs[i,] <- magnifSeven(obs_data)
+      magnifSevenMod[i,] <- magnifSeven(mod_data)
       comment <- ""
       GoFMetrics[i,] <- SiteGoF(obs_data,mod_data)
-      MonAnnGoF[i,] <- MonthlyAnnualGoF(obs_data,mod_data)
+#      MonAnnGoF[i,] <- MonthlyAnnualGoF(obs_data,mod_data)
     }
   }
   } else {
@@ -117,10 +121,40 @@ for (i in 1:length(a2)){
 }
 
 FlowStats.PDiff <- (ModFlowStats-ObsFlowStats)/ObsFlowStats
-FlowStats.GoF <- RegionalGoF(ObsFlowStats,ModFlowStats)
+magnifSeven.PDiff <- (magnifSevenMod-magnifSevenObs)/magnifSevenObs
+#FlowStats.GoF <- RegionalGoF(ObsFlowStats,ModFlowStats)
 
-statsout<-data.frame(a,yv,ymaxv,GoFMetrics,MonAnnGoF,ObsFlowStats,ModFlowStats,FlowStats.PDiff,comment)
-#colnames(statsout)<-c('site_no','min_date','max_date',,'comment')  !WILL UPDATE NAMES IN FUTURE!
+statsout<-data.frame(t(a),yv,ymaxv,GoFMetrics,magnifSevenObs,ObsFlowStats,magnifSevenMod,ModFlowStats,magnifSeven.PDiff,FlowStats.PDiff,comment,stringsAsFactors=FALSE)
+colnames(statsout)<-c('site_no','min_date','max_date','nsev','nselogv','rmsev','pbiasv','pearsonv','spearmanv',
+              'nsev_90','nsev_75_90','nsev_50_75','nsev_25_50','nsev_10_25','nsev_10',
+              'rmsev_90','rmsev_75_90','rmsev_50_75','rmsev_25_50','rmsev_10_25','rmsev_10',
+              'pbiasv_90','pbiasv_75_90','pbiasv_50_75','pbiasv_25_50','pbiasv_10_25','pbiasv_10',           
+              'pearsonv_90','pearsonv_75_90','pearsonv_50_75','pearsonv_25_50','pearsonv_10_25','pearsonv_10',
+              'spearmanv_90','spearmanv_75_90','spearmanv_50_75','spearmanv_25_50','spearmanv_10_25','spearmanv_10',
+              'NSEbyMonthJan','NSELOGbyMonthJan','RMSEbyMonthJan','BiasbyMonthJan','PearsonbyMonthJan','SpearmanbyMonthJan',
+              'NSEbyMonthFeb','NSELOGbyMonthFeb','RMSEbyMonthFeb','BiasbyMonthFeb','PearsonbyMonthFeb','SpearmanbyMonthFeb',
+              'NSEbyMonthMar','NSELOGbyMonthMar','RMSEbyMonthMar','BiasbyMonthMar','PearsonbyMonthMar','SpearmanbyMonthMar',
+              'NSEbyMonthApr','NSELOGbyMonthApr','RMSEbyMonthApr','BiasbyMonthApr','PearsonbyMonthApr','SpearmanbyMonthApr',
+              'NSEbyMonthMay','NSELOGbyMonthMay','RMSEbyMonthMay','BiasbyMonthMay','PearsonbyMonthMay','SpearmanbyMonthMay',
+              'NSEbyMonthJun','NSELOGbyMonthJun','RMSEbyMonthJun','BiasbyMonthJun','PearsonbyMonthJun','SpearmanbyMonthJun',
+              'NSEbyMonthJul','NSELOGbyMonthJul','RMSEbyMonthJul','BiasbyMonthJul','PearsonbyMonthJul','SpearmanbyMonthJul',
+              'NSEbyMonthAug','NSELOGbyMonthAug','RMSEbyMonthAug','BiasbyMonthAug','PearsonbyMonthAug','SpearmanbyMonthAug',
+              'NSEbyMonthSep','NSELOGbyMonthSep','RMSEbyMonthSep','BiasbyMonthSep','PearsonbyMonthSep','SpearmanbyMonthSep',
+              'NSEbyMonthOct','NSELOGbyMonthOct','RMSEbyMonthOct','BiasbyMonthOct','PearsonbyMonthOct','SpearmanbyMonthOct',
+              'NSEbyMonthNov','NSELOGbyMonthNov','RMSEbyMonthNov','BiasbyMonthNov','PearsonbyMonthNov','SpearmanbyMonthNov',
+              'NSEbyMonthDec','NSELOGbyMonthDec','RMSEbyMonthDec','BiasbyMonthDec','PearsonbyMonthDec','SpearmanbyMonthDec',
+              'lam1Obs','tau2Obs','tau3Obs','tau4Obs','ar1Obs','amplitudeObs','phaseObs',
+              'med_flowObs','cv_flowObs','cv_dailyObs','ma26Obs','ma41Obs','ml18Obs','ml20Obs',
+              'mh10Obs','fl2Obs','fh6Obs','fh7Obs','dl6Obs','dh13Obs','dh16Obs','ta1Obs','tl1Obs','th1Obs','ra5Obs','ra7Obs','ra8Obs',
+              'l7Q10Obs','l7Q2Obs','return_10Obs','flow_10Obs','flow_25Obs','flow_50Obs','flow_75Obs','flow_90Obs',
+              'lam1Mod','tau2Mod','tau3Mod','tau4Mod','ar1Mod','amplitudeMod','phaseMod',
+              'med_flowMod','cv_flowMod','cv_dailyMod','ma26Mod','ma41Mod','ml18Mod','ml20Mod',
+              'mh10Mod','fl2Mod','fh6Mod','fh7Mod','dl6Mod','dh13Mod','dh16Mod','ta1Mod','tl1Mod','th1Mod','ra5Mod','ra7Mod','ra8Mod',
+              'l7Q10Mod','l7Q2Mod','return_10Mod','flow_10Mod','flow_25Mod','flow_50Mod','flow_75Mod','flow_90Mod',
+              'lam1Diff','tau2Diff','tau3Diff','tau4Diff','ar1Diff','amplitudeDiff','phaseDiff',
+              'med_flowDiff','cv_flowDiff','cv_dailyDiff','ma26Diff','ma41Diff','ml18Diff','ml20Diff',
+              'mh10Diff','fl2Diff','fh6Diff','fh7Diff','dl6Diff','dh13Diff','dh16Diff','ta1Diff','tl1Diff','th1Diff','ra5Diff','ra7Diff','ra8Diff',
+              'l7Q10Diff','l7Q2Diff','return_10Diff','flow_10Diff','flow_25Diff','flow_50Diff','flow_75Diff','flow_90Diff','comment')  
 
 output="output.zip"
 if (i==length(a2)) {
@@ -135,4 +169,4 @@ if (i==length(a2)) {
   write.table(message,file="output.txt",col.names=FALSE,row.names=FALSE,quote=FALSE)
 }
 
-# wps.out: output, zip, output_file, A file containing the mean daily flow median daily flow and skewness of daily flow;
+# wps.out: output, zip, output_file, A file containing the table of statistics as well as monthly stats and graphs for each site;
