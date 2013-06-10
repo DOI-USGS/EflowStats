@@ -18,10 +18,10 @@
 #' \dontrun{getXMLWML1.1Data(obs_url)}
 getXMLWML1.1Data <- function(obs_url){
   cat(paste("Retrieving data from: \n", obs_url, "\n", sep = " "))
-  content <- getURLContent(obs_url,.opts=list(timeout.ms=500000))
+  content <- paste(readLines(obs_url,warn=FALSE))
   test <- capture.output(tryCatch(xmlTreeParse(content, getDTD=F, useInternalNodes=TRUE),"XMLParserErrorList" = function(e) {cat("incomplete",e$message)}))
   while (length(grep("<?xml",test))==0) {
-    content <- getURLContent(obs_url,.opts=list(timeout.ms=500000))
+    content <- paste(readLines(obs_url,warn=FALSE))
     test <- capture.output(tryCatch(xmlTreeParse(content, getDTD=F, useInternalNodes=TRUE),"XMLParserErrorList" = function(e) {cat("incomplete",e$message)}))
   }
   doc <- htmlTreeParse(content, asText=TRUE, useInternalNodes=TRUE)
