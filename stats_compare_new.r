@@ -25,15 +25,15 @@ drainage_url="http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site=
 scenario_url=paste(substr(model_url,1,regexpr("Get",model_url)-1),"GetCapabilities&service=SOS&version=1.0.0",sep="")
 
 setwd('/Users/jlthomps/Documents/R/')
-system("rm graph*png")
-system("rm monthly*txt")
+#system("rm graph*png")
+#system("rm monthly*txt")
 #a<-read.csv(header=F,colClasses=c("character"),text=sites)
 #a2<-read.csv(header=F,colClasses=c("character"),text=modsites)
 #a<-read.csv("sites_waters_stat.txt",header=F,colClasses=c("character"))
 #a2<-read.csv("sites_waters_stat.txt",header=F,colClasses=c("character"))
 getcap<-getScenarioSites(scenario_url)
 modprop<-getcap$modprop
-a<-t(getcap$scenario_sites[1:10])
+a<-t(getcap$scenario_sites[1:50])
 a2<-a
 al<-length(a)
 
@@ -57,7 +57,7 @@ for (i in 1:length(a2)){
     interval<-''
     latest<-''
     sites=a[i]
-    url2<-paste(sos_url_temp,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering_temp,'&parameterCd=',property_temp,'&access=3',sep='')
+    url2<-paste(sos_url_temp,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering_temp,'&parameterCd=',property_temp,sep='')
     x_obs <- getXMLWML1.1Data(url2)
 
     if (nrow(x_obs)>2) {
@@ -86,20 +86,20 @@ for (i in 1:length(a2)){
 
       yv[i]<-as.character(min(obs_data$date))
       ymaxv[i]<-as.character(max(obs_data$date))
-      x_modz<-mod_data$discharge
-      x_obsz<-obs_data$discharge
-      dates<-as.Date(obs_data$date)
-      file<-paste("graph",toString(sites),".png",sep="")
+      #x_modz<-mod_data$discharge
+      #x_obsz<-obs_data$discharge
+      #dates<-as.Date(obs_data$date)
+      #file<-paste("graph",toString(sites),".png",sep="")
       #png(file)
-      ggof(x_modz,x_obsz,na.rm=FALSE,dates,main=modsites)
-      dev.copy(png,file)
-      dev.off()
-      file<-paste("monthly_mean_ts_obs",toString(sites),".txt",sep="")
-      monthly_mean<-monthly.mean.ts(obs_data)
-      write.table(monthly_mean,file=file,col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
-      file<-paste("monthly_mean_ts_mod",toString(sites),".txt",sep="")
-      monthly_mean<-monthly.mean.ts(mod_data)
-      write.table(monthly_mean,file=file,col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
+      #ggof(x_modz,x_obsz,na.rm=FALSE,dates,main=modsites)
+      #dev.copy(png,file)
+      #dev.off()
+      #file<-paste("monthly_mean_ts_obs",toString(sites),".txt",sep="")
+      #monthly_mean<-monthly.mean.ts(obs_data)
+      #write.table(monthly_mean,file=file,col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
+      #file<-paste("monthly_mean_ts_mod",toString(sites),".txt",sep="")
+      #monthly_mean<-monthly.mean.ts(mod_data)
+      #write.table(monthly_mean,file=file,col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
       
       obs_data <- obs_data[,c('wy_val','date','discharge','month_val','year_val','day_val','jul_val')]
       mod_data <- mod_data[,c('wy_val','date','discharge','month_val','year_val','day_val','jul_val')]
@@ -160,8 +160,8 @@ output="output.zip"
 if (i==length(a2)) {
   write.table(statsout,file="output.txt",col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
   system("rm output.zip")
-  system("zip -r output graph*png")
-  system("zip -r output monthly*txt")
+  #system("zip -r output graph*png")
+  #system("zip -r output monthly*txt")
   system("zip -r output output*")
 } else { 
   output="output.zip" 
