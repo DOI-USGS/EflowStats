@@ -14,8 +14,8 @@ library(NWCCompare)
 #model_url="http://cida.usgs.gov/gdp/proxy/http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/thredds/sos/watersmart/stats/stats-Special-0.3.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 #model_url="http://cida.usgs.gov/gdp/proxy/http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/thredds/sos/watersmart/waters/waters-Special-1.2.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 #model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/stats/stats-SE-DENSE1-2.03.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
-model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/afinch/afinch-SE-SPARSE1-0.1.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
-#model_url="http://cida.usgs.gov/gdp/proxy/http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/thredds/sos/watersmart/waters/waters-Special-0.3.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
+#model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/afinch/afinch-SE-SPARSE1-0.1.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
+model_url="http://cida-wiwsc-wsqa.er.usgs.gov:8080/qa/nwc/thredds/sos/watersmart/stats/stats-SE-DENSE2-0.10.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 
 sos_url_temp="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
 offering_temp='00003'
@@ -33,7 +33,7 @@ setwd('/Users/jlthomps/Documents/R/')
 #a2<-read.csv("sites_waters_stat.txt",header=F,colClasses=c("character"))
 getcap<-getScenarioSites(scenario_url)
 modprop<-getcap$modprop
-a<-t(getcap$scenario_sites[1:50])
+a<-t(getcap$scenario_sites[1:10])
 a2<-a
 al<-length(a)
 
@@ -51,7 +51,7 @@ for (i in 1:length(a2)){
   modsites<-a2[i]
   url<-paste(model_url,'=',modsites,'&observedProperty=',modprop,sep='',collapse=NULL)
   x_mod<-SWE_CSV_IHA(url)
-  if (length(sapply(x_mod,nchar))>1) {
+  if (nrow(x_mod)>2) {
     startdate<-min(x_mod$date)
     enddate<-max(x_mod$date)
     interval<-''
@@ -62,12 +62,16 @@ for (i in 1:length(a2)){
 
     if (nrow(x_obs)>2) {
       obs_data <- get_obsdata(x_obs)
+      obs_count<-nrow(obs_data)
+      cat(paste("get_obsdata run on x_obs for site",sites,obs_count,"\n",sep=" "))
       x_mod$date <- as.Date(x_mod$date,format="%Y-%m-%d")
       x_mod<-x_mod[x_mod$date>=min(x_obs$date) & x_mod$date<=max(x_obs$date), ]
       drain_url<-paste(drainage_url,sites,sep="")
       drain_area<-getDrainageArea(drain_url)
+      cat(paste("data and drainage area retrieved for site",sites,"\n",sep=" "))
       mod_data <- get_obsdata(x_mod)
-
+      mod_count <- nrow(mod_data)
+      cat(paste("get_obsdata run on x_mod for site",sites,mod_count,"\n",sep=" "))
       countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
       countbyyr_mod<-aggregate(mod_data$discharge, list(mod_data$wy_val), length)
       colnames(countbyyr)<-c('wy','num_samples')
@@ -75,15 +79,20 @@ for (i in 1:length(a2)){
       sub_countbyyr<-subset(countbyyr,num_samples >= 365)
       sub_countbyyr_mod<-subset(countbyyr_mod,num_samples >= 365)
       include_yrs<-merge(sub_countbyyr,sub_countbyyr_mod)
+      if (nrow(include_yrs)==0) {
+        comment[i]<-"No matching complete water years for site"
+      } else {
       obs_data<-merge(obs_data,include_yrs,by.x="wy_val",by.y="wy")
       mod_data<-merge(mod_data,include_yrs,by.x="wy_val",by.y="wy")
+      obs_count <- nrow(obs_data)
+      mod_count <- nrow(mod_data)
       if (length(mod_data$discharge)<3) { 
           comment[i]<-"No matching complete water years for site" 
       } else { 
       if (length(mod_data$discharge)!=length(obs_data$discharge)) { 
         comment[i]<-"Observed and modeled time-series don't match for site"
       } else {
-
+      cat(paste("data sets merged for site",sites,obs_count,mod_count,"\n",sep=" "))
       yv[i]<-as.character(min(obs_data$date))
       ymaxv[i]<-as.character(max(obs_data$date))
       #x_modz<-mod_data$discharge
@@ -109,9 +118,10 @@ for (i in 1:length(a2)){
       magnifSevenMod[i,] <- magnifSeven(mod_data)
       comment <- ""
       GoFMetrics[i,] <- SiteGoF(obs_data,mod_data)
+      cat(paste("stats calculated for site",sites,"\n",sep=" "))
 #      MonAnnGoF[i,] <- MonthlyAnnualGoF(obs_data,mod_data)
     }
-  }
+  }}
   } else {
     comment[i]<-"No observed data for this site"
   }
@@ -123,7 +133,7 @@ for (i in 1:length(a2)){
 FlowStats.PDiff <- (ModFlowStats-ObsFlowStats)/ObsFlowStats
 magnifSeven.PDiff <- (magnifSevenMod-magnifSevenObs)/magnifSevenObs
 #FlowStats.GoF <- RegionalGoF(ObsFlowStats,ModFlowStats)
-
+cat("diffs calculated \n")
 statsout<-data.frame(t(a),yv,ymaxv,GoFMetrics,magnifSevenObs,ObsFlowStats,magnifSevenMod,ModFlowStats,magnifSeven.PDiff,FlowStats.PDiff,comment,stringsAsFactors=FALSE)
 colnames(statsout)<-c('site_no','min_date','max_date','nsev','nselogv','rmsev','pbiasv','pearsonv','spearmanv',
               'nsev_90','nsev_75_90','nsev_50_75','nsev_25_50','nsev_10_25','nsev_10',
@@ -155,7 +165,7 @@ colnames(statsout)<-c('site_no','min_date','max_date','nsev','nselogv','rmsev','
               'med_flowDiff','cv_flowDiff','cv_dailyDiff','ma26Diff','ma41Diff','ml18Diff','ml20Diff',
               'mh10Diff','fl2Diff','fh6Diff','fh7Diff','dl6Diff','dh13Diff','dh16Diff','ta1Diff','tl1Diff','th1Diff','ra5Diff','ra7Diff','ra8Diff',
               'l7Q10Diff','l7Q2Diff','return_10Diff','flow_10Diff','flow_25Diff','flow_50Diff','flow_75Diff','flow_90Diff','comment')  
-
+cat("statsout created and named \n")
 output="output.zip"
 if (i==length(a2)) {
   write.table(statsout,file="output.txt",col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
