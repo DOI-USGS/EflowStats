@@ -18,11 +18,21 @@
 #' \dontrun{getXMLWML1.1Data(obs_url)}
 getXMLWML1.1Data <- function(obs_url){
   cat(paste("Retrieving data from: \n", obs_url, "\n", sep = " "))
-  content <- paste(readLines(obs_url,warn=FALSE))
+  obs_open <- file(obs_url,open="r")
+  content <- paste(readLines(obs_open,warn=FALSE))
+  close(obs_open,type="r")
+  if (length(content)>0) {
   test <- capture.output(tryCatch(xmlTreeParse(content, getDTD=F, useInternalNodes=TRUE),"XMLParserErrorList" = function(e) {cat("incomplete",e$message)}))
+  } else {test<-0}
   while (length(grep("<?xml",test))==0) {
-    content <- paste(readLines(obs_url,warn=FALSE))
+    obs_open <- file(obs_url,open="r")
+    content <- paste(readLines(obs_open,warn=FALSE))
+    close(obs_open,type="r")
+    if (length(content)>0) {
     test <- capture.output(tryCatch(xmlTreeParse(content, getDTD=F, useInternalNodes=TRUE),"XMLParserErrorList" = function(e) {cat("incomplete",e$message)}))
+    } else {
+    test<-0
+    }
   }
   doc <- htmlTreeParse(content, asText=TRUE, useInternalNodes=TRUE)
   values<-xpathSApply(doc, "//timeseries//value")
