@@ -116,28 +116,6 @@ for (i in 1:length(a2)){
             obs_count <- nrow(obs_data)
             mod_count <- nrow(mod_data)
             cat(paste("dfs created for site",sites,obs_count,mod_count,"\n",sep=" "))
-            data <- obs_data
-            sdbyyr <- aggregate(data$discharge, list(data$year_val), 
-                                sd)
-            colnames(sdbyyr) <- c("Year", "sdq")
-            cat(paste("sdbyyr created for site",sites,"\n",sep=" "))
-            meanbyyr <- aggregate(data$discharge, list(data$year_val), 
-                                  mean, na.rm=TRUE)
-            colnames(meanbyyr) <- c("Year", "meanq")
-            cat(paste("meanbyyr created for site",sites,"\n",sep=" "))
-            medbyyr <- aggregate(data$discharge, list(data$year_val), 
-                                 median, na.rm=TRUE)
-            colnames(medbyyr) <- c("Year","medq")
-            cat(paste("medbyyr created for site",sites,"\n",sep=" "))
-            dfcvbyyr <- data.frame(meanbyyr$Year, sdbyyr$sdq, 
-                                   meanbyyr$meanq, medbyyr$medq)
-            colnames(dfcvbyyr) <- c("Year", "sdq", "meanq", "medq")
-            cat(paste("dfcvbyyr created for site",sites,"\n",sep=" "))
-            cvbyyr <- dfcvbyyr$sdq/dfcvbyyr$meanq
-            dfcvbyyrf <- data.frame(dfcvbyyr, cvbyyr)
-            colnames(dfcvbyyrf) <- c("Year", "sdq", "meanq", "medq", 
-                                     "cvq")
-            cat(paste("dfcvbyyrf created for site",sites,"\n",sep=" "))
             ObsFlowStats[i,] <- FlowStats(obs_data,drain_area)
             cat(paste("Obs flow stats calculated for site",sites,"\n",sep=" "))
             ModFlowStats[i,] <- FlowStats(mod_data,drain_area)
