@@ -30,6 +30,7 @@ tl3 <- function(qfiletempf, thresh) {
     colnames(monyears) <- c("wy_val","season","momax")
     subsetyr <- merge(qfiletempf,monyears,by = c("wy_val","season"))
     flag <- 0
+    tnlf <- 0
     for (j in 1:nrow(subsetyr)) {
       if (subsetyr$discharge[j]<lfcrit) {
         flag <- flag+1

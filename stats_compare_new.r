@@ -7,6 +7,7 @@ library(chron)
 library(doBy)
 library(hydroGOF)
 library(RCurl)
+library(lmomco)
 library(HITHATStats)
 library(NWCCompare)
 
@@ -15,7 +16,8 @@ library(NWCCompare)
 #model_url="http://cida.usgs.gov/gdp/proxy/http://cida-wiwsc-gdp1qa.er.usgs.gov:8080/thredds/sos/watersmart/waters/waters-Special-1.2.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 #model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/stats/stats-SE-DENSE1-2.03.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 #model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/afinch/afinch-SE-SPARSE1-0.1.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
-model_url="http://cida-wiwsc-wsqa.er.usgs.gov:8080/qa/nwc/thredds/sos/watersmart/stats/stats-SE-DENSE2-0.16.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
+#model_url="http://cida-wiwsc-wsqa.er.usgs.gov:8080/qa/nwc/thredds/sos/watersmart/stats/stats-SE-DENSE2-0.16.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
+model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/prms2/prms2-SE-PRMSBase-1.4.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 
 sos_url_temp="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
 offering_temp='00003'
@@ -38,7 +40,7 @@ a2<-a
 al<-length(a)
 
 comment<-vector(length=al)
-ObsFlowStats <- matrix(nrow=al,ncol=28)
+ObsFlowStats <- matrix(nrow=al,ncol=29)
 ModFlowStats <- matrix(nrow=nrow(ObsFlowStats),ncol=ncol(ObsFlowStats))
 magnifSevenObs <- matrix(nrow=nrow(ObsFlowStats),ncol=7)
 magnifSevenMod <- matrix(nrow=nrow(ObsFlowStats),ncol=7)
@@ -166,15 +168,15 @@ colnames(statsout)<-c('site_no','min_date','max_date','nse','nselog','rmse','rms
                       'lam1Obs','tau2Obs','tau3Obs','tau4Obs','ar1Obs','amplitudeObs','phaseObs',
                       'med_flowObs','cv_flowObs','cv_dailyObs','ma26Obs','ma41Obs','ml18Obs','ml20Obs',
                       'mh10Obs','fl2Obs','fh6Obs','fh7Obs','dl6Obs','dh13Obs','dh16Obs','ta1Obs','tl1Obs','th1Obs','ra5Obs','ra7Obs','ra8Obs',
-                      'l7Q10Obs','l7Q2Obs','return_10Obs','flow_10Obs','flow_25Obs','flow_50Obs','flow_75Obs','flow_90Obs',
+                      'l7Q10Obs','l7Q2Obs','return_10Obs','flow_10Obs','flow_25Obs','flow_50Obs','flow_75Obs','flow_90Obs','flow_15Obs',
                       'lam1Mod','tau2Mod','tau3Mod','tau4Mod','ar1Mod','amplitudeMod','phaseMod',
                       'med_flowMod','cv_flowMod','cv_dailyMod','ma26Mod','ma41Mod','ml18Mod','ml20Mod',
                       'mh10Mod','fl2Mod','fh6Mod','fh7Mod','dl6Mod','dh13Mod','dh16Mod','ta1Mod','tl1Mod','th1Mod','ra5Mod','ra7Mod','ra8Mod',
-                      'l7Q10Mod','l7Q2Mod','return_10Mod','flow_10Mod','flow_25Mod','flow_50Mod','flow_75Mod','flow_90Mod',
+                      'l7Q10Mod','l7Q2Mod','return_10Mod','flow_10Mod','flow_25Mod','flow_50Mod','flow_75Mod','flow_90Mod','flow_15Mod',
                       'lam1Diff','tau2Diff','tau3Diff','tau4Diff','ar1Diff','amplitudeDiff','phaseDiff',
                       'med_flowDiff','cv_flowDiff','cv_dailyDiff','ma26Diff','ma41Diff','ml18Diff','ml20Diff',
                       'mh10Diff','fl2Diff','fh6Diff','fh7Diff','dl6Diff','dh13Diff','dh16Diff','ta1Diff','tl1Diff','th1Diff','ra5Diff','ra7Diff','ra8Diff',
-                      'l7Q10Diff','l7Q2Diff','return_10Diff','flow_10Diff','flow_25Diff','flow_50Diff','flow_75Diff','flow_90Diff','comment')  
+                      'l7Q10Diff','l7Q2Diff','return_10Diff','flow_10Diff','flow_25Diff','flow_50Diff','flow_75Diff','flow_90Diff','flow_15Diff','comment')  
 cat("statsout created and named \n")
 output="output.zip"
 if (i==length(a2)) {
