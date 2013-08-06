@@ -18,8 +18,7 @@ bfi <- function(qfiletempf) {
   compbfi <- rep(0,noyrs)
   for (i in 1:noyrs) {
     subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
-    day7mean <- rollmean(subsetyr$discharge, 7, align = "right", 
-                         na.pad = FALSE)
+    day7mean <- rollmean(subsetyr$discharge, 6, align = "right", partial = TRUE)
     min7daybyyear <- min(day7mean)
     meanflow <- mean(subsetyr$discharge)
     compbfi[i] <- min7daybyyear/meanflow 
