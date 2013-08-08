@@ -1,12 +1,12 @@
 Package: HITHATStats
 Type: Package
 Title: Returns HIT/HAT Hydrologic Indicator stats for a given set of data
-Version: 2.0
-Date: 2012-12-21
+Version: 3.0
+Date: 2013-08-08
 Author: Jessica Thompson
 Maintainer: Who to complain to <jlthomps@usgs.gov>
 Depends:
-    R (>= 2.15.0),
+    R (>= 3.0),
     zoo,
     chron,
     doBy,
@@ -103,7 +103,6 @@ Collate:
     'fh9.R'
     'fl3.R'
     'get_obsdata.R'
-    'retrieveNWISData.R'
     'dh12.R'
     'dh13.R'
     'dh14.R'

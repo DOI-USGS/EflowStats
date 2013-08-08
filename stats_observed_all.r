@@ -9,9 +9,18 @@ drainage_url="http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site=
 
 startdate<-"1900-01-01"
 enddate<-"2012-10-01"
-sites<-"05382257"
-url2<-paste(sos_url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,'&access=3',sep='')
-x_obs <- getXMLWML1.1Data(url2)
+#sites<-"05382257"
+#url2<-paste(sos_url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,'&access=3',sep='')
+#x_obs <- getXMLWML1.1Data(url2)
+
+sites<-"02178400"
+a<-sites
+load_data<-"C:/Users/jlthomps/My Documents/R/dv_test.txt"
+qfiletempf<-read.table(load_data,sep="\t",stringsAsFactors=FALSE)
+colnames(qfiletempf)<-c("date","discharge")
+qfiletempf$date<-as.Date(qfiletempf$date)
+obs_data<-get_obsdata(qfiletempf)
+x_obs<-obs_data
 if (nrow(x_obs)>2) {
   data <- get_obsdata(x_obs)
   drain_url<-paste(drainage_url,sites,sep="")
