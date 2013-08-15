@@ -36,6 +36,6 @@ dh19 <- function(qfiletempf) {
   hfdur_pos <- hfdur[hfdur>0]
   if (length(hfdur_pos)>0) {
   dh19 <- mean(hfdur_pos) 
-  } else { dh19<-'NA'}
+  } else { dh19<-0}
   return(dh19)
 }

@@ -35,7 +35,7 @@ mh27 <- function(qfiletempf) {
     }
   }
   peak_sub <- subset(peak,peak>0)
-  meanex <- mean(peak_sub)
+  meanex <- ifelse(length(peak_sub)==0,0,mean(peak_sub))
   mh27 <- meanex/ma2(qfiletempf)
   return(mh27)
 }

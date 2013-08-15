@@ -18,7 +18,7 @@ dl20 <- function(qfiletempf) {
     dl20 <- nrow(zeromon)
   } 
   else {
-    dl20 <- 'NA'
+    dl20 <- 0
   }
   return(dl20)
 }

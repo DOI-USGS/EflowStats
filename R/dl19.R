@@ -21,7 +21,7 @@ dl19 <- function(qfiletempf) {
   sdzero <- sd(zero_cnts$x)
   dl19 <- (100*sdzero)/meanzero
   } else {
-    dl19 <- 'NA'
+    dl19 <- 0
   }
   return(dl19)
 }

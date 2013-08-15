@@ -25,7 +25,7 @@ fl3 <- function(qfiletempf, pref = "mean") {
       fl3 <- mean(lowbyyr$x)
     }}
   else {
-    fl3 <- 'NA'
+    fl3 <- 0
   }
   return(fl3)
 }
