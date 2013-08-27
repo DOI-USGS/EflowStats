@@ -1,0 +1,27 @@
+\name{dh14}
+\alias{dh14}
+\title{Function to return the DH14 hydrologic indicator statistic for a given data frame}
+\usage{
+  dh14(qfiletempf)
+}
+\arguments{
+  \item{qfiletempf}{data frame containing a "discharge"
+  column containing daily flow values}
+}
+\value{
+  dh14 numeric containing DH14 for the given data frame
+}
+\description{
+  This function accepts a data frame that contains a column
+  named "discharge" and calculates DH14; Flood duration.
+  Compute the mean of the mean monthly flow values. Find
+  the 95th percentile for the mean monthly flows. DH14 is
+  the 95th percentile value divided by the mean of the
+  monthly means (dimensionless-spatial).
+}
+\examples{
+load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
+qfiletempf<-read.csv(load_data)
+dh14(qfiletempf)
+}
+
