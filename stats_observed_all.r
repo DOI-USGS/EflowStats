@@ -15,12 +15,12 @@ enddate<-"2012-10-01"
 
 sites<-"02178400"
 a<-sites
-load_data<-"C:/Users/jlthomps/My Documents/R/dv_test.txt"
-qfiletempf<-read.table(load_data,sep="\t",stringsAsFactors=FALSE)
-colnames(qfiletempf)<-c("date","discharge")
-qfiletempf$date<-as.Date(qfiletempf$date)
-obs_data<-get_obsdata(qfiletempf)
-x_obs<-obs_data
+startdate<-"2008-10-01"
+enddate<-"2013-9-30"
+interval<-''
+latest<-''
+url2<-paste(sos_url_temp,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering_temp,'&parameterCd=',property_temp,sep='')
+x_obs <- getXMLWML1.1Data(url2)
 if (nrow(x_obs)>2) {
   data <- get_obsdata(x_obs)
   drain_url<-paste(drainage_url,sites,sep="")
@@ -170,9 +170,9 @@ if (nrow(x_obs)>2) {
     fh9v<-fh9(data)
     fh10v<-fh10(data)
     #peakValues<-getPeakData(sites)
-    thresh_60<-getPeakThresh(data,qfilepeak,.6)
-    thresh_40<-getPeakThresh(data,qfilepeak,.4)
-    fh11v<-fh11(data,thresh_60)
+    #thresh_60<-getPeakThresh(data,qfilepeak,.6)
+    #thresh_40<-getPeakThresh(data,qfilepeak,.4)
+    #fh11v<-fh11(data,thresh_60)
     dl1v<-dl1(data)
     dl2v<-dl2(data)
     dl3v<-dl3(data)
@@ -214,19 +214,19 @@ if (nrow(x_obs)>2) {
     dh19v<-dh19(data)
     dh20v<-dh20(data)
     dh21v<-dh21(data)
-    dh22v<-dh22(data,thresh_60)
-    dh23v<-dh23(data,thresh_60)
-    dh24v<-dh24(data,thresh_60)
+    #dh22v<-dh22(data,thresh_60)
+    #dh23v<-dh23(data,thresh_60)
+    #dh24v<-dh24(data,thresh_60)
     ta1v<-unname(unlist(ta1.2(data)[1]))
     ta2v<-unname(unlist(ta1.2(data)[2]))
-    ta3v<-ta3(data,thresh_60)
+    #ta3v<-ta3(data,thresh_60)
     tl1v<-unname(unlist(tl1.2(data)[1]))
     tl2v<-unname(unlist(tl1.2(data)[2]))
-    tl3v<-tl3(data,thresh_40)
-    tl4v<-tl4(data,thresh_40)
+    #tl3v<-tl3(data,thresh_40)
+    #tl4v<-tl4(data,thresh_40)
     th1v<-unname(unlist(th1.2(data)[1]))
     th2v<-unname(unlist(th1.2(data)[2]))
-    th3v<-th3(data,thresh_60)
+    #th3v<-th3(data,thresh_60)
     ra1v<-ra1(data)
     ra2v<-ra2(data)
     ra3v<-ra3(data)
@@ -259,11 +259,11 @@ statsout<-data.frame(sites,yv,ymaxv,mean_flow,med_flow,cv_flow,cv_daily,ma1v,ma2
                      ma45v,ml1v,ml2v,ml3v,ml4v,ml5v,ml6v,ml7v,ml8v,ml9v,ml10v,ml11v,ml12v,ml13v,ml14v,ml15v,ml16v,
                      ml17v,ml18v,ml19v,ml20v,ml21v,ml22v,mh1v,mh2v,mh3v,mh4v,mh5v,mh6v,mh7v,mh8v,mh9v,mh10v,mh11v,
                      mh12v,mh13v,mh14v,mh15v,mh16v,mh17v,mh18v,mh19v,mh20v,mh21v,mh22v,mh23v,mh24v,mh25v,mh26v,mh27v,
-                     fl1v,fl2v,fl3v,fh1v,fh2v,fh3v,fh4v,fh5v,fh6v,fh7v,fh8v,fh9v,fh10v,fh11v,dl1v,dl2v,dl3v,dl4v,
+                     fl1v,fl2v,fl3v,fh1v,fh2v,fh3v,fh4v,fh5v,fh6v,fh7v,fh8v,fh9v,fh10v,dl1v,dl2v,dl3v,dl4v,
                      dl5v,dl6v,dl7v,dl8v,dl9v,dl10v,dl11v,dl12v,dl13v,dl14v,dl15v,dl16v,dl17v,dl18v,dl19v,dl20v,
                      dh1v,dh2v,dh3v,dh4v,dh5v,dh6v,dh7v,dh8v,dh9v,dh10v,dh11v,dh12v,dh13v,dh14v,dh15v,
-                     dh16v,dh17v,dh18v,dh19v,dh20v,dh21v,dh22v,dh23v,dh24v,ta1v,ta2v,ta3v,tl1v,tl2v,tl3v,tl4v,
-                     th1v,th2v,th3v,ra1v,ra2v,ra3v,ra4v,ra5v,ra6v,ra7v,ra8v,ra9v,l7Q10v,l7Q2v,return_10v,
+                     dh16v,dh17v,dh18v,dh19v,dh20v,dh21v,ta1v,ta2v,tl1v,tl2v,
+                     th1v,th2v,ra1v,ra2v,ra3v,ra4v,ra5v,ra6v,ra7v,ra8v,ra9v,l7Q10v,l7Q2v,return_10v,
                      flow_10,flow_25,flow_50,flow_75,flow_90,flow_15,comment)
 colnames(statsout)<-c('site_no','min_date','max_date','mean_of_annual_flows','median_of_annual_flows','cv_of_annual_flows',
                       'cv_daily_flows','ma1_mean_disc','ma2_median_disc','ma3_mean_annual_var','ma4','ma5_skew','ma6','ma7','ma8','ma9','ma10','ma11','ma12_jan_mean','ma13_feb_mean',
@@ -275,11 +275,11 @@ colnames(statsout)<-c('site_no','min_date','max_date','mean_of_annual_flows','me
                       'mh1','mh2','mh3','mh4','mh5','mh6','mh7','mh8','mh9','mh10','mh11','mh12','mh13','mh14_med_annual_max',
                       'mh15','mh16_high_flow_index','mh17','mh18','mh19','mh20','mh21','mh22','mh23','mh24','mh25','mh26_high_peak_flow','mh27',
                       'fl1_low_flood_pulse','fl2_low_pulse_var','fl3','fh1_high_pulse_count','fh2_high_pulse_var','fh3_high_pulse_count_three',
-                      'fh4_high_pulse_count_seven','fh5','fh6','fh7','fh8','fh9','fh10','fh11','dl1_min_daily_flow','dl2_min_3_day_avg','dl3','dl4_min_30_day_avg','dl5_min_90_day_avg',
+                      'fh4_high_pulse_count_seven','fh5','fh6','fh7','fh8','fh9','fh10','dl1_min_daily_flow','dl2_min_3_day_avg','dl3','dl4_min_30_day_avg','dl5_min_90_day_avg',
                       'dl6_min_flow_var','dl7','dl8','dl9_min_30_day_var','dl10_min_90_day_var','dl11','dl12','dl13','dl14','dl15','dl16','dl17','dl18_zero_flow_days','dl19','dl20',
                       'dh1','dh2','dh3','dh4','dh5_max_90_day_avg','dh6','dh7','dh8','dh9',
-                      'dh10_max_90_day_var','dh11','dh12','dh13','dh14','dh15','dh16','dh17','dh18','dh19','dh20','dh21','dh22','dh23','dh24',
-                      'ta1','ta2','ta3','tl1_min_flow_julian_day','tl2_min_julian_var','tl3','tl4','th1_max_flow_julian_day','th2_max_julian_var','th3',
+                      'dh10_max_90_day_var','dh11','dh12','dh13','dh14','dh15','dh16','dh17','dh18','dh19','dh20','dh21',
+                      'ta1','ta2','tl1_min_flow_julian_day','tl2_min_julian_var','th1_max_flow_julian_day','th2_max_julian_var',
                       'ra1_rise_rate','ra2_rise_rate_var','ra3_fall_rate','ra4_fall_rate_var','ra5','ra6','ra7','ra8','ra9','7Q10_obs','7Q2_obs','10_year_return_max_obs',
                       'flow_10','flow_25','flow_50','flow_75','flow_90','flow_15','comment')
 output="output.txt"
