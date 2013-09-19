@@ -86,7 +86,7 @@ for (i in 1:length(a2)) {
     }
 }
 
-statsout<-data.frame(t(a),yv,ymaxv,magnifSevenObs,ObsFlowStats,comment,stringsAsFactors=FALSE)
+statsout<-data.frame(a,yv,ymaxv,magnifSevenObs,ObsFlowStats,comment,stringsAsFactors=FALSE)
 
 if (Magnifnum>0) {
   namesFull <- c(namesFull,namesMagnif)
