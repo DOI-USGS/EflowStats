@@ -19,8 +19,8 @@ library(NWCCompare)
 #model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/afinch/afinch-SE-SPARSE1-0.1.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 #model_url="http://cida-wiwsc-wsqa.er.usgs.gov:8080/qa/nwc/thredds/sos/watersmart/stats/stats-SE-DENSE2-0.16.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
 model_url="http://cida.usgs.gov/nwc/thredds/sos/watersmart/prms2/prms2-SE-PRMSBase-1.4.nc?request=GetObservation&service=SOS&version=1.0.0&offering"
-#stats="GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
-stats="GOF,GOFMonth,magStat,flowStat,timStat,rateStat,otherStat"
+stats="GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+#stats="GOF,GOFMonth,magStat,flowStat,timStat,rateStat,otherStat"
 
 sos_url_temp="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
 offering_temp='00003'
@@ -38,7 +38,7 @@ setwd('/Users/jlthomps/Documents/R/')
 #a2<-read.csv("sites_waters_stat.txt",header=F,colClasses=c("character"))
 getcap<-getScenarioSites(scenario_url)
 modprop<-getcap$modprop
-a<-t(getcap$scenario_sites[1:3])
+a<-t(getcap$scenario_sites)
 a2<-a
 al<-length(a2)
 
