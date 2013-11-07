@@ -3,9 +3,6 @@ library(HITHATStats)
 library(NWCCompare)
 
 # WPS Inputs
-stats="GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
-startdate <- "1900-01-01"
-enddate <- "2012-10-01"
 sites <- c("02177000", "02178400")
 startdate <- "2008-10-01"
 enddate <- "2013-9-30"
@@ -15,6 +12,9 @@ nwisDvUrl = "http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
 offering = "00003"
 property = "00060"
 drainage_url = "http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
+
+#All stats
+stats="GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 
 Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 13) + (length(grep("durStat", stats)) * 41) + (length(grep("timStat", stats)) * 
 	6) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 12)

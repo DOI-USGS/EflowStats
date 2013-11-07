@@ -12,33 +12,28 @@ library(lmomco)
 library(HITHATStats)
 library(NWCCompare)
 
+# WPS Inputs
+sites <- c("02177000", "02178400")
+startdate <- "2008-10-01"
+enddate <- "2013-9-30"
 stats="GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
-#stats="GOF,GOFMonth,magStat,flowStat,timStat,rateStat,otherStat"
 
-sos_url_temp="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
-offering_temp='00003'
-property_temp='00060'
-drainage_url="http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
-
-setwd('/Users/jlthomps/Documents/R/')
-#system("rm graph*png")
-#system("rm monthly*txt")
-#a<-read.csv(header=F,colClasses=c("character"),text=sites)
-#a2<-read.csv(header=F,colClasses=c("character"),text=modsites)
-#a<-read.csv("sites_waters_stat.txt",header=F,colClasses=c("character"))
-#a2<-read.csv("sites_waters_stat.txt",header=F,colClasses=c("character"))
-a<-c("02177000","02178400")
-a2<-a
-al<-length(a2)
+# Hardcode NWIS urls and parameters.
+nwisDvUrl = "http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
+offering = "00003"
+property = "00060"
+drainage_url = "http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
+interval<-''
+latest<-''
 
 Flownum <- (length(grep("magStat",stats))*5)+(length(grep("flowStat",stats))*3)+(length(grep("durStat",stats))*3)+(length(grep("timStat",stats))*3)+(length(grep("rateStat",stats))*3)+(length(grep("otherStat",stats))*12)
 Magnifnum <- (length(grep("magnifSeven",stats))*7)
-comment<-vector(length=al)
-ObsFlowStats <- matrix(nrow=al,ncol=Flownum)
+comment<-vector(length=length(sites))
+ObsFlowStats <- matrix(nrow=length(sites),ncol=Flownum)
 magnifSevenObs <- matrix(nrow=nrow(ObsFlowStats),ncol=Magnifnum)
-#MonAnnGoF <- matrix(nrow=nrow(ObsFlowStats),ncol=84)
-yv<-vector(length=al)
-ymaxv<-vector(length=al)
+#MonAnnGoF <- matrix(nrow=nrow(ObsFlowStats),ncol=84) # Why is this commented ou?
+yv<-vector(length=length(sites))
+ymaxv<-vector(length=length(sites))
 namesMagnif <- c('lam1Obs','tau2Obs','tau3Obs','tau4Obs','ar1Obs','amplitudeObs','phaseObs')
 namesMagStat <- c('ma26Obs','ma41Obs','ml18Obs','ml20Obs','mh10Obs')
 namesFlowStat <- c('fl2Obs','fh6Obs','fh7Obs')
@@ -49,36 +44,32 @@ namesOtherStat <- c('med_flowObs','cv_flowObs','cv_dailyObs','l7Q10Obs','l7Q2Obs
 
 namesFull <- c('site_no','min_date','max_date')
 
-for (i in 1:length(a2)) {
-    startdate<-"2008-10-01"
-    enddate<-"2013-9-30"
-    interval<-''
-    latest<-''
-    sites=a[i]
-    url2<-paste(sos_url_temp,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering_temp,'&parameterCd=',property_temp,sep='')
+for (i in 1:length(sites)) {
+    site=sites[i]
+    url2<-paste(sos_url_temp,site,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering_temp,'&parameterCd=',property_temp,sep='')
     x_obs <- getXMLWML1.1Data(url2)
     
     if (nrow(x_obs)>2) {
       obs_data <- get_obsdata(x_obs)
       obs_count<-nrow(obs_data)
-      cat(paste("get_obsdata run on x_obs for site",sites,obs_count,"\n",sep=" "))
-      drain_url<-paste(drainage_url,sites,sep="")
+      cat(paste("get_obsdata run on x_obs for site",site,obs_count,"\n",sep=" "))
+      drain_url<-paste(drainage_url,site,sep="")
       drain_area<-getDrainageArea(drain_url)
-      cat(paste("data and drainage area retrieved for site",sites,drain_area,"\n",sep=" "))
+      cat(paste("data and drainage area retrieved for site",site,drain_area,"\n",sep=" "))
             yv[i]<-as.character(min(obs_data$date))
             ymaxv[i]<-as.character(max(obs_data$date))
-            cat(paste("dates calculated for site",sites,"\n",sep=" "))
+            cat(paste("dates calculated for site",site,"\n",sep=" "))
             
             obs_data <- obs_data[,c('wy_val','date','discharge','month_val','year_val','day_val','jul_val')]
             obs_count <- nrow(obs_data)
-            cat(paste("dfs created for site",sites,obs_count,"\n",sep=" "))
+            cat(paste("dfs created for site",site,obs_count,"\n",sep=" "))
             if (Flownum>0) {
             ObsFlowStats[i,] <- FlowStats(obs_data,drain_area,stats)
-            cat(paste("Obs flow stats calculated for site",sites,"\n",sep=" "))
+            cat(paste("Obs flow stats calculated for site",site,"\n",sep=" "))
             }
             if (Magnifnum>0) {
             magnifSevenObs[i,] <- magnifSeven(obs_data)
-            cat(paste("Obs mag7 stats calculated for site",sites,"\n",sep=" "))
+            cat(paste("Obs mag7 stats calculated for site",site,"\n",sep=" "))
             }
             comment <- ""
     } else {
@@ -86,7 +77,7 @@ for (i in 1:length(a2)) {
     }
 }
 
-statsout<-data.frame(a,yv,ymaxv,magnifSevenObs,ObsFlowStats,comment,stringsAsFactors=FALSE)
+statsout<-data.frame(sites,yv,ymaxv,magnifSevenObs,ObsFlowStats,comment,stringsAsFactors=FALSE)
 
 if (Magnifnum>0) {
   namesFull <- c(namesFull,namesMagnif)
@@ -114,7 +105,7 @@ namesFull <- c(namesFull,'comment')
 colnames(statsout)<-namesFull
 cat("statsout created and named \n")
 output="output.zip"
-if (i==length(a2)) {
+if (i==length(sites)) {
   write.table(statsout,file="output.txt",col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t")
   system("rm output.zip")
   #system("zip -r output graph*png")
