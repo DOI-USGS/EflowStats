@@ -7,7 +7,7 @@ library(NWCCompare)
 # Inputs: uncomment for non Rserve execuation.
 # sites <- '02177000,02178400'
 # startdate <- "2008-10-01"
-# enddate <- "2013-9-30"
+# enddate <- "2013-10-01"
 # stats<-"GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 
 sites<-read.csv(header=F,colClasses=c("character"),text=sites)
