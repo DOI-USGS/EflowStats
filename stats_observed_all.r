@@ -1,20 +1,22 @@
-library(hydroGOF)
-library(HITHATStats)
+# wps.des: id=nwc_stats_observed, title = Observed Daily Flow Statistics, abstract = Calculates a suite of daily flow statistics;
+# wps.in: sites, string, NWIS Sites, A comma seperated list of NWIS site ids;
+# wps.in: startdate, string, Start Date, The start date for analysis;
+# wps.in: enddate, string, End Date, The end date for analysis;
+# wps.in: stats, string, Statistic Groups, A list of statistic groups chosen from GOF GOFMonth magnifSeven magStat flowStat durStat timStat rateStat otherStat;
 library(NWCCompare)
+# Inputs: uncomment for non Rserve execuation.
+# sites <- '02177000,02178400'
+# startdate <- "2008-10-01"
+# enddate <- "2013-9-30"
+# stats<-"GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 
-# WPS Inputs
-sites <- c("02177000", "02178400")
-startdate <- "2008-10-01"
-enddate <- "2013-9-30"
+sites<-read.csv(header=F,colClasses=c("character"),text=sites)
 
 # Hardcode NWIS urls and parameters.
-nwisDvUrl = "http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
-offering = "00003"
-property = "00060"
-drainage_url = "http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
-
-#All stats
-stats="GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+nwisDvUrl <- "http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
+offering <- "00003"
+property <- "00060"
+drainage_url <- "http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
 
 Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 13) + (length(grep("durStat", stats)) * 41) + (length(grep("timStat", stats)) * 
 	6) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 12)
@@ -65,7 +67,7 @@ for (i in 1:length(sites)) {
 		obs_count <- nrow(obs_data)
 		cat(paste("dfs created for site", site, obs_count, "\n", sep = " "))
 		if (Flownum > 0) {
-			ObsFlowStats[i, ] <- FlowStats_all(obs_data, drain_area)
+			ObsFlowStats[i, ] <- FlowStatsAll(obs_data, drain_area)
 			cat(paste("Obs flow stats calculated for site", site, "\n", sep = " "))
 		}
 		if (Magnifnum > 0) {
@@ -108,10 +110,10 @@ cat("statsout created and named \n")
 output = "output.txt"
 if (i == length(sites)) {
 	write.table(statsout, file = "output.txt", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
-	system("zip -r output output*")
 } else {
 	output = "output.zip"
 	message <- "One or more web service calls resulted in failure. Please try again."
 	write.table(message, file = "output.txt", col.names = FALSE, row.names = FALSE, quote = FALSE)
-	system("zip -r output output*")
 }
+
+# wps.out: output, text, Output File, A text file containing the table of statistics as well as monthly stats and graphs for each site;

@@ -1,15 +1,8 @@
+# Script not tested to work via WPS4R, still a work in progress.
 # wps.des: id=test_stats, title = test stats, abstract = Finds the mean daily flow median daily flow and skewness of daily flow in the input dataset;
 # wps.in: model_url, string, SOS Endpoint, A fully formed SOS GetObservations request that will return a SWE common CSV block holding date and flow;
 # wps.in: stats, string, list, a list of the requested statistic groups to return
 
-library(XML)
-library(zoo)
-library(chron)
-library(doBy)
-library(hydroGOF)
-library(RCurl)
-library(lmomco)
-library(HITHATStats)
 library(NWCCompare)
 
 # WPS Inputs
@@ -31,7 +24,7 @@ Magnifnum <- (length(grep("magnifSeven",stats))*7)
 comment<-vector(length=length(sites))
 ObsFlowStats <- matrix(nrow=length(sites),ncol=Flownum)
 magnifSevenObs <- matrix(nrow=nrow(ObsFlowStats),ncol=Magnifnum)
-#MonAnnGoF <- matrix(nrow=nrow(ObsFlowStats),ncol=84) # Why is this commented ou?
+#MonAnnGoF <- matrix(nrow=nrow(ObsFlowStats),ncol=84) # Why is this commented out?
 yv<-vector(length=length(sites))
 ymaxv<-vector(length=length(sites))
 namesMagnif <- c('lam1Obs','tau2Obs','tau3Obs','tau4Obs','ar1Obs','amplitudeObs','phaseObs')
