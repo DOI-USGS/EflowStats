@@ -2,9 +2,9 @@ library(hydroGOF)
 library(HITHATStats)
 library(NWCCompare)
 
-sos_url="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
-offering='00003'
-property='00060'
+sos_url_temp="http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
+offering_temp='00003'
+property_temp='00060'
 drainage_url="http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
 
 startdate<-"1900-01-01"
@@ -12,6 +12,7 @@ enddate<-"2012-10-01"
 #sites<-"05382257"
 #url2<-paste(sos_url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,'&access=3',sep='')
 #x_obs <- getXMLWML1.1Data(url2)
+stats="GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 
 a<-c("02177000","02178400")
 a2<-a
@@ -74,7 +75,7 @@ for (i in 1:length(a2)) {
     obs_count <- nrow(obs_data)
     cat(paste("dfs created for site",sites,obs_count,"\n",sep=" "))
     if (Flownum>0) {
-      ObsFlowStats[i,] <- FlowStats_all(obs_data,drain_area)
+      ObsFlowStats[i,] <- FlowStatsAll(obs_data,drain_area)
       cat(paste("Obs flow stats calculated for site",sites,"\n",sep=" "))
     }
     if (Magnifnum>0) {
