@@ -7,7 +7,7 @@ library(NWCCompare)
 # Inputs: uncomment for non Rserve execuation.
 # sites <- '02177000,02178400'
 # startdate <- "2008-10-01"
-# enddate <- "2013-10-01"
+# enddate <- "2013-09-29"
 # stats<-"GOF,GOFMonth,magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 
 sites<-read.csv(header=F,colClasses=c("character"),text=sites)
@@ -51,103 +51,69 @@ for (i in 1:length(sites)) {
   site = sites[i]
   url2 <- paste(nwisDvUrl, site, "&startDT=", startdate, "&endDT=", enddate, "&statCd=", offering, "&parameterCd=", property, sep = "")
   x_obs <- getXMLWML1.1Data(url2)
-  for (i in 1:length(a2)) {
-    startdate<-"2008-10-01"
-    enddate<-"2013-9-30"
-    interval<-''
-    latest<-''
-    sites=a[i]
-    url2<-paste(sos_url_temp,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering_temp,'&parameterCd=',property_temp,sep='')
-    x_obs <- getXMLWML1.1Data(url2)
+  
+  if (nrow(x_obs) > 2) {
+    obs_data <- get_obsdata(x_obs)
+    obs_count <- nrow(obs_data)
+    cat(paste("get_obsdata run on x_obs for site", site, obs_count, "\n", sep = " "))
+    drain_url <- paste(drainage_url, site, sep = "")
+    drain_area <- getDrainageArea(drain_url)
+    cat(paste("data and drainage area retrieved for site", site, drain_area, "\n", sep = " "))
+    yv[i] <- as.character(min(obs_data$date))
+    ymaxv[i] <- as.character(max(obs_data$date))
+    cat(paste("dates calculated for site", site, "\n", sep = " "))
     
-    if (nrow(x_obs)>2) {
-      obs_data <- get_obsdata(x_obs)
-      obs_count<-nrow(obs_data)
-      cat(paste("get_obsdata run on x_obs for site",sites,obs_count,"\n",sep=" "))
-      drain_url<-paste(drainage_url,sites,sep="")
-      drain_area<-getDrainageArea(drain_url)
-      cat(paste("data and drainage area retrieved for site",sites,drain_area,"\n",sep=" "))
-      yv[i]<-as.character(min(obs_data$date))
-      ymaxv[i]<-as.character(max(obs_data$date))
-      cat(paste("dates calculated for site",sites,"\n",sep=" "))
-      
-      obs_data <- obs_data[,c('wy_val','date','discharge','month_val','year_val','day_val','jul_val')]
-      obs_count <- nrow(obs_data)
-      cat(paste("dfs created for site",sites,obs_count,"\n",sep=" "))
-      if (Flownum>0) {
-        ObsFlowStats[i,] <- FlowStatsAll(obs_data,drain_area)
-        cat(paste("Obs flow stats calculated for site",sites,"\n",sep=" "))
-      }
-      if (Magnifnum>0) {
-        magnifSevenObs[i,] <- magnifSeven(obs_data)
-        cat(paste("Obs mag7 stats calculated for site",sites,"\n",sep=" "))
-      }
-      comment <- ""
-    } else {
-      comment[i]<-"No observed data for this site"
+    obs_data <- obs_data[, c("wy_val", "date", "discharge", "month_val", "year_val", "day_val", "jul_val")]
+    obs_count <- nrow(obs_data)
+    cat(paste("dfs created for site", site, obs_count, "\n", sep = " "))
+    if (Flownum > 0) {
+      ObsFlowStats[i, ] <- FlowStatsAll(obs_data, drain_area)
+      cat(paste("Obs flow stats calculated for site", site, "\n", sep = " "))
     }
-    if (nrow(x_obs) > 2) {
-      obs_data <- get_obsdata(x_obs)
-      obs_count <- nrow(obs_data)
-      cat(paste("get_obsdata run on x_obs for site", site, obs_count, "\n", sep = " "))
-      drain_url <- paste(drainage_url, site, sep = "")
-      drain_area <- getDrainageArea(drain_url)
-      cat(paste("data and drainage area retrieved for site", site, drain_area, "\n", sep = " "))
-      yv[i] <- as.character(min(obs_data$date))
-      ymaxv[i] <- as.character(max(obs_data$date))
-      cat(paste("dates calculated for site", site, "\n", sep = " "))
-      
-      obs_data <- obs_data[, c("wy_val", "date", "discharge", "month_val", "year_val", "day_val", "jul_val")]
-      obs_count <- nrow(obs_data)
-      cat(paste("dfs created for site", site, obs_count, "\n", sep = " "))
-      if (Flownum > 0) {
-        ObsFlowStats[i, ] <- FlowStatsAll(obs_data, drain_area)
-        cat(paste("Obs flow stats calculated for site", site, "\n", sep = " "))
-      }
-      if (Magnifnum > 0) {
-        magnifSevenObs[i, ] <- magnifSeven(obs_data)
-        cat(paste("Obs mag7 stats calculated for site", site, "\n", sep = " "))
-      }
-      comment <- ""
-    } else {
-      comment[i] <- "No observed data for this site"
+    if (Magnifnum > 0) {
+      magnifSevenObs[i, ] <- magnifSeven(obs_data)
+      cat(paste("Obs mag7 stats calculated for site", site, "\n", sep = " "))
     }
-  }
-  
-  statsout <- data.frame(sites, yv, ymaxv, magnifSevenObs, ObsFlowStats, comment, stringsAsFactors = FALSE)
-  
-  if (Magnifnum > 0) {
-    namesFull <- c(namesFull, namesMagnif)
-  }
-  if (length(grep("otherStat", stats)) > 0) {
-    namesFull <- c(namesFull, namesOtherStat)
-  }
-  if (length(grep("magStat", stats)) > 0) {
-    namesFull <- c(namesFull, namesMagStat)
-  }
-  if (length(grep("flowStat", stats)) > 0) {
-    namesFull <- c(namesFull, namesFlowStat)
-  }
-  if (length(grep("durStat", stats)) > 0) {
-    namesFull <- c(namesFull, namesDurStat)
-  }
-  if (length(grep("timStat", stats)) > 0) {
-    namesFull <- c(namesFull, namesTimStat)
-  }
-  if (length(grep("rateStat", stats)) > 0) {
-    namesFull <- c(namesFull, namesRateStat)
-  }
-  namesFull <- c(namesFull, "comment")
-  
-  colnames(statsout) <- namesFull
-  cat("statsout created and named \n")
-  output = "output.txt"
-  if (i == length(sites)) {
-    write.table(statsout, file = "output.txt", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+    comment <- ""
   } else {
-    output = "output.zip"
-    message <- "One or more web service calls resulted in failure. Please try again."
-    write.table(message, file = "output.txt", col.names = FALSE, row.names = FALSE, quote = FALSE)
+    comment[i] <- "No observed data for this site"
   }
-  
-  # wps.out: output, text, Output File, A text file containing the table of statistics as well as monthly stats and graphs for each site;
+}
+
+statsout <- data.frame(sites, yv, ymaxv, magnifSevenObs, ObsFlowStats, comment, stringsAsFactors = FALSE)
+
+if (Magnifnum > 0) {
+  namesFull <- c(namesFull, namesMagnif)
+}
+if (length(grep("otherStat", stats)) > 0) {
+  namesFull <- c(namesFull, namesOtherStat)
+}
+if (length(grep("magStat", stats)) > 0) {
+  namesFull <- c(namesFull, namesMagStat)
+}
+if (length(grep("flowStat", stats)) > 0) {
+  namesFull <- c(namesFull, namesFlowStat)
+}
+if (length(grep("durStat", stats)) > 0) {
+  namesFull <- c(namesFull, namesDurStat)
+}
+if (length(grep("timStat", stats)) > 0) {
+  namesFull <- c(namesFull, namesTimStat)
+}
+if (length(grep("rateStat", stats)) > 0) {
+  namesFull <- c(namesFull, namesRateStat)
+}
+namesFull <- c(namesFull, "comment")
+
+colnames(statsout) <- namesFull
+cat("statsout created and named \n")
+output = "output.txt"
+if (i == length(sites)) {
+  write.table(statsout, file = "output.txt", col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+} else {
+  output = "output.zip"
+  message <- "One or more web service calls resulted in failure. Please try again."
+  write.table(message, file = "output.txt", col.names = FALSE, row.names = FALSE, quote = FALSE)
+}
+
+# wps.out: output, text, Output File, A text file containing the table of statistics as well as monthly stats and graphs for each site;
