@@ -26,8 +26,7 @@
   average high pulse durations (percent-spatial).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletempf<-read.csv(load_data, stringsAsFactors=FALSE)
+qfiletempf<-sampleData
 dh15.16(qfiletempf)
 }
 

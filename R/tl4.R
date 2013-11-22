@@ -11,8 +11,7 @@
 #' @return tl4 numeric containing TL4 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' tl4(qfiletempf, 1161.38)
 tl4 <- function(qfiletempf, thresh) {
   lfcrit <- thresh

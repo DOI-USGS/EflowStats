@@ -9,8 +9,7 @@
 #' @return ml19 numeric value of ML19 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ml19(qfiletempf)
 ml19 <- function(qfiletempf, pref = "mean") {
   minbyyr <- aggregate(qfiletempf$discharge,list(qfiletempf$wy_val),FUN=min,na.rm=TRUE)

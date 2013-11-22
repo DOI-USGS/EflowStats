@@ -38,8 +38,7 @@
   the median of the monthly means (dimensionless-spatial).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletemp<-read.csv(load_data)
-ma36.40(qfiletemp)
+qfiletempf<-sampleData
+ma36.40(qfiletempf)
 }
 

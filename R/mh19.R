@@ -2,8 +2,8 @@
 #' 
 #' This function accepts a data frame that contains columns named "discharge" and "year_val" and 
 #' calculates the skewness in annual maximum flows (dimensionless-spatial). Use the equation:
-#' MH19   numerator =   N2 × sum(qm3)-3N × sum(qm) × sum(qm2) + 2 × (sum(qm))3  
-#' denominator = N × (N-1) × (N-2) × stddev3  
+#' MH19   numerator =   N2 ? sum(qm3)-3N ? sum(qm) ? sum(qm2) + 2 ? (sum(qm))3  
+#' denominator = N ? (N-1) ? (N-2) ? stddev3  
 #' Where:  N = Number of years
 #' qm = Log10 (annual maximum flows)
 #' stddev = Standard deviation of the annual maximum flows
@@ -12,9 +12,8 @@
 #' @return mh19 numeric value of MH19 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' mh19(x)
+#' qfiletempf<-sampleData
+#' mh19(qfiletempf)
 mh19 <- function(x) {
   annmax <- aggregate(x$discharge,list(x$wy_val),FUN=max,na.rm=TRUE)
   log_disch <- log10(annmax$x)

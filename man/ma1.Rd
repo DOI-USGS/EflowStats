@@ -18,8 +18,7 @@
   flow values for the entire record (cubic feet per second)
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-ma1(x)
+qfiletempf<-obs_data
+ma1(qfiletempf)
 }
 

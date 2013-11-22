@@ -8,8 +8,7 @@
 #' @return dh6 numeric containing DH6 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh6(qfiletempf)
 dh6 <- function(qfiletempf) {
   meandh6 <- dh1(qfiletempf, pref = "mean")

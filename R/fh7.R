@@ -10,8 +10,7 @@
 #' @return fh7 numeric value of FH7 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' fh7(qfiletempf)
 fh7 <- function(qfiletempf, pref = "mean") {
   hfcrit <- 7*ma2(qfiletempf)

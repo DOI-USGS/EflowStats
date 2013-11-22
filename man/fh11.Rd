@@ -28,8 +28,7 @@
   number of events (number of events/year-temporal).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletempf<-read.csv(load_data)
+qfiletempf<-sampleData
 sites<-"02178400"
 peakValues<-getPeakData(sites)
 thresh<-1158.495

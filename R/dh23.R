@@ -11,8 +11,7 @@
 #' @return dh23 list containing DH23 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh23(qfiletempf, 1158)
 dh23 <- function(qfiletempf, thresh) {
   lfcrit <- thresh

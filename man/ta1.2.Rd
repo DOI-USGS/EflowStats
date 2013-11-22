@@ -21,17 +21,17 @@
   year and the columns are 11 flow categories. The cell
   values are the number of times that a flow falls into a
   category on each day. The categories are: log(flow) < 0.1
-  × log(mean flow), 0.1 × log(mean flow) ??? log(flow) <
-  0.25 × log(mean flow) 0.25 × log(mean flow) ??? log(flow)
-  < 0.5 × log(mean flow) 0.5 × log(mean flow) ??? log(flow)
-  < 0.75 × log(mean flow) 0.75 × log(mean flow) ???
-  log(flow) < 1.0 × log(mean flow) 1.0 × log(mean flow) ???
-  log(flow) < 1.25 × log(mean flow) 1.25 × log(mean flow)
-  ???log(flow) < 1.5 × log(mean flow) 1.5 × log(mean flow)
-  ??? log(flow) < 1.75 × log(mean flow) 1.75 × log(mean
-  flow) ??? log(flow) < 2.0 × log(mean flow) 2.0 ×log(mean
-  flow) ??? log(flow) < 2.25 × log(mean flow) log(flow) ???
-  2.25 × log(mean flow) The row totals, column totals, and
+  ? log(mean flow), 0.1 ? log(mean flow) ??? log(flow) <
+  0.25 ? log(mean flow) 0.25 ? log(mean flow) ??? log(flow)
+  < 0.5 ? log(mean flow) 0.5 ? log(mean flow) ??? log(flow)
+  < 0.75 ? log(mean flow) 0.75 ? log(mean flow) ???
+  log(flow) < 1.0 ? log(mean flow) 1.0 ? log(mean flow) ???
+  log(flow) < 1.25 ? log(mean flow) 1.25 ? log(mean flow)
+  ???log(flow) < 1.5 ? log(mean flow) 1.5 ? log(mean flow)
+  ??? log(flow) < 1.75 ? log(mean flow) 1.75 ? log(mean
+  flow) ??? log(flow) < 2.0 ? log(mean flow) 2.0 ?log(mean
+  flow) ??? log(flow) < 2.25 ? log(mean flow) log(flow) ???
+  2.25 ? log(mean flow) The row totals, column totals, and
   grand total are computed. Using the equations for Shannon
   information theory parameters, constancy is computed as:
   1- (uncertainty with respect to state)/log (number of
@@ -52,8 +52,7 @@
   where number of state = number of categories = 11
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletempf<-read.csv(load_data)
+qfiletempf<-sampleData
 ta1.2(qfiletempf)
 }
 

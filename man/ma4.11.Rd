@@ -56,8 +56,7 @@
   the 25th and 75th percentiles (dimensionless-spatial).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-ma4.11(x)
+qfiletempf<-sampleData
+ma4.11(qfiletempf)
 }
 

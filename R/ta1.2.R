@@ -4,17 +4,17 @@
 #' TA1; Constancy. Constancy is computed via the formulation of Colwell (see example in Colwell, 1974). A matrix of values 
 #' is compiled where the rows are 365 (no February 29th) days of the year and the columns are 11 flow categories. The 
 #' cell values are the number of times that a flow falls into a category on each day. The categories are: 
-#' log(flow) < 0.1 × log(mean flow), 
-#' 0.1 × log(mean flow) ??? log(flow) < 0.25 × log(mean flow)
-#' 0.25 × log(mean flow) ??? log(flow) < 0.5 × log(mean flow)
-#' 0.5 × log(mean flow) ??? log(flow) < 0.75 × log(mean flow)
-#' 0.75 × log(mean flow) ??? log(flow) < 1.0 × log(mean flow)
-#' 1.0 × log(mean flow) ??? log(flow) < 1.25 × log(mean flow)
-#' 1.25 × log(mean flow) ???log(flow) < 1.5 × log(mean flow)
-#' 1.5 × log(mean flow) ??? log(flow) < 1.75 × log(mean flow)
-#' 1.75 × log(mean flow) ??? log(flow) < 2.0 × log(mean flow)
-#' 2.0 ×log(mean flow) ??? log(flow) < 2.25 × log(mean flow)
-#' log(flow) ??? 2.25 × log(mean flow)
+#' log(flow) < 0.1 ? log(mean flow), 
+#' 0.1 ? log(mean flow) ??? log(flow) < 0.25 ? log(mean flow)
+#' 0.25 ? log(mean flow) ??? log(flow) < 0.5 ? log(mean flow)
+#' 0.5 ? log(mean flow) ??? log(flow) < 0.75 ? log(mean flow)
+#' 0.75 ? log(mean flow) ??? log(flow) < 1.0 ? log(mean flow)
+#' 1.0 ? log(mean flow) ??? log(flow) < 1.25 ? log(mean flow)
+#' 1.25 ? log(mean flow) ???log(flow) < 1.5 ? log(mean flow)
+#' 1.5 ? log(mean flow) ??? log(flow) < 1.75 ? log(mean flow)
+#' 1.75 ? log(mean flow) ??? log(flow) < 2.0 ? log(mean flow)
+#' 2.0 ?log(mean flow) ??? log(flow) < 2.25 ? log(mean flow)
+#' log(flow) ??? 2.25 ? log(mean flow)
 #' The row totals, column totals, and grand total are computed. Using the equations for Shannon information theory 
 #' parameters, constancy is computed as:
 #' 1- (uncertainty with respect to state)/log (number of state) 
@@ -33,8 +33,7 @@
 #' @return ta1.2 list containing TA1 and TA2 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ta1.2(qfiletempf)
 ta1.2 <- function(qfiletempf) {
   colwell_mat <- matrix(-99999,365,11)

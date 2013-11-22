@@ -9,8 +9,7 @@
 #' @return ra3 numeric containing RA3 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ra3(qfiletempf)
 ra3 <- function(qfiletempf, pref = "mean") {
   diffbtdays <- diff(qfiletempf$discharge, lag = 1, 

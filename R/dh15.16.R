@@ -12,8 +12,7 @@
 #' @return dh15.16 list containing DH15 and DH16 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data, stringsAsFactors=FALSE)
+#' qfiletempf<-sampleData
 #' dh15.16(qfiletempf)
 dh15.16 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge

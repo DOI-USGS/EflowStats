@@ -9,8 +9,7 @@
 #' @return mh13 numeric value of MH13 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' mh13(qfiletempf)
 mh13 <- function(qfiletempf) {
   maxmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 

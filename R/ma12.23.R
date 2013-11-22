@@ -10,8 +10,7 @@
 #' @return ma12.23 data frame containing the mean or medians for each month
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ma12.23(qfiletempf)
 #' ma12.23(qfiletempf,pref="median")
 ma12.23 <- function(qfiletempf, pref = "mean") {

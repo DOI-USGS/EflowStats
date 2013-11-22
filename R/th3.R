@@ -11,8 +11,7 @@
 #' @return tl4 numeric containing TH3 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' th3(qfiletempf, 1158)
 th3 <- function(qfiletempf, thresh) {
   lfcrit <- thresh

@@ -9,8 +9,7 @@
 #' @return mh24 numeric value of MH24 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' mh24(qfiletempf)
 mh24 <- function(qfiletempf) {
   hfcrit <- ma2(qfiletempf)

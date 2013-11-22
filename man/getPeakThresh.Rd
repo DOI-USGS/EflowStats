@@ -8,7 +8,7 @@
   \item{obs_data}{data frame containing processed NWIS
   daily flow data for the site}
 
-  \item{peakDaily}{data frame containing NWIS annual peak
+  \item{peakValues}{data frame containing NWIS annual peak
   flow data for the site}
 
   \item{perc}{value containing the desired percentile to be
@@ -38,10 +38,9 @@
   value.
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-obs_data<-read.csv(load_data,stringsAsFactors=FALSE)
+qfiletempf<-sampleData
 sites<-"02178400"
 peakValues<-getPeakData(sites)
-getPeakThresh(obs_data,peakValues,.6)
+getPeakThresh(qfiletempf,peakValues,.6)
 }
 

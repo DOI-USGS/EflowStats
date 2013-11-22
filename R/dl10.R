@@ -8,8 +8,7 @@
 #' @return dl10 numeric containing DL10 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dl10(qfiletempf)
 dl10 <- function(qfiletempf) {
   meandl10 <- dl5(qfiletempf, pref = "mean")

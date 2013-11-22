@@ -10,10 +10,9 @@
 #' @return mh20 numeric value of MH20 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' drainarea<-56.5
-#' mh20(x,drainarea)
+#' mh20(qfiletempf,drainarea)
 mh20 <- function(x,drainarea,pref = "mean") {
   maxbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=max,na.rm=TRUE)
   colnames(maxbyyr) <- c("Year","yrmax")

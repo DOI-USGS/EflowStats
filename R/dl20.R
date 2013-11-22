@@ -8,8 +8,7 @@
 #' @return dl20 numeric containing DL20 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dl20(qfiletempf)
 dl20 <- function(qfiletempf) {
   sumbymonyr <- aggregate(qfiletempf$discharge,list(qfiletempf$month_val,qfiletempf$year_val),FUN=sum,na.rm=TRUE)

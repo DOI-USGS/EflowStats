@@ -10,8 +10,7 @@
 #' @return fl3 numeric containing FL3 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' fl3(qfiletempf)
 fl3 <- function(qfiletempf, pref = "mean") {
   lfcrit <- 0.05*mean(qfiletempf$discharge)

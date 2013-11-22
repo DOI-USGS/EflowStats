@@ -8,14 +8,14 @@
 #' @return Daily a data frame containing columns 'Date' and 'Discharge'
 #' @export
 #' @examples
-#' \dontrun{url<-"http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="}
-#' \dontrun{sites<-"02177000"}
-#' \dontrun{startdate<-"2012-09-01"}
-#' \dontrun{enddate<-"2012-10-01"}
-#' \dontrun{offering<-'00003'}
-#' \dontrun{property<-'00060'}
-#' \dontrun{obs_url<-paste(url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')}
-#' \dontrun{getXMLWML1.1Data(obs_url)}
+#' url<-"http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
+#' sites<-"02177000"
+#' startdate<-"2012-09-01"
+#' enddate<-"2012-10-01"
+#' offering<-'00003'
+#' property<-'00060'
+#' obs_url<-paste(url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')
+#' getXMLWML1.1Data(obs_url)
 getXMLWML1.1Data <- function(obs_url){
   cat(paste("Retrieving data from: \n", obs_url, "\n", sep = " "))
   obs_open <- file(obs_url,open="r")
