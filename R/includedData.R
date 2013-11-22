@@ -5,3 +5,12 @@
 #' @author Jessica Thompson \email{jlthomps@@usgs.gov}
 #' @keywords data
 NULL
+
+#' Example data
+#'
+#' Example data 
+#'
+#' @name sampleData
+#' @docType data
+#' @keywords streamflow data
+NULL
