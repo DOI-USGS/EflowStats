@@ -10,8 +10,7 @@
 #' @return fh4 numeric value of high flood pulse count for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' fh4(qfiletempf)
 fh4 <- function(qfiletempf, pref = "mean") {
   hfcrit <- 7 * ma2(qfiletempf)

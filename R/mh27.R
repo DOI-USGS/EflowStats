@@ -9,8 +9,7 @@
 #' @return mh27 numeric value of MH27 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' mh27(qfiletempf)
 mh27 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge

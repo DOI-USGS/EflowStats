@@ -10,8 +10,7 @@
 #' @return ma234.35 data frame containing the MA24-MA35 statistics for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ma24.35(qfiletempf)
 ma24.35 <- function(qfiletempf, pref = "mean") {
   sdmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 

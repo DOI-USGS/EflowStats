@@ -20,10 +20,9 @@
 #' @return ma41.45 list of MA41-MA45 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletemp<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' drain_area<-56.5
-#' ma41.45(qfiletemp,drain_area)
+#' ma41.45(qfiletempf,drain_area)
 ma41.45 <- function(qfiletemp,drain_area) {
   meanbyyr <- aggregate(qfiletemp$discharge, list(qfiletemp$wy_val), FUN = mean, na.rm=TRUE)
   colnames(meanbyyr) <- c("Year","meanyr")

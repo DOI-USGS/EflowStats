@@ -23,8 +23,7 @@
   feet per second-temporal).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletemp<-read.csv(load_data)
-mh1.12(qfiletemp)
+qfiletempf<-sampleData
+mh1.12(qfiletempf)
 }
 

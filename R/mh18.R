@@ -9,9 +9,8 @@
 #' @return mh18 numeric value of mh18 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' mh18(x)
+#' qfiletempf<-sampleData
+#' mh18(qfiletempf)
 mh18 <- function(x) {
   maxbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=max,na.rm=TRUE)
   colnames(maxbyyr) <- c("Year","yrmax")

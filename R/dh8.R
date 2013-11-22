@@ -8,8 +8,7 @@
 #' @return dh8 numeric containing DH8 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh8(qfiletempf)
 dh8 <- function(qfiletempf) {
   meandh8 <- dh3(qfiletempf, pref = "mean")

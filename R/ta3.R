@@ -12,8 +12,7 @@
 #' @return ta3 numeric containing TA3 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ta3(qfiletempf, 1158)
 ta3 <- function(qfiletempf, thresh) {
   lfcrit <- thresh

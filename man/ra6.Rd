@@ -20,8 +20,7 @@
   median of these values (cubic feet per second-temporal).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletempf<-read.csv(load_data)
+qfiletempf<-sampleData
 ra6(qfiletempf)
 }
 

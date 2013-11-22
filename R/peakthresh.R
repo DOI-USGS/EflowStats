@@ -10,30 +10,29 @@
 #' (80th) percentile, used by indices TL3 and TL4, follow the same process, inputing a different 'perc' value.
 #' 
 #' @param obs_data data frame containing processed NWIS daily flow data for the site
-#' @param peakDaily data frame containing NWIS annual peak flow data for the site
+#' @param peakValues data frame containing NWIS annual peak flow data for the site
 #' @param perc value containing the desired percentile to be calculated
 #' @return thresh numeric containing the 1.67-year flood threshold
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' obs_data<-read.csv(load_data,stringsAsFactors=FALSE)
+#' qfiletempf<-sampleData
 #' sites<-"02178400"
 #' peakValues<-getPeakData(sites)
-#' getPeakThresh(obs_data,peakValues,.6)
+#' getPeakThresh(qfiletempf,peakValues,.6)
 getPeakThresh <- function(obs_data,peakValues,perc) {
-peakDaily <- obs_data[obs_data$date %in% peakValues$date,]
-peakDaily$logval <- log10(peakDaily$discharge)
-peakInst <- peakValues[as.numeric(peakValues$wy_val)>=min(as.numeric(peakDaily$wy_val)) & as.numeric(peakValues$wy_val)<=max(as.numeric(peakDaily$wy_val)),]
-dailyMean <- mean(peakDaily$logval)
-instMean <- mean(peakInst$logval)
-num <- sum((peakDaily$logval-dailyMean)*(peakInst$logval-instMean))
-denom <- sum((peakInst$logval-instMean)*(peakInst$logval-instMean))
-b <- num/denom
-a <- dailyMean - (b*instMean)
-isolateq <- peakInst$logval
-sortq <- sort(isolateq)
-lfcrit <- quantile(sortq,perc,type=6)
-lq167 <- a + (b*lfcrit)
-thresh <- 10^(lq167)
+  peakDaily <- obs_data[obs_data$date %in% peakValues$date,]
+  peakDaily$logval <- log10(peakDaily$discharge)
+  peakInst <- peakValues[as.numeric(peakValues$wy_val)>=min(as.numeric(peakDaily$wy_val)) & as.numeric(peakValues$wy_val)<=max(as.numeric(peakDaily$wy_val)),]
+  dailyMean <- mean(peakDaily$logval)
+  instMean <- mean(peakInst$logval)
+  num <- sum((peakDaily$logval-dailyMean)*(peakInst$logval-instMean))
+  denom <- sum((peakInst$logval-instMean)*(peakInst$logval-instMean))
+  b <- num/denom
+  a <- dailyMean - (b*instMean)
+  isolateq <- peakInst$logval
+  sortq <- sort(isolateq)
+  lfcrit <- quantile(sortq,perc,type=6)
+  lq167 <- a + (b*lfcrit)
+  thresh <- 10^(lq167)
 return(thresh)
 }

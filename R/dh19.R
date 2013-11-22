@@ -9,8 +9,7 @@
 #' @return dh19 numeric containing DH19 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh19(qfiletempf)
 dh19 <- function(qfiletempf) {
   lfcrit <- median(qfiletempf$discharge)*7

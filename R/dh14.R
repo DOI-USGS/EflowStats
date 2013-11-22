@@ -9,8 +9,7 @@
 #' @return dh14 numeric containing DH14 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh14(qfiletempf)
 dh14 <- function(qfiletempf) {
   meanmonthly <- aggregate(qfiletempf$discharge, list(qfiletempf$month_val,qfiletempf$wy_val), mean, na.rm=TRUE)

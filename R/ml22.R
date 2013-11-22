@@ -10,10 +10,9 @@
 #' @return ml22 numeric value of ML22 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' drainarea<-56.5
-#' ml22(x,drainarea)
+#' ml22(qfiletempf,drainarea)
 ml22 <- function(x,drainarea,pref = "mean") {
   minbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=min,na.rm=TRUE)
   colnames(minbyyr) <- c("Year","yrmin")

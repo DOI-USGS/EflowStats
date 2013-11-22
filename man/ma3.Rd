@@ -24,8 +24,7 @@
   variation (percent).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletempf<-read.csv(load_data)
+qfiletempf<-sampleData
 ma3(qfiletempf)
 }
 

@@ -12,8 +12,7 @@
 #' @return th1.2 list containing TH1 and TH2 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' th1.2(qfiletempf)
 th1.2 <- function(qfiletempf) {
   max1daybyyear <- aggregate(qfiletempf$discharge, 

@@ -19,9 +19,8 @@
 #' @return ma36.40 list containing MA36-MA40 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletemp<-read.csv(load_data)
-#' ma36.40(qfiletemp)
+#' qfiletempf<-sampleData
+#' ma36.40(qfiletempf)
 ma36.40 <- function(qfiletemp) {
   meanbymon <- aggregate(qfiletemp$discharge, list(qfiletemp$month_val,qfiletemp$year_val), FUN = mean, na.rm=TRUE)
   colnames(meanbymon) <- c("Month","Year","meanmo")

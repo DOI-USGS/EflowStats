@@ -20,8 +20,7 @@
   median flow for the entire record (days-temporal).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-mh22(x)
+qfiletempf<-sampleData
+mh22(qfiletempf)
 }
 

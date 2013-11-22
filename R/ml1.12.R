@@ -9,9 +9,8 @@
 #' @return ml1.12 data frame containing the mean or median minimum flows for each month
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletemp<-read.csv(load_data)
-#' ml1.12(qfiletemp)
+#' qfiletempf<-sampleData
+#' ml1.12(qfiletempf)
 ml1.12 <- function(qfiletemp) {
   minbymonyr <- aggregate(qfiletemp$discharge, list(qfiletemp$year_val, qfiletemp$month_val), FUN = min, na.rm=TRUE)
   colnames(minbymonyr) <- c("Year","Month","minmo")

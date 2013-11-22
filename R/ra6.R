@@ -9,8 +9,7 @@
 #' @return ra6 numeric containing RA6 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ra6(qfiletempf)
 ra6 <- function(qfiletempf) {
   disch_log <- ifelse(qfiletempf$discharge>0,log(qfiletempf$discharge),log(.01))

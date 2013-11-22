@@ -8,8 +8,7 @@
 #' @return dl11 numeric containing DL11 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dl11(qfiletempf)
 dl11 <- function(qfiletempf) {
   meanmin <- dl1(qfiletempf)

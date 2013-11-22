@@ -12,8 +12,7 @@
 #' @return dl16.17 list containing DL16 and DL17 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dl16.17(qfiletempf)
 dl16.17 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge

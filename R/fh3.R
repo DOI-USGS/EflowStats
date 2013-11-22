@@ -10,8 +10,7 @@
 #' @return fh3 numeric value of FH3 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' fh3(qfiletempf)
 fh3 <- function(qfiletempf, pref = "mean") {
   hfcrit <- 3 * ma2(qfiletempf)

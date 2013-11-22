@@ -7,8 +7,7 @@
 #' @return medflowbyyear numeric value of the median flow by year for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' medflowbyyear(qfiletempf)
 medflowbyyear <- function(qfiletempf) {
   medflowbyyear<-aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 

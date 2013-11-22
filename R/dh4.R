@@ -10,8 +10,7 @@
 #' @return dh4 numeric containing DH4 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh4(qfiletempf)
 dh4 <- function(qfiletempf, pref = "mean") {
   noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 

@@ -13,8 +13,7 @@
 #' @return mh15.17 list of numeric value of MH15, MH16 and MH17 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' mh15.17(qfiletempf)
 mh15.17 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge

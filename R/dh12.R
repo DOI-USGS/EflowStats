@@ -9,8 +9,7 @@
 #' @return dh12 numeric containing DH12 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh12(qfiletempf)
 dh12 <- function(qfiletempf) {
   medianflow <- median(qfiletempf$discharge,na.rm=TRUE)

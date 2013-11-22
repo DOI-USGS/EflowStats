@@ -42,9 +42,8 @@
   the annual means (dimensionless-spatial).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletemp<-read.csv(load_data)
+qfiletempf<-sampleData
 drain_area<-56.5
-ma41.45(qfiletemp,drain_area)
+ma41.45(qfiletempf,drain_area)
 }
 
