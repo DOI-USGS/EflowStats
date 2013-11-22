@@ -129,6 +129,5 @@ Collate:
     'peakflow.R'
     'peakthresh.R'
     'ta1.2.R'
-    'obs_data.R'
 LazyLoad: yes
 LazyData: yes
