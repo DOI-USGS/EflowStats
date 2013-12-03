@@ -129,3 +129,7 @@ Collate:
     'peakflow.R'
     'peakthresh.R'
     'ta1.2.R'
+    'compute_magnif7.r'
+    'deseason.R'
+    'l7Q10.R'
+    'l7Q2.R'
