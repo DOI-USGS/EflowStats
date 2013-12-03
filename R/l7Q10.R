@@ -6,7 +6,7 @@
 #' @return l7Q10 l7Q10 value for the given data frame
 #' @export
 #' @examples
-#' data<-paste(system.file(package="NWCCompare"),"/data/qfiletempf.csv",sep="")
+#' data<-paste(system.file(package="HITHATStats"),"/data/qfiletempf.csv",sep="")
 #' qfiletempf<-read.csv(data,stringsAsFactors=FALSE)
 #' l7Q10(qfiletempf)
 l7Q10 <- function(qfiletempf) {
