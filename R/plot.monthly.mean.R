@@ -10,5 +10,5 @@
 #' meanmonts<-monthly.mean.ts(qfiletempf)
 #' plot.monthly.mean(meanmonts,'02178400')
 plot.monthly.mean <- function(meanmonts,station) {
-  plot(meanmonts$datenum,meanmonts$Mean_disch,xlab="",ylab="Discharge(cfs)",col="blue",type="o",main=paste("Monthly Average Flow at USGS station ",station,sep=""))
+  plot(meanmonts$datenum,meanmonts$Mean_disch,xlab="",ylab="Discharge(cfs)",col="blue",type="o",main=paste("Monthly Average Flow at station ",station,sep=""))
 }
