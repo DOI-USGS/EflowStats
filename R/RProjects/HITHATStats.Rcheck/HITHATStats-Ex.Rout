@@ -1,0 +1,49 @@
+
+R version 2.15.2 (2012-10-26) -- "Trick or Treat"
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "HITHATStats"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('HITHATStats')
+> 
+> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("getXMLWML1.1Data")
+> ### * getXMLWML1.1Data
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: getXMLWML1.1Data
+> ### Title: Function to return data from the NWISWeb WaterML1.1 daily values
+> ###   service
+> ### Aliases: getXMLWML1.1Data
+> 
+> ### ** Examples
+> 
+> url<-"http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
+> sites<-"02177000"
+> startdate<-"1900-01-01"
+> enddate<-"2012-10-01"
+> offering='00003'
+> property='00060'
+> obs_url<-paste(url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')
+> getXMLWML1.1Data(obs_url)
+Error: could not find function "getXMLWML1.1Data"
+Execution halted

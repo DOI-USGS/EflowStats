@@ -1,0 +1,25 @@
+\name{dl20}
+\alias{dl20}
+\title{Function to return the DL20 hydrologic indicator statistic for a given data frame}
+\usage{
+  dl20(qfiletempf)
+}
+\arguments{
+  \item{qfiletempf}{data frame containing a "discharge"
+  column containing daily flow values}
+}
+\value{
+  dl20 numeric containing DL20 for the given data frame
+}
+\description{
+  This function accepts a data frame that contains a column
+  named "discharge" and calculates DL20; Number of
+  zero-flow months. While computing the mean monthly flow
+  values, count the number of months in which there was no
+  flow over the entire flow record (percent-spatial).
+}
+\examples{
+qfiletempf<-sampleData
+dl20(qfiletempf)
+}
+

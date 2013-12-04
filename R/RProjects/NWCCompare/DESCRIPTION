@@ -1,0 +1,35 @@
+Package: NWCCompare
+Type: Package
+Title: Returns NWC comparison stats for two daily data sets
+Version: 1.0
+Date: 2013-01-28
+Author: Jessica Thompson
+Maintainer: Who to complain to <jlthomps@usgs.gov>
+Depends:
+    R (>= 2.15.0),
+    zoo,
+    chron,
+    doBy,
+    XML,
+    hydroGOF,
+    HITHATStats
+Description: Calculates comparison stats for two timeseries.
+License: file LICENSE
+Collate:
+    'SWE_CSV_IHA.R'
+    'getScenarioSites.R'
+    'nse.R'
+    'cv.R'
+    'l7Q10.R'
+    'l7Q2.R'
+    'monthly.mean.ts.R'
+    'nselog.R'
+    'return_10.R'
+    'rmse.R'
+    'sdev.R'
+    'includedData.R'
+    'skew.R'
+    'FlowStats.R'
+    'MonthlyAnnualGoF.R'
+    'RegionalGoF.R'
+    'SiteGoF.R'

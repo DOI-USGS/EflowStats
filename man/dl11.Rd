@@ -1,0 +1,26 @@
+\name{dl11}
+\alias{dl11}
+\title{Function to return the DL11 hydrologic indicator statistic for a given data frame}
+\usage{
+  dl11(qfiletempf)
+}
+\arguments{
+  \item{qfiletempf}{data frame containing a "discharge"
+  column containing daily flow values}
+}
+\value{
+  dl11 numeric containing DL11 for the given data frame
+}
+\description{
+  This function accepts a data frame that contains a column
+  named "discharge" and calculates DL11; Annual minimum
+  daily flow divided by the median for the entire record.
+  Compute the minimum daily flow for each year. DL11 is the
+  mean of these values divided by the median for the entire
+  record (dimensionless-temporal).
+}
+\examples{
+qfiletempf<-sampleData
+dl11(qfiletempf)
+}
+
