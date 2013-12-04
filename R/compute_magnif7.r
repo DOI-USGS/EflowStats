@@ -8,8 +8,7 @@
 #' @return magnif7 data frame of calculated statistics
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/qfiletempf.csv",sep="")
-#' timeseries1<-read.csv(load_data,stringsAsFactors=FALSE)
+#' qfiletempf<-sampleData
 #' timeseries1<-data.frame(timeseries1$date,timeseries1$discharge,timeseries1$month_val,timeseries1$year_val,stringsAsFactors=FALSE)
 #' timeseries1$date<-as.Date(timeseries1$timeseries1.date,"%m/%d/%y")
 #' timeseries1<-data.frame(timeseries1$date,timeseries1$timeseries1.discharge,timeseries1$timeseries1.month_val,timeseries1$timeseries1.year_val,stringsAsFactors=FALSE)

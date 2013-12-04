@@ -6,8 +6,7 @@
 #' @return l7Q2 l7Q2 value for the given data frame
 #' @export
 #' @examples
-#' data<-paste(system.file(package="HITHATStats"),"/data/qfiletempf.csv",sep="")
-#' qfiletempf<-read.csv(data,stringsAsFactors=FALSE)
+#' qfiletempf<-sampleData
 #' l7Q2(qfiletempf)
 l7Q2 <- function(qfiletempf) {
   day7mean <- rollmean(qfiletempf$discharge, 7, align = "right", 
