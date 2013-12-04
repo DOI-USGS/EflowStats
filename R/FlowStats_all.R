@@ -13,8 +13,7 @@
 #' sites<-"02177000"
 #' drain_url<-paste(drainage_url,sites,sep="")
 #' drain_area<-getDrainageArea(drain_url)
-#' load_data<-paste(system.file(package="NWCCompare"),"/data/qfiletempf.csv",sep="")
-#' qfiletempf<-read.csv(load_data,stringsAsFactors=FALSE)
+#' qfiletempf<-sampleData
 #' FlowStatsAll(qfiletempf,drain_area,"magStat,flowStat,durStat,timStat,rateStat,otherStat")
 FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateStat,otherStat,durStat") {
   if (length(grep("otherStat",stats))>0) {
