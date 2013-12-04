@@ -9,7 +9,7 @@ Created May 29, 2013 and functions are modified from previous versions of this c
   deseason(timeseries)
 }
 \arguments{
-  \item{timeseries1}{data frame of daily flow data}
+  \item{timeseries}{data frame of daily flow data}
 }
 \value{
   deseason data frame of deseasonalized streamflow

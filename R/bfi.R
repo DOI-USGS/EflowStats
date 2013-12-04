@@ -6,6 +6,7 @@
 #' @param qfiletempf data frame containing a "discharge" column containing daily flow values
 #' @return bfi numeric value of the base flow index for the given data frame
 #' @export
+#' @import zoo chron lmomco doBy RCurl XML hydroGOF
 #' @examples
 #' qfiletempf<-sampleData
 #' bfi(qfiletempf)

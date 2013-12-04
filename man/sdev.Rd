@@ -16,8 +16,7 @@
   and returns the standard deviation
 }
 \examples{
-data<-paste(system.file(package="NWCCompare"),"/data/qfiletempf.csv",sep="")
-qfiletempf<-read.csv(data,stringsAsFactors=FALSE)
+qfiletempf<-sampleData
 sdev(qfiletempf)
 }
 

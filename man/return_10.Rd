@@ -16,8 +16,7 @@
   and returns the 10 year return value
 }
 \examples{
-data<-paste(system.file(package="NWCCompare"),"/data/qfiletempf.csv",sep="")
-qfiletempf<-read.csv(data,stringsAsFactors=FALSE)
+qfiletempf<-sampleData
 return_10(qfiletempf)
 }
 

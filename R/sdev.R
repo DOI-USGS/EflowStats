@@ -6,8 +6,7 @@
 #' @return sdev standard deviation for the given data frame
 #' @export
 #' @examples
-#' data<-paste(system.file(package="NWCCompare"),"/data/qfiletempf.csv",sep="")
-#' qfiletempf<-read.csv(data,stringsAsFactors=FALSE)
+#' qfiletempf<-sampleData
 #' sdev(qfiletempf)
 sdev <- function(x) {
   sdev <- sd(x$discharge,na.rm=TRUE)

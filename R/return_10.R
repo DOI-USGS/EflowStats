@@ -6,8 +6,7 @@
 #' @return return_10 10-year return value for the given data frame
 #' @export
 #' @examples
-#' data<-paste(system.file(package="NWCCompare"),"/data/qfiletempf.csv",sep="")
-#' qfiletempf<-read.csv(data,stringsAsFactors=FALSE)
+#' qfiletempf<-sampleData
 #' return_10(qfiletempf)
 return_10 <- function(qfiletempf) {
   annual_max <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), max, na.rm=TRUE)
