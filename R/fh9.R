@@ -10,8 +10,7 @@
 #' @return fh9 numeric value of FH9 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' fh9(qfiletempf)
 fh9 <- function(qfiletempf, pref = "mean") {
   isolateq <- qfiletempf$discharge

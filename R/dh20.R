@@ -9,8 +9,7 @@
 #' @return dh20 list containing DH20 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh20(qfiletempf)
 dh20 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge

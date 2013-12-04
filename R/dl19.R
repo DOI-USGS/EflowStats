@@ -9,8 +9,7 @@
 #' @return dl19 numeric containing DL19 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dl19(qfiletempf)
 dl19 <- function(qfiletempf) {
   subset_zero <- subset(qfiletempf,qfiletempf$discharge==0)

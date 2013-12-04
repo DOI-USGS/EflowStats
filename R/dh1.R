@@ -9,8 +9,7 @@
 #' @return dh1 numeric containing DH1 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh1(qfiletempf)
 dh1 <- function(qfiletempf, pref = "mean") {
   annualmax <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), max)

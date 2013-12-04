@@ -7,9 +7,8 @@
 #' @return ma1 numeric value of the mean daily flow for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ma1(x)
+#' qfiletempf<-obs_data
+#' ma1(qfiletempf)
 ma1 <- function(x) {
   ma1 <- mean(x$discharge,na.rm=TRUE)
   return(ma1)

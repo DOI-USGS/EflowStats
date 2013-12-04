@@ -8,8 +8,7 @@
 #' @return ra2 numeric containing RA2 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ra2(qfiletempf)
 ra2 <- function(qfiletempf) {
   meanra2 <- ra1(qfiletempf, pref = "mean")

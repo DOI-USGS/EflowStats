@@ -11,9 +11,8 @@
 #' @return ml20 numeric value of ML20 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data,stringsAsFactors=FALSE)
-#' ml20(x)
+#' qfiletempf<-sampleData
+#' ml20(qfiletempf)
 ml20 <- function(x) {
   sub_flow <- subset(x,na.rm=TRUE)
   numdays <- nrow(sub_flow)

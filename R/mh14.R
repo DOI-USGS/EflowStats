@@ -9,8 +9,7 @@
 #' @return mh14 numeric value of MH14 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' mh14(qfiletempf)
 mh14 <- function(qfiletempf) {
   maxmonbymoyr <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val, 

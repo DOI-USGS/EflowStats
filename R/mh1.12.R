@@ -9,9 +9,8 @@
 #' @return mh1.12 data frame containing the mean or median maximum flows for each month
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletemp<-read.csv(load_data)
-#' mh1.12(qfiletemp)
+#' qfiletempf<-sampleData
+#' mh1.12(qfiletempf)
 mh1.12 <- function(qfiletemp) {
   maxbymonyr <- aggregate(qfiletemp$discharge, list(qfiletemp$year_val, qfiletemp$month_val), FUN = max, na.rm=TRUE)
   colnames(maxbymonyr) <- c("Year","Month","maxmo")

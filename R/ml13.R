@@ -9,8 +9,7 @@
 #' @return ml13 numeric value of ML13 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ml13(qfiletempf)
 ml13 <- function(qfiletempf) {
   minmonbyyr <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val, 

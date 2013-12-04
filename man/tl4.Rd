@@ -25,8 +25,7 @@
   yearly ratios (dimensionless-spatial).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletempf<-read.csv(load_data)
+qfiletempf<-sampleData
 tl4(qfiletempf, 1161.38)
 }
 

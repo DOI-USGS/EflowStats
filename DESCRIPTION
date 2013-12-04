@@ -6,7 +6,8 @@ Date: 2013-08-08
 Author: Jessica Thompson
 Maintainer: Who to complain to <jlthomps@usgs.gov>
 Depends:
-    R (>= 3.0),
+    R (>= 3.0)
+Imports:
     zoo,
     chron,
     doBy,
@@ -133,3 +134,5 @@ Collate:
     'deseason.R'
     'l7Q10.R'
     'l7Q2.R'
+LazyLoad: yes
+LazyData: yes

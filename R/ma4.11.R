@@ -27,9 +27,8 @@
 #' @return ma4.11 list of the MA4-MA11 statistics for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ma4.11(x)
+#' qfiletempf<-sampleData
+#' ma4.11(qfiletempf)
 ma4.11<-function(x) {
   isolateq <- x$discharge
   sortq <- sort(isolateq)

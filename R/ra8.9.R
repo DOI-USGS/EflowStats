@@ -10,8 +10,7 @@
 #' @return ra8.9 list containing RA8 and RA9 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ra8.9(qfiletempf)
 ra8.9 <- function(qfiletempf) {
   noyears <- data.frame(unique(qfiletempf$wy_val),stringsAsFactors=FALSE)

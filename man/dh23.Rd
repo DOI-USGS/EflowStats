@@ -26,8 +26,7 @@
   for years in which floods occur (days-temporal).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-qfiletempf<-read.csv(load_data)
+qfiletempf<-sampleData
 dh23(qfiletempf, 1158)
 }
 

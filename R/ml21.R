@@ -8,9 +8,8 @@
 #' @return ml21 numeric value of ML21 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ml21(x)
+#' qfiletempf<-sampleData
+#' ml21(qfiletempf)
 ml21 <- function(x) {
   minbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=min,na.rm=TRUE)
   colnames(minbyyr) <- c("Year","yrmin")

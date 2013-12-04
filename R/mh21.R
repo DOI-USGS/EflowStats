@@ -9,9 +9,8 @@
 #' @return mh21 numeric value of MH21 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' mh21(x)
+#' qfiletempf<-sampleData
+#' mh21(qfiletempf)
 mh21 <- function(x) {
   thresh <- ma2(x)
   nevents <- 0

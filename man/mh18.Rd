@@ -21,8 +21,7 @@
   (percent-spatial).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
-mh18(x)
+qfiletempf<-sampleData
+mh18(qfiletempf)
 }
 

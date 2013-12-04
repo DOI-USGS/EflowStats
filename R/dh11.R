@@ -10,8 +10,7 @@
 #' @return dh11 numeric containing DH11 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dh11(qfiletempf)
 dh11 <- function(qfiletempf, pref = "mean") {
   meanmaxbyyear <- dh1(qfiletempf)

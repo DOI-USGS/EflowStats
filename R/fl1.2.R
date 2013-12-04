@@ -12,8 +12,7 @@
 #' @return fl1.2 list of FL1 and FL2 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' fl1.2(qfiletempf)
 fl1.2 <- function(qfiletempf, pref = "mean") {
   isolateq <- qfiletempf$discharge

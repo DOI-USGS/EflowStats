@@ -10,8 +10,7 @@
 #' @return fh10 numeric value of FH10 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' fh10(qfiletempf)
 fh10 <- function(qfiletempf, pref = "mean") {
   minbyyear <- aggregate(qfiletempf$discharge,list(qfiletempf$wy_val),FUN=min,na.rm=TRUE)

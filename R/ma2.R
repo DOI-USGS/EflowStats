@@ -7,9 +7,8 @@
 #' @return ma2 numeric value of the median daily flow for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' ma2(x)
+#' qfiletempf<-obs_data
+#' ma2(qfiletempf)
 ma2 <- function(x) {
   ma2 <- median(x$discharge,na.rm=TRUE)
   return(ma2)

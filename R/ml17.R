@@ -10,8 +10,7 @@
 #' @return ml17 numeric value of ML17 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ml17(qfiletempf)
 ml17 <- function(qfiletempf, pref = "mean") {
   bfibyyear <- bfi(qfiletempf)

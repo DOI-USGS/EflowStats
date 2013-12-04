@@ -9,8 +9,7 @@
 #' @return dl13 numeric containing DL13 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dl13(qfiletempf)
 dl13 <- function(qfiletempf) {
   meanmin <- dl4(qfiletempf)

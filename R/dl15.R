@@ -8,8 +8,7 @@
 #' @return dl15 numeric containing DL15 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' dl15(qfiletempf)
 dl15 <- function(qfiletempf) {
   isolateq <- qfiletempf$discharge

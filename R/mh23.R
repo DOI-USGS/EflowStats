@@ -9,9 +9,8 @@
 #' @return mh23 numeric value of MH23 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' x<-read.csv(load_data)
-#' mh23(x)
+#' qfiletempf<-sampleData
+#' mh23(qfiletempf)
 mh23 <- function(x) {
   thresh <- 7*ma2(x)
   nevents <- 0

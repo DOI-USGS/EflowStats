@@ -8,8 +8,7 @@
 #' @return ra5 numeric containing RA5 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' ra5(qfiletempf)
 ra5 <- function(qfiletempf) {
   sub_length <- nrow(qfiletempf)-1

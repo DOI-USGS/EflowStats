@@ -26,9 +26,8 @@
   (cubic feet per second/square mile-temporal).
 }
 \examples{
-load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-x<-read.csv(load_data)
+qfiletempf<-sampleData
 drainarea<-56.5
-ml22(x,drainarea)
+ml22(qfiletempf,drainarea)
 }
 

@@ -7,8 +7,7 @@
 #' @return bfi numeric value of the base flow index for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' bfi(qfiletempf)
 bfi <- function(qfiletempf) {
   noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 

@@ -11,8 +11,7 @@
 #' @return dh22 numeric containing DH22 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data, stringsAsFactors=FALSE)
+#' qfiletempf<-sampleData
 #' dh22(qfiletempf, 1158)
 dh22 <- function(qfiletempf, thresh) {
   lfcrit <- thresh

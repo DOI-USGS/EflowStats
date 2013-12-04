@@ -12,8 +12,7 @@
 #' @return tl1.2 list containing TL1 and TL2 for the given data frame
 #' @export
 #' @examples
-#' load_data<-paste(system.file(package="HITHATStats"),"/data/obs_data.csv",sep="")
-#' qfiletempf<-read.csv(load_data)
+#' qfiletempf<-sampleData
 #' tl1.2(qfiletempf)
 tl1.2 <- function(qfiletempf) {
   min1daybyyear <- aggregate(qfiletempf$discharge, 
