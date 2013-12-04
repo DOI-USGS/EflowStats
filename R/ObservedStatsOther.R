@@ -103,4 +103,5 @@ ObservedStatsOther <- function(daily_data,drain_area,site_id,stats) {
   
   colnames(statsout)<-namesFull
   cat("statsout created and named \n")
+  return(statsout)
 }

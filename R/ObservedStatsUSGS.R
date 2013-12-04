@@ -112,4 +112,5 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
   
   colnames(statsout)<-namesFull
   cat("statsout created and named \n")
+  return(statsout)
 }
