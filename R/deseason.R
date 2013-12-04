@@ -4,11 +4,11 @@
 #' two columns:  1) date and 2) streamflow.
 #' Created May 29, 2013 and functions are modified from previous versions of this code.
 #' 
-#' @param timeseries1 data frame of daily flow data
+#' @param timeseries data frame of daily flow data
 #' @return deseason data frame of deseasonalized streamflow
 #' @export
 #' @examples
-#' qfiletempf<-sampleData
+#' timeseries1<-sampleData
 #' timeseries1<-data.frame(timeseries1$date,timeseries1$discharge,timeseries1$month_val,stringsAsFactors=FALSE)
 #' timeseries1$date<-as.Date(timeseries1$timeseries1.date,"%m/%d/%y")
 #' timeseries1<-data.frame(timeseries1$date,timeseries1$timeseries1.discharge,timeseries1$timeseries1.month_val,stringsAsFactors=FALSE)

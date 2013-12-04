@@ -7,7 +7,7 @@
 #' @return ma1 numeric value of the mean daily flow for the given data frame
 #' @export
 #' @examples
-#' qfiletempf<-obs_data
+#' qfiletempf<-sampleData
 #' ma1(qfiletempf)
 ma1 <- function(x) {
   ma1 <- mean(x$discharge,na.rm=TRUE)

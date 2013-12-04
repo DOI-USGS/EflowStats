@@ -134,5 +134,13 @@ Collate:
     'deseason.R'
     'l7Q10.R'
     'l7Q2.R'
+    'FlowStats_all.R'
+    'ObservedStatsOther.R'
+    'ObservedStatsUSGS.R'
+    'monthly.mean.ts.R'
+    'plot.monthly.mean.R'
+    'cv.R'
+    'sdev.R'
+    'return_10.R'
 LazyLoad: yes
 LazyData: yes

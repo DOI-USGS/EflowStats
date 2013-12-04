@@ -7,7 +7,7 @@
 #' @return ma2 numeric value of the median daily flow for the given data frame
 #' @export
 #' @examples
-#' qfiletempf<-obs_data
+#' qfiletempf<-sampleData
 #' ma2(qfiletempf)
 ma2 <- function(x) {
   ma2 <- median(x$discharge,na.rm=TRUE)

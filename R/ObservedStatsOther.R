@@ -5,16 +5,20 @@
 #' 
 #' @param daily_data data frame containing datetime and discharge
 #' @param drain_area value of drainage area for station
+#' @param site_id string containing site identifier
 #' @param stats string containing desired groups of statistics 
 #' @return statsout data frame containing requested statistics for each station
 #' @export
 #' @examples
-#' qfiletempf<-sampleData
-#' ObservedStatsOther(qfiletempf,stats)
-ObservedStatsOther <- function(daily_data,drain_area,stats) {
+#' qfiletempf<-dailyData
+#' drain_area<-54
+#' site_id <- "Test site"
+#' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+#' ObservedStatsOther(qfiletempf,drain_area,site_id,stats)
+ObservedStatsOther <- function(daily_data,drain_area,site_id,stats) {
   Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 13) + (length(grep("durStat", stats)) * 41) + (length(grep("timStat", stats)) *                                                                                                                                         6) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 12)
   Magnifnum <- (length(grep("magnifSeven", stats)) * 7)
-  colnames(daily_data) <- c("datetime","discharge")
+  colnames(daily_data) <- c("date","discharge")
   selqfile<-daily_data
   tempdatafr<-NULL
   tempdatafr<-data.frame(selqfile,stringsAsFactors=FALSE)
@@ -26,10 +30,10 @@ ObservedStatsOther <- function(daily_data,drain_area,stats) {
   ones_val<-rep(1,length(tempdatafr$date))
   qfiletempf<-data.frame(tempdatafr$date,tempdatafr$discharge,month_val,year_val,day_val,jul_val,wy_val,stringsAsFactors=FALSE)
   colnames(qfiletempf)<-c('date','discharge','month_val','year_val','day_val','jul_val','wy_val')
-  qfiletempf$month_val<-substr(x_obs$date,6,7)
-  qfiletempf$year_val<-substr(x_obs$date,1,4)
-  qfiletempf$day_val<-substr(x_obs$date,9,10)
-  qfiletempf$jul_val<-strptime(x_obs$date, "%Y-%m-%d")$yday+1
+  qfiletempf$month_val<-substr(daily_data$date,6,7)
+  qfiletempf$year_val<-substr(daily_data$date,1,4)
+  qfiletempf$day_val<-substr(daily_data$date,9,10)
+  qfiletempf$jul_val<-strptime(daily_data$date, "%Y-%m-%d")$yday+1
   qfiletempf$wy_val<-ifelse(as.numeric(qfiletempf$month_val)>=10,as.character(as.numeric(qfiletempf$year_val)+ones_val),qfiletempf$year_val) 
   
   obs_data<-qfiletempf
@@ -59,20 +63,20 @@ ObservedStatsOther <- function(daily_data,drain_area,stats) {
   
   yv<-as.character(min(obs_data$date))
   ymaxv<-as.character(max(obs_data$date))
-  cat(paste("dates calculated for site",site,"\n",sep=" "))
+  cat(paste("dates calculated for site","\n",sep=" "))
   obs_data <- obs_data[,c('wy_val','date','discharge','month_val','year_val','day_val','jul_val')]
   obs_count <- nrow(obs_data)
-  cat(paste("dfs created for site",site,obs_count,"\n",sep=" "))
+  cat(paste("dfs created for site",obs_count,"\n",sep=" "))
     if (Flownum>0) {
       ObsFlowStats <- FlowStatsAll(obs_data,drain_area,stats)
-      cat(paste("Flow stats calculated for site",site,"\n",sep=" "))
+      cat(paste("Flow stats calculated for site",site_id,"\n",sep=" "))
     }
     if (Magnifnum>0) {
       magnifSevenObs <- magnifSeven(obs_data)
-      cat(paste("Mag7 stats calculated for site",site,"\n",sep=" "))
+      cat(paste("Mag7 stats calculated for site",site_id,"\n",sep=" "))
     }
   comment <- ""
-  statsout<-data.frame(t(c(sites,yv,ymaxv,magnifSevenObs,ObsFlowStats,comment)),stringsAsFactors=FALSE)
+  statsout<-data.frame(t(c(site_id,yv,ymaxv,magnifSevenObs,ObsFlowStats,comment)),stringsAsFactors=FALSE)
   
   if (Magnifnum>0) {
     namesFull <- c(namesFull,namesMagnif)

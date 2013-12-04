@@ -18,7 +18,7 @@
   flow values for the entire record (cubic feet per second)
 }
 \examples{
-qfiletempf<-obs_data
+qfiletempf<-sampleData
 ma1(qfiletempf)
 }
 
