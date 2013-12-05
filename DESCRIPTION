@@ -1,6 +1,6 @@
 Package: EflowStats
 Type: Package
-Title: Returns HIT/HAT Hydrologic Indicator stats for a given set of data
+Title: Returns Hydrologic Indicator stats for a given set of data
 Version: 3.0
 Date: 2013-08-08
 Author: Jessica Thompson
