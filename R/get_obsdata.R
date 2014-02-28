@@ -36,7 +36,9 @@ qfiletempf$year_val<-substr(x_obs$date,1,4)
 qfiletempf$day_val<-substr(x_obs$date,9,10)
 qfiletempf$jul_val<-strptime(x_obs$date, "%Y-%m-%d")$yday+1
 qfiletempf$wy_val<-ifelse(as.numeric(qfiletempf$month_val)>=10,as.character(as.numeric(qfiletempf$year_val)+ones_val),qfiletempf$year_val) 
+temp <- aggregate(discharge ~ wy_val,data=qfiletempf,length)
+temp <- temp[which(temp$discharge>=365),]
 
-obs_data<-qfiletempf
+obs_data<-qfiletempf[qfiletempf$wy_val %in% temp$wy_val,]
 return(obs_data)
 }
