@@ -15,13 +15,20 @@ dl18 <- function(qfiletempf, pref = "mean") {
   subset_zero <- subset(qfiletempf,qfiletempf$discharge==0)
   if (nrow(subset_zero)>0) {
   subset_zero$discharge <- subset_zero$discharge+1
-  zero_cnts <- aggregate(subset_zero$discharge, list(qfiletempf$wy_val), sum)
-  } else {zero_cnts <- data.frame(x=rep(0,1))}
+  zero_cnts <- aggregate(subset_zero$discharge, list(subset_zero$wy_val), sum)
+  wy_cnts <- aggregate(qfiletempf$discharge,list(qfiletempf$wy_val),sum)
+  colnames(wy_cnts) <- c("wy_val","zero_cnt")
+  wy_cnts$zero_cnt <- rep(0,nrow(wy_cnts))
+  wy_cnts <- merge(wy_cnts,zero_cnts,by.x="wy_val",by.y="Group.1",all.x=TRUE)
+  wy_cnts$zero_cnt <- wy_cnts$zero_cnt+wy_cnts$x
+  wy_cnts$zero_cnt[is.na(wy_cnts$zero_cnt)] <- 0
+ 
+  } else {wy_cnts <- data.frame(zero_cnt=rep(0,1))}
   if (pref == "median") {
-    dl18 <- median(zero_cnts$x)
+    dl18 <- median(wy_cnts$zero_cnt)
   }
   else {
-    dl18 <- mean(zero_cnts$x)
+    dl18 <- mean(wy_cnts$zero_cnt)
   }
   return(dl18)
 }
