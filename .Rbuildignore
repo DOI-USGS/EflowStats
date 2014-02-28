@@ -7,3 +7,4 @@ stats_observed_new.r
 stats_observed_all.r
 HITHATStats_1.0.tar.gz
 HITHATStats_2.0.tar.gz
+test_stats_huc12_modeled_performance.R
