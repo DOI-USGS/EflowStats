@@ -16,7 +16,7 @@
 #' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 #' ObservedStatsOther(qfiletempf,drain_area,site_id,stats)
 ObservedStatsOther <- function(daily_data,drain_area,site_id,stats) {
-  Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 13) + (length(grep("durStat", stats)) * 41) + (length(grep("timStat", stats)) *                                                                                                                                         6) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 12)
+  Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 13) + (length(grep("durStat", stats)) * 41) + (length(grep("timStat", stats)) * 6) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 12)
   Magnifnum <- (length(grep("magnifSeven", stats)) * 7)
   colnames(daily_data) <- c("date","discharge")
   selqfile<-daily_data

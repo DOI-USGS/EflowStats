@@ -25,7 +25,7 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
   interval<-''
   latest<-''
   
-  Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 13) + (length(grep("durStat", stats)) * 41) + (length(grep("timStat", stats)) *                                                                                                                                         6) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 12)
+  Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 13) + (length(grep("durStat", stats)) * 41) + (length(grep("timStat", stats)) * 6) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 12)
   Magnifnum <- (length(grep("magnifSeven", stats)) * 7)
   comment <- vector(length = length(sites))
   ObsFlowStats <- matrix(nrow = length(sites), ncol = Flownum)

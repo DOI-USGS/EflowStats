@@ -14,7 +14,7 @@ dl20 <- function(qfiletempf) {
   sumbymonyr <- aggregate(qfiletempf$discharge,list(qfiletempf$month_val,qfiletempf$year_val),FUN=sum,na.rm=TRUE)
   if (min(sumbymonyr$x)==0) {
     zeromon <- subset(sumbymonyr$x,sumbymonyr$x==0)
-    dl20 <- nrow(zeromon)
+    dl20 <- length(zeromon)
   } 
   else {
     dl20 <- 0
