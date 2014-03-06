@@ -16,6 +16,7 @@
 #' qfiletempf<-sampleData
 #' FlowStatsAll(qfiletempf,drain_area,"magStat,flowStat,durStat,timStat,rateStat,otherStat")
 FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateStat,otherStat,durStat") {
+  dfOut <- vector()
   if (length(grep("otherStat",stats))>0) {
   sdbyyr <- aggregate(data$discharge, list(data$year_val), 
                       sd)
@@ -49,7 +50,7 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
   flow_75 <- obs_percentiles[4]
   flow_90 <- obs_percentiles[5]
   flow_15 <- obs_percentiles[6]
-  dfOut <- c(med_flow,cv_flow,cv_daily,l7Q10v,l7Q2v,return_10v,flow_10,flow_25,flow_50,flow_75,flow_90,flow_15)
+  dfOut <- c(dfOut,med_flow,cv_flow,cv_daily,l7Q10v,l7Q2v,return_10v,flow_10,flow_25,flow_50,flow_75,flow_90,flow_15)
   }
   if (length(grep("magStat",stats))>0) {
     ma1v<-ma1(data)
