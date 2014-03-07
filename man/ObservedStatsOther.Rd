@@ -2,8 +2,7 @@
 \alias{ObservedStatsOther}
 \title{Function to return all flow statistics for an outside daily discharge data set}
 \usage{
-  ObservedStatsOther(daily_data, drain_area, site_id,
-    stats)
+ObservedStatsOther(daily_data, drain_area, site_id, stats)
 }
 \arguments{
   \item{daily_data}{data frame containing datetime and
@@ -17,14 +16,14 @@
   statistics}
 }
 \value{
-  statsout data frame containing requested statistics for
-  each station
+statsout data frame containing requested statistics for
+each station
 }
 \description{
-  This function accepts a data frame of outside discharge
-  data (datetime in format 'YYYY-MM-DD') and list of
-  desired statistic groups and returns a data frame
-  containing requested statistics
+This function accepts a data frame of outside discharge
+data (datetime in format 'YYYY-MM-DD') and list of desired
+statistic groups and returns a data frame containing
+requested statistics
 }
 \examples{
 qfiletempf<-dailyData

@@ -2,7 +2,7 @@
 \alias{dh22}
 \title{Function to return the DH22 hydrologic indicator statistic for a given data frame}
 \usage{
-  dh22(qfiletempf, thresh)
+dh22(qfiletempf, thresh)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
@@ -12,18 +12,18 @@
   threshold calculated by getPeakThresh}
 }
 \value{
-  dh22 numeric containing DH22 for the given data frame
+dh22 numeric containing DH22 for the given data frame
 }
 \description{
-  This function accepts a data frame that contains a column
-  named "discharge" and a threshold value obtained using
-  the peakdata and peakthresh functions and calculates
-  DH22; Flood interval. Compute the flood threshold as the
-  flow equivalent for a flood recurrence of 1.67 years.
-  Determine the median number of days between flood events
-  for each year. DH22 is the mean (or median-Use Preference
-  option) of the yearly median number of days between flood
-  events (days-temporal).
+This function accepts a data frame that contains a column
+named "discharge" and a threshold value obtained using the
+peakdata and peakthresh functions and calculates DH22;
+Flood interval. Compute the flood threshold as the flow
+equivalent for a flood recurrence of 1.67 years. Determine
+the median number of days between flood events for each
+year. DH22 is the mean (or median-Use Preference option) of
+the yearly median number of days between flood events
+(days-temporal).
 }
 \examples{
 qfiletempf<-sampleData

@@ -2,7 +2,7 @@
 \alias{ObservedStatsUSGS}
 \title{Function to return all flow statistics for a set of USGS sites and start and end date}
 \usage{
-  ObservedStatsUSGS(sites, startdate, enddate, stats)
+ObservedStatsUSGS(sites, startdate, enddate, stats)
 }
 \arguments{
   \item{sites}{list of USGS station ids}
@@ -17,13 +17,13 @@
   statistics}
 }
 \value{
-  statsout data frame containing requested statistics for
-  each station
+statsout data frame containing requested statistics for
+each station
 }
 \description{
-  This function accepts a list of sites, start and end date
-  and list of desired statistic groups and returns a data
-  frame containing requested statistics
+This function accepts a list of sites, start and end date
+and list of desired statistic groups and returns a data
+frame containing requested statistics
 }
 \examples{
 sites <- c("02177000", "02178400")

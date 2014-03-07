@@ -4,7 +4,7 @@
 #' calculated HIT/HAT statistics 
 #' 
 #' @param data data frame of daily flow data
-#' @param drain_area drainage area for a given site
+#' @param drain_area value of site drainage area
 #' @return Output data frame of calculated statistics
 #' @export
 #' @examples
@@ -13,7 +13,8 @@
 #' drain_url<-paste(drainage_url,sites,sep="")
 #' drain_area<-getDrainageArea(drain_url)
 #' qfiletempf<-sampleData
-#' FlowStatsICP(qfiletempf,mod_data,drain_area)
+#' qfiletempf$date <- as.Date(qfiletempf$date,"%m/%d/%y")
+#' FlowStatsICP(qfiletempf,drain_area)
 FlowStatsICP <- function(data,drain_area) {
   dfOut <- vector()
   magnif7 <- magnifSeven(data)

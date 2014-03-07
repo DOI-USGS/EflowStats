@@ -2,23 +2,23 @@
 \alias{mh14}
 \title{Function to return the MH14 hydrologic indicator statistic for a given data frame}
 \usage{
-  mh14(qfiletempf)
+mh14(qfiletempf)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
   column containing daily flow values}
 }
 \value{
-  mh14 numeric value of MH14 for the given data frame
+mh14 numeric value of MH14 for the given data frame
 }
 \description{
-  This function accepts a data frame that contains columns
-  named "discharge", "year_val" and "month_val" and
-  calculates MH14, median of annual maximum flows. Compute
-  the annual maximum flows from monthly maximum flows.
-  Compute the ratio of annual maximum flow to median annual
-  flow for each year. MH14 is the median of these ratios
-  (dimensionless-temporal).
+This function accepts a data frame that contains columns
+named "discharge", "year_val" and "month_val" and
+calculates MH14, median of annual maximum flows. Compute
+the annual maximum flows from monthly maximum flows.
+Compute the ratio of annual maximum flow to median annual
+flow for each year. MH14 is the median of these ratios
+(dimensionless-temporal).
 }
 \examples{
 qfiletempf<-sampleData

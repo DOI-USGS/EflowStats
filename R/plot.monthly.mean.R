@@ -6,9 +6,12 @@
 #' @param station station number for plot title 
 #' @export
 #' @examples
+#' \dontrun{
 #' qfiletempf<-sampleData
 #' meanmonts<-monthly.mean.ts(qfiletempf)
 #' plot.monthly.mean(meanmonts,'02178400')
-plot.monthly.mean <- function(meanmonts,station) {
+#' }
+plot.monthly.mean <- function(meanmonts,station){
   plot(meanmonts$datenum,meanmonts$Mean_disch,xlab="",ylab="Discharge(cfs)",col="blue",type="o",main=paste("Monthly Average Flow at station ",station,sep=""))
+  dev.off()
 }

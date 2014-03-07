@@ -2,7 +2,7 @@
 \alias{ma24.35}
 \title{Function to return the MA24-35 hydrologic indicator statistics for a given data frame}
 \usage{
-  ma24.35(qfiletempf, pref = "mean")
+ma24.35(qfiletempf, pref = "mean")
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
@@ -12,18 +12,18 @@
   preference}
 }
 \value{
-  ma234.35 data frame containing the MA24-MA35 statistics
-  for the given data frame
+ma234.35 data frame containing the MA24-MA35 statistics for
+the given data frame
 }
 \description{
-  This function accepts a data frame that contains columns
-  named "discharge", "year_val" and "month_val" and
-  calculates the variability (coefficient of variation) of
-  monthly flow values. compute the standard deviation for
-  each month in each year over the entire flow record.
-  Divide the standard deviation by the mean for each month.
-  Average (or median - use preference option) these values
-  for each month across all years (percent - temporal).
+This function accepts a data frame that contains columns
+named "discharge", "year_val" and "month_val" and
+calculates the variability (coefficient of variation) of
+monthly flow values. compute the standard deviation for
+each month in each year over the entire flow record. Divide
+the standard deviation by the mean for each month. Average
+(or median - use preference option) these values for each
+month across all years (percent - temporal).
 }
 \examples{
 qfiletempf<-sampleData

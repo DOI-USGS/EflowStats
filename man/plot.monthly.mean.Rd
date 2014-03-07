@@ -2,7 +2,7 @@
 \alias{plot.monthly.mean}
 \title{Function to plot the monthly mean time series for a given daily data series}
 \usage{
-  plot.monthly.mean(meanmonts, station)
+\method{plot}{monthly.mean}(meanmonts, station)
 }
 \arguments{
   \item{meanmonts}{data frame containing mean monthly
@@ -11,13 +11,14 @@
   \item{station}{station number for plot title}
 }
 \description{
-  This function accepts a data frame containing daily data
-  and a site number and returns a graph of mean monthly
-  data
+This function accepts a data frame containing daily data
+and a site number and returns a graph of mean monthly data
 }
 \examples{
+\dontrun{
 qfiletempf<-sampleData
 meanmonts<-monthly.mean.ts(qfiletempf)
 plot.monthly.mean(meanmonts,'02178400')
+}
 }
 

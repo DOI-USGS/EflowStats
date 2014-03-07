@@ -6,22 +6,22 @@ time series of streamflow with date in the format Y-m-d. Data should be arranged
 two columns with names:  1) date and 2) discharge.
 Created May 29, 2013 and functions are modified from previous versions of this code.}
 \usage{
-  magnifSeven(timeseries1)
+magnifSeven(timeseries1)
 }
 \arguments{
   \item{timeseries1}{data frame of daily flow data}
 }
 \value{
-  magnif7 data frame of calculated statistics
+magnif7 data frame of calculated statistics
 }
 \description{
-  This is a function to compute the 7 statistics of daily
-  streamflow used by Archfield et al., under revision (June
-  2013). Input to the function is a time series of
-  streamflow with date in the format Y-m-d. Data should be
-  arranged in two columns with names: 1) date and 2)
-  discharge. Created May 29, 2013 and functions are
-  modified from previous versions of this code.
+This is a function to compute the 7 statistics of daily
+streamflow used by Archfield et al., under revision (June
+2013). Input to the function is a time series of streamflow
+with date in the format Y-m-d. Data should be arranged in
+two columns with names: 1) date and 2) discharge. Created
+May 29, 2013 and functions are modified from previous
+versions of this code.
 }
 \examples{
 timeseries1<-sampleData

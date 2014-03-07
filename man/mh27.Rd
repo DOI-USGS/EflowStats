@@ -2,23 +2,22 @@
 \alias{mh27}
 \title{Function to return the MH27 hydrologic indicator statistic for a given data frame}
 \usage{
-  mh27(qfiletempf)
+mh27(qfiletempf)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
   column containing daily flow values}
 }
 \value{
-  mh27 numeric value of MH27 for the given data frame
+mh27 numeric value of MH27 for the given data frame
 }
 \description{
-  This function accepts a data frame that contains a column
-  named "discharge" and calculates MH27, high peak flow.
-  Compute the average peak flow value for flow events above
-  a threshold equal to 75th percentile value for the entire
-  flow record. MH27 is the average peak flow divided by the
-  median flow for the entire record
-  (dimensionless-temporal).
+This function accepts a data frame that contains a column
+named "discharge" and calculates MH27, high peak flow.
+Compute the average peak flow value for flow events above a
+threshold equal to 75th percentile value for the entire
+flow record. MH27 is the average peak flow divided by the
+median flow for the entire record (dimensionless-temporal).
 }
 \examples{
 qfiletempf<-sampleData

@@ -1,16 +1,13 @@
-\name{FlowStatsAll}
-\alias{FlowStatsAll}
-\title{Function to run HIT/HAT statistics for a given data set}
+\name{FlowStatsICP}
+\alias{FlowStatsICP}
+\title{Function to run ICP HIT/HAT statistics for a given data set}
 \usage{
-FlowStatsAll(data, drain_area,
-  stats = "magStat,flowStat,timStat,rateStat,otherStat,durStat")
+FlowStatsICP(data, drain_area)
 }
 \arguments{
   \item{data}{data frame of daily flow data}
 
-  \item{drain_area}{drainage area for a given site}
-
-  \item{stats}{list of requested stat groups}
+  \item{drain_area}{value of site drainage area}
 }
 \value{
 Output data frame of calculated statistics
@@ -25,6 +22,7 @@ sites<-"02177000"
 drain_url<-paste(drainage_url,sites,sep="")
 drain_area<-getDrainageArea(drain_url)
 qfiletempf<-sampleData
-FlowStatsAll(qfiletempf,drain_area,"magStat,flowStat,durStat,timStat,rateStat,otherStat")
+qfiletempf$date <- as.Date(qfiletempf$date,"\%m/\%d/\%y")
+FlowStatsICP(qfiletempf,drain_area)
 }
 

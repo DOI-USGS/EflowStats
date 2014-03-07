@@ -2,20 +2,20 @@
 \alias{getPeakData}
 \title{Function to return data from the NWISWeb peak values service}
 \usage{
-  getPeakData(sites)
+getPeakData(sites)
 }
 \arguments{
   \item{sites}{string containing the site for the
   retrieval}
 }
 \value{
-  peakValues a data frame containing columns 'Date' and
-  'Discharge'
+peakValues a data frame containing columns 'Date' and
+'Discharge'
 }
 \description{
-  This function accepts a sites parameter that contains the
-  desired NWIS site. It returns a data frame containing
-  peak instantaneous annual flow data for the site.
+This function accepts a sites parameter that contains the
+desired NWIS site. It returns a data frame containing peak
+instantaneous annual flow data for the site.
 }
 \examples{
 sites<-"02178400"

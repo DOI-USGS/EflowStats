@@ -6,23 +6,22 @@ time series of streamflow with date in the format Y-m-d. Data should be arranged
 two columns:  1) date and 2) streamflow.
 Created May 29, 2013 and functions are modified from previous versions of this code.}
 \usage{
-  deseason(timeseries)
+deseason(timeseries)
 }
 \arguments{
   \item{timeseries}{data frame of daily flow data}
 }
 \value{
-  deseason data frame of deseasonalized streamflow
+deseason data frame of deseasonalized streamflow
 }
 \description{
-  This is a function to deseasonalize streamflow data in
-  order to compute the 7 statistics of daily streamflow
-  used by Archfield et al., under revision (June 2013).
-  Input to the function is a time series of streamflow with
-  date in the format Y-m-d. Data should be arranged in two
-  columns: 1) date and 2) streamflow. Created May 29, 2013
-  and functions are modified from previous versions of this
-  code.
+This is a function to deseasonalize streamflow data in
+order to compute the 7 statistics of daily streamflow used
+by Archfield et al., under revision (June 2013). Input to
+the function is a time series of streamflow with date in
+the format Y-m-d. Data should be arranged in two columns:
+1) date and 2) streamflow. Created May 29, 2013 and
+functions are modified from previous versions of this code.
 }
 \examples{
 timeseries1<-sampleData

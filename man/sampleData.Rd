@@ -3,9 +3,8 @@
 \alias{sampleData}
 \title{Example data}
 \description{
-  Example data
+Example data
 }
 \keyword{data}
-\keyword{datasets}
 \keyword{streamflow}
 

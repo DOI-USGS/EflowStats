@@ -2,7 +2,7 @@
 \alias{fh5}
 \title{Function to return the FH5 hydrologic indicator statistic for a given data frame}
 \usage{
-  fh5(qfiletempf, pref = "mean")
+fh5(qfiletempf, pref = "mean")
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
@@ -12,16 +12,15 @@
   preference}
 }
 \value{
-  fh5 numeric value of FH5 for the given data frame
+fh5 numeric value of FH5 for the given data frame
 }
 \description{
-  This function accepts a data frame that contains a column
-  named "discharge" and calculates FH5; Flood frequency.
-  Compute the average number of flow events with flows
-  above a threshold equal to the median flow value for the
-  entire flow record. FH5 is the average (or median - Use
-  Preference option) number of events (number of
-  events/year-temporal).
+This function accepts a data frame that contains a column
+named "discharge" and calculates FH5; Flood frequency.
+Compute the average number of flow events with flows above
+a threshold equal to the median flow value for the entire
+flow record. FH5 is the average (or median - Use Preference
+option) number of events (number of events/year-temporal).
 }
 \examples{
 qfiletempf<-sampleData

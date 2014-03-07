@@ -2,7 +2,7 @@
 \alias{tl3}
 \title{Function to return the TL3 hydrologic indicator statistic for a given data frame}
 \usage{
-  tl3(qfiletempf, thresh)
+tl3(qfiletempf, thresh)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
@@ -12,19 +12,19 @@
   value for the site}
 }
 \value{
-  tl3 numeric containing TL3 for the given data frame
+tl3 numeric containing TL3 for the given data frame
 }
 \description{
-  This function accepts a data frame that contains a column
-  named "discharge" and a threshold value obtained using
-  the peakdata and getPeakThresh functions and calculates
-  TL3; Seasonal predictability of low flow. Divide years up
-  into 2-month periods (that is, Oct-Nov, Dec-Jan, and so
-  forth). Count the number of low flow events (flow events
-  with flows ??? 5 year flood threshold) in each period
-  over the entire flow record. TL3 is the maximum number of
-  low flow events in any one period divided by the total
-  number of low flow events (dimensionless-spatial).
+This function accepts a data frame that contains a column
+named "discharge" and a threshold value obtained using the
+peakdata and getPeakThresh functions and calculates TL3;
+Seasonal predictability of low flow. Divide years up into
+2-month periods (that is, Oct-Nov, Dec-Jan, and so forth).
+Count the number of low flow events (flow events with flows
+??? 5 year flood threshold) in each period over the entire
+flow record. TL3 is the maximum number of low flow events
+in any one period divided by the total number of low flow
+events (dimensionless-spatial).
 }
 \examples{
 qfiletempf<-sampleData

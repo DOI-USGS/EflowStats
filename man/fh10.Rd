@@ -2,7 +2,7 @@
 \alias{fh10}
 \title{Function to return the FH10 hydrologic indicator statistic for a given data frame}
 \usage{
-  fh10(qfiletempf, pref = "mean")
+fh10(qfiletempf, pref = "mean")
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
@@ -12,16 +12,16 @@
   preference}
 }
 \value{
-  fh10 numeric value of FH10 for the given data frame
+fh10 numeric value of FH10 for the given data frame
 }
 \description{
-  This function accepts a data frame that contains a column
-  named "discharge" and calculates FH10; Flood frequency.
-  Compute the average number of flow events with flows
-  above a threshold equal to median of the annual minima
-  for the entire flow record. FH10 is the average (or
-  median-Use Preference option) number of events (number of
-  events/year-temporal).
+This function accepts a data frame that contains a column
+named "discharge" and calculates FH10; Flood frequency.
+Compute the average number of flow events with flows above
+a threshold equal to median of the annual minima for the
+entire flow record. FH10 is the average (or median-Use
+Preference option) number of events (number of
+events/year-temporal).
 }
 \examples{
 qfiletempf<-sampleData

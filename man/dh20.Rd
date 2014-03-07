@@ -2,24 +2,24 @@
 \alias{dh20}
 \title{Function to return the DH20 hydrologic indicator statistic for a given data frame}
 \usage{
-  dh20(qfiletempf)
+dh20(qfiletempf)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
   column containing daily flow values}
 }
 \value{
-  dh20 list containing DH20 for the given data frame
+dh20 list containing DH20 for the given data frame
 }
 \description{
-  This function accepts a data frame that contains a column
-  named "discharge" and calculates DH20; High flow
-  duration. Compute the 75th percentile value for the
-  entire flow record. Compute the average duration of flow
-  events with flows above a threshold equal to the 75th
-  percentile value for the median annual flows. DH20 is the
-  average (or median-Use Preference option) duration of the
-  events (days-temporal).
+This function accepts a data frame that contains a column
+named "discharge" and calculates DH20; High flow duration.
+Compute the 75th percentile value for the entire flow
+record. Compute the average duration of flow events with
+flows above a threshold equal to the 75th percentile value
+for the median annual flows. DH20 is the average (or
+median-Use Preference option) duration of the events
+(days-temporal).
 }
 \examples{
 qfiletempf<-sampleData

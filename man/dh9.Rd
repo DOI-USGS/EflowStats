@@ -2,22 +2,22 @@
 \alias{dh9}
 \title{Function to return the DH9 hydrologic indicator statistic for a given data frame}
 \usage{
-  dh9(qfiletempf)
+dh9(qfiletempf)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
   column containing daily flow values}
 }
 \value{
-  dh9 numeric containing DH9 for the given data frame
+dh9 numeric containing DH9 for the given data frame
 }
 \description{
-  This function accepts a data frame that contains a column
-  named "discharge" and calculates DH9; Variability of
-  annual maximum of 30-day moving average flows. Compute
-  the standard deviation for the maximum 30-day moving
-  averages. DH9 is 100 times the standard deviation divided
-  by the mean (percent-spatial).
+This function accepts a data frame that contains a column
+named "discharge" and calculates DH9; Variability of annual
+maximum of 30-day moving average flows. Compute the
+standard deviation for the maximum 30-day moving averages.
+DH9 is 100 times the standard deviation divided by the mean
+(percent-spatial).
 }
 \examples{
 qfiletempf<-sampleData

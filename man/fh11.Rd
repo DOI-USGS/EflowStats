@@ -2,7 +2,7 @@
 \alias{fh11}
 \title{Function to return the FH11 hydrologic indicator statistic for a given data frame}
 \usage{
-  fh11(qfiletempf, thresh, pref = "mean")
+fh11(qfiletempf, thresh, pref = "mean")
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
@@ -15,17 +15,17 @@
   preference}
 }
 \value{
-  fh11 numeric containing FH11 for the given data frame
+fh11 numeric containing FH11 for the given data frame
 }
 \description{
-  This function accepts a data frame that contains a column
-  named "discharge" and a threshold value calculated for
-  the site using the peakdata and peakthresh functions and
-  calculates FH11; Flood frequency. Compute the average
-  number of flow events with flows above a threshold equal
-  to flow corresponding to a 1.67-year recurrence interval.
-  FH11 is the average (or median-Use Preference option)
-  number of events (number of events/year-temporal).
+This function accepts a data frame that contains a column
+named "discharge" and a threshold value calculated for the
+site using the peakdata and peakthresh functions and
+calculates FH11; Flood frequency. Compute the average
+number of flow events with flows above a threshold equal to
+flow corresponding to a 1.67-year recurrence interval. FH11
+is the average (or median-Use Preference option) number of
+events (number of events/year-temporal).
 }
 \examples{
 qfiletempf<-sampleData

@@ -2,7 +2,7 @@
 \alias{findrank}
 \title{Function to return the rank of a given value}
 \usage{
-  findrank(n, p)
+findrank(n, p)
 }
 \arguments{
   \item{n}{number of values in a data set}
@@ -10,12 +10,12 @@
   \item{p}{percentile desired}
 }
 \value{
-  findrank numeric giving the position in the data set of
-  the percentile
+findrank numeric giving the position in the data set of the
+percentile
 }
 \description{
-  This function accepts the number of values in a data set
-  and the desired percentile and then calculates the rank
+This function accepts the number of values in a data set
+and the desired percentile and then calculates the rank
 }
 \examples{
 n<-365

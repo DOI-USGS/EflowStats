@@ -2,18 +2,18 @@
 \alias{return_10}
 \title{Function to return the 10 year return value for a given data series}
 \usage{
-  return_10(qfiletempf)
+return_10(qfiletempf)
 }
 \arguments{
   \item{qfiletempf}{data frame containing value data for
   the chosen timeseries}
 }
 \value{
-  return_10 10-year return value for the given data frame
+return_10 10-year return value for the given data frame
 }
 \description{
-  This function accepts a data frame containing daily data
-  and returns the 10 year return value
+This function accepts a data frame containing daily data
+and returns the 10 year return value
 }
 \examples{
 qfiletempf<-sampleData

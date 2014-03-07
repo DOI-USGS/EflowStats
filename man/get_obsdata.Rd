@@ -2,19 +2,19 @@
 \alias{get_obsdata}
 \title{Function to transform data into the format required for calculation of HIT/HAT statistics}
 \usage{
-  get_obsdata(x_obs)
+get_obsdata(x_obs)
 }
 \arguments{
   \item{x_obs}{data frame pulled from NWIS webservice}
 }
 \value{
-  obs_data data frame of observed data for the chosen
-  parameters
+obs_data data frame of observed data for the chosen
+parameters
 }
 \description{
-  This function accepts a raw data frame pulled from the
-  NWIS webservice and returns a data frame of observed data
-  for use in calculating HIT/HAT statistics
+This function accepts a raw data frame pulled from the NWIS
+webservice and returns a data frame of observed data for
+use in calculating HIT/HAT statistics
 }
 \examples{
 url<-"http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="

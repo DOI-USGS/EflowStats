@@ -2,20 +2,20 @@
 \alias{medflowbyyear}
 \title{Function to return the median flow by year for a given data frame}
 \usage{
-  medflowbyyear(qfiletempf)
+medflowbyyear(qfiletempf)
 }
 \arguments{
   \item{qfiletempf}{data frame containing a "discharge"
   column containing daily flow values}
 }
 \value{
-  medflowbyyear numeric value of the median flow by year
-  for the given data frame
+medflowbyyear numeric value of the median flow by year for
+the given data frame
 }
 \description{
-  This function accepts a data frame that contains columns
-  named "discharge" and "year_val" and calculates the
-  median flow by year for the entire record
+This function accepts a data frame that contains columns
+named "discharge" and "year_val" and calculates the median
+flow by year for the entire record
 }
 \examples{
 qfiletempf<-sampleData
