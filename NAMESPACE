@@ -1,4 +1,4 @@
-S3method(plot.monthly.mean)
+S3method(plot,monthly.mean)
 export(FlowStatsAll)
 export(FlowStatsICP)
 export(ObservedStatsOther)
