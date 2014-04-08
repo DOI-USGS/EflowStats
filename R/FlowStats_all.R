@@ -18,13 +18,13 @@
 FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateStat,otherStat,durStat") {
   dfOut <- vector()
   if (length(grep("otherStat",stats))>0) {
-  sdbyyr <- aggregate(data$discharge, list(data$year_val), 
+  sdbyyr <- aggregate(data$discharge, list(data$wy_val), 
                       sd)
   colnames(sdbyyr) <- c("Year", "sdq")
-  meanbyyr <- aggregate(data$discharge, list(data$year_val), 
+  meanbyyr <- aggregate(data$discharge, list(data$wy_val), 
                         mean, na.rm=TRUE)
   colnames(meanbyyr) <- c("Year", "meanq")
-  medbyyr <- aggregate(data$discharge, list(data$year_val), 
+  medbyyr <- aggregate(data$discharge, list(data$wy_val), 
                        median, na.rm=TRUE)
   colnames(medbyyr) <- c("Year","medq")
   dfcvbyyr <- data.frame(meanbyyr$Year, sdbyyr$sdq, 

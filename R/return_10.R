@@ -9,7 +9,7 @@
 #' qfiletempf<-sampleData
 #' return_10(qfiletempf)
 return_10 <- function(qfiletempf) {
-  annual_max <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val), max, na.rm=TRUE)
+  annual_max <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), max, na.rm=TRUE)
   sort_annual_max <- sort(annual_max$x)
   rank_10 <- floor(findrank(length(sort_annual_max),0.10))
   return_10 <- sort_annual_max[rank_10]

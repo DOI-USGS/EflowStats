@@ -15,7 +15,7 @@ l7Q2 <- function(qfiletempf) {
   rollingavgs7day <- subset(day7rollingavg, day7rollingavg$day7mean != 
                               "NA")
   min7daybyyear <- aggregate(rollingavgs7day$day7mean, 
-                              list(rollingavgs7day$year_val), min, na.rm=TRUE)
+                              list(rollingavgs7day$wy_val), min, na.rm=TRUE)
   sort_7day<-sort(min7daybyyear$x)
   rank_50<-floor(findrank(length(sort_7day),0.50))
   if (rank_50 > 0) { 
