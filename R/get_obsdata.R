@@ -20,25 +20,14 @@ get_obsdata <- function(x_obs) {
 x2<-(x_obs$date)
 x_obs<-data.frame(x2,x_obs$discharge,stringsAsFactors=FALSE)
 colnames(x_obs)<-c("date","discharge")
-selqfile<-x_obs
-tempdatafr<-NULL
-tempdatafr<-data.frame(selqfile,stringsAsFactors=FALSE)
-month_val<-rep(0,length(tempdatafr$date))
-year_val<-rep(0,length(tempdatafr$date))
-day_val<-rep(0,length(tempdatafr$date))
-jul_val<-rep(0,length(tempdatafr$date))
-wy_val<-rep(0,length(tempdatafr$date))
-ones_val<-rep(1,length(tempdatafr$date))
-qfiletempf<-data.frame(tempdatafr$date,tempdatafr$discharge,month_val,year_val,day_val,jul_val,wy_val,stringsAsFactors=FALSE)
-colnames(qfiletempf)<-c('date','discharge','month_val','year_val','day_val','jul_val','wy_val')
-qfiletempf$month_val<-substr(x_obs$date,6,7)
-qfiletempf$year_val<-substr(x_obs$date,1,4)
-qfiletempf$day_val<-substr(x_obs$date,9,10)
-qfiletempf$jul_val<-strptime(x_obs$date, "%Y-%m-%d")$yday+1
-qfiletempf$wy_val<-ifelse(as.numeric(qfiletempf$month_val)>=10,as.character(as.numeric(qfiletempf$year_val)+ones_val),qfiletempf$year_val) 
-temp <- aggregate(discharge ~ wy_val,data=qfiletempf,length)
+x_obs$month_val <- substr(x_obs$date,6,7)
+x_obs$year_val <- substr(x_obs$date,1,4)
+x_obs$day_val <- substr(x_obs$date,9,10)
+x_obs$jul_val <- strptime(x_obs$date,"%Y-%m-%d")$yday+1
+x_obs$wy_val <- ifelse(as.numeric(x_obs$month_val)>=10,as.character(as.numeric(x_obs$year_val)+1),x_obs$year_val) 
+temp <- aggregate(discharge ~ wy_val,data=x_obs,length)
 temp <- temp[which(temp$discharge>=365),]
 
-obs_data<-qfiletempf[qfiletempf$wy_val %in% temp$wy_val,]
+obs_data<-x_obs[x_obs$wy_val %in% temp$wy_val,]
 return(obs_data)
 }
