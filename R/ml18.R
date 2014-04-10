@@ -15,6 +15,6 @@ ml18 <- function(qfiletempf) {
   bfibyyear <- bfi(qfiletempf)  
   sdbfi <- sd(bfibyyear)
   meanbfi <- mean(bfibyyear)
-  ml18 <- round((sdbfi/meanbfi),digits=2)*100
+  ml18 <- round((sdbfi/meanbfi)*100,digits=2)
   return(ml18)
 }

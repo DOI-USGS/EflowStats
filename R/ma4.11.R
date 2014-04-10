@@ -54,7 +54,7 @@ ma4.11<-function(x) {
   percentiles[19] <- quantile(sortq,.05,type=6)
   mean <- mean(percentiles,na.rm=TRUE)
   sdev <- sd(percentiles, na.rm=TRUE)
-  ma4 <- round((sdev/mean),digits=2)*100
+  ma4 <- round((sdev/mean)*100,digits=2)
   ma5 <- round(ma1(x)/ma2(x),digits=2)
   ma6 <- round(percentiles[2]/percentiles[18],digits=2)
   ma7 <- round(percentiles[4]/percentiles[16],digits=2)

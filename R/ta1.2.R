@@ -64,7 +64,7 @@ ta1.2 <- function(qfiletempf) {
   HXY <- -sum((colwell_sub/Z)*log10(colwell_sub/Z))
   HxY <- HXY - HX
   ta1 <- round(1-(HY/log10(11)),digits=2)
-  ta2 <- 100*round((1-(HxY/log10(11))),digits=2)
+  ta2 <- round(100*(1-(HxY/log10(11))),digits=2)
   ta1.2<-list(ta1=ta1,ta2=ta2)
   return(ta1.2)
 }
