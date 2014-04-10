@@ -15,10 +15,10 @@
 ml17 <- function(qfiletempf, pref = "mean") {
   bfibyyear <- bfi(qfiletempf)
   if (pref == "median") {
-    ml17 <- median(bfibyyear)
+    ml17 <- round(median(bfibyyear),digits=2)
   }
   else {
-    ml17 <- mean(bfibyyear)
+    ml17 <- round(mean(bfibyyear),digits=2)
   }
   return(ml17)
 }

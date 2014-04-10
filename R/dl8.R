@@ -24,6 +24,6 @@ dl8 <- function(qfiletempf) {
     min7daybyyear[i] <- min(day7mean, na.rm=TRUE)
   }
   sddl8 <- sd(min7daybyyear)
-  dl8 <- (sddl8 * 100)/meandl8
+  dl8 <- round((sddl8 * 100)/meandl8,digits=2)
   return(dl8)
 }

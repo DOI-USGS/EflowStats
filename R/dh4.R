@@ -25,10 +25,10 @@ dh4 <- function(qfiletempf, pref = "mean") {
     max30daybyyear[i] <- max(day30mean, na.rm=TRUE)
   }
   if (pref == "median") {
-    dh4 <- median(max30daybyyear)
+    dh4 <- round(median(max30daybyyear),digits=2)
   }
   else {
-    dh4 <- mean(max30daybyyear)
+    dh4 <- round(mean(max30daybyyear),digits=2)
   }
   return(dh4)
 }

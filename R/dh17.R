@@ -34,7 +34,7 @@ dh17 <- function(qfiletempf) {
   }
   hfdur_pos <- hfdur[hfdur>0]
   if (length(hfdur_pos)>0) {
-  dh17 <- mean(hfdur_pos)
+  dh17 <- round(mean(hfdur_pos),digits=2)
   } else { dh17<-'NA'} 
   return(dh17)
 }

@@ -17,6 +17,6 @@ ml13 <- function(qfiletempf) {
   colnames(minmonbyyr) <- c("Year", "Month", "minmo")
   sdminmonflows <- sd(minmonbyyr$minmo)
   meanminmonflows <- mean(minmonbyyr$minmo)
-  ml13 <- (sdminmonflows * 100)/meanminmonflows
+  ml13 <- round((sdminmonflows * 100)/meanminmonflows,digits=2)
   return(ml13)
 }

@@ -16,18 +16,18 @@ ml1.12 <- function(qfiletemp) {
   colnames(minbymonyr) <- c("Year","Month","minmo")
   meanminbymon <- aggregate(minbymonyr$minmo, list(minbymonyr$Month), FUN = mean, na.rm=TRUE)
   colnames(meanminbymon) <- c("Month","meanmin")
-  ml1 <- meanminbymon[1,2]
-  ml2 <- meanminbymon[2,2]
-  ml3 <- meanminbymon[3,2]
-  ml4 <- meanminbymon[4,2]
-  ml5 <- meanminbymon[5,2]
-  ml6 <- meanminbymon[6,2]
-  ml7 <- meanminbymon[7,2]
-  ml8 <- meanminbymon[8,2]
-  ml9 <- meanminbymon[9,2]
-  ml10 <- meanminbymon[10,2]
-  ml11 <- meanminbymon[11,2]
-  ml12 <- meanminbymon[12,2]
+  ml1 <- round(meanminbymon[1,2],digits=2)
+  ml2 <- round(meanminbymon[2,2],digits=2)
+  ml3 <- round(meanminbymon[3,2],digits=2)
+  ml4 <- round(meanminbymon[4,2],digits=2)
+  ml5 <- round(meanminbymon[5,2],digits=2)
+  ml6 <- round(meanminbymon[6,2],digits=2)
+  ml7 <- round(meanminbymon[7,2],digits=2)
+  ml8 <- round(meanminbymon[8,2],digits=2)
+  ml9 <- round(meanminbymon[9,2],digits=2)
+  ml10 <- round(meanminbymon[10,2],digits=2)
+  ml11 <- round(meanminbymon[11,2],digits=2)
+  ml12 <- round(meanminbymon[12,2],digits=2)
   ml1.12 <- list(ml1,ml2,ml3,ml4,ml5,ml6,ml7,ml8,ml9,ml10,ml11,ml12)
   return(ml1.12)
 }

@@ -17,6 +17,6 @@ mh13 <- function(qfiletempf) {
   colnames(maxmonbyyr) <- c("Year", "Month", "maxmo")
   sdmaxmonflows <- sd(maxmonbyyr$maxmo)
   meanmaxmonflows <- mean(maxmonbyyr$maxmo)
-  mh13 <- (sdmaxmonflows * 100)/meanmaxmonflows
+  mh13 <- round((sdmaxmonflows * 100)/meanmaxmonflows,digits=2)
   return(mh13)
 }

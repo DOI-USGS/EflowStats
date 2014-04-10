@@ -36,7 +36,7 @@ dh20 <- function(qfiletempf) {
   }
   hfdur_pos <- hfdur[hfdur>0]
   if (length(hfdur_pos)>0) {
-  dh20 <- mean(hfdur_pos)
+  dh20 <- round(mean(hfdur_pos),digits=2)
   } else { dh20<-0} 
   return(dh20)
 }

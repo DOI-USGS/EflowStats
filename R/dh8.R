@@ -20,6 +20,6 @@ dh8 <- function(qfiletempf) {
   max7daybyyear <- aggregate(rollingavgs7day$day7mean, 
                               list(rollingavgs7day$wy_val), max, na.rm=TRUE)
   sddh8 <- sd(max7daybyyear$x)
-  dh8 <- (sddh8 * 100)/meandh8
+  dh8 <- round((sddh8 * 100)/meandh8,digits=2)
   return(dh8)
 }

@@ -30,12 +30,12 @@ ma24.35 <- function(qfiletempf, pref = "mean") {
   if (pref == "median") {
     medmoncv <- aggregate(dfcvmonbyyrf$cvq, list(dfcvmonbyyrf$Month), 
                           median, na.rm=TRUE)
-    ma24.35 <- data.frame(medmoncv[2] * 100)
+    ma24.35 <- data.frame(round(medmoncv[2],digits=2) * 100)
   }
   else {
     meanmoncv <- aggregate(dfcvmonbyyrf$cvq, list(dfcvmonbyyrf$Month), 
                            mean, na.rm=TRUE)
-    ma24.35 <- data.frame(meanmoncv[2] * 100)
+    ma24.35 <- data.frame(round(meanmoncv[2],digits=2) * 100)
   }
   return(ma24.35)
 }

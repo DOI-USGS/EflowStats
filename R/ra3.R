@@ -18,10 +18,10 @@ ra3 <- function(qfiletempf, pref = "mean") {
                                0)
   findfallvalues <- abs(findfallvalueneg)
   if (pref == "median") {
-    ra3 <- median(findfallvalues)
+    ra3 <- round(median(findfallvalues),digits=2)
   }
   else {
-    ra3 <- mean(findfallvalues)
+    ra3 <- round(mean(findfallvalues),digits=2)
   }
   return(ra3)
 }

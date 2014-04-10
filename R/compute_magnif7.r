@@ -24,10 +24,10 @@ magnifSeven<-function(timeseries1)  {
 
   #Compute L-moment ratios for time series so consistent in function
   complmom<-lmom.ub(timeseries$flow)
-  lam1<-complmom$L1
-  tau2<-complmom$LCV
-  tau3<-complmom$TAU3
-  tau4<-complmom$TAU4
+  lam1<-round(complmom$L1,digits=2)
+  tau2<-round(complmom$LCV,digits=2)
+  tau3<-round(complmom$TAU3,digits=2)
+  tau4<-round(complmom$TAU4,digits=2)
 
   #Compute AR(1) correlation coefficienct
   #First, deseasonalize the time series using the long-term monthly means
@@ -35,7 +35,7 @@ magnifSeven<-function(timeseries1)  {
   #Fit AR(1) model to deseasonalized data but first standardize deseasonlized time series
   ds_std_flows<-scale(ds.timeseries$flow, center = TRUE, scale = TRUE)
   armdl<-ar(ds_std_flows, aic = FALSE, order.max = 1, method="yule-walker")
-  ar1<-armdl$ar 
+  ar1<-round(armdl$ar,digits=2)
     
   #Compute seasonal factors (amplitude and phase)
   #Compute seasonality variables by first standardizing flows, the fitting relation A*cos(2*pi*t) + B*sin(2*pi*t)
@@ -51,8 +51,8 @@ magnifSeven<-function(timeseries1)  {
   seasonA<-as.vector(seasonfit$coefficients[2])
   seasonB<-as.vector(seasonfit$coefficients[3]) 
   #Now compute the amplitude and phase of the seasonal signal
-  amplitude<-sqrt((seasonA^2)+(seasonB^2))
-  phase<-atan((-seasonB)/seasonA)
+  amplitude<-round(sqrt((seasonA^2)+(seasonB^2)),digits=2)
+  phase<-round(atan((-seasonB)/seasonA),digits=2)
   
   #Now output the results
   magnifSeven1<-c(lam1,tau2,tau3,tau4,ar1,amplitude,phase)

@@ -24,10 +24,10 @@ dl5 <- function(qfiletempf, pref = "mean") {
     min90daybyyear[i] <- min(day90mean, na.rm=TRUE)
   }
   if (pref == "median") {
-    dl5 <- median(min90daybyyear)
+    dl5 <- round(median(min90daybyyear),digits=2)
   }
   else {
-    dl5 <- mean(min90daybyyear)
+    dl5 <- round(mean(min90daybyyear),digits=2)
   }
   return(dl5)
 }

@@ -17,6 +17,6 @@ dh14 <- function(qfiletempf) {
   isolateq <- meanmonthly$x
   sortq <- sort(isolateq)
   hfcrit <- quantile(sortq,.95,type=6)
-  dh14 <- hfcrit/meanflow
+  dh14 <- round(hfcrit/meanflow,digits=2)
   return(dh14)
 }

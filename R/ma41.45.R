@@ -31,11 +31,11 @@ ma41.45 <- function(qfiletemp,drain_area) {
   perc_25 <- quantile(sortmeanbyyr,.25,type=6)
   perc_75 <- quantile(sortmeanbyyr,.75,type=6)
   perc_90 <- quantile(sortmeanbyyr,.9,type=6)
-  ma41 <- mean(meanbyyr$meanyr)/drain_area
-  ma42 <- (max(meanbyyr$meanyr)-min(meanbyyr$meanyr))/median(meanbyyr$meanyr)
-  ma43 <- (perc_75-perc_25)/median(meanbyyr$meanyr)
-  ma44 <- (perc_90-perc_10)/median(meanbyyr$meanyr)
-  ma45 <- (mean(meanbyyr$meanyr)-median(meanbyyr$meanyr))/median(meanbyyr$meanyr)
+  ma41 <- round(mean(meanbyyr$meanyr)/drain_area,digits=2)
+  ma42 <- round((max(meanbyyr$meanyr)-min(meanbyyr$meanyr))/median(meanbyyr$meanyr),digits=2)
+  ma43 <- round((perc_75-perc_25)/median(meanbyyr$meanyr),digits=2)
+  ma44 <- round((perc_90-perc_10)/median(meanbyyr$meanyr),digits=2)
+  ma45 <- round((mean(meanbyyr$meanyr)-median(meanbyyr$meanyr))/median(meanbyyr$meanyr),digits=2)
   ma41.45 <- list(ma41,ma42,ma43,ma44,ma45)
   return(ma41.45)
 }

@@ -15,6 +15,6 @@
 dh11 <- function(qfiletempf, pref = "mean") {
   meanmaxbyyear <- dh1(qfiletempf)
   medianflow <- median(qfiletempf$discharge,na.rm=TRUE)
-  dh11 <- meanmaxbyyear/medianflow
+  dh11 <- round(meanmaxbyyear/medianflow,digits=2)
   return(dh11)
 }

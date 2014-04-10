@@ -21,9 +21,9 @@ mh15.17 <- function(qfiletempf) {
   hfcrit10 <- quantile(sortq,.9,type=6)
   hfcrit1 <- quantile(sortq,.99,type=6)
   hfcrit25 <- quantile(sortq,.75,type=6)
-  mh15 <- hfcrit1/ma2(qfiletempf)
-  mh16 <- hfcrit10/ma2(qfiletempf)
-  mh17 <- hfcrit25/ma2(qfiletempf)
+  mh15 <- round(hfcrit1/ma2(qfiletempf),digits=2)
+  mh16 <- round(hfcrit10/ma2(qfiletempf),digits=2)
+  mh17 <- round(hfcrit25/ma2(qfiletempf),digits=2)
   mh15.17 <- list(mh15,mh16,mh17)
   return(mh15.17)
 }

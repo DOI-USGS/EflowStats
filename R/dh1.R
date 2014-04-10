@@ -17,7 +17,7 @@ dh1 <- function(qfiletempf, pref = "mean") {
     dh1 <- median(annualmax$x)
   }
   else {
-    dh1 <- mean(annualmax$x)
+    dh1 <- round(mean(annualmax$x),digits=2)
   }
   return(dh1)
 }

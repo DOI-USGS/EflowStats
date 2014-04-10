@@ -15,6 +15,6 @@ dh6 <- function(qfiletempf) {
   maxbyyear <- aggregate(qfiletempf$discharge, 
                              list(qfiletempf$wy_val), max, na.rm=TRUE)
   sddh6 <- sd(maxbyyear$x)
-  dh6 <- (sddh6 * 100)/meandh6
+  dh6 <- round((sddh6 * 100)/meandh6,digits=2)
   return(dh6)
 }

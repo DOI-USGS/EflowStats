@@ -44,6 +44,6 @@ dh24 <- function(qfiletempf, thresh) {
     max_yr[i] <- ifelse(length(dur_sub)>0,max(dur_sub),0)
   }
   max_yr[max_yr==0]<-NA
-  dh24 <- mean(max_yr,na.rm=TRUE)
+  dh24 <- round(mean(max_yr,na.rm=TRUE),digits=2)
   return(dh24)
 }

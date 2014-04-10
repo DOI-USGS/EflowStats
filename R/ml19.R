@@ -18,10 +18,10 @@ ml19 <- function(qfiletempf, pref = "mean") {
   colnames(meanbyyr) <- c("Year","yrmean")
   ratiominmean <- (minbyyr$yrmin/meanbyyr$yrmean)
   if (pref == "median") {
-    ml19 <- median(ratiominmean)*100
+    ml19 <- round(median(ratiominmean),digits=2)*100
   }
   else {
-    ml19 <- mean(ratiominmean)*100
+    ml19 <- round(mean(ratiominmean),digits=2)*100
   }
   return(ml19)
 }

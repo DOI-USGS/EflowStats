@@ -28,17 +28,17 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
                        median, na.rm=TRUE)
   colnames(medbyyr) <- c("Year","medq")
   dfcvbyyr <- data.frame(meanbyyr$Year, sdbyyr$sdq, 
-                         meanbyyr$meanq, medbyyr$medq)
+                         meanbyyr$meanq, medbyyr$medq,stringsAsFactors=FALSE)
   colnames(dfcvbyyr) <- c("Year", "sdq", "meanq", "medq")
   cvbyyr <- dfcvbyyr$sdq/dfcvbyyr$meanq
-  dfcvbyyrf <- data.frame(dfcvbyyr, cvbyyr)
+  dfcvbyyrf <- data.frame(dfcvbyyr, cvbyyr, stringsAsFactors=FALSE)
   colnames(dfcvbyyrf) <- c("Year", "sdq", "meanq", "medq", 
                            "cvq")
   
-  mean_flow<-mean(dfcvbyyrf$meanq,na.rm=TRUE)
-  med_flow<-median(dfcvbyyrf$meanq,na.rm=TRUE)
-  cv_flow<-sd(dfcvbyyrf$meanq,na.rm=TRUE)/mean(dfcvbyyrf$meanq,na.rm=TRUE)
-  cv_daily<-cv(data)
+  mean_flow<-round(mean(dfcvbyyrf$meanq,na.rm=TRUE),digits=2)
+  med_flow<-round(median(dfcvbyyrf$meanq,na.rm=TRUE),digits=2)
+  cv_flow<-round(sd(dfcvbyyrf$meanq,na.rm=TRUE)/mean(dfcvbyyrf$meanq,na.rm=TRUE),digits=2)
+  cv_daily<-round(cv(data),digits=2)
   l7Q10v<-l7Q10(data)
   l7Q2v<-l7Q2(data)
   return_10v<-return_10(data)
@@ -64,18 +64,18 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
     ma9v<-unlist(ma4.11(data)[6])
     ma10v<-unlist(ma4.11(data)[7])
     ma11v<-unlist(ma4.11(data)[8])
-    ma12v<-ma12.23(data)[1:1,2:2]
-    ma13v<-ma12.23(data)[2:2,2:2]
-    ma14v<-ma12.23(data)[3:3,2:2]
-    ma15v<-ma12.23(data)[4:4,2:2]
-    ma16v<-ma12.23(data)[5:5,2:2]
-    ma17v<-ma12.23(data)[6:6,2:2]
-    ma18v<-ma12.23(data)[7:7,2:2]
-    ma19v<-ma12.23(data)[8:8,2:2]
-    ma20v<-ma12.23(data)[9:9,2:2]
-    ma21v<-ma12.23(data)[10:10,2:2]
-    ma22v<-ma12.23(data)[11:11,2:2]
-    ma23v<-ma12.23(data)[12:12,2:2]
+    ma12v<-ma12.23(data)[1,1]
+    ma13v<-ma12.23(data)[2,1]
+    ma14v<-ma12.23(data)[3,1]
+    ma15v<-ma12.23(data)[4,1]
+    ma16v<-ma12.23(data)[5,1]
+    ma17v<-ma12.23(data)[6,1]
+    ma18v<-ma12.23(data)[7,1]
+    ma19v<-ma12.23(data)[8,1]
+    ma20v<-ma12.23(data)[9,1]
+    ma21v<-ma12.23(data)[10,1]
+    ma22v<-ma12.23(data)[11,1]
+    ma23v<-ma12.23(data)[12,1]
     ma24v<-ma24.35(data)[1,1]
     ma25v<-ma24.35(data)[2,1]
     ma26v<-ma24.35(data)[3,1]

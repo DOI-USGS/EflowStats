@@ -10,6 +10,6 @@
 #' qfiletempf<-sampleData
 #' ma2(qfiletempf)
 ma2 <- function(x) {
-  ma2 <- median(x$discharge,na.rm=TRUE)
+  ma2 <- round(median(x$discharge,na.rm=TRUE),digits=2)
   return(ma2)
 }

@@ -17,6 +17,6 @@ ra2 <- function(qfiletempf) {
   findrisevalues <- subset(diffbtdays, diffbtdays > 
                              0)
   sddra2 <- sd(findrisevalues)
-  ra2 <- (sddra2 * 100)/meanra2
+  ra2 <- round((sddra2 * 100)/meanra2,digits=2)
   return(ra2)
 }

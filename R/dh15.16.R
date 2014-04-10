@@ -37,8 +37,8 @@ dh15.16 <- function(qfiletempf) {
     }
     if (nevents>0) {hfdur[i]<-pdur/nevents}
   }
-  dh15 <- median(hfdur)
-  dh16 <- (sd(hfdur)*100)/mean(hfdur)
+  dh15 <- round(median(hfdur),digits=2)
+  dh16 <- round((sd(hfdur)*100)/mean(hfdur),digits=2)
   dh15.16 <- list(dh15=dh15,dh16=dh16)
   return(dh15.16)
 }

@@ -14,10 +14,10 @@
 dl1 <- function(qfiletempf, pref = "mean") {
   annualminimum <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), min)
   if (pref == "median") {
-    dl1 <- median(annualminimum$x)
+    dl1 <- round(median(annualminimum$x),digits=2)
   }
   else {
-    dl1 <- mean(annualminimum$x)
+    dl1 <- round(mean(annualminimum$x),digits=2)
   }
   return(dl1)
 }

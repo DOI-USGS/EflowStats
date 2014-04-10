@@ -29,14 +29,14 @@ FlowStatsICP <- function(data,drain_area) {
                        median, na.rm=TRUE)
   colnames(medbyyr) <- c("Year","medq")
   dfcvbyyr <- data.frame(meanbyyr$Year, sdbyyr$sdq, 
-                         meanbyyr$meanq, medbyyr$medq)
+                         meanbyyr$meanq, medbyyr$medq, stringsAsFactors=FALSE)
   colnames(dfcvbyyr) <- c("Year", "sdq", "meanq", "medq")
   cvbyyr <- dfcvbyyr$sdq/dfcvbyyr$meanq
-  dfcvbyyrf <- data.frame(dfcvbyyr, cvbyyr)
+  dfcvbyyrf <- data.frame(dfcvbyyr, cvbyyr, stringsAsFactors=FALSE)
   colnames(dfcvbyyrf) <- c("Year", "sdq", "meanq", "medq", 
                            "cvq")
-  med_flow<-median(dfcvbyyrf$meanq,na.rm=TRUE)
-  cv_flow<-sd(dfcvbyyrf$meanq,na.rm=TRUE)/mean(dfcvbyyrf$meanq,na.rm=TRUE)
+  med_flow<-round(median(dfcvbyyrf$meanq,na.rm=TRUE),digits=2)
+  cv_flow<-round(sd(dfcvbyyrf$meanq,na.rm=TRUE)/mean(dfcvbyyrf$meanq,na.rm=TRUE),digits=2)
   l7Q10v<-l7Q10(data)
   l7Q2v<-l7Q2(data)
   return_10v<-return_10(data)

@@ -54,14 +54,14 @@ ma4.11<-function(x) {
   percentiles[19] <- quantile(sortq,.05,type=6)
   mean <- mean(percentiles,na.rm=TRUE)
   sdev <- sd(percentiles, na.rm=TRUE)
-  ma4 <- (sdev/mean)*100
-  ma5 <- ma1(x)/ma2(x)
-  ma6 <- percentiles[2]/percentiles[18]
-  ma7 <- percentiles[4]/percentiles[16]
-  ma8 <- percentiles[5]/percentiles[15]
-  ma9 <- (percentiles[2]-percentiles[18])/ma2(x)
-  ma10 <- (percentiles[4]-percentiles[16])/(ma2(x))
-  ma11 <- (percentiles[5]-percentiles[15])/(ma2(x))
+  ma4 <- round((sdev/mean),digits=2)*100
+  ma5 <- round(ma1(x)/ma2(x),digits=2)
+  ma6 <- round(percentiles[2]/percentiles[18],digits=2)
+  ma7 <- round(percentiles[4]/percentiles[16],digits=2)
+  ma8 <- round(percentiles[5]/percentiles[15],digits=2)
+  ma9 <- round((percentiles[2]-percentiles[18])/ma2(x),digits=2)
+  ma10 <- round((percentiles[4]-percentiles[16])/(ma2(x)),digits=2)
+  ma11 <- round((percentiles[5]-percentiles[15])/(ma2(x)),digits=2)
   ma4.11 <- list(ma4,ma5,ma6,ma7,ma8,ma9,ma10,ma11)
   return(ma4.11)
 }

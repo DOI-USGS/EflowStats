@@ -17,6 +17,6 @@ ra7 <- function(qfiletempf) {
                      differences = 1)
   findfallvalues <- subset(diffbtdays, diffbtdays < 
                              0)
-  ra7 <- median(abs(findfallvalues))
+  ra7 <- round(median(abs(findfallvalues)),digits=2)
   return(ra7)
 }

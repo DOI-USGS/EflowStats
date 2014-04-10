@@ -25,10 +25,10 @@ dl18 <- function(qfiletempf, pref = "mean") {
  
   } else {wy_cnts <- data.frame(zero_cnt=rep(0,1))}
   if (pref == "median") {
-    dl18 <- median(wy_cnts$zero_cnt)
+    dl18 <- round(median(wy_cnts$zero_cnt),digits=2)
   }
   else {
-    dl18 <- mean(wy_cnts$zero_cnt)
+    dl18 <- round(mean(wy_cnts$zero_cnt),digits=2)
   }
   return(dl18)
 }

@@ -14,6 +14,6 @@ dl6 <- function(qfiletempf) {
   meandl6 <- dl1(qfiletempf, pref = "mean")
   annualminimum <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), min)
   sddl6 <- sd(annualminimum$x)
-  dl6 <- (sddl6 * 100)/meandl6
+  dl6 <- round((sddl6 * 100)/meandl6,digits=2)
   return(dl6)
 }

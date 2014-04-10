@@ -40,6 +40,6 @@ tl3 <- function(qfiletempf, thresh) {
   dur$season <- ifelse(as.numeric(dur$month)==10,10,ifelse(as.numeric(dur$month)==11,10,ifelse(as.numeric(dur$month)==12,12,ifelse(as.numeric(dur$month)==1,12,ifelse(as.numeric(dur$month)==2,2,ifelse(as.numeric(dur$month)==3,2,ifelse(as.numeric(dur$month)==4,4,ifelse(as.numeric(dur$month)==5,4,ifelse(as.numeric(dur$month)==6,6,ifelse(as.numeric(dur$month)==7,6,ifelse(as.numeric(dur$month)==8,8,ifelse(as.numeric(dur$month)==9,8,99))))))))))))
   dur <- dur[!dur$season==99,]
   num_season <- aggregate(dur$dur, list(dur$season), sum)
-  tl3 <- max(num_season$x)/sum(num_season$x)
+  tl3 <- round(max(num_season$x)/sum(num_season$x),digits=2)
   return(tl3)
 }

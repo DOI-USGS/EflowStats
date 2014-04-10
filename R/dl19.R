@@ -24,7 +24,7 @@ dl19 <- function(qfiletempf) {
     wy_cnts$zero_cnt[is.na(wy_cnts$zero_cnt)] <- 0
   meanzero <- mean(wy_cnts$zero_cnt)
   sdzero <- sd(wy_cnts$zero_cnt)
-  dl19 <- (100*sdzero)/meanzero
+  dl19 <- round((100*sdzero)/meanzero,digits=2)
   } else {
     dl19 <- 0
   }

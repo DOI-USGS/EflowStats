@@ -24,6 +24,6 @@ dh10 <- function(qfiletempf) {
     max90daybyyear[i] <- max(day90mean, na.rm=TRUE)
   }
   sddh10 <- sd(max90daybyyear)
-  dh10 <- (sddh10 * 100)/meandh10
+  dh10 <- round((sddh10 * 100)/meandh10,digits=2)
   return(dh10)
 }

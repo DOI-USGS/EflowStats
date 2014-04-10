@@ -35,12 +35,12 @@ fh1.2 <- function(qfiletempf, pref = "mean") {
       } else {flag <- 0}
     }}
   stdevfh1 <- sd(counter)
-  fh2 <- (stdevfh1 * 100)/mean(counter)
+  fh2 <- round((stdevfh1 * 100)/mean(counter),digits=2)
   if (pref == "median") {
-    fh1 <- median(counter)
+    fh1 <- round(median(counter),digits=2)
   }
   else {
-    fh1 <- mean(counter)
+    fh1 <- round(mean(counter),digits=2)
   }
   fh1.2<-list(fh1=fh1,fh2=fh2)
   return(fh1.2)

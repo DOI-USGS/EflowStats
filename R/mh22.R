@@ -25,6 +25,6 @@ mh22 <- function(x) {
     } else {flag <- 0}
   }
   avg_ex <- total/nevents
-  mh22 <- avg_ex/ma2(x)
+  mh22 <- round(avg_ex/ma2(x),digits=2)
   return(mh22)
 }

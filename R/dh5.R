@@ -24,10 +24,10 @@ dh5 <- function(qfiletempf, pref = "mean") {
     max90daybyyear[i] <- max(day90mean, na.rm=TRUE)
   }
   if (pref == "median") {
-    dh5 <- median(max90daybyyear)
+    dh5 <- round(median(max90daybyyear),digits=2)
   }
   else {
-    dh5 <- mean(max90daybyyear)
+    dh5 <- round(mean(max90daybyyear),digits=2)
   }
   return(dh5)
 }

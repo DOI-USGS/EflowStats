@@ -13,6 +13,6 @@
 dl11 <- function(qfiletempf) {
   meanmin <- dl1(qfiletempf)
   medianq <- median(qfiletempf$discharge)
-  dl11 <- meanmin/medianq
+  dl11 <- round(meanmin/medianq,digits=2)
   return(dl11)
 }

@@ -15,6 +15,6 @@ dl14 <- function(qfiletempf) {
   sortq <- sort(isolateq)
   hfcrit <- quantile(sortq,.25,type=6)
   medianq <- median(qfiletempf$discharge)
-  dl14 <- hfcrit/medianq
+  dl14 <- round(hfcrit/medianq,digits=2)
   return(dl14)
 }

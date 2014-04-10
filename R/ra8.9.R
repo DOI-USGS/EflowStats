@@ -38,9 +38,9 @@ ra8.9 <- function(qfiletempf) {
     }
     noyears$cnt[j] <- counter
   }
-  ra8 <- mean(noyears$cnt)
+  ra8 <- round(mean(noyears$cnt),digits=2)
   sd_diff <- sd(noyears$cnt)
-  ra9 <- (sd_diff*100)/ra8
+  ra9 <- round((sd_diff*100)/ra8,digits=2)
   ra8.9 <- list(ra8=ra8,ra9=ra9)
   return(ra8.9)
 }

@@ -13,6 +13,6 @@
 ml21 <- function(x) {
   minbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=min,na.rm=TRUE)
   colnames(minbyyr) <- c("Year","yrmin")
-  ml21 <- (sd(minbyyr$yrmin)*100)/mean(minbyyr$yrmin)
+  ml21 <- round((sd(minbyyr$yrmin)*100)/mean(minbyyr$yrmin),digits=2)
   return(ml21)
 }

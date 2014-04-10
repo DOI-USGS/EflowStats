@@ -44,6 +44,6 @@ dh22 <- function(qfiletempf, thresh) {
     med_yr[i] <- median(dur_sub)
   }
   med_yr[is.na(med_yr)]<-0
-  dh22 <- mean(med_yr,na.rm=TRUE)
+  dh22 <- round(mean(med_yr,na.rm=TRUE),digits=2)
   return(dh22)
 }

@@ -37,8 +37,8 @@ dl16.17 <- function(qfiletempf) {
     }
     if (nevents>0) {lfdur[i]<-pdur/nevents}
   }
-  dl16 <- median(lfdur)
-  dl17 <- (sd(lfdur)*100)/mean(lfdur)
+  dl16 <- round(median(lfdur),digits=2)
+  dl17 <- round((sd(lfdur)*100)/mean(lfdur),digits=2)
   dl16.17 <- list(dl16=dl16,dl17=dl17)
   return(dl16.17)
 }

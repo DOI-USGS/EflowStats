@@ -36,6 +36,6 @@ dh23 <- function(qfiletempf, thresh) {
   subset_dur <- dur[1:nevents ,]
   meanbyyr <- aggregate(subset_dur$dur, list(subset_dur$Year), mean)
   colnames(meanbyyr) <- c("Year", "num_mean")
-  dh23 <- mean(meanbyyr$num_mean)
+  dh23 <- round(mean(meanbyyr$num_mean),digits=2)
   return(dh23)
 }

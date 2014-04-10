@@ -27,11 +27,11 @@ ma3 <- function(qfiletempf, pref = "mean") {
   colnames(dfcvbyyrf) <- c("Year", "sdq", "meanq", 
                            "cvq")
   if (pref == "median") {
-    medcv <- median(dfcvbyyrf$cvq, na.rm=TRUE)
+    medcv <- round(median(dfcvbyyrf$cvq, na.rm=TRUE),digits=2)
     ma3 <- (medcv) * 100
   }
   else {
-    meancv <- mean(dfcvbyyrf$cvq, na.rm=TRUE)
+    meancv <- round(mean(dfcvbyyrf$cvq, na.rm=TRUE),digits=2)
     ma3 <- (meancv) * 100
   }
   return(ma3)

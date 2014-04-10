@@ -24,6 +24,6 @@ dl9 <- function(qfiletempf) {
     min30daybyyear[i] <- min(day30mean, na.rm=TRUE)
   }
   sddl9 <- sd(min30daybyyear)
-  dl9 <- (sddl9 * 100)/meandl9
+  dl9 <- round((sddl9 * 100)/meandl9,digits=2)
   return(dl9)
 }

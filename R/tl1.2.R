@@ -37,10 +37,10 @@ tl1.2 <- function(qfiletempf) {
     tl1_temp <- 270
   }
   tl1_temp <- ifelse(tl1_temp<0,tl1_temp+360,tl1_temp)
-  tl1 <- tl1_temp*365.25/360
+  tl1 <- round(tl1_temp*365.25/360,digits=2)
   tl2_a <- sqrt((xbar*xbar)+(ybar*ybar))
   tl2_b <- sqrt(2*(1-tl2_a))
-  tl2 <- tl2_b*180/pi/360*365.25
+  tl2 <- round(tl2_b*180/pi/360*365.25,digits=2)
   tl1.2<-list(tl1=tl1,tl2=tl2)
   return(tl1.2)
 }

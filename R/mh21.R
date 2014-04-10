@@ -25,6 +25,6 @@ mh21 <- function(x) {
     } else {flag <- 0}
   }
   avg_ex <- total/nevents
-  mh21 <- avg_ex/thresh
+  mh21 <- round(avg_ex/thresh,digits=2)
   return(mh21)
 }

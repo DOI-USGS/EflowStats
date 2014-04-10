@@ -14,6 +14,6 @@
 dh12 <- function(qfiletempf) {
   medianflow <- median(qfiletempf$discharge,na.rm=TRUE)
   meanmax7day <- dh3(qfiletempf)
-  dh12 <- meanmax7day/medianflow
+  dh12 <- round(meanmax7day/medianflow,digits=2)
   return(dh12)
 }

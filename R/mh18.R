@@ -15,6 +15,6 @@ mh18 <- function(x) {
   maxbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=max,na.rm=TRUE)
   colnames(maxbyyr) <- c("Year","yrmax")
   log10maxbyyr <- log10(maxbyyr$yrmax)
-  mh18 <- (sd(log10maxbyyr)*100)/mean(log10maxbyyr)
+  mh18 <- round((sd(log10maxbyyr)*100)/mean(log10maxbyyr),digits=2)
   return(mh18)
 }

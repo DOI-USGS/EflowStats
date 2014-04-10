@@ -17,6 +17,6 @@ ra6 <- function(qfiletempf) {
                      differences = 1)
   findrisevalues <- subset(diffbtdays, diffbtdays > 
                              0)
-  ra6 <- median(abs(findrisevalues))
+  ra6 <- round(median(abs(findrisevalues)),digits=2)
   return(ra6)
 }

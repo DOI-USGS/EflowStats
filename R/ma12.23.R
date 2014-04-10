@@ -17,12 +17,12 @@ ma12.23 <- function(qfiletempf, pref = "mean") {
   if (pref == "median") {
     medmon <- aggregate(qfiletempf$discharge, list(qfiletempf$month_val), 
                         median, na.rm=TRUE)
-    ma12.23 <- data.frame(medmon)
+    ma12.23 <- data.frame(round(medmon[2],digits=2))
   }
   else {
     meanmon <- aggregate(qfiletempf$discharge, list(qfiletempf$month_val), 
                          mean, na.rm=TRUE)
-    ma12.23 <- data.frame(meanmon)
+    ma12.23 <- data.frame(round(meanmon[2],digits=2))
   }
   return(ma12.23)
 }

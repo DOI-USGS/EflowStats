@@ -24,10 +24,10 @@ dl4 <- function(qfiletempf, pref = "mean") {
     min30daybyyear[i] <- min(day30mean, na.rm=TRUE)
   }
   if (pref == "median") {
-    dl4 <- median(min30daybyyear)
+    dl4 <- round(median(min30daybyyear),digits=2)
   }
   else {
-    dl4 <- mean(min30daybyyear)
+    dl4 <- round(mean(min30daybyyear),digits=2)
   }
   return(dl4)
 }

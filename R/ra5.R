@@ -18,6 +18,6 @@ ra5 <- function(qfiletempf) {
       counter <- counter+1
     }
   }
-  ra5 <- counter/(sub_length+1)
+  ra5 <- round(counter/(sub_length+1),digits=2)
   return(ra5)
 }

@@ -18,10 +18,10 @@ fl3 <- function(qfiletempf, pref = "mean") {
   if (nrow(lowflow)>0) {
     lowbyyr <- aggregate(lowflow$discharge,list(lowflow$wy_val),FUN=length)
     if (pref == "median") {
-      fl3 <- median(lowbyyr$x)
+      fl3 <- round(median(lowbyyr$x),digits=2)
     }
     else {
-      fl3 <- mean(lowbyyr$x)
+      fl3 <- round(mean(lowbyyr$x),digits=2)
     }}
   else {
     fl3 <- 0

@@ -17,10 +17,10 @@ ml22 <- function(x,drainarea,pref = "mean") {
   minbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=min,na.rm=TRUE)
   colnames(minbyyr) <- c("Year","yrmin")
   if (pref == "median") {
-    ml22 <- (median(minbyyr$yrmin))/drainarea
+    ml22 <- round((median(minbyyr$yrmin))/drainarea,digits=2)
   } 
   else {
-    ml22 <- (mean(minbyyr$yrmin))/drainarea
+    ml22 <- round((mean(minbyyr$yrmin))/drainarea,digits=2)
   }
   return(ml22)
 }

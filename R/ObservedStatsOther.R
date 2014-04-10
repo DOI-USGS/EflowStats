@@ -19,24 +19,18 @@ ObservedStatsOther <- function(daily_data,drain_area,site_id,stats) {
   Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 13) + (length(grep("durStat", stats)) * 41) + (length(grep("timStat", stats)) * 6) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 12)
   Magnifnum <- (length(grep("magnifSeven", stats)) * 7)
   colnames(daily_data) <- c("date","discharge")
-  selqfile<-daily_data
-  tempdatafr<-NULL
-  tempdatafr<-data.frame(selqfile,stringsAsFactors=FALSE)
-  month_val<-rep(0,length(tempdatafr$date))
-  year_val<-rep(0,length(tempdatafr$date))
-  day_val<-rep(0,length(tempdatafr$date))
-  jul_val<-rep(0,length(tempdatafr$date))
-  wy_val<-rep(0,length(tempdatafr$date))
-  ones_val<-rep(1,length(tempdatafr$date))
-  qfiletempf<-data.frame(tempdatafr$date,tempdatafr$discharge,month_val,year_val,day_val,jul_val,wy_val,stringsAsFactors=FALSE)
-  colnames(qfiletempf)<-c('date','discharge','month_val','year_val','day_val','jul_val','wy_val')
-  qfiletempf$month_val<-substr(daily_data$date,6,7)
-  qfiletempf$year_val<-substr(daily_data$date,1,4)
-  qfiletempf$day_val<-substr(daily_data$date,9,10)
-  qfiletempf$jul_val<-strptime(daily_data$date, "%Y-%m-%d")$yday+1
-  qfiletempf$wy_val<-ifelse(as.numeric(qfiletempf$month_val)>=10,as.character(as.numeric(qfiletempf$year_val)+ones_val),qfiletempf$year_val) 
+  x_obs <- daily_data 
+  x_obs$date <- as.Date(x_obs$date,"%Y-%m-%d")
+  x_obs$month_val <- substr(x_obs$date,6,7)
+  x_obs$year_val <- substr(x_obs$date,1,4)
+  x_obs$day_val <- substr(x_obs$date,9,10)
+  x_obs$jul_val <- strptime(x_obs$date,"%Y-%m-%d")$yday+1
+  x_obs$wy_val <- ifelse(as.numeric(x_obs$month_val)>=10,as.character(as.numeric(x_obs$year_val)+1),x_obs$year_val) 
+  temp <- aggregate(discharge ~ wy_val,data=x_obs,length)
+  temp <- temp[which(temp$discharge>=365),]
   
-  obs_data<-qfiletempf
+  obs_data<-x_obs[x_obs$wy_val %in% temp$wy_val,]
+
   min_date <- min(obs_data[which(obs_data$month_val=="10"&obs_data$day_val=="01"),]$date)
   max_date <- max(obs_data[which(obs_data$month_val=="09"&obs_data$day_val=="30"),]$date)
   obs_data <- obs_data[which(obs_data$date>=min_date&obs_data$date<=max_date),]

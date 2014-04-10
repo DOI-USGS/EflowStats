@@ -22,6 +22,6 @@ mh14 <- function(qfiletempf) {
                            FUN = median, na.rm=TRUE)
   colnames(medflowbyyr) <- c("Year", "yrmed")
   ratiomaxmed <- maxmonbyyrr$yrmax/medflowbyyr$yrmed
-  mh14 <- median(ratiomaxmed)
+  mh14 <- round(median(ratiomaxmed),digits=2)
   return(mh14)
 }

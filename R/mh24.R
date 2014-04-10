@@ -33,6 +33,6 @@ mh24 <- function(qfiletempf) {
   }
   peak_sub <- subset(peak,peak>0)
   meanex <- mean(peak_sub)
-  mh24 <- meanex/ma2(qfiletempf)
+  mh24 <- round(meanex/ma2(qfiletempf),digits=2)
   return(mh24)
 }

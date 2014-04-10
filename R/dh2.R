@@ -24,10 +24,10 @@ dh2 <- function(qfiletempf, pref = "mean") {
     max3daybyyear[i] <- max(day3mean, na.rm=TRUE)
   }
   if (pref == "median") {
-    dh2 <- median(max3daybyyear)
+    dh2 <- round(median(max3daybyyear),digits=2)
   }
   else {
-    dh2 <- mean(max3daybyyear)
+    dh2 <- round(mean(max3daybyyear),digits=2)
   }
   return(dh2)
 }

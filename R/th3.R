@@ -28,6 +28,6 @@ th3 <- function(qfiletempf, thresh) {
       flag <- 0
     }
   }
-  th3 <- max(maxdur)/365
+  th3 <- round(max(maxdur)/365,digits=2)
   return(th3)
 }

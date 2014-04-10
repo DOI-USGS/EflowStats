@@ -31,10 +31,10 @@ fh10 <- function(qfiletempf, pref = "mean") {
     }
   }
   if (pref == "median") {
-    fh10 <- median(hfcountbyyrfh4)
+    fh10 <- round(median(hfcountbyyrfh4),digits=2)
   }
   else {
-    fh10 <- mean(hfcountbyyrfh4)
+    fh10 <- round(mean(hfcountbyyrfh4),digits=2)
   }
   return(fh10)
 }

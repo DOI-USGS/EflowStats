@@ -17,10 +17,10 @@ mh20 <- function(x,drainarea,pref = "mean") {
   maxbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=max,na.rm=TRUE)
   colnames(maxbyyr) <- c("Year","yrmax")
   if (pref == "median") {
-    mh20 <- (median(maxbyyr$yrmax))/drainarea
+    mh20 <- round((median(maxbyyr$yrmax))/drainarea,digits=2)
   } 
   else {
-    mh20 <- (mean(maxbyyr$yrmax))/drainarea
+    mh20 <- round((mean(maxbyyr$yrmax))/drainarea,digits=2)
   }
   return(mh20)
 }

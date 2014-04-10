@@ -22,6 +22,6 @@ mh19 <- function(x) {
   sumq <- sum(log_disch)
   num_years <- length(unique(x$wy_val))
   qstd <- sd(log_disch)
-  mh19 <- ((num_years*num_years*sumq3) - (3*num_years*sumq*sumq2) + (2*sumq*sumq*sumq))/(num_years*(num_years-1)*(num_years-2)*qstd*qstd*qstd)
+  mh19 <- round(((num_years*num_years*sumq3) - (3*num_years*sumq*sumq2) + (2*sumq*sumq*sumq))/(num_years*(num_years-1)*(num_years-2)*qstd*qstd*qstd),digits=2)
   return(mh19)
 }

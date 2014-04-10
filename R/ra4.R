@@ -18,6 +18,6 @@ ra4 <- function(qfiletempf) {
                                0)
   findfallvalues <- abs(findfallvalueneg)
   sddra4 <- sd(findfallvalues)
-  ra4 <- (sddra4 * 100)/meanra4
+  ra4 <- round((sddra4 * 100)/meanra4,digits=2)
   return(ra4)
 }

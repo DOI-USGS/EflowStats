@@ -30,10 +30,10 @@ fh5 <- function(qfiletempf, pref = "mean") {
       } else {flag <- 0}
     }}
   if (pref == "median") {
-    fh5 <- median(counter)
+    fh5 <- round(median(counter),digits=2)
   }
   else {
-    fh5 <- mean(counter)
+    fh5 <- round(mean(counter),digits=2)
   }
   return(fh5)
 }

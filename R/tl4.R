@@ -19,6 +19,6 @@ tl4 <- function(qfiletempf, thresh) {
   num_year <- aggregate(subset_crit$discharge, list(subset_crit$wy_val), function(x) sum(!is.na(x)))
   names(num_year) <- c('wy_val','num_days')
   num_year$ratio <- ifelse((as.numeric(num_year$wy_val)+1)/4==round((as.numeric(num_year$wy_val)+1)/4),num_year$num_days/366,num_year$num_days/365)
-  tl4 <- max(num_year$ratio)
+  tl4 <- round(max(num_year$ratio),digits=2)
   return(tl4)
 }

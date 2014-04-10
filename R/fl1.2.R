@@ -34,12 +34,12 @@ fl1.2 <- function(qfiletempf, pref = "mean") {
     } else {flag <- 0}
   }}
   stdevfl1 <- sd(counter)
-  fl2 <- (stdevfl1 * 100)/mean(counter)
+  fl2 <- round((stdevfl1 * 100)/mean(counter),digits=2)
   if (pref == "median") {
-    fl1 <- median(counter)
+    fl1 <- round(median(counter),digits=2)
   }
   else {
-    fl1 <- mean(counter)
+    fl1 <- round(mean(counter),digits=2)
   }
   fl1.2<-list(fl1=fl1,fl2=fl2)
   return(fl1.2)

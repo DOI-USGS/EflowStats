@@ -21,10 +21,10 @@ fh3 <- function(qfiletempf, pref = "mean") {
   numyrs <- length(unique(qfiletempf$wy_val))
   if (numrows<numyrs) { highbyyr_x <- c(highbyyr$x,rep(0,numyrs-numrows)) } else { highbyyr_x <- highbyyr$x}
   if (pref == "median") {
-    fh3 <- median(highbyyr_x)
+    fh3 <- round(median(highbyyr_x),digits=2)
   }
   else {
-    fh3 <- mean(highbyyr_x)
+    fh3 <- round(mean(highbyyr_x),digits=2)
   }}
   else {
     fh3 <- 0

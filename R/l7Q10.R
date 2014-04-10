@@ -19,7 +19,7 @@ l7Q10 <- function(qfiletempf) {
   sort_7day<-sort(min7daybyyear$x)
   rank_90<-floor(findrank(length(sort_7day),0.90))
   if (rank_90 > 0) { 
-    l7Q10<-sort_7day[rank_90]
+    l7Q10<-round(sort_7day[rank_90],digits=2)
   } else { 
     l7Q10<-NaN 
   }

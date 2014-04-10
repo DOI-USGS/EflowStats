@@ -17,10 +17,10 @@ ra1 <- function(qfiletempf, pref = "mean") {
   findrisevalues <- subset(diffbtdays, diffbtdays > 
                              0)
   if (pref == "median") {
-    ra1 <- median(findrisevalues)
+    ra1 <- round(median(findrisevalues),digits=2)
   }
   else {
-    ra1 <- mean(findrisevalues)
+    ra1 <- round(mean(findrisevalues),digits=2)
   }
   return(ra1)
 }

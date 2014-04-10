@@ -16,18 +16,18 @@ mh1.12 <- function(qfiletemp) {
   colnames(maxbymonyr) <- c("Year","Month","maxmo")
   meanmaxbymon <- aggregate(maxbymonyr$maxmo, list(maxbymonyr$Month), FUN = mean, na.rm=TRUE)
   colnames(meanmaxbymon) <- c("Month","meanmax")
-  mh1 <- meanmaxbymon[1,2]
-  mh2 <- meanmaxbymon[2,2]
-  mh3 <- meanmaxbymon[3,2]
-  mh4 <- meanmaxbymon[4,2]
-  mh5 <- meanmaxbymon[5,2]
-  mh6 <- meanmaxbymon[6,2]
-  mh7 <- meanmaxbymon[7,2]
-  mh8 <- meanmaxbymon[8,2]
-  mh9 <- meanmaxbymon[9,2]
-  mh10 <- meanmaxbymon[10,2]
-  mh11 <- meanmaxbymon[11,2]
-  mh12 <- meanmaxbymon[12,2]
+  mh1 <- round(meanmaxbymon[1,2],digits=2)
+  mh2 <- round(meanmaxbymon[2,2],digits=2)
+  mh3 <- round(meanmaxbymon[3,2],digits=2)
+  mh4 <- round(meanmaxbymon[4,2],digits=2)
+  mh5 <- round(meanmaxbymon[5,2],digits=2)
+  mh6 <- round(meanmaxbymon[6,2],digits=2)
+  mh7 <- round(meanmaxbymon[7,2],digits=2)
+  mh8 <- round(meanmaxbymon[8,2],digits=2)
+  mh9 <- round(meanmaxbymon[9,2],digits=2)
+  mh10 <- round(meanmaxbymon[10,2],digits=2)
+  mh11 <- round(meanmaxbymon[11,2],digits=2)
+  mh12 <- round(meanmaxbymon[12,2],digits=2)
   mh1.12 <- list(mh1,mh2,mh3,mh4,mh5,mh6,mh7,mh8,mh9,mh10,mh11,mh12)
   return(mh1.12)
 }

@@ -24,9 +24,9 @@ ml14.16 <- function(qfiletempf) {
   colnames(computeml14) <- c("year", "minbyyr", "medbyyr", "meanbyyr")
   dfml14 <- computeml14$minbyyr/computeml14$medbyyr
   dfml15 <- computeml14$minbyyr/computeml14$meanbyyr
-  ml14 <- mean(dfml14)
-  ml16 <- median(dfml14)
-  ml15 <- mean(dfml15)
+  ml14 <- round(mean(dfml14),digits=2)
+  ml16 <- round(median(dfml14),digits=2)
+  ml15 <- round(mean(dfml15),digits=2)
   ml14.16 <- list(ml14,ml15,ml16)
   return(ml14.16)
 }

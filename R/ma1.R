@@ -10,6 +10,6 @@
 #' qfiletempf<-sampleData
 #' ma1(qfiletempf)
 ma1 <- function(x) {
-  ma1 <- mean(x$discharge,na.rm=TRUE)
+  ma1 <- round(mean(x$discharge,na.rm=TRUE),digits=2)
   return(ma1)
 }
