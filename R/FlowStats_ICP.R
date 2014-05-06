@@ -17,38 +17,8 @@
 #' FlowStatsICP(qfiletempf,drain_area)
 FlowStatsICP <- function(data,drain_area) {
   dfOut <- vector()
-  magnif7 <- magnifSeven(data)
-  dfOut <- c(dfOut,magnif7)
-  sdbyyr <- aggregate(data$discharge, list(data$wy_val), 
-                      sd)
-  colnames(sdbyyr) <- c("Year", "sdq")
-  meanbyyr <- aggregate(data$discharge, list(data$wy_val), 
-                        mean, na.rm=TRUE)
-  colnames(meanbyyr) <- c("Year", "meanq")
-  medbyyr <- aggregate(data$discharge, list(data$wy_val), 
-                       median, na.rm=TRUE)
-  colnames(medbyyr) <- c("Year","medq")
-  dfcvbyyr <- data.frame(meanbyyr$Year, sdbyyr$sdq, 
-                         meanbyyr$meanq, medbyyr$medq, stringsAsFactors=FALSE)
-  colnames(dfcvbyyr) <- c("Year", "sdq", "meanq", "medq")
-  cvbyyr <- dfcvbyyr$sdq/dfcvbyyr$meanq
-  dfcvbyyrf <- data.frame(dfcvbyyr, cvbyyr, stringsAsFactors=FALSE)
-  colnames(dfcvbyyrf) <- c("Year", "sdq", "meanq", "medq", 
-                           "cvq")
-  med_flow<-round(median(dfcvbyyrf$meanq,na.rm=TRUE),digits=2)
-  cv_flow<-round(sd(dfcvbyyrf$meanq,na.rm=TRUE)/mean(dfcvbyyrf$meanq,na.rm=TRUE),digits=2)
-  l7Q10v<-l7Q10(data)
-  l7Q2v<-l7Q2(data)
-  return_10v<-return_10(data)
-  
-  obs_percentiles <- quantile(data$discharge,probs=c(0.10, 0.25, 0.50, 0.75, 0.90, 0.15),na.rm=TRUE)
-  flow_10 <- obs_percentiles[1]
-  flow_25 <- obs_percentiles[2]
-  flow_50 <- obs_percentiles[3]
-  flow_75 <- obs_percentiles[4]
-  flow_90 <- obs_percentiles[5]
-  flow_15 <- obs_percentiles[6]
-  dfOut <- c(dfOut,med_flow,cv_flow,l7Q10v,l7Q2v,return_10v,flow_10,flow_25,flow_50,flow_75,flow_90,flow_15)
+  otherstat <- OtherStats(data)
+  dfOut <- c(dfOut,otherstat)
 
     ma26v<-ma24.35(data)[3,1]
     ma41v<-unlist(ma41.45(data,drain_area)[1])

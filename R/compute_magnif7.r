@@ -1,8 +1,8 @@
+#' Function to return the magnificent seven statistics for a given data series
 #' This is a function to compute the 7 statistics of daily streamflow
 #' used by Archfield et al., under revision (June 2013). Input to the function is a
 #' time series of streamflow with date in the format Y-m-d. Data should be arranged in 
-#' two columns with names:  1) date and 2) discharge.
-#' Created May 29, 2013 and functions are modified from previous versions of this code.
+#' four columns with names:  1) date, 2) discharge, 3) month_val and 4) year_val.
 #' 
 #' @param timeseries1 data frame of daily flow data
 #' @return magnif7 data frame of calculated statistics
@@ -30,12 +30,7 @@ magnifSeven<-function(timeseries1)  {
   tau4<-round(complmom$TAU4,digits=2)
 
   #Compute AR(1) correlation coefficienct
-  #First, deseasonalize the time series using the long-term monthly means
-  ds.timeseries<-deseason(timeseries)  
-  #Fit AR(1) model to deseasonalized data but first standardize deseasonlized time series
-  ds_std_flows<-scale(ds.timeseries$flow, center = TRUE, scale = TRUE)
-  armdl<-ar(ds_std_flows, aic = FALSE, order.max = 1, method="yule-walker")
-  ar1<-round(armdl$ar,digits=2)
+  ar1<-ar1(timeseries)
     
   #Compute seasonal factors (amplitude and phase)
   #Compute seasonality variables by first standardizing flows, the fitting relation A*cos(2*pi*t) + B*sin(2*pi*t)
@@ -51,8 +46,9 @@ magnifSeven<-function(timeseries1)  {
   seasonA<-as.vector(seasonfit$coefficients[2])
   seasonB<-as.vector(seasonfit$coefficients[3]) 
   #Now compute the amplitude and phase of the seasonal signal
-  amplitude<-round(sqrt((seasonA^2)+(seasonB^2)),digits=2)
-  phase<-round(atan((-seasonB)/seasonA),digits=2)
+  seasonality_vars <- seasonality(timeseries)
+  amplitude<-seasonality_vars[1]
+  phase<-seasonality_vars[2]
   
   #Now output the results
   magnifSeven1<-c(lam1,tau2,tau3,tau4,ar1,amplitude,phase)
