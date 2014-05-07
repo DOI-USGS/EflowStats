@@ -40,6 +40,6 @@ OtherStats<-function(timeseries1)  {
   flow_75 <- obs_percentiles[4]
   flow_90 <- obs_percentiles[5]
   flow_15 <- obs_percentiles[6]
-  OtherStats <- c(med_flow,cv_flow,cv_daily,l7Q10v,l7Q2v,return_10v,flow_10,flow_25,flow_50,flow_75,flow_90,flow_15)
+  OtherStats <- c(med_flow,cv_flow,cv_daily,flow_10,flow_25,flow_50,flow_75,flow_90,flow_15)
   return(OtherStats)
 }
