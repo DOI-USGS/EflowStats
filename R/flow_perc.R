@@ -11,6 +11,6 @@
 #' qfiletempf<-sampleData
 #' flow(qfiletempf,probs=c(.1,.25,.5,.75))
 flow_perc <- function(data,probs=c(.1,.25,.5,.75,.9,.15)) {
-obs_percentiles <- quantile(data$discharge,probs,na.rm=TRUE)
+obs_percentiles <- quantile(data,probs,na.rm=TRUE)
 return(obs_percentiles)
 }

@@ -30,8 +30,8 @@ OtherStats<-function(timeseries1)  {
   
   mean_flow<-round(mean(dfcvbyyrf$meanq,na.rm=TRUE),digits=2)
   med_flow<-round(median(dfcvbyyrf$meanq,na.rm=TRUE),digits=2)
-  cv_flow<-round(cv(dfcybyyrf$meanq),digits=2)
-  cv_daily<-round(cv(data),digits=2)
+  cv_flow<-round(cv(dfcvbyyrf$meanq),digits=2)
+  cv_daily<-round(cv(data$discharge),digits=2)
   l7Q10v<-l7Q10(data)
   l7Q2v<-l7Q2(data)
   return_10v<-return_10(data)

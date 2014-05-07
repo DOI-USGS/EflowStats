@@ -9,6 +9,6 @@
 #' qfiletempf<-sampleData
 #' sdev(qfiletempf)
 sdev <- function(x) {
-  sdev <- sd(x$discharge,na.rm=TRUE)
+  sdev <- sd(x,na.rm=TRUE)
   return(sdev)
 }

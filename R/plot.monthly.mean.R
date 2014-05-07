@@ -13,5 +13,4 @@
 #' }
 plot.monthly.mean <- function(meanmonts,station){
   plot(meanmonts$datenum,meanmonts$Mean_disch,xlab="",ylab="Discharge(cfs)",col="blue",type="o",main=paste("Monthly Average Flow at station ",station,sep=""))
-  dev.off()
 }

@@ -9,7 +9,7 @@
 #' qfiletempf<-sampleData
 #' cv(qfiletempf)
 cv <- function(x) {
-  x1 <- mean(x$discharge,na.rm=TRUE)
+  x1 <- mean(x,na.rm=TRUE)
   x2 <- sdev(x)
   cv <- x2/x1
   return(cv)

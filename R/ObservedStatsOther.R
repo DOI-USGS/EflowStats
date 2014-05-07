@@ -30,6 +30,13 @@ ObservedStatsOther <- function(daily_data,drain_area,site_id,stats) {
   temp <- temp[which(temp$discharge>=365),]
   
   obs_data<-x_obs[x_obs$wy_val %in% temp$wy_val,]
+  countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
+  colnames(countbyyr)<-c('wy','num_samples')
+  sub_countbyyr<-subset(countbyyr,num_samples >= 365)
+  if (nrow(sub_countbyyr)==0) {
+    tempArrays$comment[i]<-"No complete water years for site"
+  } else {
+    obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
 
   min_date <- min(obs_data[which(obs_data$month_val=="10"&obs_data$day_val=="01"),]$date)
   max_date <- max(obs_data[which(obs_data$month_val=="09"&obs_data$day_val=="30"),]$date)
@@ -92,7 +99,7 @@ ObservedStatsOther <- function(daily_data,drain_area,site_id,stats) {
   }
   if (length(grep("rateStat",stats))>0) {
     namesFull <- c(namesFull,namesRateStat)
-  }
+  }}
   namesFull <- c(namesFull,'comment')
   
   colnames(statsout)<-namesFull

@@ -64,6 +64,13 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
       drain_url<-paste(drainage_url,site,sep="")
       drain_area<-getDrainageArea(drain_url)
       cat(paste("data and drainage area retrieved for site",site,drain_area,"\n",sep=" "))
+      countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
+      colnames(countbyyr)<-c('wy','num_samples')
+      sub_countbyyr<-subset(countbyyr,num_samples >= 365)
+      if (nrow(sub_countbyyr)==0) {
+        tempArrays$comment[i]<-"No complete water years for site"
+      } else {
+        obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
       yv[i]<-as.character(min(obs_data$date))
       ymaxv[i]<-as.character(max(obs_data$date))
       cat(paste("dates calculated for site",site,"\n",sep=" "))
@@ -80,7 +87,7 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
         cat(paste("Mag7 stats calculated for site",site,"\n",sep=" "))
       }
       comment <- ""
-    } else {
+    }} else {
       comment[i]<-"No observed data for this site"
     }
   }
