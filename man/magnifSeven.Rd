@@ -1,10 +1,10 @@
 \name{magnifSeven}
 \alias{magnifSeven}
-\title{This is a function to compute the 7 statistics of daily streamflow
+\title{Function to return the magnificent seven statistics for a given data series
+This is a function to compute the 7 statistics of daily streamflow
 used by Archfield et al., under revision (June 2013). Input to the function is a
 time series of streamflow with date in the format Y-m-d. Data should be arranged in
-two columns with names:  1) date and 2) discharge.
-Created May 29, 2013 and functions are modified from previous versions of this code.}
+four columns with names:  1) date, 2) discharge, 3) month_val and 4) year_val.}
 \usage{
 magnifSeven(timeseries1)
 }
@@ -15,13 +15,13 @@ magnifSeven(timeseries1)
 magnif7 data frame of calculated statistics
 }
 \description{
-This is a function to compute the 7 statistics of daily
-streamflow used by Archfield et al., under revision (June
-2013). Input to the function is a time series of streamflow
-with date in the format Y-m-d. Data should be arranged in
-two columns with names: 1) date and 2) discharge. Created
-May 29, 2013 and functions are modified from previous
-versions of this code.
+Function to return the magnificent seven statistics for a
+given data series This is a function to compute the 7
+statistics of daily streamflow used by Archfield et al.,
+under revision (June 2013). Input to the function is a time
+series of streamflow with date in the format Y-m-d. Data
+should be arranged in four columns with names: 1) date, 2)
+discharge, 3) month_val and 4) year_val.
 }
 \examples{
 timeseries1<-sampleData

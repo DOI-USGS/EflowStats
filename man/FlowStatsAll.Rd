@@ -25,6 +25,6 @@ sites<-"02177000"
 drain_url<-paste(drainage_url,sites,sep="")
 drain_area<-getDrainageArea(drain_url)
 qfiletempf<-sampleData
-FlowStatsAll(qfiletempf,drain_area,"magStat,flowStat,durStat,timStat,rateStat,otherStat")
+FlowStatsAll(qfiletempf,drain_area,"magStat,flowStat,durStat,timStat,rateStat")
 }
 
