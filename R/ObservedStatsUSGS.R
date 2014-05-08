@@ -71,6 +71,7 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
         tempArrays$comment[i]<-"No complete water years for site"
       } else {
         obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
+        obs_data<-obs_data[order(obs_data$jul_val),]
       yv[i]<-as.character(min(obs_data$date))
       ymaxv[i]<-as.character(max(obs_data$date))
       cat(paste("dates calculated for site",site,"\n",sep=" "))
