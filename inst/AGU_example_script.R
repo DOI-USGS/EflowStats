@@ -1,6 +1,6 @@
 
 install.packages(c("zoo","chron","doBy","XML","hydroGOF","lmomco","RCurl"))
-install.packages("EflowStats",repos="http://usgs-r.github.com")
+install.packages("EflowStats",repos="http://usgs-r.github.com",type="source")
 
 library(EflowStats)
 
