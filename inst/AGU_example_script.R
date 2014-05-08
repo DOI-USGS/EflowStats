@@ -18,6 +18,3 @@ daily_data<-dailyData
 stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 statsout <- ObservedStatsOther(daily_data,drain_area,site_id,stats)
 
-obs_data <- sampleData
-meanmonts <- monthly.mean.ts(obs_data)
-plot.monthly.mean(meanmonts,site_id)
