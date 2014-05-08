@@ -12,7 +12,7 @@
 #' sites <- c("02177000", "02178400")
 #' startdate <- "2009"
 #' enddate <- "2013"
-#' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+#' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 #' ObservedStatsUSGS(sites,startdate,enddate,stats)
 ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
   startdate <- paste(startdate,"10","01",sep="-")

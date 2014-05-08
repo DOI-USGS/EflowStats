@@ -8,12 +8,12 @@ flow_perc(data, probs = c(0.1, 0.25, 0.5, 0.75, 0.9, 0.15))
   \item{data}{data frame containing value data for the
   chosen timeseries}
 
-  \item{probs}{string containing requested percentile
+  \item{probs}{vector containing requested percentile
   value(s)}
 }
 \value{
-flow_perc requested flow percentiles for the given data
-frame
+obs_percentiles requested flow percentiles for the given
+data frame
 }
 \description{
 This function accepts a data frame containing daily data
@@ -22,6 +22,6 @@ requested percentiles
 }
 \examples{
 qfiletempf<-sampleData
-flow(qfiletempf,probs=c(.1,.25,.5,.75))
+flow_perc(qfiletempf,probs=c(.1,.25,.5,.75))
 }
 

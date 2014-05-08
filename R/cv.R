@@ -7,7 +7,7 @@
 #' @export
 #' @examples
 #' qfiletempf<-sampleData
-#' cv(qfiletempf)
+#' cv(qfiletempf$discharge)
 cv <- function(x) {
   x1 <- mean(x,na.rm=TRUE)
   x2 <- sdev(x)

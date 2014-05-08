@@ -11,9 +11,9 @@
 #' ar1(qfiletempf)
 ar1 <- function(data) {
   #First, deseasonalize the time series using the long-term monthly means
-  ds.timeseries<-deseason(timeseries)  
+  ds.timeseries<-deseason(data)  
   #Fit AR(1) model to deseasonalized data but first standardize deseasonlized time series
-  ds_std_flows<-scale(ds.timeseries$flow, center = TRUE, scale = TRUE)
+  ds_std_flows<-scale(ds.timeseries$discharge, center = TRUE, scale = TRUE)
   armdl<-ar(ds_std_flows, aic = FALSE, order.max = 1, method="yule-walker")
   ar1<-round(armdl$ar,digits=2)
   return(ar1)

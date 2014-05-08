@@ -7,7 +7,7 @@
 #' @export
 #' @examples
 #' qfiletempf<-sampleData
-#' sdev(qfiletempf)
+#' sdev(qfiletempf$discharge)
 sdev <- function(x) {
   sdev <- sd(x,na.rm=TRUE)
   return(sdev)

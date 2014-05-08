@@ -17,6 +17,6 @@ and returns the coefficient of variation
 }
 \examples{
 qfiletempf<-sampleData
-cv(qfiletempf)
+cv(qfiletempf$discharge)
 }
 

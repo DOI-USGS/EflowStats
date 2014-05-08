@@ -18,19 +18,19 @@ magnifSeven<-function(timeseries1)  {
 
   #Rename columns of timeseries dataframe 
   timeseries<-data.frame(timeseries1$date,timeseries1$discharge,timeseries1$month_val,timeseries1$year_val,stringsAsFactors=FALSE)
-  colnames(timeseries)<-c("date","flow","month_val","year_val")
+  colnames(timeseries)<-c("date","discharge","month_val","year_val")
   #Subset timeseries to remove NAs
-  timeseries<-subset(timeseries,timeseries$flow!='NA') 
+  timeseries<-subset(timeseries,timeseries$discharge!='NA') 
 
   #Compute L-moment ratios for time series so consistent in function
-  complmom<-lmom.ub(timeseries$flow)
+  complmom<-lmom.ub(timeseries$discharge)
   lam1<-round(complmom$L1,digits=2)
   tau2<-round(complmom$LCV,digits=2)
   tau3<-round(complmom$TAU3,digits=2)
   tau4<-round(complmom$TAU4,digits=2)
 
   #Compute AR(1) correlation coefficienct
-  ar1<-ar1(timeseries)
+  ar1v<-ar1(timeseries)
     
   #Compute seasonal factors (amplitude and phase)
   #Compute seasonality variables by first standardizing flows, the fitting relation A*cos(2*pi*t) + B*sin(2*pi*t)
@@ -40,7 +40,7 @@ magnifSeven<-function(timeseries1)  {
 	jday<-strptime(timeseries$date, "%Y-%m-%d")$yday+1
 	decimal_year<-as.numeric(timeseries$year_val)+(jday/365.25)
   #2) Standardize flows
-  std_flows<-scale(timeseries$flow, center = TRUE, scale = TRUE)
+  std_flows<-scale(timeseries$discharge, center = TRUE, scale = TRUE)
   #3) Use linear model to fit 
   seasonfit<-lm(std_flows~cos(2*pi*decimal_year)+sin(2*pi*decimal_year))
   seasonA<-as.vector(seasonfit$coefficients[2])
@@ -51,8 +51,8 @@ magnifSeven<-function(timeseries1)  {
   phase<-seasonality_vars[2]
   
   #Now output the results
-  magnifSeven1<-c(lam1,tau2,tau3,tau4,ar1,amplitude,phase)
+  magnifSeven1<-c(lam1,tau2,tau3,tau4,ar1v,amplitude,phase)
   #colnames(magnifSeven1)<-c("lam1","tau2","tau3","tau4","ar1","amplitude","phase")                                      
-  magnifSeven<-magnifSeven1
-  return(magnifSeven)
+  magnif7<-magnifSeven1
+  return(magnif7)
 }

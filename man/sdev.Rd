@@ -17,6 +17,6 @@ and returns the standard deviation
 }
 \examples{
 qfiletempf<-sampleData
-sdev(qfiletempf)
+sdev(qfiletempf$discharge)
 }
 

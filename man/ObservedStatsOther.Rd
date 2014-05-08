@@ -29,7 +29,7 @@ requested statistics
 qfiletempf<-dailyData
 drain_area<-54
 site_id <- "Test site"
-stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 ObservedStatsOther(qfiletempf,drain_area,site_id,stats)
 }
 
