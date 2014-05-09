@@ -1,0 +1,327 @@
+%\VignetteIndexEntry{Introduction to the EflowStats package}
+%\VignetteEngine{knitr::knitr}
+%\VignetteDepends{}
+%\VignetteSuggests{xtable}
+%\VignetteImports{zoo, XML, RCurl, chron, doBy, hydroGOF, lmomco}
+%\VignettePackage{EflowStats}
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage[numbers, round]{natbib}
+\usepackage[american]{babel}
+\usepackage{authblk}
+\usepackage{subfig}
+\usepackage{placeins}
+\usepackage{footnote}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+\usepackage{parskip}
+\renewcommand\Affilfont{\itshape\small}
+
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\usepackage{graphicx}
+
+
+\textwidth=6.2in
+\textheight=8.5in
+\parskip=.3cm
+\oddsidemargin=.1in
+\evensidemargin=.1in
+\headheight=-.3in
+
+%------------------------------------------------------------
+  % newcommand
+%------------------------------------------------------------
+  \newcommand{\scscst}{\scriptscriptstyle}
+\newcommand{\scst}{\scriptstyle}
+\newcommand{\Robject}[1]{{\texttt{#1}}}
+  \newcommand{\Rfunction}[1]{{\texttt{#1}}}
+    \newcommand{\Rclass}[1]{\textit{#1}}
+      \newcommand{\Rpackage}[1]{\textit{#1}}
+        \newcommand{\Rexpression}[1]{\texttt{#1}}
+          \newcommand{\Rmethod}[1]{{\texttt{#1}}}
+            \newcommand{\Rfunarg}[1]{{\texttt{#1}}}
+              
+              \begin{document}
+              
+              <<openLibrary, echo=FALSE>>=
+                library(xtable)
+              options(continue=" ")
+              options(width=60)
+              library(knitr)
+              
+              @
+              
+              
+              %------------------------------------------------------------
+                \title{The EflowStats R package}
+              %------------------------------------------------------------
+                \author[1]{Jessica Thompson}
+              \author[1]{Stacey Archfield}
+              \affil[1]{United States Geological Survey}
+              
+              
+              <<include=TRUE ,echo=FALSE,eval=TRUE>>=
+                opts_chunk$set(highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE, tidy=FALSE,comment="")
+              knit_hooks$set(inline = function(x) {
+                if (is.numeric(x)) round(x, 3)})
+              knit_hooks$set(crop = hook_pdfcrop)
+              @
+              
+              
+              \maketitle
+              \tableofcontents
+              
+              %------------------------------------------------------------
+                \section{Introduction to EflowStats}
+              %------------------------------------------------------------ 
+                The EflowStats package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with USGS NWIS data, and works with the NWCCompare package to compare modeled and observed streamflow data. This package is intended to be an update of the previously existing USGS NAHAT program \ref{sec:NAHAT} with additional statistics previously published by Archfield et al \ref{Archfield}.     
+              
+              Quantifying the amount of ecologically necessary streamflow and determining the effect of changes in landscape and climate on flow are critical aspects to understanding the ecological health of rivers. A natural flow regime can be characterized using five components of streamflow: magnitude, frequency, duration, timing and rate fo change of streamflow. Statistics representing these five properties are commonly applied and the number of ecologically-relevant streamflow statistics (ERSS) available from various software packages is now in the hundreds. The EflowStats package is designed to calculate a comprehensive set of ERSS using the open-source R software environement and provides batch capabilities for calculation of ERSS for multiple sites simultaneously. EflowStats is both directly available as an R package and integrated into the USGS National Water Census Data Platform. EflowStats will enable easy, transparent and repeatable calculation of many of the most utilized ERSS for many scientists. The EflowStats package is designed to work seamlessly with USGS NWIS web-available data, and users may also load data from other sources (text files, spreadsheets).  Section \ref{sec:exampleWorkflow} provides examples of how one can calculate selected stats from USGS or other data. 
+              
+              For information on getting started in R and installing the package, see (\ref{sec:appendix1}): Getting Started.
+              
+%------------------------------------------------------------
+\section{General Workflow}
+\label{sec:exampleWorkflow}
+%------------------------------------------------------------ 
+
+This example vignette first loads the relevant packages (assuming they are already installed) and the included sample data. In your use, you would need to load the packages, but not the given example data.
+First, it is a good practice to clear any existing objects from your working environment. In RStudio, in the upper right quadrant, there is a broom icon that says 'Clear'. Click this and select 'Yes' to remove objects. This allows you to being work with a clear workspace, negating the possibility of mis-identified variables. 
+
+<<workflow, echo=TRUE,eval=FALSE>>=
+library(SampleSplitting)
+library(dataRetrieval)
+library(googleVis)
+
+############################################
+# Load sample data included with package:
+ExampleData <- rdbExample
+
+@
+
+Enter information about the USGS station, date range and optional separate USGS station for precipitation data.
+
+<<siteInfo, echo=TRUE,eval=FALSE>>=
+############################################
+# Enter information about the desired data set
+# enter NWIS station id for gaging station
+siteNo <- "424314090240601"
+# enter date to begin pulling data (rounded to the day)
+StartDt <- '2008-05-30'
+# enter date to stop pulling data (rounded to the day)
+EndDt <- '2008-06-15'
+# enter NWIS station id for precipitation gaging station, may or 
+# may not be identical to "siteNo"
+precipSite <- "434425090462401"
+@
+
+Normally, the user will now run the getADAPSData function with or without a dataFile variable, depending on if a data file exported from ADAPs is being used. For this example, we will simply rename the provided data.
+
+<<loadData, echo=TRUE,eval=FALSE>>=
+###############################################
+# rename example data for following operations
+adaps_data_all <- ExampleData
+@
+
+The retrieved data is now saved as a comma-separated text file, in case you need to refer to it later. The file will be saved to your present working directory. If you are unsure of that location, you can run: "getwd()" at the R prompt to discover this information.
+
+<<saveData, echo=TRUE,eval=FALSE>>=
+###############################################
+# save merged data for station/storm event, saved as file, 
+# eg 434425090462401data.csv 
+mergedDataTable(siteNo,StartDt,EndDt,adaps_data_all)
+@
+
+Now the hydrologist may generate hydrographs to assist in choosing storm event start and end datetimes. There are two hydrographs available, one which generates an interactive Google charts visualization, which will pop up in a browser, and one that saves as a pdf to your working directory.
+
+<<generatePlots, echo=TRUE,eval=FALSE>>=
+# Generate interactive googleVis plot
+hydrographPlot <- hydrographInteractive(adaps_data_all)
+plot(hydrographPlot)
+
+# Generate pdf of hydrograph to save, saved as file, 
+# eg 434425090462401hydrograph.pdf 
+# adjust dateInt as desired to vary length of time (in hours) between 
+# x-axis tick marks
+hydrographPDF(adaps_data_all,siteNo,dateInt=8)
+@
+
+Now that storm start and end times have been determined, it is time to enter information for each event. You must enter a StormStart, StormEnd and StormName for each event. For sampled events, you must also enter maxBottleVol, maxSampleVol and subNum. These values must be in order (eg, all lists must be in the same order as the StormName list). If you have unsampled storms, just skip the maxBottleVol, maxSampVol and subNum for those. So, if I have 3 storm events - "S1-01","S1-02","S1-03" - and S1-02 wasn't sampled, my lists might be:
+\begin{verbatim}
+StormName     c("S1-01","S1-02","S1-03")
+StormStart    c("2012-04-01 14:00","2012-04-02 20:30","2012-04-05 10:15")
+StormStart    c("2012-04-01 22:30","2012-04-03 02:15","2012-04-05 13:45")
+maxBottleVol  c(400,400)
+maxSampVol    c(3900,3900)
+subNum        c(1,5)
+\end{verbatim}
+
+<<enterInfo, echo=TRUE,eval=FALSE>>=
+#############################################################
+# after using the hydrographs to determine storm start and end time(s), 
+# enter information for storm events.
+# IF you have un-sampled storms, you may enter their StormStart and  
+# StormEnd values, as well as StormNames in 
+# the appropriate list. Leave them out of the maxBottleVol, maxSampVol  
+# and subNum lists
+# enter the name of the storm event(s)
+StormName <- c("S2-066","S2-066A","S2-067","S2-068","S2-069",
+               "S2-070","S2-071","S2-072","S2-073","S2-074",
+               "S2-075")
+# enter Storm Start date(s)
+# MUST be in the format YYYY-MM-DD HH:24
+StormStart <- c("2008-05-30 02:51","2008-06-01 02:30",
+                "2008-06-05 04:39","2008-06-06 04:22",
+                "2008-06-07 22:52","2008-06-08 08:41",
+                "2008-06-08 19:03","2008-06-12 09:03",
+                "2008-06-12 21:40","2008-06-14 16:52",
+                "2008-06-15 04:07")
+# enter Storm End date(s) 
+# MUST be in the format YYYY-MM-DD HH:24
+StormEnd <- c("2008-05-30 08:49","2008-06-01 22:45",
+              "2008-06-05 07:21","2008-06-06 05:28",
+              "2008-06-08 01:14","2008-06-08 11:39",
+              "2008-06-08 21:31","2008-06-12 10:22",
+              "2008-06-13 01:36","2008-06-14 18:05",
+              "2008-06-15 09:22")
+# enter the maximum possible volume for one sample bottle
+maxBottleVol <- c(400,600,600,600,600,600,600,400,600,800)
+# enter the maximum possible volume for one full storm sample
+maxSampVol <- c(3900,3900,3900,3900,3900,3900,3900,3900,3900,3900)
+# enter number for 1st bottle of each storm, if a number other 
+# than 1 is desired
+subNum <- c(1,1,1,1,16,1,1,5,1,7)
+@
+
+Once that information has been entered, it is time to run the calculation for sample splitting volumes. After the calculation has been done, it may be helpful to output the initial numbers for review, as well as save the intermediate volume calculations (for later reference).
+
+<<calculateVolumes, echo=TRUE,eval=FALSE>>=
+# generate bottle volume table(s) for lab for each storm
+tableOut <- labDataOut(adaps_data_all,StormStart,StormEnd,StormName,
+                       maxBottleVol,maxSampVol,subNum=subNum)
+# look at table(s) generated for lab sample instructions for storm 
+# event(s) and determine if changes are needed
+for (i in 1:length(StormStart)){
+  print(tableOut[[i]])
+}
+
+#Output csv file of all intermediate volumes used for calculations
+intermediateVolTable(siteNo,StormStart,StormEnd,tableOut)
+@
+
+After looking at the initial volumes, if there is a sample that needs to be removed, you can optionally run the following section to remove the desired sample and also re-calculate volumes and save the updated information.
+
+<<removeSamples, echo=TRUE,eval=FALSE>>=
+# OPTIONAL if sample(s) need to be removed, enter their datetime  
+# and a comment and re-create tableOut
+# MUST be in the format YYYY-MM-DD HH:24
+removeDate <- c("2008-05-30 07:44")
+removeComment <- c("")
+tableOut <- labDataOut(adaps_data_all,StormStart,StormEnd,StormName,
+                       maxBottleVol,maxSampVol,
+                       removeDate=removeDate,subNum=subNum)
+for (i in 1:length(StormStart)){
+  print(tableOut[[i]])
+}
+intermediateVolTable(siteNo,StormStart,StormEnd,tableOut)
+@
+
+When you are satisfied with the sample splitting volume calculations, it is time to enter the date when sample bottles were retrieved and generate two summary files. The first summary file is named, for example, S2-066sampVol.txt. It contains the volume calculations for the sample bottles for all storm events as well as extra information for the hydrologist, such as the total volume fo the lab sample and the total sampled storm volume. The other file, S2-066labVolumes.txt, contains a clean table of bottle volumes for each storm event to be sent to the lab.
+
+<<generateFiles, echo=TRUE,eval=FALSE>>=
+#Once you are satisfied with the table output
+#enter date(s) when samples were picked up 
+bottlePickup <- c("Bottles S2-1 through S2-26 picked up 2008-05-30",
+                  "Bottles S2-1 through S2-15 picked up 2008-06-05",
+                  "Bottles S2-1 through S2-6 picked up 2008-06-06",
+                  "Bottles S2-1 through S2-9 picked up 2008-06-07 and 
+                  bottles S2-10 through S2-15 picked up 2008-06-08",
+                  "Bottles S2-16 through S2-25 picked up 2008-06-09",
+                  "Bottles S2-1 through S2-9 picked up 2008-06-10",
+                  "Bottles S2-1 through S2-7 picked up 2008-06-12",
+                  "Bottles S2-5 through S2-25 picked up 2008-06-13",
+                  "Bottles S2-1 through S2-6 picked up 2008-06-14",
+                  "Bottles S2-7 through S2-17 picked up 2008-06-15")
+
+# generate text file with storm event sample bottle 
+# volume table(s)
+stormEventsTable(StormName,StormStart,StormEnd,tableOut,
+                 maxBottleVol,bottlePickup)
+
+# generate simple table for lab
+labVolumesTable(StormName,StormStart,StormEnd,tableOut,
+                bottlePickup)
+
+@
+
+%------------------------------------------------------------ 
+\section{Getting Started in R}
+\label{sec:started}
+%------------------------------------------------------------ 
+This section describes the options for downloading and installing the sampleSplitting package.
+
+%------------------------------------------------------------
+\subsection{New to R?}
+%------------------------------------------------------------ 
+If you are new to R, you will need to first install the latest version of R, which can be found here: \url{http://www.r-project.org/}. There is also a useful USGS site for R help at \url{http://bwtst.usgs.gov/apps/R/index.html}.
+
+There are many options for running and editing R code, one nice environment to learn R is RStudio. RStudio can be downloaded here: \url{http://rstudio.org/}. Once R and RStudio are installed, the dataRetrieval package needs to be installed as described in the next section.
+
+At any time, you can get information about any function in R by typing a question mark before the functions name.  This will open a file (in RStudio, in the Help window) that describes the function, the required arguments, and provides working examples.
+
+<<helpFunc,eval = FALSE>>=
+library(SampleSplitting)
+?getADAPSData
+@
+
+To see the raw code for a particular code, type the name of the function:
+<<rawFunc,eval = FALSE>>=
+getADAPSData
+@
+
+%------------------------------------------------------------
+\subsection{R User: Installing sampleSplitting}
+%------------------------------------------------------------ 
+Before installing sampleSplitting, the supporting packages must be first be installed:
+
+<<installFromCran,eval = FALSE>>=
+install.packages(c("googleVis"), dependencies=TRUE)
+install.packages(c("dataRetrieval"), repos="http://usgs-r.github.com")
+install.packages(c("SampleSplitting"),repos="http://usgs-r.github.com",
+                 type="source")
+@
+
+It is a good idea to re-start R after installing the package, especially if installing an updated version. Some users have found it necessary to delete the previous version's package folder before installing newer version of dataRetrieval. If you are experiencing issues after updating a package, trying deleting the package folder - the default location for Windows is something like this: C:/Users/userA/Documents/R/win-library/2.15/dataRetrieval, and the default for a Mac: 
+/Users/userA/Library/R/2.15/library/dataRetrieval. Then, re-install the package using the directions above. Moving to CRAN should solve this problem.
+
+After installing the package, you need to open the library each time you re-start R.  This is done with the simple command:
+<<openLibraryTest, eval=FALSE>>=
+library(SampleSplitting)
+@
+
+\clearpage
+
+%------------------------------------------------------------------------------------
+% BIBLIO
+%------------------------------------------------------------------------------------
+\begin{thebibliography}{10}
+
+\bibitem{NAHAT}
+Henriksen, J.A., Heasley, J. Kennen, J.G., and Nieswand, S., 2006, Users' manual for the Hydroecological Integrity Assessment Process software (including the New Jersey Assessment Tools): U.S. Geological Survey Open-File Report 2006-1093. 72 p.
+\url{http://www.fort.usgs.gov/products/publications/21598/21598.pdf}
+
+\bibitem{Archfield}
+Archfield, S.A., J.G. Kennen, D.M. Carlisle, and D.M. Wolock. 2013. An Objective and Parsimonious Approach for Classifying Natural Flow Regimes at a Continental Scale. River Res. Applic. doi: 10.1002/rra.2710
+\url{http://onlinelibrary.wiley.com/doi/10.1002/rra.2710/abstract}
+
+\end{thebibliography}
+
+\end{document}
+
+\end{document}
+
