@@ -20,5 +20,5 @@ statsout <- ObservedStatsOther(daily_data,drain_area,site_id,stats)
 
 # plot monthly means for a daily discharge timeseries
 qfiletempf<-sampleData
-meanmonts<-monthly.mean.ts(qfiletempf)
-plot.monthly.mean(meanmonts,'02178400')
+meanmonts<-monthlyMeanTs(qfiletempf)
+plotMonthlyMean(meanmonts,'02178400')

@@ -7,8 +7,8 @@
 #' @export
 #' @examples
 #' qfiletempf<-sampleData
-#' monthly.mean.ts(qfiletempf)
-monthly.mean.ts <- function(qfiletempf) {
+#' monthlyMeanTs(qfiletempf)
+monthlyMeanTs <- function(qfiletempf) {
   meanmonts <- aggregate(qfiletempf$discharge, list(qfiletempf$year_val,qfiletempf$month_val), FUN = mean, na.rm=TRUE)
   colnames(meanmonts) <- c("Year","Month","Mean_disch")
   meanmonts$datenum <- as.numeric(meanmonts$Year)+as.numeric(meanmonts$Month)*(1/12)

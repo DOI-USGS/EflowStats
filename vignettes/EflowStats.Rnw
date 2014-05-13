@@ -161,12 +161,11 @@ The generated statsout dataframe has the same characteristics as that shown prev
 
 There is also a function available to plot the monthly means for a daily discharge timeseries. Using included sample data, the following code generates a dataframe of mean monthly discharge and then plots the values with a title containing the site id. 
 
-<<plotMonthlyMeans, echo=-4,fig.cap="Monthly Average Flow at station 02178400">>=
+<<plotMonthlyMeans, echo=TRUE,fig.cap="Monthly Average Flow at station 02178400">>=
 # plot monthly means for a daily discharge timeseries
 qfiletempf<-sampleData
-meanmonts<-monthly.mean.ts(qfiletempf)
-source('C:/Users/jlthomps/Desktop/git/EflowStats/R/plot.monthly.mean.R')
-plot.monthly.mean(meanmonts,'02178400')
+meanmonts<-monthlyMeanTs(qfiletempf)
+plotMonthlyMean(meanmonts,'02178400')
 @
 
 \FloatBarrier
