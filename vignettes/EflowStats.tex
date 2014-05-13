@@ -5,7 +5,56 @@
 %\VignetteImports{zoo, XML, RCurl, chron, doBy, hydroGOF, lmomco}
 %\VignettePackage{EflowStats}
 
-\documentclass[a4paper,11pt]{article}
+\documentclass[a4paper,11pt]{article}\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
 
 \usepackage{amsmath}
 \usepackage{times}
@@ -45,15 +94,12 @@
 \newcommand{\Rexpression}[1]{\texttt{#1}}
 \newcommand{\Rmethod}[1]{{\texttt{#1}}}
 \newcommand{\Rfunarg}[1]{{\texttt{#1}}}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 
 \begin{document}
 
-<<openLibrary, echo=FALSE>>=
-library(xtable)
-options(continue=" ")
-options(width=60)
-library(knitr)
-@
+
+
 
 
 %------------------------------------------------------------
@@ -64,12 +110,8 @@ library(knitr)
 \affil[1]{United States Geological Survey}
 
 
-<<include=TRUE ,echo=FALSE,eval=TRUE>>=
-opts_chunk$set(highlight=TRUE, tidy=TRUE, keep.space=TRUE, keep.blank.space=FALSE, keep.comment=TRUE, tidy=FALSE,comment="")
-knit_hooks$set(inline = function(x) {
-   if (is.numeric(x)) round(x, 3)})
-knit_hooks$set(crop = hook_pdfcrop)
-@
+
+
 
 
 \maketitle
@@ -94,80 +136,115 @@ This example vignette first loads the relevant packages (assuming they are alrea
 
 First, it is a good practice to clear any existing objects from your working environment. In RStudio, in the upper right quadrant, there is a broom icon that says 'Clear'. Click this and select 'Yes' to remove objects. This allows you to being work with a clear workspace, negating the possibility of mis-identified variables. 
 
-<<workflow, echo=TRUE,eval=TRUE>>=
-library(EflowStats)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(EflowStats)}
 
-############################################
-# Load sample data included with package:
-daily_data<-dailyData
+\hlcom{############################################}
+\hlcom{# Load sample data included with package:}
+\hlstd{daily_data}\hlkwb{<-}\hlstd{dailyData}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
-@
 
 To calculate stats for USGS streamgage(s), enter gage id(s), start and end dates and a list of the groups of statistics to be calculated. The list in the example contains all possible statistics.
 
-<<USGSstatsinfo, echo=TRUE,eval=TRUE>>=
-############################################
-# calculate stats for a USGS streamgage
-sites <- c("02177000","02178400")
-startdate <- "2009"
-enddate <- "2013"
-stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{############################################}
+\hlcom{# calculate stats for a USGS streamgage}
+\hlstd{sites} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"02177000"}\hlstd{,}\hlstr{"02178400"}\hlstd{)}
+\hlstd{startdate} \hlkwb{<-} \hlstr{"2009"}
+\hlstd{enddate} \hlkwb{<-} \hlstr{"2013"}
+\hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 Once this information is entered, the user runs the ObservedStatsUSGS function and maps the result to a named data frame.
 
-<<createstatsoutput, echo=FALSE,eval=TRUE,results='hide'>>=
-###############################################
-# calculate stats for USGS streamgage(s)
-statsout <- ObservedStatsUSGS(sites,startdate,enddate,stats)
-@
 
-<<statsoutput, echo=TRUE,eval=FALSE>>=
-###############################################
-# calculate stats for USGS streamgage(s)
-statsout <- ObservedStatsUSGS(sites,startdate,enddate,stats)
-@
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{###############################################}
+\hlcom{# calculate stats for USGS streamgage(s)}
+\hlstd{statsout} \hlkwb{<-} \hlkwd{ObservedStatsUSGS}\hlstd{(sites,startdate,enddate,stats)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 The retrieved data is now present as a dataframe called statsout in your R environment. This data frame has one row for each gage and one column for each statistic. An example of the first few columns is given below.
 
-<<viewData, echo=FALSE,eval=TRUE>>=
-###############################################
-# view a portion of the statsout table
-statsout[,c(1,4:8,10)]
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+   site_no lam1Obs tau2Obs tau3Obs tau4Obs ar1Obs phaseObs
+1 02177000   697.0    0.40    0.31    0.15  -0.14    -1.15
+2 02178400   190.7    0.39    0.36    0.25  -0.09    -1.05
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 This dataframe may now be used within the R environment or saved as a file as shown.
 
-<<saveData, echo=TRUE,eval=FALSE>>=
-# save statsout to a tab-delimited file
-output = "output.txt"
-write.table(statsout, file = output, col.names = TRUE, row.names = FALSE, 
-            quote = FALSE, sep = "\t")
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# save statsout to a tab-delimited file}
+\hlstd{output} \hlkwb{=} \hlstr{"output.txt"}
+\hlkwd{write.table}\hlstd{(statsout,} \hlkwc{file} \hlstd{= output,} \hlkwc{col.names} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{row.names} \hlstd{=} \hlnum{FALSE}\hlstd{,}
+            \hlkwc{quote} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 For daily discharge data not available via NWISWeb, statistics can be calculated by loading data into an R dataframe like the example \texttt{"}dailyData\texttt{"}. This dataframe has two columns, the first named date, containing dates as characters in the format \texttt{"}YYYY-MM-DD\texttt{"} and the second column, discharge, containing the numeric discharge. This can be easily accomplished from most text file formats using \texttt{"}read.delim\texttt{"} or \texttt{"}read.table\texttt{"}. Then the user must enter a drainage area and a site id for each site, as well as the stats string.
 
-<<OtherStats, echo=TRUE,eval=FALSE>>=
-#############################################################
-# calculate stats for data from your own data file
-drain_area=54
-site_id="Test site"
-daily_data<-dailyData
-stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
-statsout <- ObservedStatsOther(daily_data,drain_area,site_id,stats)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#############################################################}
+\hlcom{# calculate stats for data from your own data file}
+\hlstd{drain_area}\hlkwb{=}\hlnum{54}
+\hlstd{site_id}\hlkwb{=}\hlstr{"Test site"}
+\hlstd{daily_data}\hlkwb{<-}\hlstd{dailyData}
+\hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
+\hlstd{statsout} \hlkwb{<-} \hlkwd{ObservedStatsOther}\hlstd{(daily_data,drain_area,site_id,stats)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 The generated statsout dataframe has the same characteristics as that shown previously. 
 
 There is also a function available to plot the monthly means for a daily discharge timeseries. Using included sample data, the following code generates a dataframe of mean monthly discharge and then plots the values with a title containing the site id. 
 
-<<plotMonthlyMeans, echo=-4,fig.cap="Monthly Average Flow at station 02178400">>=
-# plot monthly means for a daily discharge timeseries
-qfiletempf<-sampleData
-meanmonts<-monthly.mean.ts(qfiletempf)
-source('C:/Users/jlthomps/Desktop/git/EflowStats/R/plot.monthly.mean.R')
-plot.monthly.mean(meanmonts,'02178400')
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# plot monthly means for a daily discharge timeseries}
+\hlstd{qfiletempf}\hlkwb{<-}\hlstd{sampleData}
+\hlstd{meanmonts}\hlkwb{<-}\hlkwd{monthly.mean.ts}\hlstd{(qfiletempf)}
+\hlkwd{plot.monthly.mean}\hlstd{(meanmonts,}\hlstr{'02178400'}\hlstd{)}
+\end{alltt}
+\end{kframe}\begin{figure}[]
+
+\includegraphics[width=\maxwidth]{figure/plotMonthlyMeans} \caption[Monthly Average Flow at station 02178400]{Monthly Average Flow at station 02178400\label{fig:plotMonthlyMeans}}
+\end{figure}
+
+
+\end{knitrout}
+
 
 \FloatBarrier
 
@@ -472,15 +549,44 @@ There are many options for running and editing R code, one nice environment to l
 
 At any time, you can get information about any function in R by typing a question mark before the functions name.  This will open a file (in RStudio, in the Help window) that describes the function, the required arguments, and provides working examples.
 
-<<helpFunc,eval = FALSE>>=
-library(EflowStats)
-?mh19
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(EflowStats)}
+\hlopt{?}\hlstd{mh19}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 To see the raw code for a particular code, type the name of the function:
-<<rawFunc,eval = TRUE>>=
-mh19
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlstd{mh19}
+\end{alltt}
+\begin{verbatim}
+function (x) 
+{
+    annmax <- aggregate(x$discharge, list(x$wy_val), FUN = max, 
+        na.rm = TRUE)
+    log_disch <- log10(annmax$x)
+    sumq3 <- sum(log_disch^3)
+    sumq2 <- sum(log_disch^2)
+    sumq <- sum(log_disch)
+    num_years <- length(unique(x$wy_val))
+    qstd <- sd(log_disch)
+    mh19 <- round(((num_years * num_years * sumq3) - (3 * num_years * 
+        sumq * sumq2) + (2 * sumq * sumq * sumq))/(num_years * 
+        (num_years - 1) * (num_years - 2) * qstd * qstd * qstd), 
+        digits = 2)
+    return(mh19)
+}
+<environment: namespace:EflowStats>
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \FloatBarrier
 \clearpage
@@ -489,18 +595,28 @@ mh19
 %------------------------------------------------------------ 
 Before installing EflowStats, the supporting packages must be first be installed:
 
-<<installFromCran,eval = FALSE>>=
-install.packages(c("zoo","chron","doBy","XML","hydroGOF","lmomco","RCurl"))
-install.packages("EflowStats",repos="http://usgs-r.github.com",type="source")
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{install.packages}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"zoo"}\hlstd{,}\hlstr{"chron"}\hlstd{,}\hlstr{"doBy"}\hlstd{,}\hlstr{"XML"}\hlstd{,}\hlstr{"hydroGOF"}\hlstd{,}\hlstr{"lmomco"}\hlstd{,}\hlstr{"RCurl"}\hlstd{))}
+\hlkwd{install.packages}\hlstd{(}\hlstr{"EflowStats"}\hlstd{,}\hlkwc{repos}\hlstd{=}\hlstr{"http://usgs-r.github.com"}\hlstd{,}\hlkwc{type}\hlstd{=}\hlstr{"source"}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 It is a good idea to re-start R after installing the package, especially if installing an updated version. Some users have found it necessary to delete the previous version's package folder before installing newer version of dataRetrieval. If you are experiencing issues after updating a package, trying deleting the package folder - the default location for Windows is something like this: C:/Users/userA/Documents/R/win-library/2.15/dataRetrieval, and the default for a Mac: 
 /Users/userA/Library/R/2.15/library/dataRetrieval. Then, re-install the package using the directions above. Moving to CRAN should solve this problem.
 
 After installing the package, you need to open the library each time you re-start R.  This is done with the simple command:
-<<openLibraryTest, eval=FALSE>>=
-library(EflowStats)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlkwd{library}\hlstd{(EflowStats)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \clearpage
 
