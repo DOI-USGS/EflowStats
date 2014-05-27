@@ -2,6 +2,7 @@
 
 export(FlowStatsAll)
 export(ObservedStatsOther)
+export(ObservedStatsOtherMulti)
 export(ObservedStatsUSGS)
 export(OtherStats)
 export(ar1)

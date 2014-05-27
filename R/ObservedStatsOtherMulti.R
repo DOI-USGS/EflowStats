@@ -12,7 +12,7 @@
 #' @return statsout data frame containing requested statistics for each station
 #' @export
 #' @examples
-#' dataPath <- "/Users/jlthomps/Documents/R/JData/modeled/"
+#' dataPath <- "C:/Users/jlthomps/Documents/R/JData/modeled/"
 #' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 #' ObservedStatsOtherMulti(dataPath,stats)
 ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar=",") {
