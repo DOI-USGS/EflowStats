@@ -38,6 +38,6 @@ ml20 <- function(x) {
   fiveday_merge$y <- ifelse(is.na(fiveday_merge$y),as.numeric(fiveday_merge$fiveday),fiveday_merge$y)
   total_bf <- sum(fiveday_merge$y*5)+((numdays-(numsets*5))*fiveday_merge$y[numsets])
   total_flow <- sum(sub_flow$discharge)
-  ml20 <- round(total_bf/total_flow,digits=2)
-  return(ml20)
+  ml20v <- round(total_bf/total_flow,digits=2)
+  return(ml20v)
 } 

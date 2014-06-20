@@ -37,7 +37,7 @@ ObservedStatsOther <- function(daily_data,drain_area,site_id,stats) {
     tempArrays$comment[i]<-"No complete water years for site"
   } else {
     obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
-    obs_data<-obs_data[order(obs_data$jul_val),]
+    obs_data<-obs_data[order(obs_data$date),]
 
   min_date <- min(obs_data[which(obs_data$month_val=="10"&obs_data$day_val=="01"),]$date)
   max_date <- max(obs_data[which(obs_data$month_val=="09"&obs_data$day_val=="30"),]$date)

@@ -4,6 +4,7 @@
 #' calculated HIT/HAT statistics
 #' 
 #' @param data data frame of daily flow data
+#' @param peakData data frame of annual peaks
 #' @param drain_area drainage area for a given site
 #' @param stats list of requested stat groups
 #' @return Output data frame of calculated statistics
@@ -15,8 +16,11 @@
 #' drain_area<-getDrainageArea(drain_url)
 #' qfiletempf<-sampleData
 #' FlowStatsAll(qfiletempf,drain_area,"magStat,flowStat,durStat,timStat,rateStat")
-FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateStat,otherStat,durStat") {
+FlowStatsAll <- function(data,peakData=NA,drain_area,stats="magStat,flowStat,timStat,rateStat,otherStat,durStat") {
   dfOut <- vector()
+  if (is.na(peakData)){
+    peakData <- aggregate(data$discharge,by=list(data$wy_val),max)
+  }
   if (length(grep("otherStat",stats))>0) {
     otherstat <- OtherStats(data)
     dfOut <- c(dfOut,otherstat)
@@ -137,11 +141,10 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
     fh8v<-fh8(data)
     fh9v<-fh9(data)
     fh10v<-fh10(data)
-    #peakValues<-getPeakData(sites)
-    #thresh_60<-getPeakThresh(data,qfilepeak,.6)
-    #thresh_40<-getPeakThresh(data,qfilepeak,.4)
-    #fh11v<-fh11(data,thresh_60)
-  dfOut <- c(dfOut,fl1v,fl2v,fl3v,fh1v,fh2v,fh3v,fh4v,fh5v,fh6v,fh7v,fh8v,fh9v,fh10v)
+    thresh_60<-getPeakThresh(data,peakData,.6)
+    thresh_40<-getPeakThresh(data,peakData,.4)
+    fh11v<-fh11(data,thresh_60)
+  dfOut <- c(dfOut,fl1v,fl2v,fl3v,fh1v,fh2v,fh3v,fh4v,fh5v,fh6v,fh7v,fh8v,fh9v,fh10v,fh11v)
   }
   if (length(grep("durStat",stats))>0) {
     dl1v<-dl1(data)
@@ -185,26 +188,26 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
     dh19v<-dh19(data)
     dh20v<-dh20(data)
     dh21v<-dh21(data)
-    #dh22v<-dh22(data,thresh_60)
-    #dh23v<-dh23(data,thresh_60)
-    #dh24v<-dh24(data,thresh_60)
+    dh22v<-dh22(data,thresh_60)
+    dh23v<-dh23(data,thresh_60)
+    dh24v<-dh24(data,thresh_60)
   dfOut <- c(dfOut,dl1v,dl2v,dl3v,dl4v,
              dl5v,dl6v,dl7v,dl8v,dl9v,dl10v,dl11v,dl12v,dl13v,dl14v,dl15v,dl16v,dl17v,dl18v,dl19v,dl20v,
              dh1v,dh2v,dh3v,dh4v,dh5v,dh6v,dh7v,dh8v,dh9v,dh10v,dh11v,dh12v,dh13v,dh14v,dh15v,
-             dh16v,dh17v,dh18v,dh19v,dh20v,dh21v)
+             dh16v,dh17v,dh18v,dh19v,dh20v,dh21v,dh22v,dh23v,dh24v)
   }
   if (length(grep("timStat",stats))>0) {
     ta1v<-unname(unlist(ta1.2(data)[1]))
     ta2v<-unname(unlist(ta1.2(data)[2]))
-    #ta3v<-ta3(data,thresh_60)
+    ta3v<-ta3(data,thresh_60)
     tl1v<-unname(unlist(tl1.2(data)[1]))
     tl2v<-unname(unlist(tl1.2(data)[2]))
-    #tl3v<-tl3(data,thresh_40)
-    #tl4v<-tl4(data,thresh_40)
+    tl3v<-tl3(data,thresh_40)
+    tl4v<-tl4(data,thresh_40)
     th1v<-unname(unlist(th1.2(data)[1]))
     th2v<-unname(unlist(th1.2(data)[2]))
-    #th3v<-th3(data,thresh_60)
-  dfOut <- c(dfOut,ta1v,ta2v,tl1v,tl2v,th1v,th2v)
+    th3v<-th3(data,thresh_60)
+  dfOut <- c(dfOut,ta1v,ta2v,ta3v,tl1v,tl2v,tl3v,tl4v,th1v,th2v,th3v)
   }
   if (length(grep("rateStat",stats))>0) {
     ra1v<-ra1(data)
