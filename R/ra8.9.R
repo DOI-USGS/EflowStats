@@ -13,6 +13,7 @@
 #' qfiletempf<-sampleData
 #' ra8.9(qfiletempf)
 ra8.9 <- function(qfiletempf) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   noyears <- data.frame(unique(qfiletempf$wy_val),stringsAsFactors=FALSE)
   colnames(noyears) <- c("wy_val")
   noyrs <- nrow(noyears)

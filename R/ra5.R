@@ -11,6 +11,7 @@
 #' qfiletempf<-sampleData
 #' ra5(qfiletempf)
 ra5 <- function(qfiletempf) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   sub_length <- nrow(qfiletempf)-1
   counter <- 0
   for (i in 1:sub_length) {

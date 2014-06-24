@@ -19,7 +19,7 @@ stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 statsout <- ObservedStatsOther(daily_data,drain_area,site_id,stats)
 
 # calculate stats for multiple sites in a local data directory
-dataPath="/Users/jlthomps/Documents/R/JData/modeled/"
+dataPath="C:/Users/jlthomps/Documents/R/JData/modeled/"
 stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 statsout <- ObservedStatsOtherMulti(dataPath,stats)
 

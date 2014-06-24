@@ -12,6 +12,7 @@
 #' qfiletempf<-sampleData
 #' ra6(qfiletempf)
 ra6 <- function(qfiletempf) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   disch_log <- ifelse(qfiletempf$discharge>0,log(qfiletempf$discharge),log(.01))
   diffbtdays <- diff(disch_log, lag = 1, 
                      differences = 1)

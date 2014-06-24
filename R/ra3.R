@@ -12,6 +12,7 @@
 #' qfiletempf<-sampleData
 #' ra3(qfiletempf)
 ra3 <- function(qfiletempf, pref = "mean") {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   diffbtdays <- diff(qfiletempf$discharge, lag = 1, 
                      differences = 1)
   findfallvalueneg <- subset(diffbtdays, diffbtdays < 

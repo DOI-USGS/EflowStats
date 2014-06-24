@@ -14,6 +14,7 @@
 #' qfiletempf<-sampleData
 #' dh23(qfiletempf, 1158)
 dh23 <- function(qfiletempf, thresh) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   lfcrit <- thresh
   noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                        FUN = median, na.rm=TRUE)

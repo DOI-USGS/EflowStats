@@ -12,6 +12,7 @@
 #' qfiletempf<-sampleData
 #' ra1(qfiletempf)
 ra1 <- function(qfiletempf, pref = "mean") {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   diffbtdays <- diff(qfiletempf$discharge, lag = 1, 
                      differences = 1)
   findrisevalues <- subset(diffbtdays, diffbtdays > 

@@ -12,6 +12,7 @@
 #' qfiletempf<-sampleData
 #' dh19(qfiletempf)
 dh19 <- function(qfiletempf) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   lfcrit <- median(qfiletempf$discharge)*7
   noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                        FUN = median, na.rm=TRUE)

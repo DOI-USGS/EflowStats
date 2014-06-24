@@ -11,6 +11,7 @@
 #' qfiletempf<-sampleData
 #' dh8(qfiletempf)
 dh8 <- function(qfiletempf) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   meandh8 <- dh3(qfiletempf, pref = "mean")
   day7mean <- rollmean(qfiletempf$discharge, 7, align = "right", 
                         na.pad = TRUE)

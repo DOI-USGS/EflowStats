@@ -11,6 +11,7 @@
 #' qfiletempf<-sampleData
 #' ra4(qfiletempf)
 ra4 <- function(qfiletempf) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   meanra4 <- ra3(qfiletempf, pref = "mean")
   diffbtdays <- diff(qfiletempf$discharge, lag = 1, 
                      differences = 1)

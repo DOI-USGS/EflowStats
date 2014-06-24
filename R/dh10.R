@@ -11,6 +11,7 @@
 #' qfiletempf<-sampleData
 #' dh10(qfiletempf)
 dh10 <- function(qfiletempf) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   meandh10 <- dh5(qfiletempf, pref = "mean")
   noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                        FUN = median, na.rm=TRUE)

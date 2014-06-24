@@ -12,6 +12,7 @@
 #' qfiletempf<-sampleData
 #' ml18(qfiletempf)
 ml18 <- function(qfiletempf) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   bfibyyear <- bfi(qfiletempf)  
   sdbfi <- sd(bfibyyear)
   meanbfi <- mean(bfibyyear)

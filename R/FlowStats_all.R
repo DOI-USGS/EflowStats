@@ -16,9 +16,9 @@
 #' drain_area<-getDrainageArea(drain_url)
 #' qfiletempf<-sampleData
 #' FlowStatsAll(qfiletempf,drain_area,"magStat,flowStat,durStat,timStat,rateStat")
-FlowStatsAll <- function(data,peakData=NA,drain_area,stats="magStat,flowStat,timStat,rateStat,otherStat,durStat") {
+FlowStatsAll <- function(data,peakData=0,drain_area,stats="magStat,flowStat,timStat,rateStat,otherStat,durStat") {
   dfOut <- vector()
-  if (is.na(peakData)){
+  if (length(peakData)==1){
     peakData <- aggregate(data$discharge,by=list(data$wy_val),max)
   }
   if (length(grep("otherStat",stats))>0) {

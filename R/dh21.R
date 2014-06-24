@@ -12,6 +12,7 @@
 #' qfiletempf<-sampleData
 #' dh21(qfiletempf)
 dh21 <- function(qfiletempf) {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   isolateq <- qfiletempf$discharge
   sortq <- sort(isolateq)
   lfcrit <- quantile(sortq,.25,type=6)

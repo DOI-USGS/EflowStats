@@ -17,7 +17,8 @@ peakValues<-data.frame(as.Date(doc$V3[3:nrow(doc)],format="%Y-%m-%d"),as.numeric
 colnames(peakValues)<-c('date','discharge')
 peakValues$year_val<-substr(peakValues$date,1,4)
 peakValues$month_val<-substr(peakValues$date,6,7)
-peakValues$wy_val<-ifelse(as.numeric(peakValues$month_val)>=10,as.character(as.numeric(peakValues$year_val)+1),peakValues$year_val) 
+peakValues$wy_val<-as.numeric(ifelse(as.numeric(peakValues$month_val)>=10,as.character(as.numeric(peakValues$year_val)+1),peakValues$year_val)) 
 peakValues$logval <- log10(peakValues$discharge)
+peakValues <- peakValues[,c(1:2,5:6)]
 return (peakValues)
 }

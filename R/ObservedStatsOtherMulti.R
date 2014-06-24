@@ -22,8 +22,12 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
   }
   fileList <- fileList[which(!is.na(fileList))]
   drainFile <- fileList[charmatch("drain",fileList)]
-  sites <- fileList[which(!fileList %in% drainFile)]
-  Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 13) + (length(grep("durStat", stats)) * 41) + (length(grep("timStat", stats)) * 6) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 9)
+  peakFiles <- fileList[charmatch("peak",fileList)]
+  if (!is.na(peakFiles)) {
+  sites <- fileList-peakFiles
+  sites <- sites[which(!fileList %in% drainFile)]
+  } else {sites <- fileList[which(!fileList %in% drainFile)]}
+  Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 14) + (length(grep("durStat", stats)) * 44) + (length(grep("timStat", stats)) * 10) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 9)
   Magnifnum <- (length(grep("magnifSeven", stats)) * 7)
   comment <- vector(length = length(sites))
   ObsFlowStats <- matrix(nrow = length(sites), ncol = Flownum)
@@ -39,11 +43,11 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
                     "ml15", "ml16", "ml17", "ml18", "ml19", "ml20", "ml21", "ml22", "mh1", "mh2", "mh3", "mh4", "mh5", "mh6", "mh7", "mh8", "mh9", "mh10", "mh11", "mh12", "mh13", 
                     "mh14_med_annual_max", "mh15", "mh16_high_flow_index", "mh17", "mh18", "mh19", "mh20", "mh21", "mh22", "mh23", "mh24", "mh25", "mh26_high_peak_flow", "mh27")
   namesFlowStat <- c("fl1_low_flood_pulse", "fl2_low_pulse_var", "fl3", "fh1_high_pulse_count", "fh2_high_pulse_var", "fh3_high_pulse_count_three", "fh4_high_pulse_count_seven", 
-                     "fh5", "fh6", "fh7", "fh8", "fh9", "fh10")
+                     "fh5", "fh6", "fh7", "fh8", "fh9", "fh10","fh11")
   namesDurStat <- c("dl1_min_daily_flow", "dl2_min_3_day_avg", "dl3", "dl4_min_30_day_avg", "dl5_min_90_day_avg", "dl6_min_flow_var", "dl7", "dl8", "dl9_min_30_day_var", 
                     "dl10_min_90_day_var", "dl11", "dl12", "dl13", "dl14", "dl15", "dl16", "dl17", "dl18_zero_flow_days", "dl19", "dl20", "dh1", "dh2", "dh3", "dh4", "dh5_max_90_day_avg", 
-                    "dh6", "dh7", "dh8", "dh9", "dh10_max_90_day_var", "dh11", "dh12", "dh13", "dh14", "dh15", "dh16", "dh17", "dh18", "dh19", "dh20", "dh21")
-  namesTimStat <- c("ta1", "ta2", "tl1_min_flow_julian_day", "tl2_min_julian_var", "th1_max_flow_julian_day", "th2_max_julian_var")
+                    "dh6", "dh7", "dh8", "dh9", "dh10_max_90_day_var", "dh11", "dh12", "dh13", "dh14", "dh15", "dh16", "dh17", "dh18", "dh19", "dh20", "dh21","dh22","dh23","dh24")
+  namesTimStat <- c("ta1", "ta2", "ta3","tl1_min_flow_julian_day", "tl2_min_julian_var", "tl3","tl4","th1_max_flow_julian_day", "th2_max_julian_var","th3")
   namesRateStat <- c("ra1_rise_rate", "ra2_rise_rate_var", "ra3_fall_rate", "ra4_fall_rate_var", "ra5", "ra6", "ra7", "ra8", "ra9")
   namesOtherStat <- c("med_flowObs", "cv_flowObs", "cv_dailyObs", "flow_10Obs", "flow_25Obs", "flow_50Obs", "flow_75Obs", 
                       "flow_90Obs", "flow_15Obs")
@@ -70,6 +74,26 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
       } else {
         obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
         obs_data<-obs_data[order(obs_data$date),]
+        if (!is.na(peakFiles)) {
+          peakData <- read.table(paste(dataPath,peakFiles[i],sep=""),sep=sepChar,stringsAsFactors=FALSE,header=TRUE)
+          peak <- peakData[1,1]
+          peakData <- peak[,2:3]
+          colnames(peakData) <- c("date","discharge")
+          peakData$month_val <- substr(peakData$date,6,7)
+          peakData$year_val <- substr(peakData$date,1,4)
+          peakData$day_val <- substr(peakData$date,9,10)
+          peakData$jul_val <- strptime(peakData$date,"%Y-%m-%d")$yday+1
+          peakData$wy_val <- ifelse(as.numeric(peakData$month_val)>=10,as.character(as.numeric(peakData$year_val)+1),peakData$year_val)
+          peakData$logval <- log10(peakData$discharge)
+        } else {
+          peakData <- aggregate(obs_data$discharge,by=list(obs_data$wy_val),max)
+          colnames(peakData) <- c("wy_val","discharge")
+          peakData <- obs_data[paste(obs_data$wy_val,obs_data$discharge) %in% paste(peakData$wy_val,peakData$discharge),]
+          peakData$logval <- log10(peakData$discharge)
+        }
+        min_date <- min(obs_data[which(obs_data$month_val=="10"&obs_data$day_val=="01"),]$date)
+        max_date <- max(obs_data[which(obs_data$month_val=="09"&obs_data$day_val=="30"),]$date)
+        obs_data <- obs_data[which(obs_data$date>=min_date&obs_data$date<=max_date),]
         yv[i]<-as.character(min(obs_data$date))
         ymaxv[i]<-as.character(max(obs_data$date))
         cat(paste("dates calculated for site",site,"\n",sep=" "))
@@ -78,7 +102,7 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
         obs_count <- nrow(obs_data)
         cat(paste("dfs created for site",site,obs_count,"\n",sep=" "))
         if (Flownum>0) {
-          ObsFlowStats[i,] <- FlowStatsAll(obs_data,drain_area,stats)
+          ObsFlowStats[i,] <- FlowStatsAll(obs_data,peakData,drain_area,stats)
           cat(paste("Flow stats calculated for site",site,"\n",sep=" "))
         }
         if (Magnifnum>0) {

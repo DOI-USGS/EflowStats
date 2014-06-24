@@ -12,6 +12,7 @@
 #' qfiletempf<-sampleData
 #' dl5(qfiletempf)
 dl5 <- function(qfiletempf, pref = "mean") {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                        FUN = median, na.rm=TRUE)
   colnames(noyears) <- c("Year", "momax")

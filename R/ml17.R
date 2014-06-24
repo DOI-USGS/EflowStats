@@ -13,6 +13,7 @@
 #' qfiletempf<-sampleData
 #' ml17(qfiletempf)
 ml17 <- function(qfiletempf, pref = "mean") {
+  qfiletempf <- qfiletempf[order(qfiletempf$date),]
   bfibyyear <- bfi(qfiletempf)
   if (pref == "median") {
     ml17 <- round(median(bfibyyear),digits=2)

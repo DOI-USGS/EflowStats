@@ -14,6 +14,7 @@
 #' qfiletempf<-sampleData
 #' ml20(qfiletempf)
 ml20 <- function(x) {
+  x <- x[order(x$date),]
   sub_flow <- subset(x,na.rm=TRUE)
   numdays <- nrow(sub_flow)
   numsets <- floor(numdays/5)
