@@ -95,9 +95,7 @@
 \newcommand{\Rmethod}[1]{{\texttt{#1}}}
 \newcommand{\Rfunarg}[1]{{\texttt{#1}}}
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-
 \begin{document}
-
 
 
 
@@ -108,7 +106,6 @@
 \author[1]{Jessica Thompson}
 \author[1]{Stacey Archfield}
 \affil[1]{United States Geological Survey}
-
 
 
 
@@ -148,7 +145,6 @@ First, it is a good practice to clear any existing objects from your working env
 \end{kframe}
 \end{knitrout}
 
-
 To calculate stats for USGS streamgage(s), enter gage id(s), start and end dates and a list of the groups of statistics to be calculated. The list in the example contains all possible statistics.
 
 \begin{knitrout}
@@ -164,9 +160,7 @@ To calculate stats for USGS streamgage(s), enter gage id(s), start and end dates
 \end{kframe}
 \end{knitrout}
 
-
 Once this information is entered, the user runs the ObservedStatsUSGS function and maps the result to a named data frame.
-
 
 
 
@@ -180,19 +174,17 @@ Once this information is entered, the user runs the ObservedStatsUSGS function a
 \end{kframe}
 \end{knitrout}
 
-
 The retrieved data is now present as a dataframe called statsout in your R environment. This data frame has one row for each gage and one column for each statistic. An example of the first few columns is given below.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
    site_no lam1Obs tau2Obs tau3Obs tau4Obs ar1Obs phaseObs
-1 02177000   697.0    0.40    0.31    0.15  -0.14    -1.15
-2 02178400   190.7    0.39    0.36    0.25  -0.09    -1.05
+1 02177000   697.0    0.40    0.31    0.15   0.55    -1.15
+2 02178400   190.7    0.39    0.36    0.25   0.47    -1.05
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-
 
 This dataframe may now be used within the R environment or saved as a file as shown.
 
@@ -206,7 +198,6 @@ This dataframe may now be used within the R environment or saved as a file as sh
 \end{alltt}
 \end{kframe}
 \end{knitrout}
-
 
 For daily discharge data not available via NWISWeb, statistics can be calculated by loading data into an R dataframe like the example \texttt{"}dailyData\texttt{"}. This dataframe has two columns, the first named date, containing dates as characters in the format \texttt{"}YYYY-MM-DD\texttt{"} and the second column, discharge, containing the numeric discharge. This can be easily accomplished from most text file formats using \texttt{"}read.delim\texttt{"} or \texttt{"}read.table\texttt{"}. Then the user must enter a drainage area and a site id for each site, as well as the stats string.
 
@@ -223,7 +214,6 @@ For daily discharge data not available via NWISWeb, statistics can be calculated
 \end{alltt}
 \end{kframe}
 \end{knitrout}
-
 
 The generated statsout dataframe has the same characteristics as that shown previously. 
 
@@ -244,7 +234,6 @@ There is also a function available to plot the monthly means for a daily dischar
 
 
 \end{knitrout}
-
 
 \FloatBarrier
 
@@ -558,7 +547,6 @@ At any time, you can get information about any function in R by typing a questio
 \end{kframe}
 \end{knitrout}
 
-
 To see the raw code for a particular code, type the name of the function:
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -566,27 +554,21 @@ To see the raw code for a particular code, type the name of the function:
 \hlstd{mh19}
 \end{alltt}
 \begin{verbatim}
-function (x) 
-{
-    annmax <- aggregate(x$discharge, list(x$wy_val), FUN = max, 
-        na.rm = TRUE)
-    log_disch <- log10(annmax$x)
-    sumq3 <- sum(log_disch^3)
-    sumq2 <- sum(log_disch^2)
-    sumq <- sum(log_disch)
-    num_years <- length(unique(x$wy_val))
-    qstd <- sd(log_disch)
-    mh19 <- round(((num_years * num_years * sumq3) - (3 * num_years * 
-        sumq * sumq2) + (2 * sumq * sumq * sumq))/(num_years * 
-        (num_years - 1) * (num_years - 2) * qstd * qstd * qstd), 
-        digits = 2)
-    return(mh19)
+function(x) {
+  annmax <- aggregate(x$discharge,list(x$wy_val),FUN=max,na.rm=TRUE)
+  log_disch <- log10(annmax$x)
+  sumq3 <- sum(log_disch^3)
+  sumq2 <- sum(log_disch^2)
+  sumq <- sum(log_disch)
+  num_years <- length(unique(x$wy_val))
+  qstd <- sd(log_disch)
+  mh19 <- round(((num_years*num_years*sumq3) - (3*num_years*sumq*sumq2) + (2*sumq*sumq*sumq))/(num_years*(num_years-1)*(num_years-2)*qstd*qstd*qstd),digits=2)
+  return(mh19)
 }
 <environment: namespace:EflowStats>
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
-
 
 \FloatBarrier
 \clearpage
@@ -604,7 +586,6 @@ Before installing EflowStats, the supporting packages must be first be installed
 \end{kframe}
 \end{knitrout}
 
-
 It is a good idea to re-start R after installing the package, especially if installing an updated version. Some users have found it necessary to delete the previous version's package folder before installing newer version of dataRetrieval. If you are experiencing issues after updating a package, trying deleting the package folder - the default location for Windows is something like this: C:/Users/userA/Documents/R/win-library/2.15/dataRetrieval, and the default for a Mac: 
 /Users/userA/Library/R/2.15/library/dataRetrieval. Then, re-install the package using the directions above. Moving to CRAN should solve this problem.
 
@@ -616,7 +597,6 @@ After installing the package, you need to open the library each time you re-star
 \end{alltt}
 \end{kframe}
 \end{knitrout}
-
 
 \clearpage
 

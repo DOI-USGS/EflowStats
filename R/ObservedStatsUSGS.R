@@ -87,7 +87,7 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
       obs_count <- nrow(obs_data)
       cat(paste("dfs created for site",site,obs_count,"\n",sep=" "))
       if (Flownum>0) {
-        ObsFlowStats[i,] <- FlowStatsAll(obs_data,peakData,drain_area,stats)
+        ObsFlowStats[i,] <- FlowStatsAll(obs_data,drain_area,stats=stats,peakData=peakData)
         cat(paste("Flow stats calculated for site",site,"\n",sep=" "))
       }
       if (Magnifnum>0) {

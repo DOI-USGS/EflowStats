@@ -3,8 +3,9 @@
 \alias{FlowStatsAll}
 \title{Function to run HIT/HAT statistics for a given data set}
 \usage{
-FlowStatsAll(data, peakData = 0, drain_area,
-  stats = "magStat,flowStat,timStat,rateStat,otherStat,durStat")
+FlowStatsAll(data, drain_area,
+  stats = "magStat,flowStat,timStat,rateStat,otherStat,durStat",
+  peakData = 0)
 }
 \arguments{
 \item{data}{data frame of daily flow data}
@@ -28,6 +29,6 @@ sites<-"02177000"
 drain_url<-paste(drainage_url,sites,sep="")
 drain_area<-getDrainageArea(drain_url)
 qfiletempf<-sampleData
-FlowStatsAll(qfiletempf,drain_area,"magStat,flowStat,durStat,timStat,rateStat")
+FlowStatsAll(qfiletempf,drain_area)
 }
 

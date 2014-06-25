@@ -67,7 +67,7 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
       drain_area<-drainAreas$darea[which(as.numeric(drainAreas$siteNo)==as.numeric(site))]
       cat(paste("data and drainage area retrieved for site",site,drain_area,"\n",sep=" "))
       countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
-      colnames(countbyyr)<-c('wy','num_samples')
+      colnames(countbyyr)<-c("wy","num_samples")
       sub_countbyyr<-subset(countbyyr,num_samples >= 365)
       if (nrow(sub_countbyyr)==0) {
         tempArrays$comment[i]<-"No complete water years for site"
@@ -102,7 +102,7 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
         obs_count <- nrow(obs_data)
         cat(paste("dfs created for site",site,obs_count,"\n",sep=" "))
         if (Flownum>0) {
-          ObsFlowStats[i,] <- FlowStatsAll(obs_data,peakData,drain_area,stats)
+          ObsFlowStats[i,] <- FlowStatsAll(obs_data,drain_area,stats=stats,peakData=peakData)
           cat(paste("Flow stats calculated for site",site,"\n",sep=" "))
         }
         if (Magnifnum>0) {

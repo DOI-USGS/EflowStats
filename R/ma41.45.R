@@ -36,6 +36,6 @@ ma41.45 <- function(qfiletemp,drain_area) {
   ma43 <- round((perc_75-perc_25)/median(meanbyyr$meanyr),digits=2)
   ma44 <- round((perc_90-perc_10)/median(meanbyyr$meanyr),digits=2)
   ma45 <- round((mean(meanbyyr$meanyr)-median(meanbyyr$meanyr))/median(meanbyyr$meanyr),digits=2)
-  ma41.45 <- list(ma41,ma42,ma43,ma44,ma45)
-  return(ma41.45)
+  ma41.45v <- list(ma41,ma42,ma43,ma44,ma45)
+  return(ma41.45v)
 }
