@@ -20,6 +20,9 @@ FlowStatsAll <- function(data,peakData=0,drain_area,stats="magStat,flowStat,timS
   dfOut <- vector()
   if (length(peakData)==1){
     peakData <- aggregate(data$discharge,by=list(data$wy_val),max)
+    colnames(peakData) <- c("wy_val","discharge")
+    peakData <- data[paste(data$wy_val,data$discharge) %in% paste(peakData$wy_val,peakData$discharge),]
+    peakData$logval <- log10(peakData$discharge)
   }
   if (length(grep("otherStat",stats))>0) {
     otherstat <- OtherStats(data)

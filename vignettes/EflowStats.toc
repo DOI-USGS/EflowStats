@@ -1,7 +1,0 @@
-\select@language {american}
-\contentsline {section}{\numberline {1}Introduction to EflowStats}{1}{section.1}
-\contentsline {section}{\numberline {2}General Workflow}{2}{section.2}
-\contentsline {section}{\numberline {3}Stats Reference}{5}{section.3}
-\contentsline {section}{\numberline {4}Getting Started in R}{15}{section.4}
-\contentsline {subsection}{\numberline {4.1}New to R?}{15}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}R User: Installing EflowStats}{16}{subsection.4.2}
