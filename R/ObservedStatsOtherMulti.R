@@ -6,8 +6,8 @@
 #' 
 #' @param dataPath path to directory containing data files
 #' @param stats string containing desired groups of statistics 
-#' @param startDt string containing start date if other than minimum in files
-#' @param endDt string containing end date if other than maximum in files
+#' @param startDt beginning water year, will be translated to 10/01
+#' @param endDt ending water year, will be translated to 09/30
 #' @param sepChar string containing the datafile separator, default is comma
 #' @return statsout data frame containing requested statistics for each station
 #' @export
@@ -16,6 +16,8 @@
 #' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 #' ObservedStatsOtherMulti(dataPath,stats)
 ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar=",") {
+  startdate <- paste(startdate,"10","01",sep="-")
+  enddate <- paste(enddate,"09","30",sep="-")
   fileList <- system2("ls",args=dataPath,stdout=TRUE)
   for (i in 1:length(fileList)) {
     fileList[i] <- ifelse(nchar(strsplit(fileList[i],".csv"))<nchar(fileList[i]) | nchar(strsplit(fileList[i],".txt"))<nchar(fileList[i]), fileList[i],NA)
@@ -60,8 +62,8 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
     site <- x_obs[1,1]
     x_obs <- x_obs[,2:3]
       obs_data <- get_obsdata(x_obs)
-    if (nchar(startDt)>1) {obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")>=strptime(startDt,"%Y-%m-%d")),]}
-    if (nchar(endDt)>1) {obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")<=strptime(endDt,"%Y-%m-%d")),]}
+    if (nchar(startDt)>1) {obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")>=strptime(startdate,"%Y-%m-%d")),]}
+    if (nchar(endDt)>1) {obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")<=strptime(enddate,"%Y-%m-%d")),]}
       obs_count<-nrow(obs_data)
       cat(paste("get_obsdata run on x_obs for site",site,obs_count,"\n",sep=" "))
       drain_area<-drainAreas$darea[which(as.numeric(drainAreas$siteNo)==as.numeric(site))]

@@ -24,6 +24,8 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
     peakData <- data[paste(data$wy_val,data$discharge) %in% paste(peakData$wy_val,peakData$discharge),]
     peakData$logval <- log10(peakData$discharge)
   }
+  thresh_60<-getPeakThresh(data,peakData,.6)
+  thresh_40<-getPeakThresh(data,peakData,.4)
   if (length(grep("otherStat",stats))>0) {
     otherstat <- OtherStats(data)
     dfOut <- c(dfOut,otherstat)
@@ -144,8 +146,6 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
     fh8v<-fh8(data)
     fh9v<-fh9(data)
     fh10v<-fh10(data)
-    thresh_60<-getPeakThresh(data,peakData,.6)
-    thresh_40<-getPeakThresh(data,peakData,.4)
     fh11v<-fh11(data,thresh_60)
   dfOut <- c(dfOut,fl1v,fl2v,fl3v,fh1v,fh2v,fh3v,fh4v,fh5v,fh6v,fh7v,fh8v,fh9v,fh10v,fh11v)
   }

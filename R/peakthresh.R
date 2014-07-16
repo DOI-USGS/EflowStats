@@ -22,7 +22,8 @@
 getPeakThresh <- function(obs_data,peakValues,perc) {
   peakDaily <- obs_data[obs_data$date %in% peakValues$date,]
   peakDaily$logval <- log10(peakDaily$discharge)
-  peakInst <- peakValues[as.numeric(peakValues$wy_val)>=min(as.numeric(peakDaily$wy_val)) & as.numeric(peakValues$wy_val)<=max(as.numeric(peakDaily$wy_val)),]
+  peakInst <- peakValues[peakValues$date %in% peakDaily$date,]
+  peakInst <- peakInst[!is.na(peakInst$date),]
   dailyMean <- mean(peakDaily$logval)
   instMean <- mean(peakInst$logval)
   num <- sum((peakDaily$logval-dailyMean)*(peakInst$logval-instMean))

@@ -4,7 +4,7 @@ install.packages("EflowStats",repos="http://usgs-r.github.com",type="source")
 
 library(EflowStats)
 
-# calculate stats for a USGS streamgage
+# calculate stats for USGS streamgage(s)
 sites <- c("02177000","02178400")
 startdate <- "2009"
 enddate <- "2013"
@@ -27,3 +27,26 @@ statsout <- ObservedStatsOtherMulti(dataPath,stats)
 qfiletempf<-sampleData
 meanmonts<-monthlyMeanTs(qfiletempf)
 plotMonthlyMean(meanmonts,'02178400')
+
+# NWIS-local
+sites <- c("02186000","02192000","02219000","02317500","02329600")
+startDt <- "1990"
+endDt <- "1999"
+stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+dataPath="C:/Users/jlthomps/Documents/R/JData/modeled/"
+DiffStats <- CompareStats(stats,sites=sites,dataPath=dataPath,startDt=startDt,endDt=endDt)
+
+# NWIS-NWIS
+sites <- c("02186000","02192000","02219000","02317500","02329600")
+startDt <- "1990"
+endDt <- "1999"
+startDt2 <- "2000"
+endDt2 <- "2008"
+stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+DiffStats <- CompareStats(stats,sites=sites,startDt=startDt,endDt=endDt,startDt2=startDt2,endDt2=endDt2)
+
+# local-local
+stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+dataPath="C:/Users/jlthomps/Documents/R/JData/modeled/"
+dataPath2="C:/Users/jlthomps/Documents/R/JData/observed/"
+DiffStats <- CompareStats(stats,dataPath=dataPath,dataPath2=dataPath2)

@@ -11,9 +11,9 @@ ObservedStatsOtherMulti(dataPath, stats, startDt = "", endDt = "",
 
 \item{stats}{string containing desired groups of statistics}
 
-\item{startDt}{string containing start date if other than minimum in files}
+\item{startDt}{beginning water year, will be translated to 10/01}
 
-\item{endDt}{string containing end date if other than maximum in files}
+\item{endDt}{ending water year, will be translated to 09/30}
 
 \item{sepChar}{string containing the datafile separator, default is comma}
 }
