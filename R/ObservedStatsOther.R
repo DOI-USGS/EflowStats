@@ -32,9 +32,9 @@ ObservedStatsOther <- function(daily_data,drain_area,site_id,stats) {
   obs_data<-x_obs[x_obs$wy_val %in% temp$wy_val,]
   countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
   colnames(countbyyr)<-c("wy","num_samples")
-  sub_countbyyr<-subset(countbyyr,num_samples >= 365)
+  sub_countbyyr<-countbyyr[countbyyr$num_samples>=365,]
   if (nrow(sub_countbyyr)==0) {
-    tempArrays$comment[i]<-"No complete water years for site"
+    comment<-"No complete water years for site"
   } else {
     obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
     obs_data<-obs_data[order(obs_data$date),]

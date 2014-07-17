@@ -3,8 +3,8 @@
 #' This function accepts a list of sites, start and end date and returns a data frame containing requested flow data
 #' 
 #' @param dataPath path to directory containing data files
-#' @param startdate beginning water year, will be translated to 10/01
-#' @param enddate ending water year, will be translated to 09/30
+#' @param startDt beginning water year, will be translated to 10/01
+#' @param endDt ending water year, will be translated to 09/30
 #' @param sepChar string containing the datafile separator, default is comma
 #' @return dataOut data frame containing requested flow data for the stations
 #' @export
@@ -12,10 +12,10 @@
 #' dataPath <- "C:/Users/jlthomps/Documents/R/JData/modeled/"
 #' startdate <- "2009"
 #' enddate <- "2013"
-#' getDataLocal(dataPath,startdate,enddate)
+#' getDataLocal(dataPath,startDt=startdate,endDt=enddate)
 getDataLocal <- function(dataPath,startDt="",endDt="",sepChar=",") {
-  startdate <- paste(startdate,"10","01",sep="-")
-  enddate <- paste(enddate,"09","30",sep="-")
+  if (nchar(startDt)>1) {startdate <- paste(startDt,"10","01",sep="-")}
+  if (nchar(endDt)>1) {enddate <- paste(endDt,"09","30",sep="-")}
   fileList <- system2("ls",args=dataPath,stdout=TRUE)
   for (i in 1:length(fileList)) {
     fileList[i] <- ifelse(nchar(strsplit(fileList[i],".csv"))<nchar(fileList[i]) | nchar(strsplit(fileList[i],".txt"))<nchar(fileList[i]), fileList[i],NA)
@@ -38,11 +38,9 @@ getDataLocal <- function(dataPath,startDt="",endDt="",sepChar=",") {
     if (nchar(endDt)>1) {obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")<=strptime(enddate,"%Y-%m-%d")),]}
     obs_count<-nrow(obs_data)
     cat(paste("get_obsdata run on x_obs for site",site,obs_count,"\n",sep=" "))
-    drain_area<-drainAreas$darea[which(as.numeric(drainAreas$siteNo)==as.numeric(site))]
-    cat(paste("data and drainage area retrieved for site",site,drain_area,"\n",sep=" "))
     countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
     colnames(countbyyr)<-c("wy","num_samples")
-    sub_countbyyr<-subset(countbyyr,num_samples >= 365)
+    sub_countbyyr<-countbyyr[countbyyr$num_samples>=365,]
     if (nrow(sub_countbyyr)==0) {
       obs_data<-"No complete water years for site"
     } else {

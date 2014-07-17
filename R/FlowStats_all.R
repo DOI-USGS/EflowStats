@@ -146,7 +146,9 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
     fh8v<-fh8(data)
     fh9v<-fh9(data)
     fh10v<-fh10(data)
+    if (!is.na(thresh_60)) {
     fh11v<-fh11(data,thresh_60)
+    } else {fh11v<-NA}
   dfOut <- c(dfOut,fl1v,fl2v,fl3v,fh1v,fh2v,fh3v,fh4v,fh5v,fh6v,fh7v,fh8v,fh9v,fh10v,fh11v)
   }
   if (length(grep("durStat",stats))>0) {
@@ -191,9 +193,15 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
     dh19v<-dh19(data)
     dh20v<-dh20(data)
     dh21v<-dh21(data)
+    if (!is.na(thresh_60)) {
     dh22v<-dh22(data,thresh_60)
+    } else {dh22v<-NA}
+    if (!is.na(thresh_60)) {
     dh23v<-dh23(data,thresh_60)
+    } else {dh23v<-NA}
+    if (!is.na(thresh_60)) {
     dh24v<-dh24(data,thresh_60)
+    } else {dh24v<-NA}
   dfOut <- c(dfOut,dl1v,dl2v,dl3v,dl4v,
              dl5v,dl6v,dl7v,dl8v,dl9v,dl10v,dl11v,dl12v,dl13v,dl14v,dl15v,dl16v,dl17v,dl18v,dl19v,dl20v,
              dh1v,dh2v,dh3v,dh4v,dh5v,dh6v,dh7v,dh8v,dh9v,dh10v,dh11v,dh12v,dh13v,dh14v,dh15v,
@@ -202,14 +210,22 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
   if (length(grep("timStat",stats))>0) {
     ta1v<-unname(unlist(ta1.2(data)[1]))
     ta2v<-unname(unlist(ta1.2(data)[2]))
+    if (!is.na(thresh_60)) {
     ta3v<-ta3(data,thresh_60)
+    } else {ta3v<-NA}
     tl1v<-unname(unlist(tl1.2(data)[1]))
     tl2v<-unname(unlist(tl1.2(data)[2]))
+    if (!is.na(thresh_40)) {
     tl3v<-tl3(data,thresh_40)
+    } else {tl3v<-NA}
+    if (!is.na(thresh_40)) {
     tl4v<-tl4(data,thresh_40)
+    } else {tl4v<-NA}
     th1v<-unname(unlist(th1.2(data)[1]))
     th2v<-unname(unlist(th1.2(data)[2]))
+    if (!is.na(thresh_60)) {
     th3v<-th3(data,thresh_60)
+    } else {th3v<-NA}
   dfOut <- c(dfOut,ta1v,ta2v,ta3v,tl1v,tl2v,tl3v,tl4v,th1v,th2v,th3v)
   }
   if (length(grep("rateStat",stats))>0) {

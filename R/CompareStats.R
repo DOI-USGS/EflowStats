@@ -20,7 +20,7 @@
 #' startdate2 <- "2009"
 #' enddate2 <- "2013"
 #' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
-#' CompareStats(sites,stats,startdate,enddate,startdate2,enddate2)
+#' CompareStats(stats,sites=sites,startDt=startdate,endDt=enddate,startDt2=startdate2,endDt2=enddate2)
 CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",sepChar=",",dataPath2="",startDt2="",endDt2="") {
   if (length(sites)>1) {
     statsout1 <- ObservedStatsUSGS(sites,startDt,endDt,stats)
@@ -32,7 +32,7 @@ CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",sepChar=
   if (length(sites)>1) {
     if (nchar(dataPath)+nchar(dataPath2)<3) {
     statsout2 <- ObservedStatsUSGS(sites,startDt2,endDt2,stats)
-    dataOut1 <- getDataUSGS(sites,startDt2,endDt2)
+    dataOut2 <- getDataUSGS(sites,startDt2,endDt2)
     } else if (nchar(dataPath)>1) {
     statsout2 <- ObservedStatsOtherMulti(dataPath,stats,startDt,endDt,sepChar)
     dataOut2 <- getDataLocal(dataPath,startDt,endDt,sepChar)
@@ -46,10 +46,10 @@ CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",sepChar=
   } else { statsout2 <- ObservedStatsOtherMulti(dataPath,stats,startDt2,endDt2,sepChar)
            dataOut2 <- getDataLocal(dataPath,startDt2,endDt2,sepChar)}  
 DiffStats <- (statsout2[,4:190]-statsout1[,4:190])/statsout1[,4:190]
+RegGoFstats <- RegionalGoF(statsout1[,c(1,4:190)],statsout2[,c(1,4:190)])
 GoFstats <- matrix(,nrow=nrow(statsout1),ncol=146)
 flag <- 0
 for (i in 1:nrow(statsout1)) {
-  cat(i,"GoF",sep=" ")
   a <- SiteGoF(dataOut1[[i]],dataOut2[[i]]) 
   if (length(a)>1) {
   GoFstats[i,] <- SiteGoF(dataOut1[[i]],dataOut2[[i]])
@@ -59,7 +59,7 @@ for (i in 1:nrow(statsout1)) {
   }
 }
 if (flag==i) {
-  compareOut <- cbind(statsout1,statsout2,DiffStats)
+  compareOut <- list(statsout1,statsout2,DiffStats,RegGoFstats) 
 } else {
 colnames(GoFstats) <- c("nse","nselog","rmse","rmsne","rsr","pbias","pearson","spearman",'nse_90','nse_75_90','nse_50_75','nse_25_50','nse_10_25',
                   'nse_10','rmse_90','rmse_75_90','rmse_50_75','rmse_25_50','rmse_10_25','rmse_10','rmsne_90','rmsne_75_90','rmsne_50_75',
@@ -80,7 +80,7 @@ colnames(GoFstats) <- c("nse","nselog","rmse","rmsne","rsr","pbias","pearson","s
                   'NSEbyMonthOct','NSELOGbyMonthOct','RMSEbyMonthOct','RMSNEbyMonthOct','RSRbyMonthOct','BiasbyMonthOct','PearsonbyMonthOct','SpearmanbyMonthOct',
                   'NSEbyMonthNov','NSELOGbyMonthNov','RMSEbyMonthNov','RMSNEbyMonthNov','RSRbyMonthNov','BiasbyMonthNov','PearsonbyMonthNov','SpearmanbyMonthNov',
                   'NSEbyMonthDec','NSELOGbyMonthDec','RMSEbyMonthDec','RMSNEbyMonthDec','RSRbyMonthDec','BiasbyMonthDec','PearsonbyMonthDec','SpearmanbyMonthDec')
-compareOut <- cbind(statsout1,statsout2,DiffStats,GoFstats)
+compareOut <- list(statsout1,statsout2,DiffStats,RegGoFstats,GoFstats)
 }
 return(compareOut)
 }

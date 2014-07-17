@@ -20,6 +20,7 @@
 #' peakValues<-getPeakData(sites)
 #' getPeakThresh(qfiletempf,peakValues,.6)
 getPeakThresh <- function(obs_data,peakValues,perc) {
+  if (nrow(peakValues)>1) {
   peakDaily <- obs_data[obs_data$date %in% peakValues$date,]
   peakDaily$logval <- log10(peakDaily$discharge)
   peakInst <- peakValues[peakValues$date %in% peakDaily$date,]
@@ -35,5 +36,6 @@ getPeakThresh <- function(obs_data,peakValues,perc) {
   lfcrit <- quantile(sortq,perc,type=6)
   lq167 <- a + (b*lfcrit)
   thresh <- 10^(lq167)
+  } else {thresh<-NA}
 return(thresh)
 }

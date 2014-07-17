@@ -118,9 +118,13 @@
 \section{Introduction to EflowStats}
 %------------------------------------------------------------ 
                 
-The EflowStats package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with USGS NWIS data, and works with the NWCCompare package to compare modeled and observed streamflow data. This package is intended to be an update of the previously existing USGS NAHAT program \cite{NAHAT} with additional statistics previously published by Archfield et al \cite{Archfield}.     
+The EflowStats package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with USGS NWIS data, and works with the NWCCompare package to compare USGS National Water Census (\url {http://cida.usgs.gov/nwc/}) modeled and observed streamflow data. This package is intended to be an update of the previously existing USGS NAHAT program \cite{NAHAT} with additional statistics previously published by Archfield et al \cite{Archfield}.     
               
-Quantifying the amount of ecologically necessary streamflow and determining the effect of changes in landscape and climate on flow are critical aspects to understanding the ecological health of rivers. A natural flow regime can be characterized using five components of streamflow: magnitude, frequency, duration, timing and rate fo change of streamflow. Statistics representing these five properties are commonly applied and the number of ecologically-relevant streamflow statistics (ERSS) available from various software packages is now in the hundreds. The EflowStats package is designed to calculate a comprehensive set of ERSS using the open-source R software environement and provides batch capabilities for calculation of ERSS for multiple sites simultaneously. EflowStats is both directly available as an R package and integrated into the USGS National Water Census Data Platform. EflowStats will enable easy, transparent and repeatable calculation of many of the most utilized ERSS for many scientists. The EflowStats package is designed to work seamlessly with USGS NWIS web-available data, and users may also load data from other sources (text files, spreadsheets).  Section \ref{sec:exampleWorkflow} provides examples of how one can calculate selected stats from USGS or other data. 
+Quantifying the amount of ecologically necessary streamflow and determining the effect of changes in landscape and climate on flow are critical aspects to understanding the ecological health of rivers. A natural flow regime can be characterized using five components of streamflow: magnitude, frequency, duration, timing and rate of change of streamflow. Statistics representing these five properties are commonly applied and the number of ecologically-relevant streamflow statistics (ERSS) available from various software packages is now in the hundreds. The EflowStats package is designed to calculate a comprehensive set of ERSS using the open-source R software environement and provides batch capabilities for calculation of ERSS for multiple sites simultaneously. 
+
+EflowStats also provides the capability to compare two discharge data sets, using direct flow data comparison, as well as frequently used comparison statistics such as Nash-Sutcliffe values, root mean squared error and skewness. This functionality can be used to compared modeled and observed discharge data or two time periods of the same data set. There is a need to examine goodness of fit for surface-water models, and methods differ depending on the intended use of the model. For ecological stream health considerations, the comparison of hydrologic indicator statistics is one judge of fit. The EflowStats package allows for easy comparison of two discharge data sets through direct data comparison and comparison of calculated indices.
+
+EflowStats is both directly available as an R package and integrated into the USGS National Water Census Data Platform. EflowStats will enable easy, transparent and repeatable calculation of many of the most utilized ERSS for many scientists. The EflowStats package is designed to work seamlessly with USGS NWIS web-available data, and users may also load data from other sources (text files, spreadsheets).  Section \ref{sec:exampleWorkflow} provides examples of how one can calculate selected stats from USGS or other data, and how to run data set comparisons. 
               
 For information on getting started in R and installing the package, see (\ref{sec:started}): Getting Started.
 
@@ -174,7 +178,7 @@ Once this information is entered, the user runs the ObservedStatsUSGS function a
 \end{kframe}
 \end{knitrout}
 
-The retrieved data is now present as a dataframe called statsout in your R environment. This data frame has one row for each gage and one column for each statistic. An example of the first few columns is given below.
+The retrieved data is now present as a dataframe called 'statsout' in your R environment. This data frame has one row for each gage and one column for each statistic. An example of the first few columns is given below.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -217,6 +221,59 @@ For daily discharge data not available via NWISWeb, statistics can be calculated
 
 The generated statsout dataframe has the same characteristics as that shown previously. 
 
+The user may wish to generate statistics for a group of sites with locally-stored data. In order to do this, the discharge data must be stored in a local directory, with one file for each site, in the format specified in the previous example. There must also be a file present containing drainage areas for each site, with one column for site number and the second for drainage area. So, for example, the directory may contain 4 files: drainarea.csv, mod02186000.csv, mod02192000.csv and mod02219000.csv, where the files look like the examples shown. 
+
+\begin{table}[ht]
+  \centering
+  \begin{threeparttable}[b]
+  \caption{drainarea.csv}
+  \label{tab:darea}
+  \begin{tabularx}{\textwidth}{lXl}
+  \hline
+\textbf{siteNo} & \textbf{darea} \\ 
+  \hline
+  02186000 & 106 \\
+  02192000 & 1420 \\
+  02219000 & 176 \\
+  \hline
+  \end{tabularx}
+  \end{threeparttable}
+\end{table}
+
+\begin{table}[ht]
+  \centering
+  \begin{threeparttable}[b]
+  \caption{mod02186000.csv}
+  \label{tab:moddata}
+  \begin{tabularx}{\textwidth}{lXl}
+  \hline
+\textbf{siteNo} & \textbf{date} & \textbf{discharge} \\ 
+  \hline
+  02186000 & 1980-10-01 & 4196.27 \\
+  02186000 & 1980-10-02 & 2302.53 \\
+  02186000 & 1980-10-03 & 1202.631 \\
+  02186000 & 1980-10-04 & 863.99 \\
+  02186000 & 1980-10-05 & 709.28 \\
+  02186000 & 1980-10-06 & 637.385 \\
+  \hline
+  \end{tabularx}
+  \end{threeparttable}
+\end{table}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{###############################################################}
+\hlcom{# calculate stats for multiple sites in a local data directory}
+\hlstd{dataPath}\hlkwb{=}\hlstr{"C:/Users/jlthomps/Documents/R/JData/modeled/"}
+\hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
+\hlstd{statsout} \hlkwb{<-} \hlkwd{ObservedStatsOtherMulti}\hlstd{(dataPath,stats)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+The generated statsout dataframe has the same characteristics as that shown previously.
+
 There is also a function available to plot the monthly means for a daily discharge timeseries. Using included sample data, the following code generates a dataframe of mean monthly discharge and then plots the values with a title containing the site id. 
 
 \begin{knitrout}
@@ -235,6 +292,63 @@ There is also a function available to plot the monthly means for a daily dischar
 
 \end{knitrout}
 
+There is one function, CompareStats, that is used to compare the data and calculated statistics for two data sets. It can be used in several ways, three of which are shown here. 
+
+To compare the NWIS observed data for a group of USGS stations with locally stored data (eg modeled data), a list of sites, startDt, endDt, stats string and dataPath are required. The function will then calculate ERSS for each data set, compare the ERSS and directly compare the data sets. These results are then returned in a list (assigned to 'DiffStats' in the example). Statistics for the first data set (the NWIS data) are first in the list, then ERSS for the local data, then ERSS comparison, then ERSS goodness of fit and last the direct data goodness of fit.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#######################################################################}
+\hlcom{# NWIS-local}
+\hlstd{sites} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"02186000"}\hlstd{,}\hlstr{"02192000"}\hlstd{,}\hlstr{"02219000"}\hlstd{,}\hlstr{"02317500"}\hlstd{,}\hlstr{"02329600"}\hlstd{)}
+\hlstd{startDt} \hlkwb{<-} \hlstr{"1990"}
+\hlstd{endDt} \hlkwb{<-} \hlstr{"1999"}
+\hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
+\hlstd{dataPath}\hlkwb{=}\hlstr{"C:/Users/jlthomps/Documents/R/JData/modeled/"}
+\hlstd{DiffStats} \hlkwb{<-} \hlkwd{CompareStats}\hlstd{(stats,}\hlkwc{sites}\hlstd{=sites,}\hlkwc{dataPath}\hlstd{=dataPath,}\hlkwc{startDt}\hlstd{=startDt,}\hlkwc{endDt}\hlstd{=endDt)}
+\hlstd{stats1} \hlkwb{<-} \hlstd{DiffStats[[}\hlnum{1}\hlstd{]]}
+\hlstd{stats2} \hlkwb{<-} \hlstd{DiffStats[[}\hlnum{2}\hlstd{]]}
+\hlstd{Diffstats} \hlkwb{<-} \hlstd{DiffStats[[}\hlnum{3}\hlstd{]]}
+\hlstd{RegGoFstats} \hlkwb{<-} \hlstd{DiffStats[[}\hlnum{4}\hlstd{]]}
+\hlstd{GoFstats} \hlkwb{<-} \hlstd{DiffStats[[}\hlnum{5}\hlstd{]]}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+In order to compare data from the same data set, but differing time periods, the CompareStats function requires a list of sites (or dataPath), startDt, endDt, startDt2, endDt2 and the stats string. The function will then return the ERSS for each data set as well as the comparison and goodness of fit of the ERSS. The list returned will not contain the direct data comparison, as there are no matching dates between the two data sets. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{########################################################################}
+\hlcom{# NWIS-NWIS}
+\hlstd{sites} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"02186000"}\hlstd{,}\hlstr{"02192000"}\hlstd{,}\hlstr{"02219000"}\hlstd{,}\hlstr{"02317500"}\hlstd{,}\hlstr{"02329600"}\hlstd{)}
+\hlstd{startDt} \hlkwb{<-} \hlstr{"1990"}
+\hlstd{endDt} \hlkwb{<-} \hlstr{"1999"}
+\hlstd{startDt2} \hlkwb{<-} \hlstr{"2000"}
+\hlstd{endDt2} \hlkwb{<-} \hlstr{"2008"}
+\hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
+\hlstd{DiffStats} \hlkwb{<-} \hlkwd{CompareStats}\hlstd{(stats,}\hlkwc{sites}\hlstd{=sites,}\hlkwc{startDt}\hlstd{=startDt,}\hlkwc{endDt}\hlstd{=endDt,}\hlkwc{startDt2}\hlstd{=startDt2,}\hlkwc{endDt2}\hlstd{=endDt2)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+In order to compare two locally stored data sets, the CompareStats function requires the stats string, dataPath and dataPath2. Start and end date(s) could be provided if desired. The list returned will contain ERSS for both data sets, the ERSS comparison and goodness of fit and the direct data comparison for any overlapping dates. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#############################################################################}
+\hlcom{# local-local}
+\hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
+\hlstd{dataPath}\hlkwb{=}\hlstr{"C:/Users/jlthomps/Documents/R/JData/modeled/"}
+\hlstd{dataPath2}\hlkwb{=}\hlstr{"C:/Users/jlthomps/Documents/R/JData/observed/"}
+\hlstd{DiffStats} \hlkwb{<-} \hlkwd{CompareStats}\hlstd{(stats,}\hlkwc{dataPath}\hlstd{=dataPath,}\hlkwc{dataPath2}\hlstd{=dataPath2)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 \FloatBarrier
 
 %------------------------------------------------------------
@@ -242,7 +356,7 @@ There is also a function available to plot the monthly means for a daily dischar
 \label{sec:reference}
 %------------------------------------------------------------
 
-Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:timStats}, \ref{tab:rateStats}, \ref{tab:otherStats} and \ref{tab:mag7Stats} summarize the EflowStats functions:
+Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:timStats}, \ref{tab:rateStats}, \ref{tab:otherStats}, \ref{tab:mag7Stats} and \ref{tab:compStats} summarize the EflowStats functions:
 
 \begin{table}[ht]
   \centering
@@ -515,6 +629,27 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   ar1 & AR1 correlation coefficient. \\
   amplitude & Amplitude of the seasonal signal. Compute seasonality variables by first standardizing flows, using the fitting relation A*cos(2*pi*t) + B*sin(2*pi*t). \\
   phase & Phase of the seasonal signal. Compute seasonality variables by first standardizing flows, the fitting relation A*cos(2*pi*t) + B*sin(2*pi*t). \\
+   \hline
+\end{tabularx}
+\end{threeparttable}
+\end{table}
+
+\begin{table}[ht]
+  \centering
+  \begin{threeparttable}[b]
+  \caption{EflowStats comparison functions}
+  \label{tab:compStats}
+\begin{tabularx}{\textwidth}{lXl}
+  \hline
+\textbf{Function} & \textbf{Definition} \\ 
+  \hline
+  nse & Nash-Sutcliffe value between two data series. \\
+  nselog & Nash-Sutcliffe value between the natural logarithms of two data series, with zeros removed. \\
+  rmse & Root-mean square error between two data series. \\
+  rmsne & Normalized root-mean square error between two data series. \\
+  rsr & Ratio of root-mean square error to standard deviation for two data series. \\
+  RegionalGoF & Regional goodness of fit. Function calculates nse, nselog, rmse, pbias (percent bias between two data series), pearson correlation coefficient and spearman correlation coefficient for the two sets of flow statistics (modeled and observed). \\
+  SiteGoF & Site goodness of fit. Function calculates nse, nselog, rmse, rmsne, rsr, pbias, pearson and  spearman statistics for the entire data series, for the <=10th, 10-25th, 25-50th, 50-75th, 75-90th and >=90th percentiles, and by month for the entire data series. \\
    \hline
 \end{tabularx}
 \end{threeparttable}

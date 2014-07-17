@@ -35,6 +35,11 @@ endDt <- "1999"
 stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 dataPath="C:/Users/jlthomps/Documents/R/JData/modeled/"
 DiffStats <- CompareStats(stats,sites=sites,dataPath=dataPath,startDt=startDt,endDt=endDt)
+stats1 <- DiffStats[[1]]
+stats2 <- DiffStats[[2]]
+Diffstats <- DiffStats[[3]]
+RegGoFstats <- DiffStats[[4]]
+GoFstats <- DiffStats[[5]]
 
 # NWIS-NWIS
 sites <- c("02186000","02192000","02219000","02317500","02329600")

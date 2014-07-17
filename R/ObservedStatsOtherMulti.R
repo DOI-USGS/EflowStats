@@ -16,8 +16,8 @@
 #' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 #' ObservedStatsOtherMulti(dataPath,stats)
 ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar=",") {
-  startdate <- paste(startdate,"10","01",sep="-")
-  enddate <- paste(enddate,"09","30",sep="-")
+  if (nchar(startDt)>1) {startdate <- paste(startdate,"10","01",sep="-")}
+  if (nchar(endDt)>1) {enddate <- paste(enddate,"09","30",sep="-")}
   fileList <- system2("ls",args=dataPath,stdout=TRUE)
   for (i in 1:length(fileList)) {
     fileList[i] <- ifelse(nchar(strsplit(fileList[i],".csv"))<nchar(fileList[i]) | nchar(strsplit(fileList[i],".txt"))<nchar(fileList[i]), fileList[i],NA)
@@ -70,7 +70,7 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
       cat(paste("data and drainage area retrieved for site",site,drain_area,"\n",sep=" "))
       countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
       colnames(countbyyr)<-c("wy","num_samples")
-      sub_countbyyr<-subset(countbyyr,num_samples >= 365)
+      sub_countbyyr<-countbyyr[countbyyr$num_samples>=365,]
       if (nrow(sub_countbyyr)==0) {
         tempArrays$comment[i]<-"No complete water years for site"
       } else {

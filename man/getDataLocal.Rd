@@ -8,9 +8,9 @@ getDataLocal(dataPath, startDt = "", endDt = "", sepChar = ",")
 \arguments{
 \item{dataPath}{path to directory containing data files}
 
-\item{startdate}{beginning water year, will be translated to 10/01}
+\item{startDt}{beginning water year, will be translated to 10/01}
 
-\item{enddate}{ending water year, will be translated to 09/30}
+\item{endDt}{ending water year, will be translated to 09/30}
 
 \item{sepChar}{string containing the datafile separator, default is comma}
 }
@@ -24,6 +24,6 @@ This function accepts a list of sites, start and end date and returns a data fra
 dataPath <- "C:/Users/jlthomps/Documents/R/JData/modeled/"
 startdate <- "2009"
 enddate <- "2013"
-getDataLocal(dataPath,startdate,enddate)
+getDataLocal(dataPath,startDt=startdate,endDt=enddate)
 }
 

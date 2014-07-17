@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.12.19)  25 JUN 2014 12:34
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.12.19)  17 JUL 2014 10:14
 entering extended mode
 **EflowStats.tex
 (C:\Users\jlthomps\Desktop\git\EflowStats\vignettes\EflowStats.tex
@@ -508,100 +508,134 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 2.
 )
 \tf@toc=\write4
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 121.
 
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
 [1
 
 {C:/Users/jlthomps/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-Package color Info: Redefining color shadecolor on input line 137.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 138.
-
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
+Package color Info: Redefining color shadecolor on input line 141.
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 139.
+(Font)              Font shape `OT1/pcr/b/n' tried instead on input line 143.
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <10.95> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 141.
-Package color Info: Redefining color shadecolor on input line 151.
-Package color Info: Redefining color shadecolor on input line 168.
-Package color Info: Redefining color shadecolor on input line 180.
-Package color Info: Redefining color shadecolor on input line 192.
-
-Overfull \hbox (9.85443pt too wide) in paragraph at lines 196--196
-[][]\OT1/pcr/b/n/10.95 write.table[][]\OT1/pcr/m/n/10.95 (statsout,[] []file[] 
-[]= output,[] []col.names[] []=[] []TRUE[][],[] []row.names[] []=[] []FALSE[][]
-,[][] 
- []
-
-LaTeX Font Info:    Try loading font information for OMS+pcr on input line 197.
-
-("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omspcr.fd"
-File: omspcr.fd 
-)
-LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 197.
-Package color Info: Redefining color shadecolor on input line 205.
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 145.
+Package color Info: Redefining color shadecolor on input line 155.
+Package color Info: Redefining color shadecolor on input line 172.
+Package color Info: Redefining color shadecolor on input line 184.
 
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
 [2]
-Package color Info: Redefining color shadecolor on input line 223.
-LaTeX Font Info:    Try loading font information for TS1+pcr on input line 228.
+Package color Info: Redefining color shadecolor on input line 196.
+
+Overfull \hbox (9.85443pt too wide) in paragraph at lines 200--200
+[][]\OT1/pcr/b/n/10.95 write.table[][]\OT1/pcr/m/n/10.95 (statsout,[] []file[] 
+[]= output,[] []col.names[] []=[] []TRUE[][],[] []row.names[] []=[] []FALSE[][]
+,[][] 
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+pcr on input line 201.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omspcr.fd"
+File: omspcr.fd 
+)
+LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 201.
+Package color Info: Redefining color shadecolor on input line 209.
+Package color Info: Redefining color shadecolor on input line 264.
+
+Overfull \vbox (7.22743pt too high) has occurred while \output is active []
+
+
+[3]
+Package color Info: Redefining color shadecolor on input line 280.
+LaTeX Font Info:    Try loading font information for TS1+pcr on input line 285.
 
  ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ts1pcr.fd"
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 )
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 230.
+               Default added (so using `tbp') on input line 287.
 
-<figure/plotMonthlyMeans.pdf, id=56, 505.89pt x 505.89pt>
+<figure/plotMonthlyMeans.pdf, id=66, 505.89pt x 505.89pt>
 File: figure/plotMonthlyMeans.pdf Graphic file (type pdf)
 
 <use figure/plotMonthlyMeans.pdf>
-Package pdftex.def Info: figure/plotMonthlyMeans.pdf used on input line 232.
+Package pdftex.def Info: figure/plotMonthlyMeans.pdf used on input line 289.
 (pdftex.def)             Requested size: 469.75499pt x 469.76265pt.
+Package color Info: Redefining color shadecolor on input line 300.
+
+Overfull \hbox (121.5443pt too wide) in paragraph at lines 309--309
+[][]\OT1/pcr/m/n/10.95 DiffStats[] []<-[] []\OT1/pcr/b/n/10.95 CompareStats[][]
+\OT1/pcr/m/n/10.95 (stats,[][]sites[][]=sites,[][]dataPath[][]=dataPath,[][]sta
+rtDt[][]=startDt,[][]endDt[][]=endDt)[][] 
+ []
+
+Package color Info: Redefining color shadecolor on input line 322.
+
+Overfull \hbox (3.28444pt too wide) in paragraph at lines 324--324
+[][]\OT1/pcr/m/sl/10.95 #######################################################
+#################[][] 
+ []
+
+
+Overfull \hbox (213.52419pt too wide) in paragraph at lines 332--332
+[][]\OT1/pcr/m/n/10.95 DiffStats[] []<-[] []\OT1/pcr/b/n/10.95 CompareStats[][]
+\OT1/pcr/m/n/10.95 (stats,[][]sites[][]=sites,[][]startDt[][]=startDt,[][]endDt
+[][]=endDt,[][]startDt2[][]=startDt2,[][]endDt2[][]=endDt2)[][] 
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 334
+ []
+
 
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
-[3]
+[4]
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
-[4 <C:/Users/jlthomps/Desktop/git/EflowStats/vignettes/figure/plotMonthlyMeans.
+[5 <C:/Users/jlthomps/Desktop/git/EflowStats/vignettes/figure/plotMonthlyMeans.
 pdf>]
+Package color Info: Redefining color shadecolor on input line 340.
 
-LaTeX Warning: Float too large for page by 40.77011pt on input line 299.
+Overfull \hbox (36.1344pt too wide) in paragraph at lines 342--342
+[][]\OT1/pcr/m/sl/10.95 #######################################################
+######################[][] 
+ []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 326--326
+LaTeX Warning: Float too large for page by 40.77011pt on input line 413.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 440--440
 []|\OT1/ptm/m/n/10.95 Skewness in an-nual max-i-mum flows. Use the equa-tion: (
 N2*sum(qm3)-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 326--326
+Underfull \hbox (badness 10000) in paragraph at lines 440--440
 \OT1/ptm/m/n/10.95 3N*sum(qm)*sum(qm2)+2*sum(qm))3)/(N*(N-1)*(N-2)*stddev3) whe
 re N=number
  []
 
 
-LaTeX Warning: Float too large for page by 13.57002pt on input line 328.
+LaTeX Warning: Float too large for page by 13.57002pt on input line 442.
 
 
-LaTeX Warning: Float too large for page by 13.57pt on input line 384.
+LaTeX Warning: Float too large for page by 13.57pt on input line 498.
 
 
-Overfull \vbox (7.22743pt too high) has occurred while \output is active []
-
-
-[5]
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
@@ -638,12 +672,20 @@ Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
 [14]
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 533.
-Package color Info: Redefining color shadecolor on input line 542.
-Package color Info: Redefining color shadecolor on input line 552.
+Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
-Overfull \hbox (568.30376pt too wide) in paragraph at lines 569--569
+
+[15]
+Overfull \vbox (7.22743pt too high) has occurred while \output is active []
+
+
+[16]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 668.
+Package color Info: Redefining color shadecolor on input line 677.
+Package color Info: Redefining color shadecolor on input line 687.
+
+Overfull \hbox (568.30376pt too wide) in paragraph at lines 704--704
 []  \OT1/pcr/m/n/10.95 mh19 <- round(((num_years*num_years*sumq3) - (3*num_year
 s*sumq*sumq2) + (2*sumq*sumq*sumq))/(num_years*(num_years-1)*(num_years-2)*qstd
 *qstd*qstd),digits=2)[] 
@@ -653,57 +695,57 @@ s*sumq*sumq2) + (2*sumq*sumq*sumq))/(num_years*(num_years-1)*(num_years-2)*qstd
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
-[15
+[17
 
 
 ]
-Package color Info: Redefining color shadecolor on input line 581.
+Package color Info: Redefining color shadecolor on input line 716.
 
-Overfull \hbox (22.99442pt too wide) in paragraph at lines 583--583
+Overfull \hbox (22.99442pt too wide) in paragraph at lines 718--718
 [][]\OT1/pcr/b/n/10.95 install.packages[][]\OT1/pcr/m/n/10.95 ([][]\OT1/pcr/b/n
 /10.95 c[][]\OT1/pcr/m/n/10.95 ([][]"zoo"[][],[][]"chron"[][],[][]"doBy"[][],[]
 []"XML"[][],[][]"hydroGOF"[][],[][]"lmomco"[][],[][]"RCurl"[][]))[][] 
  []
 
 
-Overfull \hbox (36.1344pt too wide) in paragraph at lines 584--584
+Overfull \hbox (36.1344pt too wide) in paragraph at lines 719--719
 [][]\OT1/pcr/b/n/10.95 install.packages[][]\OT1/pcr/m/n/10.95 ([][]"EflowStats"
 [][],[][]repos[][]=[][]"http://usgs-r.github.com"[][],[][]type[][]=[][]"source"
 [][])[][] 
  []
 
-Package color Info: Redefining color shadecolor on input line 594.
+Package color Info: Redefining color shadecolor on input line 729.
 
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
-[16
+[18
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 618.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 753.
 
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
-[17
+[19
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 618.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 753.
  (C:\Users\jlthomps\Desktop\git\EflowStats\vignettes\EflowStats.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 618.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 618.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 753.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 753.
 Package rerunfilecheck Info: File `EflowStats.out' has not changed.
 (rerunfilecheck)             Checksum: 41B4B5A6CDF749BE5FD4CA1CF1F520D7;359.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 618.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 753.
  ) 
 Here is how much of TeX's memory you used:
- 8257 strings out of 494045
- 123518 string characters out of 3145959
- 274443 words of memory out of 3000000
- 11369 multiletter control sequences out of 15000+200000
+ 8268 strings out of 494045
+ 123667 string characters out of 3145959
+ 280865 words of memory out of 3000000
+ 11372 multiletter control sequences out of 15000+200000
  26674 words of font info for 60 fonts, out of 3000000 for 9000
  715 hyphenation exceptions out of 8191
- 44i,12n,42p,1333b,420s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,12n,42p,927b,420s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Progra
 m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program 
 Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrb8a.pfb><C:/Program Files (x8
@@ -712,9 +754,9 @@ Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrb8a.pfb><C:/Program Files (x8
 ts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
 w/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on EflowStats.pdf (17 pages, 144735 bytes).
+Output written on EflowStats.pdf (19 pages, 153665 bytes).
 PDF statistics:
- 203 PDF objects out of 1000 (max. 8388607)
- 51 named destinations out of 1000 (max. 500000)
+ 222 PDF objects out of 1000 (max. 8388607)
+ 59 named destinations out of 1000 (max. 500000)
  54 words of extra memory for PDF output out of 10000 (max. 10000000)
 

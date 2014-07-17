@@ -12,7 +12,6 @@
 #' @import zoo
 #' @import chron
 #' @import doBy
-#' @import EflowStats
 #' @import lmomco
 #' @examples
 #' load_data<-sampleData

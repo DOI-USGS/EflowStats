@@ -32,12 +32,9 @@ getDataUSGS <- function(sites,startdate,enddate) {
       obs_data <- get_obsdata(x_obs)
       obs_count<-nrow(obs_data)
       cat(paste("get_obsdata run on x_obs for site",site,obs_count,"\n",sep=" "))
-      drain_url<-paste(drainage_url,site,sep="")
-      drain_area<-getDrainageArea(drain_url)
-      cat(paste("data and drainage area retrieved for site",site,drain_area,"\n",sep=" "))
       countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
       colnames(countbyyr)<-c('wy','num_samples')
-      sub_countbyyr<-subset(countbyyr,num_samples >= 365)
+      sub_countbyyr<-countbyyr[countbyyr$num_samples>=365,]
       if (nrow(sub_countbyyr)==0) {
         comment<-"No complete water years for site"
       } else {

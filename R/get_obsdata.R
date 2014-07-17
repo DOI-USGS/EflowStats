@@ -9,8 +9,8 @@
 #' @examples
 #' url<-"http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
 #' sites<-"02177000"
-#' startdate<-"2012-09-01"
-#' enddate<-"2012-10-01"
+#' startdate<-"2011-10-01"
+#' enddate<-"2012-09-30"
 #' offering<-'00003'
 #' property<-'00060'
 #' obs_url<-paste(url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')

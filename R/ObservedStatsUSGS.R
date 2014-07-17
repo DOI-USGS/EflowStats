@@ -66,7 +66,7 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
       cat(paste("data and drainage area retrieved for site",site,drain_area,"\n",sep=" "))
       countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
       colnames(countbyyr)<-c('wy','num_samples')
-      sub_countbyyr<-subset(countbyyr,num_samples >= 365)
+      sub_countbyyr<-countbyyr[countbyyr$num_samples>=365,]
       if (nrow(sub_countbyyr)==0) {
         tempArrays$comment[i]<-"No complete water years for site"
       } else {
