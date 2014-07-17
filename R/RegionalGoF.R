@@ -8,7 +8,7 @@
 #' @return Output data frame of calculated statistics
 #' @export
 RegionalGoF <- function(GagedFlowStats,ModeledFlowStats) {
-  Output<-matrix(nrow=nrow(statsout1)*6,ncol=ncol(GagedFlowStats)+1)
+  Output<-matrix(nrow=nrow(GagedFlowStats)*6,ncol=ncol(GagedFlowStats)+1)
   for (j in 1:nrow(GagedFlowStats)) {
     n<-(j-1)*6
     Output[1+n,2] <- GagedFlowStats[j,1]

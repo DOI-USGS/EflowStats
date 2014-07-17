@@ -45,8 +45,9 @@ CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",sepChar=
   dataOut2 <- getDataLocal(dataPath2,startDt2,endDt2,sepChar)
   } else { statsout2 <- ObservedStatsOtherMulti(dataPath,stats,startDt2,endDt2,sepChar)
            dataOut2 <- getDataLocal(dataPath,startDt2,endDt2,sepChar)}  
-DiffStats <- (statsout2[,4:190]-statsout1[,4:190])/statsout1[,4:190]
-RegGoFstats <- RegionalGoF(statsout1[,c(1,4:190)],statsout2[,c(1,4:190)])
+n <- ncol(statsout1)-1  
+DiffStats <- (statsout2[,4:n]-statsout1[,4:n])/statsout1[,4:n]
+RegGoFstats <- RegionalGoF(statsout1[,c(1,4:n)],statsout2[,c(1,4:n)])
 GoFstats <- matrix(,nrow=nrow(statsout1),ncol=146)
 flag <- 0
 for (i in 1:nrow(statsout1)) {
