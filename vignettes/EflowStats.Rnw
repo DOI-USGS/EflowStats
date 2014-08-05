@@ -120,7 +120,7 @@ stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 
 Once this information is entered, the user runs the ObservedStatsUSGS function and maps the result to a named data frame.
 
-<<createstatsoutput, echo=FALSE,eval=TRUE,results='hide'>>=
+<<createstatsoutput, echo=FALSE,eval=TRUE,results="hide">>=
 ###############################################
 # calculate stats for USGS streamgage(s)
 statsout <- ObservedStatsUSGS(sites,startdate,enddate,stats)

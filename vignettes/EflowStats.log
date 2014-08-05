@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.12.19)  17 JUL 2014 10:14
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (MiKTeX 2.9) (preloaded format=pdflatex 2012.12.19)  5 AUG 2014 10:19
 entering extended mode
 **EflowStats.tex
 (C:\Users\jlthomps\Desktop\git\EflowStats\vignettes\EflowStats.tex
@@ -685,13 +685,6 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 Package color Info: Redefining color shadecolor on input line 677.
 Package color Info: Redefining color shadecolor on input line 687.
 
-Overfull \hbox (568.30376pt too wide) in paragraph at lines 704--704
-[]  \OT1/pcr/m/n/10.95 mh19 <- round(((num_years*num_years*sumq3) - (3*num_year
-s*sumq*sumq2) + (2*sumq*sumq*sumq))/(num_years*(num_years-1)*(num_years-2)*qstd
-*qstd*qstd),digits=2)[] 
- []
-
-
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
@@ -699,22 +692,22 @@ Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
 
 ]
-Package color Info: Redefining color shadecolor on input line 716.
+Package color Info: Redefining color shadecolor on input line 721.
 
-Overfull \hbox (22.99442pt too wide) in paragraph at lines 718--718
+Overfull \hbox (22.99442pt too wide) in paragraph at lines 723--723
 [][]\OT1/pcr/b/n/10.95 install.packages[][]\OT1/pcr/m/n/10.95 ([][]\OT1/pcr/b/n
 /10.95 c[][]\OT1/pcr/m/n/10.95 ([][]"zoo"[][],[][]"chron"[][],[][]"doBy"[][],[]
 []"XML"[][],[][]"hydroGOF"[][],[][]"lmomco"[][],[][]"RCurl"[][]))[][] 
  []
 
 
-Overfull \hbox (36.1344pt too wide) in paragraph at lines 719--719
+Overfull \hbox (36.1344pt too wide) in paragraph at lines 724--724
 [][]\OT1/pcr/b/n/10.95 install.packages[][]\OT1/pcr/m/n/10.95 ([][]"EflowStats"
 [][],[][]repos[][]=[][]"http://usgs-r.github.com"[][],[][]type[][]=[][]"source"
 [][])[][] 
  []
 
-Package color Info: Redefining color shadecolor on input line 729.
+Package color Info: Redefining color shadecolor on input line 734.
 
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
@@ -722,7 +715,7 @@ Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 [18
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 753.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 758.
 
 Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 
@@ -730,13 +723,13 @@ Overfull \vbox (7.22743pt too high) has occurred while \output is active []
 [19
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 753.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 758.
  (C:\Users\jlthomps\Desktop\git\EflowStats\vignettes\EflowStats.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 753.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 753.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 758.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 758.
 Package rerunfilecheck Info: File `EflowStats.out' has not changed.
 (rerunfilecheck)             Checksum: 41B4B5A6CDF749BE5FD4CA1CF1F520D7;359.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 753.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 758.
  ) 
 Here is how much of TeX's memory you used:
  8268 strings out of 494045
@@ -754,7 +747,7 @@ Files (x86)/MiKTeX 2.9/fonts/type1/urw/courier/ucrb8a.pfb><C:/Program Files (x8
 ts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
 w/times/utmr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on EflowStats.pdf (19 pages, 153665 bytes).
+Output written on EflowStats.pdf (19 pages, 153708 bytes).
 PDF statistics:
  222 PDF objects out of 1000 (max. 8388607)
  59 named destinations out of 1000 (max. 500000)
