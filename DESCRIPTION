@@ -2,7 +2,7 @@ Package: EflowStats
 Type: Package
 Title: Returns Hydrologic Indicator stats for a given set of data
 Version: 4.0
-Date: 2013-08-08
+Date: 2014-08-05
 Author: Jessica Thompson
 Maintainer: Who to complain to <jlthomps@usgs.gov>
 Depends:
@@ -15,9 +15,14 @@ Imports:
     RCurl,
     hydroGOF,
     lmomco
+Suggests:
+    xtable,
+    knitr
 Description: Uses USGS NWISWeb web services to fetch data for the user's
     desired USGS NWIS stations; calculates all HIT/HAT hydrologic indicator
     statistics; and returns these statistics in a text output file.
 License: file LICENSE
 LazyLoad: yes
 LazyData: yes
+VignetteBuilder: knitr
+BuildVignettes: true
