@@ -12,9 +12,11 @@
 #' @return statsout data frame containing requested statistics for each station
 #' @export
 #' @examples
+#' \dontrun{
 #' dataPath <- "C:/Users/jlthomps/Documents/R/JData/modeled/"
 #' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 #' ObservedStatsOtherMulti(dataPath,stats)
+#' }
 ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar=",") {
   if (nchar(startDt)>1) {startdate <- paste(startdate,"10","01",sep="-")}
   if (nchar(endDt)>1) {enddate <- paste(enddate,"09","30",sep="-")}

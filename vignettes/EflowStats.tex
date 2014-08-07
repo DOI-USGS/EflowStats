@@ -66,17 +66,94 @@
 \usepackage{placeins}
 \usepackage{footnote}
 \usepackage{tabularx}
-\usepackage{threeparttable}
 \usepackage{parskip}
+\usepackage{threeparttable}
+\usepackage{longtable}
 \renewcommand\Affilfont{\itshape\small}
+
+\usepackage{csquotes}
+\usepackage{setspace}
+
+\doublespacing
 
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\textfraction}{0.1}
 \usepackage{graphicx}
 
 
+\usepackage{mathptmx}% Times Roman font
+\usepackage[scaled=.90]{helvet}% Helvetica, served as a model for arial
+
+\usepackage{indentfirst}
+\setlength{\parskip}{0pt}
+
+\usepackage{courier}
+
+\usepackage{titlesec}
+\usepackage{titletoc}
+
+\titleformat{\section}
+  {\normalfont\sffamily\bfseries\LARGE}
+  {\thesection}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\sffamily\bfseries\Large}
+  {\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}
+  {\normalfont\sffamily\large}
+  {\thesubsubsection}{0.5em}{}
+  
+\titlecontents{section}
+[2.3em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\contentslabel{2.3em}} % section label and offset
+{\hspace*{-2.3em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+  
+\titlecontents{subsection}
+[4.6em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\contentslabel{2.3em}} % section label and offset
+{\hspace*{-2.3em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+  
+\titlecontents{subsubsection}
+[6.9em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\contentslabel{2.3em}} % section label and offset
+{\hspace*{-2.3em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+
+\titlecontents{table}
+[0em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\textbf{Table}\hspace*{2em} \contentslabel {2em}} % section label and offset
+{\hspace*{4em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+
+\titlecontents{figure}
+[0em]                 % adjust left margin
+{\sffamily}             % font formatting
+{\textbf{Figure}\hspace*{2em} \contentslabel {2em}} % section label and offset
+{\hspace*{4em}}
+{\titlerule*[0.25pc]{.}\contentspage}
+
+%Italisize and change font of urls:
+\urlstyle{sf}
+\renewcommand\UrlFont\itshape
+
+\usepackage{caption}
+\captionsetup{
+  font={sf},
+  labelfont={bf,sf},
+  labelsep=period,
+  justification=justified,
+  singlelinecheck=false
+}
+
+\setlength\parindent{20pt}
+
 \textwidth=6.5in
-\textheight=9.0in
+\textheight=9in
 \parskip=.3cm
 \oddsidemargin=.1in
 \evensidemargin=.1in
@@ -99,6 +176,9 @@
 
 
 
+\renewenvironment{knitrout}{\begin{singlespace}}{\end{singlespace}}
+\renewcommand*\listfigurename{Figures}
+\renewcommand*\listtablename{Tables}
 
 %------------------------------------------------------------
 \title{The EflowStats R package}
@@ -109,10 +189,15 @@
 
 
 
+\noindent{\huge\textsf{\textbf{The EflowStats R package}}}
 
+\noindent\textsf{By Jessica Thompson and Stacey Archfield}
 
-\maketitle
+\noindent\textsf{\today}
+
 \tableofcontents
+%\listoffigures
+\listoftables
 
 %------------------------------------------------------------
 \section{Introduction to EflowStats}
@@ -224,16 +309,15 @@ The generated statsout dataframe has the same characteristics as that shown prev
 The user may wish to generate statistics for a group of sites with locally-stored data. In order to do this, the discharge data must be stored in a local directory, with one file for each site, in the format specified in the previous example. There must also be a file present containing drainage areas for each site, with one column for site number and the second for drainage area. So, for example, the directory may contain 4 files: drainarea.csv, mod02186000.csv, mod02192000.csv and mod02219000.csv, where the files look like the examples shown. 
 
 \begin{table}[ht]
-  \centering
   \begin{threeparttable}[b]
   \caption{drainarea.csv}
   \label{tab:darea}
-  \begin{tabularx}{\textwidth}{lXl}
+  \begin{tabularx}{250pt}{|X|X|}
   \hline
 \textbf{siteNo} & \textbf{darea} \\ 
-  \hline
-  02186000 & 106 \\
-  02192000 & 1420 \\
+  \hline\hline
+  02186000 & 106 \\ \hline
+  02192000 & 1420 \\ \hline
   02219000 & 176 \\
   \hline
   \end{tabularx}
@@ -241,19 +325,18 @@ The user may wish to generate statistics for a group of sites with locally-store
 \end{table}
 
 \begin{table}[ht]
-  \centering
   \begin{threeparttable}[b]
   \caption{mod02186000.csv}
   \label{tab:moddata}
-  \begin{tabularx}{\textwidth}{lXl}
+  \begin{tabularx}{350pt}{|X|X|X|}
   \hline
 \textbf{siteNo} & \textbf{date} & \textbf{discharge} \\ 
-  \hline
-  02186000 & 1980-10-01 & 4196.27 \\
-  02186000 & 1980-10-02 & 2302.53 \\
-  02186000 & 1980-10-03 & 1202.631 \\
-  02186000 & 1980-10-04 & 863.99 \\
-  02186000 & 1980-10-05 & 709.28 \\
+  \hline\hline
+  02186000 & 1980-10-01 & 4196.27 \\ \hline
+  02186000 & 1980-10-02 & 2302.53 \\ \hline
+  02186000 & 1980-10-03 & 1202.631 \\ \hline
+  02186000 & 1980-10-04 & 863.99 \\ \hline
+  02186000 & 1980-10-05 & 709.28 \\ \hline
   02186000 & 1980-10-06 & 637.385 \\
   \hline
   \end{tabularx}
@@ -358,15 +441,15 @@ In order to compare two locally stored data sets, the CompareStats function requ
 
 Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:timStats}, \ref{tab:rateStats}, \ref{tab:otherStats}, \ref{tab:mag7Stats} and \ref{tab:compStats} summarize the EflowStats functions:
 
-\begin{table}[ht]
+\begin{table}[{|l|X|}[ht]
   \centering
   \begin{threeparttable}[b]
   \caption{EflowStats magnitude functions}
   \label{tab:magStats}
-  \begin{tabularx}{\textwidth}{lXl}
+  \begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
-  \hline
+  \hline\hline
   ma1 & Mean of the daily mean flow values for the entire flow record \\
   ma2 & Median of the daily mean flow values for the entire flow record \\
   ma3 & Mean (or median - use preference option) of the coefficients of 
@@ -393,7 +476,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats magnitude functions continued}
   \label{tab:mag2Stats}
-  \begin{tabularx}{\textwidth}{lXl}
+  \begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -417,7 +500,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats magnitude functions continued}
   \label{tab:mag3Stats}
-  \begin{tabularx}{\textwidth}{lXl}
+  \begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -446,7 +529,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats frequency functions}
   \label{tab:freqStats}
-\begin{tabularx}{\textwidth}{lXl}
+\begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -472,7 +555,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats duration functions}
   \label{tab:durStats}
-\begin{tabularx}{\textwidth}{lXl}
+\begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -502,7 +585,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats duration functions continued}
   \label{tab:dur2Stats}
-  \begin{tabularx}{\textwidth}{lXl}
+  \begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -532,7 +615,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats duration functions continued}
   \label{tab:dur3Stats}
-  \begin{tabularx}{\textwidth}{lXl}
+  \begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -556,7 +639,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats timing functions}
   \label{tab:timStats}
-\begin{tabularx}{\textwidth}{lXl}
+\begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -577,7 +660,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats rate of change functions}
   \label{tab:rateStats}
-\begin{tabularx}{\textwidth}{lXl}
+\begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -599,7 +682,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats other stats functions}
   \label{tab:otherStats}
-\begin{tabularx}{\textwidth}{lXl}
+\begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -618,7 +701,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats magnificent 7 functions}
   \label{tab:mag7Stats}
-\begin{tabularx}{\textwidth}{lXl}
+\begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
@@ -639,7 +722,7 @@ Tables \ref{tab:magStats}, \ref{tab:freqStats}, \ref{tab:durStats}, \ref{tab:tim
   \begin{threeparttable}[b]
   \caption{EflowStats comparison functions}
   \label{tab:compStats}
-\begin{tabularx}{\textwidth}{lXl}
+\begin{tabularx}{\textwidth}{|l|X|}
   \hline
 \textbf{Function} & \textbf{Definition} \\ 
   \hline
