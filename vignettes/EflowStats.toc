@@ -4,5 +4,5 @@
 \contentsline {section}{\numberline {3}Stats Reference}{8}{section.3}
 \contentsline {section}{\numberline {4}Getting Started in R}{19}{section.4}
 \contentsline {subsection}{\numberline {4.1}New to R?}{19}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}R User: Installing EflowStats}{21}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.2}R User: Installing EflowStats}{20}{subsection.4.2}
 \contentsfinish 

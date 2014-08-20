@@ -157,7 +157,7 @@
 \parskip=.3cm
 \oddsidemargin=.1in
 \evensidemargin=.1in
-\headheight=-.1in
+\headheight=-.3in
 
 %------------------------------------------------------------
 % newcommand
@@ -203,13 +203,13 @@
 \section{Introduction to EflowStats}
 %------------------------------------------------------------ 
                 
-The EflowStats package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with USGS NWIS data, and works with the NWCCompare package to compare USGS National Water Census (\url {http://cida.usgs.gov/nwc/}) modeled and observed streamflow data. This package is intended to be an update of the previously existing USGS NAHAT program \cite{NAHAT} with additional statistics previously published by Archfield et al \cite{Archfield}.     
+The EflowStats package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with USGS (United States Geological Survey) NWIS (National Water Information System) data, and works with the NWCCompare package to compare USGS National Water Census (\url {http://cida.usgs.gov/nwc/}) modeled and observed streamflow data. This package is intended to be an update of the previously existing USGS NAHAT (National Hydrologic Assessment Tool) program \cite{NAHAT} with additional statistics previously published by Archfield et al \cite{Archfield}.     
               
 Quantifying the amount of ecologically necessary streamflow and determining the effect of changes in landscape and climate on flow are critical aspects to understanding the ecological health of rivers. A natural flow regime can be characterized using five components of streamflow: magnitude, frequency, duration, timing and rate of change of streamflow. Statistics representing these five properties are commonly applied and the number of ecologically-relevant streamflow statistics (ERSS) available from various software packages is now in the hundreds. The EflowStats package is designed to calculate a comprehensive set of ERSS using the open-source R software environement and provides batch capabilities for calculation of ERSS for multiple sites simultaneously. 
 
 EflowStats also provides the capability to compare two discharge data sets, using direct flow data comparison, as well as frequently used comparison statistics such as Nash-Sutcliffe values, root mean squared error and skewness. This functionality can be used to compared modeled and observed discharge data or two time periods of the same data set. There is a need to examine goodness of fit for surface-water models, and methods differ depending on the intended use of the model. For ecological stream health considerations, the comparison of hydrologic indicator statistics is one judge of fit. The EflowStats package allows for easy comparison of two discharge data sets through direct data comparison and comparison of calculated indices.
 
-EflowStats is both directly available as an R package and integrated into the USGS National Water Census Data Platform. EflowStats will enable easy, transparent and repeatable calculation of many of the most utilized ERSS for many scientists. The EflowStats package is designed to work seamlessly with USGS NWIS web-available data, and users may also load data from other sources (text files, spreadsheets).  Section \ref{sec:exampleWorkflow} provides examples of how one can calculate selected stats from USGS or other data, and how to run data set comparisons. 
+EflowStats is both directly available as an R package and integrated into the USGS National Water Census Data Platform. EflowStats enables easy, transparent and repeatable calculation of many of the most utilized ERSS for many scientists. The EflowStats package is designed to work seamlessly with USGS NWIS web-available data, and users may also load data from other sources (text files, spreadsheets).  Section \ref{sec:exampleWorkflow} provides examples of how one can calculate selected stats from USGS or other data, and how to run data set comparisons. 
               
 For information on getting started in R and installing the package, see (\ref{sec:started}): Getting Started.
 
@@ -220,26 +220,21 @@ For information on getting started in R and installing the package, see (\ref{se
 
 This example vignette first loads the relevant packages (assuming they are already installed) and the included sample data. For regular use, you would need to load the packages, but not the given example data.
 
-First, it is a good practice to clear any existing objects from your working environment. In RStudio, in the upper right quadrant, there is a broom icon that says 'Clear'. Click this and select 'Yes' to remove objects. This allows you to being work with a clear workspace, negating the possibility of mis-identified variables. 
+First, it is a good practice to clear any existing objects from your working environment. In RStudio, in the upper right quadrant, there is a broom icon that says \enquote{Clear}. Click this and select \enquote{Yes} to remove objects. This allows you to begin work with a clear workspace, negating the possibility of mis-identified variables. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlkwd{library}\hlstd{(EflowStats)}
-
-\hlcom{############################################}
-\hlcom{# Load sample data included with package:}
-\hlstd{daily_data}\hlkwb{<-}\hlstd{dailyData}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
-To calculate stats for USGS streamgage(s), enter gage id(s), start and end dates and a list of the groups of statistics to be calculated. The list in the example contains all possible statistics.
+To calculate statistics for USGS streamgage(s), enter gage id(s), start and end dates and a list of the groups of statistics to be calculated. The list in the example contains all possible statistics.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{############################################}
 \hlcom{# calculate stats for a USGS streamgage}
 \hlstd{sites} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"02177000"}\hlstd{,}\hlstr{"02178400"}\hlstd{)}
 \hlstd{startdate} \hlkwb{<-} \hlstr{"2009"}
@@ -249,21 +244,20 @@ To calculate stats for USGS streamgage(s), enter gage id(s), start and end dates
 \end{kframe}
 \end{knitrout}
 
-Once this information is entered, the user runs the ObservedStatsUSGS function and maps the result to a named data frame.
+Once this information is entered, the user runs the \texttt{}ObservedStatsUSGS\texttt{} function and maps the result to a named data frame.
 
 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{###############################################}
 \hlcom{# calculate stats for USGS streamgage(s)}
 \hlstd{statsout} \hlkwb{<-} \hlkwd{ObservedStatsUSGS}\hlstd{(sites,startdate,enddate,stats)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
-The retrieved data is now present as a dataframe called 'statsout' in your R environment. This data frame has one row for each gage and one column for each statistic. An example of the first few columns is given below.
+The retrieved data is now present as a dataframe called \texttt{"}statsout\texttt{"} in your R environment. This data frame has one row for each gage and one column for each statistic. An example of the first few columns is given below.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -282,18 +276,60 @@ This dataframe may now be used within the R environment or saved as a file as sh
 \begin{alltt}
 \hlcom{# save statsout to a tab-delimited file}
 \hlstd{output} \hlkwb{=} \hlstr{"output.txt"}
-\hlkwd{write.table}\hlstd{(statsout,} \hlkwc{file} \hlstd{= output,} \hlkwc{col.names} \hlstd{=} \hlnum{TRUE}\hlstd{,} \hlkwc{row.names} \hlstd{=} \hlnum{FALSE}\hlstd{,}
-            \hlkwc{quote} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{)}
+\hlkwd{write.table}\hlstd{(statsout,} \hlkwc{file} \hlstd{= output,} \hlkwc{col.names} \hlstd{=} \hlnum{TRUE}\hlstd{,}
+            \hlkwc{row.names} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{quote} \hlstd{=} \hlnum{FALSE}\hlstd{,} \hlkwc{sep} \hlstd{=} \hlstr{"\textbackslash{}t"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
-For daily discharge data not available via NWISWeb, statistics can be calculated by loading data into an R dataframe like the example \texttt{"}dailyData\texttt{"}. This dataframe has two columns, the first named date, containing dates as characters in the format \texttt{"}YYYY-MM-DD\texttt{"} and the second column, discharge, containing the numeric discharge. This can be easily accomplished from most text file formats using \texttt{"}read.delim\texttt{"} or \texttt{"}read.table\texttt{"}. Then the user must enter a drainage area and a site id for each site, as well as the stats string.
+For daily discharge data not available via NWISWeb, statistics can be calculated by loading data into an R dataframe like the example \texttt{"}dailyData\texttt{"}. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{#############################################################}
+\hlcom{# Load sample data included with package:}
+\hlstd{daily_data}\hlkwb{<-}\hlstd{dailyData}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+This dataframe has two columns, the first named date, containing dates as characters in the format \texttt{"}YYYY-MM-DD\texttt{"} and the second column, discharge, containing the numeric discharge. This can be easily accomplished from most text file formats using \texttt{"}read.delim\texttt{"} or \texttt{"}read.table\texttt{"}. For example, if the data file to be loaded is saved in dailyData.csv (comma-separated variable) format, with dates and discharges eg:
+
+\begin{table}[ht]
+  \begin{threeparttable}[b]
+  \caption{dailyData.csv}
+  \label{tab:dailyData}
+  \begin{tabularx}{150pt}{|X|}
+  \hline
+\textbf{date,discharge} \\ 
+  \hline\hline
+  2010-10-01,79 \\ \hline
+  2010-10-02,55 \\ \hline
+  2010-10-03,52 \\ \hline
+  2010-10-04,49 \\ \hline
+  2010-10-05,62 \\
+  \hline
+  \end{tabularx}
+  \end{threeparttable}
+\end{table}
+
+The user could load this data using \texttt{"}read.table\texttt{"}:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{#load locally stored daily discharge data}
+\hlstd{dailyData} \hlkwb{<-} \hlkwd{read.table}\hlstd{(}\hlstr{"dailyData.csv"}\hlstd{,}\hlkwc{sep}\hlstd{=}\hlstr{","}\hlstd{,}
+                        \hlkwc{stringsAsFactors}\hlstd{=}\hlnum{FALSE}\hlstd{,}\hlkwc{header}\hlstd{=}\hlnum{TRUE}\hlstd{)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+Once the daily discharge data is loaded, the user must enter a drainage area and a site id for each site, as well as the stats string.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 \hlcom{# calculate stats for data from your own data file}
 \hlstd{drain_area}\hlkwb{=}\hlnum{54}
 \hlstd{site_id}\hlkwb{=}\hlstr{"Test site"}
@@ -304,7 +340,7 @@ For daily discharge data not available via NWISWeb, statistics can be calculated
 \end{kframe}
 \end{knitrout}
 
-The generated statsout dataframe has the same characteristics as that shown previously. 
+The generated \texttt{"}statsout\texttt{"} dataframe has the same characteristics as that shown previously. 
 
 The user may wish to generate statistics for a group of sites with locally-stored data. In order to do this, the discharge data must be stored in a local directory, with one file for each site, in the format specified in the previous example. There must also be a file present containing drainage areas for each site, with one column for site number and the second for drainage area. So, for example, the directory may contain 4 files: drainarea.csv, mod02186000.csv, mod02192000.csv and mod02219000.csv, where the files look like the examples shown. 
 
@@ -346,7 +382,6 @@ The user may wish to generate statistics for a group of sites with locally-store
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{###############################################################}
 \hlcom{# calculate stats for multiple sites in a local data directory}
 \hlstd{dataPath}\hlkwb{=}\hlstr{"C:/Users/jlthomps/Documents/R/JData/modeled/"}
 \hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
@@ -355,7 +390,7 @@ The user may wish to generate statistics for a group of sites with locally-store
 \end{kframe}
 \end{knitrout}
 
-The generated statsout dataframe has the same characteristics as that shown previously.
+The generated \texttt{"}statsout\texttt{"} dataframe has the same characteristics as that shown previously.
 
 There is also a function available to plot the monthly means for a daily discharge timeseries. Using included sample data, the following code generates a dataframe of mean monthly discharge and then plots the values with a title containing the site id. 
 
@@ -375,21 +410,21 @@ There is also a function available to plot the monthly means for a daily dischar
 
 \end{knitrout}
 
-There is one function, CompareStats, that is used to compare the data and calculated statistics for two data sets. It can be used in several ways, three of which are shown here. 
+There is one function, \texttt{}CompareStats\texttt{}, that is used to compare the data and calculated statistics for two data sets. It can be used in several ways, three of which are shown here. 
 
-To compare the NWIS observed data for a group of USGS stations with locally stored data (eg modeled data), a list of sites, startDt, endDt, stats string and dataPath are required. The function will then calculate ERSS for each data set, compare the ERSS and directly compare the data sets. These results are then returned in a list (assigned to 'DiffStats' in the example). Statistics for the first data set (the NWIS data) are first in the list, then ERSS for the local data, then ERSS comparison, then ERSS goodness of fit and last the direct data goodness of fit.
+To compare the NWIS observed data for a group of USGS stations with locally stored data (eg modeled data), a list of sites, startDt, endDt, stats string and dataPath are required. The function will then calculate ERSS for each data set, compare the ERSS and directly compare the data sets. These results are then returned in a list (assigned to \texttt{"}DiffStats\texttt{"} in the example). Statistics for the first data set (the NWIS data) are first in the list, then ERSS for the local data, then ERSS comparison, then ERSS goodness of fit and last the direct data goodness of fit.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{#######################################################################}
 \hlcom{# NWIS-local}
 \hlstd{sites} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"02186000"}\hlstd{,}\hlstr{"02192000"}\hlstd{,}\hlstr{"02219000"}\hlstd{,}\hlstr{"02317500"}\hlstd{,}\hlstr{"02329600"}\hlstd{)}
 \hlstd{startDt} \hlkwb{<-} \hlstr{"1990"}
 \hlstd{endDt} \hlkwb{<-} \hlstr{"1999"}
 \hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
 \hlstd{dataPath}\hlkwb{=}\hlstr{"C:/Users/jlthomps/Documents/R/JData/modeled/"}
-\hlstd{DiffStats} \hlkwb{<-} \hlkwd{CompareStats}\hlstd{(stats,}\hlkwc{sites}\hlstd{=sites,}\hlkwc{dataPath}\hlstd{=dataPath,}\hlkwc{startDt}\hlstd{=startDt,}\hlkwc{endDt}\hlstd{=endDt)}
+\hlstd{DiffStats} \hlkwb{<-} \hlkwd{CompareStats}\hlstd{(stats,}\hlkwc{sites}\hlstd{=sites,}\hlkwc{dataPath}\hlstd{=dataPath,}
+                          \hlkwc{startDt}\hlstd{=startDt,}\hlkwc{endDt}\hlstd{=endDt)}
 \hlstd{stats1} \hlkwb{<-} \hlstd{DiffStats[[}\hlnum{1}\hlstd{]]}
 \hlstd{stats2} \hlkwb{<-} \hlstd{DiffStats[[}\hlnum{2}\hlstd{]]}
 \hlstd{Diffstats} \hlkwb{<-} \hlstd{DiffStats[[}\hlnum{3}\hlstd{]]}
@@ -399,12 +434,11 @@ To compare the NWIS observed data for a group of USGS stations with locally stor
 \end{kframe}
 \end{knitrout}
 
-In order to compare data from the same data set, but differing time periods, the CompareStats function requires a list of sites (or dataPath), startDt, endDt, startDt2, endDt2 and the stats string. The function will then return the ERSS for each data set as well as the comparison and goodness of fit of the ERSS. The list returned will not contain the direct data comparison, as there are no matching dates between the two data sets. 
+In order to compare data from the same data set, but differing time periods, the \texttt{}CompareStats\texttt{} function requires a list of sites (or dataPath), startDt, endDt, startDt2, endDt2 and the stats string. The function will then return the ERSS for each data set as well as the comparison and goodness of fit of the ERSS. The list returned will not contain the direct data comparison, as there are no matching dates between the two data sets. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{########################################################################}
 \hlcom{# NWIS-NWIS}
 \hlstd{sites} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"02186000"}\hlstd{,}\hlstr{"02192000"}\hlstd{,}\hlstr{"02219000"}\hlstd{,}\hlstr{"02317500"}\hlstd{,}\hlstr{"02329600"}\hlstd{)}
 \hlstd{startDt} \hlkwb{<-} \hlstr{"1990"}
@@ -412,22 +446,45 @@ In order to compare data from the same data set, but differing time periods, the
 \hlstd{startDt2} \hlkwb{<-} \hlstr{"2000"}
 \hlstd{endDt2} \hlkwb{<-} \hlstr{"2008"}
 \hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
-\hlstd{DiffStats} \hlkwb{<-} \hlkwd{CompareStats}\hlstd{(stats,}\hlkwc{sites}\hlstd{=sites,}\hlkwc{startDt}\hlstd{=startDt,}\hlkwc{endDt}\hlstd{=endDt,}\hlkwc{startDt2}\hlstd{=startDt2,}\hlkwc{endDt2}\hlstd{=endDt2)}
+\hlstd{DiffStats} \hlkwb{<-} \hlkwd{CompareStats}\hlstd{(stats,}\hlkwc{sites}\hlstd{=sites,}\hlkwc{startDt}\hlstd{=startDt,}
+                          \hlkwc{endDt}\hlstd{=endDt,}\hlkwc{startDt2}\hlstd{=startDt2,}\hlkwc{endDt2}\hlstd{=endDt2)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
-In order to compare two locally stored data sets, the CompareStats function requires the stats string, dataPath and dataPath2. Start and end date(s) could be provided if desired. The list returned will contain ERSS for both data sets, the ERSS comparison and goodness of fit and the direct data comparison for any overlapping dates. 
+In order to compare two locally stored data sets, the \texttt{}CompareStats\texttt{} function requires the stats string, dataPath and dataPath2. Start and end date(s) could be provided if desired. The list returned will contain ERSS for both data sets, the ERSS comparison and goodness of fit and the direct data comparison for any overlapping dates. 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcom{#############################################################################}
 \hlcom{# local-local}
 \hlstd{stats}\hlkwb{=}\hlstr{"magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"}
 \hlstd{dataPath}\hlkwb{=}\hlstr{"C:/Users/jlthomps/Documents/R/JData/modeled/"}
 \hlstd{dataPath2}\hlkwb{=}\hlstr{"C:/Users/jlthomps/Documents/R/JData/observed/"}
 \hlstd{DiffStats} \hlkwb{<-} \hlkwd{CompareStats}\hlstd{(stats,}\hlkwc{dataPath}\hlstd{=dataPath,}\hlkwc{dataPath2}\hlstd{=dataPath2)}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+A typical scientific use case for this package may be the exploration of change in selected hydrologic indices over time as a selected stream undergoes a change in land use, such as increased urbanization. In a developing watershed, for example, a user may wish to calculate fh1 (high flood pulse count), dh15 (high flow pulse duration) and ra6 (positive change of flow) for both pre-development and post-development study periods. This could be accomplished in two ways. The easiest way is to use the provided wrapper functions and then select the desired statistics from the resulting \enquote{statsout} data frame. Alternatively, to calculate only selected indices, an example workflow would be:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcom{# NWIS-NWIS}
+\hlstd{sites} \hlkwb{<-} \hlkwd{c}\hlstd{(}\hlstr{"02186000"}\hlstd{)}
+\hlstd{startDt} \hlkwb{<-} \hlstr{"1990"}
+\hlstd{endDt} \hlkwb{<-} \hlstr{"1999"}
+\hlstd{startDt2} \hlkwb{<-} \hlstr{"2000"}
+\hlstd{endDt2} \hlkwb{<-} \hlstr{"2008"}
+\hlstd{data1} \hlkwb{<-} \hlkwd{getDataUSGS}\hlstd{(sites,startDt,endDt)[[}\hlnum{1}\hlstd{]]}
+\hlstd{data2} \hlkwb{<-} \hlkwd{getDataUSGS}\hlstd{(sites,startDt2,endDt2)[[}\hlnum{1}\hlstd{]]}
+\hlstd{fh1Reference} \hlkwb{<-} \hlkwd{fh1.2}\hlstd{(data1)[[}\hlnum{1}\hlstd{]]}
+\hlstd{fh1Urbanized} \hlkwb{<-} \hlkwd{fh1.2}\hlstd{(data2)[[}\hlnum{1}\hlstd{]]}
+\hlstd{dh15Reference} \hlkwb{<-} \hlkwd{dh15.16}\hlstd{(data1)[[}\hlnum{1}\hlstd{]]}
+\hlstd{dh15Urbanized} \hlkwb{<-} \hlkwd{dh15.16}\hlstd{(data2)[[}\hlnum{1}\hlstd{]]}
+\hlstd{ra6Reference} \hlkwb{<-} \hlkwd{ra6}\hlstd{(data1)}
+\hlstd{ra6Urbanized} \hlkwb{<-} \hlkwd{ra6}\hlstd{(data2)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -752,8 +809,6 @@ This section describes the options for downloading and installing the EflowStats
 %------------------------------------------------------------ 
 If you are new to R, you will need to first install the latest version of R, which can be found here: \url{http://www.r-project.org/}. There is also a useful USGS site for R help at \url{http://bwtst.usgs.gov/apps/R/index.html}.
 
-There are many options for running and editing R code, one nice environment to learn R is RStudio. RStudio can be downloaded here: \url{http://rstudio.org/}. Once R and RStudio are installed, the dataRetrieval package needs to be installed as described in the next section.
-
 At any time, you can get information about any function in R by typing a question mark before the functions name.  This will open a file (in RStudio, in the Help window) that describes the function, the required arguments, and provides working examples.
 
 \begin{knitrout}
@@ -798,19 +853,19 @@ function (x)
 %------------------------------------------------------------
 \subsection{R User: Installing EflowStats}
 %------------------------------------------------------------ 
-Before installing EflowStats, the supporting packages must be first be installed:
+To install EflowStats:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlkwd{install.packages}\hlstd{(}\hlkwd{c}\hlstd{(}\hlstr{"zoo"}\hlstd{,}\hlstr{"chron"}\hlstd{,}\hlstr{"doBy"}\hlstd{,}\hlstr{"XML"}\hlstd{,}\hlstr{"hydroGOF"}\hlstd{,}\hlstr{"lmomco"}\hlstd{,}\hlstr{"RCurl"}\hlstd{))}
-\hlkwd{install.packages}\hlstd{(}\hlstr{"EflowStats"}\hlstd{,}\hlkwc{repos}\hlstd{=}\hlstr{"http://usgs-r.github.com"}\hlstd{,}\hlkwc{type}\hlstd{=}\hlstr{"source"}\hlstd{)}
+\hlkwd{install.packages}\hlstd{(}\hlstr{"EflowStats"}\hlstd{,}\hlkwc{repos}\hlstd{=}\hlkwd{c}\hlstd{(}\hlstr{"http://usgs-r.github.com"}\hlstd{,}
+                                      \hlstr{"http://cran.us.r-project.org"}\hlstd{),}
+                 \hlkwc{type}\hlstd{=}\hlstr{"source"}\hlstd{)}
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
-It is a good idea to re-start R after installing the package, especially if installing an updated version. Some users have found it necessary to delete the previous version's package folder before installing newer version of dataRetrieval. If you are experiencing issues after updating a package, trying deleting the package folder - the default location for Windows is something like this: C:/Users/userA/Documents/R/win-library/2.15/dataRetrieval, and the default for a Mac: 
-/Users/userA/Library/R/2.15/library/dataRetrieval. Then, re-install the package using the directions above. Moving to CRAN should solve this problem.
+It is a good idea to re-start R after installing the package, especially if installing an updated version. 
 
 After installing the package, you need to open the library each time you re-start R.  This is done with the simple command:
 \begin{knitrout}
