@@ -20,8 +20,16 @@ Suggests:
     knitr
 Description: Uses USGS NWISWeb web services to fetch data for the user's
     desired USGS NWIS stations; calculates a suite of ecological flow
-    statistics; and returns these statistics in a text output file. Statistics 
-    are references: Henriksen, J.A., Heasley, J. Kennen, J.G., and Nieswand, S., 2006, Users' manual for the Hydroecological Integrity Assessment Process software (including the New Jersey Assessment Tools): U.S. Geological Survey Open-File Report 2006-1093. 72 p. (http://www.fort.usgs.gov/products/publications/21598/21598.pdf); Archfield, S.A., J.G. Kennen, D.M. Carlisle, and D.M. Wolock. 2013. An Objective and Parsimonious Approach for Classifying Natural Flow Regimes at a Continental Scale. River Res. Applic. doi: 10.1002/rra.2710 (http://onlinelibrary.wiley.com/doi/10.1002/rra.2710/abstract).
+    statistics; and returns these statistics in a text output file. Statistics
+    are references: Henriksen, J.A., Heasley, J. Kennen, J.G., and Nieswand,
+    S., 2006, Users' manual for the Hydroecological Integrity Assessment
+    Process software (including the New Jersey Assessment Tools): U.S.
+    Geological Survey Open-File Report 2006-1093. 72 p.
+    (http://www.fort.usgs.gov/products/publications/21598/21598.pdf);
+    Archfield, S.A., J.G. Kennen, D.M. Carlisle, and D.M. Wolock. 2013. An
+    Objective and Parsimonious Approach for Classifying Natural Flow Regimes at
+    a Continental Scale. River Res. Applic. doi: 10.1002/rra.2710
+    (http://onlinelibrary.wiley.com/doi/10.1002/rra.2710/abstract).
 License: file LICENSE
 LazyLoad: yes
 LazyData: yes
