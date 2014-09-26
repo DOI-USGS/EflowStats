@@ -133,7 +133,7 @@ SiteGoF <- function(Gaged,Modeled) {
               pearsonv_90,pearsonv_75_90,pearsonv_50_75,pearsonv_25_50,pearsonv_10_25,pearsonv_10,
               spearmanv_90,spearmanv_75_90,spearmanv_50_75,spearmanv_25_50,spearmanv_10_25,spearmanv_10,
               NSEbyMonth,NSELOGbyMonth,RMSEbyMonth,RMSNEbyMonth,RSRbyMonth,BiasbyMonth,PearsonbyMonth,SpearmanbyMonth)
-  } else {
+} else {
     Output <- NA
     cat("No matching discharge days available")
   }

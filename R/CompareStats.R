@@ -62,6 +62,7 @@ for (i in 1:nrow(statsout1)) {
 if (flag==i) {
   compareOut <- list(statsout1,statsout2,DiffStats,RegGoFstats) 
 } else {
+GoFstats <- as.data.frame(GoFstats,stringsAsFactors=FALSE)
 colnames(GoFstats) <- c("nse","nselog","rmse","rmsne","rsr","pbias","pearson","spearman",'nse_90','nse_75_90','nse_50_75','nse_25_50','nse_10_25',
                   'nse_10','rmse_90','rmse_75_90','rmse_50_75','rmse_25_50','rmse_10_25','rmse_10','rmsne_90','rmsne_75_90','rmsne_50_75',
                   'rmsne_25_50','rmsne_10_25','rmsne_10','rsr_90','rsr_75_90','rsr_50_75','rsr_25_50','rsr_10_25','rsr_10','pbias_90',
