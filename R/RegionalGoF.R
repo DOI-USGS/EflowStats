@@ -36,5 +36,6 @@ RegionalGoF <- function(GagedFlowStats,ModeledFlowStats) {
   a <- colnames(GagedFlowStats)
   a <- c("stat",a)
   colnames(Output) <- (a)
+  Output <- Output[order(as.numeric(Output$site_no)),]
   return(Output)
 }

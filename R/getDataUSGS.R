@@ -41,6 +41,8 @@ getDataUSGS <- function(sites,startdate,enddate) {
         obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
         obs_data<-obs_data[order(obs_data$date),]
         obs_data <- obs_data[,c('wy_val','date','discharge','month_val','year_val','day_val','jul_val')]
+        site_no <- rep(site,nrow(obs_data))
+        obs_data <- cbind(site_no,obs_data,stringsAsFactors=FALSE)
       }} else {
         obs_data<-"No observed data for this site"
       }

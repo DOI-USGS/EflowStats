@@ -22,7 +22,10 @@
 SiteGoF <- function(Gaged,Modeled) {
   Gaged <- Gaged[as.Date(Gaged$date) %in% as.Date(Modeled$date),]
   Modeled <- Modeled[as.Date(Modeled$date) %in% as.Date(Gaged$date),]
+  Gaged <- Gaged[order(Gaged$date),]
+  Modeled <- Modeled[order(Modeled$date),]
   if (nrow(Modeled)>1) {
+    site_no <- Gaged[1,1]
   nsev<-nse(Gaged$discharge,Modeled$discharge)
   nselogv<-nselog(Gaged$discharge,Modeled$discharge)
   rmsev<-rmse(Gaged$discharge,Modeled$discharge)
@@ -124,7 +127,7 @@ SiteGoF <- function(Gaged,Modeled) {
     SpearmanbyMonth[m] <- cor(monthobs$discharge,monthmod$discharge,method="spearman")
   }
   
-  Output <- c(nsev,nselogv,rmsev,rmsnev,rsrv,pbiasv,pearsonv,spearmanv,
+  Output <- c(site_no, nsev,nselogv,rmsev,rmsnev,rsrv,pbiasv,pearsonv,spearmanv,
               nsev_90,nsev_75_90,nsev_50_75,nsev_25_50,nsev_10_25,nsev_10,
               rmsev_90,rmsev_75_90,rmsev_50_75,rmsev_25_50,rmsev_10_25,rmsev_10,
               rmsnev_90,rmsnev_75_90,rmsnev_50_75,rmsnev_25_50,rmsnev_10_25,rmsnev_10,
@@ -133,6 +136,26 @@ SiteGoF <- function(Gaged,Modeled) {
               pearsonv_90,pearsonv_75_90,pearsonv_50_75,pearsonv_25_50,pearsonv_10_25,pearsonv_10,
               spearmanv_90,spearmanv_75_90,spearmanv_50_75,spearmanv_25_50,spearmanv_10_25,spearmanv_10,
               NSEbyMonth,NSELOGbyMonth,RMSEbyMonth,RMSNEbyMonth,RSRbyMonth,BiasbyMonth,PearsonbyMonth,SpearmanbyMonth)
+  Output <- as.data.frame(t(Output),stringsAsFactors=FALSE)
+  colnames(Output) <- c("site_no","nse","nselog","rmse","rmsne","rsr","pbias","pearson","spearman",'nse_90','nse_75_90','nse_50_75','nse_25_50','nse_10_25',
+                          'nse_10','rmse_90','rmse_75_90','rmse_50_75','rmse_25_50','rmse_10_25','rmse_10','rmsne_90','rmsne_75_90','rmsne_50_75',
+                          'rmsne_25_50','rmsne_10_25','rmsne_10','rsr_90','rsr_75_90','rsr_50_75','rsr_25_50','rsr_10_25','rsr_10','pbias_90',
+                          'pbias_75_90','pbias_50_75','pbias_25_50','pbias_10_25','pbias_10','pearson_90','pearson_75_90','pearson_50_75',
+                          'pearson_25_50','pearson_10_25','pearson_10','spearman_90','spearman_75_90','spearman_50_75','spearman_25_50',
+                          'spearman_10_25','spearman_10','NSEbyMonthJan','NSELOGbyMonthJan','RMSEbyMonthJan','RMSNEbyMonthJan','RSRbyMonthJan',
+                          'BiasbyMonthJan','PearsonbyMonthJan','SpearmanbyMonthJan','NSEbyMonthFeb','NSELOGbyMonthFeb','RMSEbyMonthFeb',
+                          'RMSNEbyMonthFeb','RSRbyMonthFeb','BiasbyMonthFeb','PearsonbyMonthFeb','SpearmanbyMonthFeb','NSEbyMonthMar',
+                          'NSELOGbyMonthMar','RMSEbyMonthMar','RMSNEbyMonthMar','RSRbyMonthMar','BiasbyMonthMar','PearsonbyMonthMar','SpearmanbyMonthMar',
+                          'NSEbyMonthApr','NSELOGbyMonthApr','RMSEbyMonthApr','RMSNEbyMonthApr','RSRbyMonthApr','BiasbyMonthApr','PearsonbyMonthApr',
+                          'SpearmanbyMonthApr','NSEbyMonthMay','NSELOGbyMonthMay','RMSEbyMonthMay','RMSNEbyMonthMay','RSRbyMonthMay','BiasbyMonthMay',
+                          'PearsonbyMonthMay','SpearmanbyMonthMay','NSEbyMonthJun','NSELOGbyMonthJun','RMSEbyMonthJun','RMSNEbyMonthJun',
+                          'RSRbyMonthJun','BiasbyMonthJun','PearsonbyMonthJun','SpearmanbyMonthJun','NSEbyMonthJul','NSELOGbyMonthJul',
+                          'RMSEbyMonthJul','RMSNEbyMonthJul','RSRbyMonthJul','BiasbyMonthJul','PearsonbyMonthJul','SpearmanbyMonthJul','NSEbyMonthAug',
+                          'NSELOGbyMonthAug','RMSEbyMonthAug','RMSNEbyMonthAug','RSRbyMonthAug','BiasbyMonthAug','PearsonbyMonthAug','SpearmanbyMonthAug',
+                          'NSEbyMonthSep','NSELOGbyMonthSep','RMSEbyMonthSep','RMSNEbyMonthSep','RSRbyMonthSep','BiasbyMonthSep','PearsonbyMonthSep','SpearmanbyMonthSep',
+                          'NSEbyMonthOct','NSELOGbyMonthOct','RMSEbyMonthOct','RMSNEbyMonthOct','RSRbyMonthOct','BiasbyMonthOct','PearsonbyMonthOct','SpearmanbyMonthOct',
+                          'NSEbyMonthNov','NSELOGbyMonthNov','RMSEbyMonthNov','RMSNEbyMonthNov','RSRbyMonthNov','BiasbyMonthNov','PearsonbyMonthNov','SpearmanbyMonthNov',
+                          'NSEbyMonthDec','NSELOGbyMonthDec','RMSEbyMonthDec','RMSNEbyMonthDec','RSRbyMonthDec','BiasbyMonthDec','PearsonbyMonthDec','SpearmanbyMonthDec')
 } else {
     Output <- NA
     cat("No matching discharge days available")

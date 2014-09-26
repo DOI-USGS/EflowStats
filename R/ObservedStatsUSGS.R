@@ -126,6 +126,7 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
   namesFull <- c(namesFull,'comment')
   
   colnames(statsout)<-namesFull
+  statsout <- statsout[order(as.numeric(statsout$site_no)),]
   cat("statsout created and named \n")
   return(statsout)
 }
