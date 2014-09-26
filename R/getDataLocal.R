@@ -16,7 +16,7 @@
 getDataLocal <- function(dataPath,startDt="",endDt="",sepChar=",") {
   if (nchar(startDt)>1) {startdate <- paste(startDt,"10","01",sep="-")}
   if (nchar(endDt)>1) {enddate <- paste(endDt,"09","30",sep="-")}
-  fileList <- system2("ls",args=dataPath,stdout=TRUE)
+  fileList <- list.files(path=dataPath)
   for (i in 1:length(fileList)) {
     fileList[i] <- ifelse(nchar(strsplit(fileList[i],".csv"))<nchar(fileList[i]) | nchar(strsplit(fileList[i],".txt"))<nchar(fileList[i]), fileList[i],NA)
   }
