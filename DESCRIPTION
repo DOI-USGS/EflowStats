@@ -14,7 +14,8 @@ Imports:
     XML,
     RCurl,
     hydroGOF,
-    lmomco
+    lmomco,
+    plyr
 Suggests:
     xtable,
     knitr

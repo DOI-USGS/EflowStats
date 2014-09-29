@@ -13,6 +13,7 @@
 #' @param endDt2 ending water year, will be translated to 09/30
 #' @return statsout data frame containing requested statistics for each station
 #' @export
+#' @import plyr
 #' @examples
 #' sites <- c("02177000", "02178400")
 #' startdate <- "2003"
@@ -59,10 +60,15 @@ RegGoFstats <- RegionalGoF(statsout1[,c(1,4:n)],statsout2[,c(1,4:n)])
 GoFstats <- matrix(,nrow=nrow(statsout1),ncol=147)
 flag <- 0
 for (i in 1:nrow(statsout1)) {
-  a <- SiteGoF(dataOut1[[i]],dataOut2[[i]]) 
+  flow1 <- dataOut1[[i]] 
+  lfunc <- function(e) {data.frame(e$site_no,e$wy_val,e$date,e$discharge,e$month_val,e$year_val,e$day_val,e$jul_val,stringsAsFactors=FALSE)}
+  flow2 <- ldply(dataOut2,lfunc)
+  flow2 <- flow2[as.numeric(flow2$e.site_no)==max(as.numeric(flow1$site_no)),]
+  colnames(flow2) <- colnames(flow1)
+  a <- SiteGoF(flow1,flow2) 
   GoFnames <- colnames(a)
   if (length(a)>1) {
-  GoFstats[i,] <- t(as.vector(SiteGoF(dataOut1[[i]],dataOut2[[i]])))
+  GoFstats[i,] <- t(as.vector(SiteGoF(flow1,flow2)))
   } else {
     flag <- flag+1
     GoFstats[i,] <- rep(NA,147)
