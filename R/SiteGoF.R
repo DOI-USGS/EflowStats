@@ -37,15 +37,15 @@ SiteGoF <- function(Gaged,Modeled) {
   
   obs_percentiles <- quantile(Gaged$discharge,probs=c(0.10, 0.25, 0.50, 0.75, 0.90),na.rm=TRUE)
   obs_10_indices <- which(Gaged$discharge< obs_percentiles[1])
-  obs_10_25_indices <- which(Gaged$discharge>obs_percentiles[1] 
+  obs_10_25_indices <- which(Gaged$discharge>=obs_percentiles[1] 
                              & Gaged$discharge<obs_percentiles[2])
-  obs_25_50_indices <- which(Gaged$discharge>obs_percentiles[2]
+  obs_25_50_indices <- which(Gaged$discharge>=obs_percentiles[2]
                              & Gaged$discharge<obs_percentiles[3])
-  obs_50_75_indices <- which(Gaged$discharge>obs_percentiles[3]  
+  obs_50_75_indices <- which(Gaged$discharge>=obs_percentiles[3]  
                              & Gaged$discharge<obs_percentiles[4])
-  obs_75_90_indices <- which(Gaged$discharge>obs_percentiles[4]  
+  obs_75_90_indices <- which(Gaged$discharge>=obs_percentiles[4]  
                              & Gaged$discharge<obs_percentiles[5])
-  obs_90_indices <- which(Gaged$discharge>obs_percentiles[5])
+  obs_90_indices <- which(Gaged$discharge>=obs_percentiles[5])
   nsev_90 <- nse(Gaged$discharge[obs_90_indices],Modeled$discharge[obs_90_indices])
   nsev_75_90 <- nse(Gaged$discharge[obs_75_90_indices],Modeled$discharge[obs_75_90_indices])
   nsev_50_75 <- nse(Gaged$discharge[obs_50_75_indices],Modeled$discharge[obs_50_75_indices])
