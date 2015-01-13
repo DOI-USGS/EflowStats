@@ -24,45 +24,45 @@
 #' CompareStats(stats,sites=sites,startDt=startdate,endDt=enddate,startDt2=startdate2,endDt2=enddate2)
 CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",sepChar=",",dataPath2="",startDt2="",endDt2="") {
   if (length(sites)>1) {
-    statsout1 <- ObservedStatsUSGS(sites,startDt,endDt,stats)
-    dataOut1 <- getDataUSGS(sites,startDt,endDt)
+    statsoutsim <- ObservedStatsUSGS(sites,startDt,endDt,stats)
+    dataOutsim <- getDataUSGS(sites,startDt,endDt)
   } else {
-    statsout1 <- ObservedStatsOtherMulti(dataPath,stats,startDt,endDt,sepChar)
-    dataOut1 <- getDataLocal(dataPath,startDt,endDt,sepChar)
+    statsoutsim <- ObservedStatsOtherMulti(dataPath,stats,startDt,endDt,sepChar)
+    dataOutsim <- getDataLocal(dataPath,startDt,endDt,sepChar)
   }
   if (length(sites)>1) {
     if (nchar(dataPath)+nchar(dataPath2)<3) {
-    statsout2 <- ObservedStatsUSGS(sites,startDt2,endDt2,stats)
-    dataOut2 <- getDataUSGS(sites,startDt2,endDt2)
+    statsoutobs <- ObservedStatsUSGS(sites,startDt2,endDt2,stats)
+    dataOutobs <- getDataUSGS(sites,startDt2,endDt2)
     } else if (nchar(dataPath)>1) {
-    statsout2 <- ObservedStatsOtherMulti(dataPath,stats,startDt,endDt,sepChar)
-    dataOut2 <- getDataLocal(dataPath,startDt,endDt,sepChar)
+    statsoutobs <- ObservedStatsOtherMulti(dataPath,stats,startDt,endDt,sepChar)
+    dataOutobs <- getDataLocal(dataPath,startDt,endDt,sepChar)
     } else if (nchar(dataPath2)>1) {
-    statsout2 <- ObservedStatsOtherMulti(dataPath2,stats,startDt2,endDt2,sepChar)
-    dataOut2 <- getDataLocal(dataPath2,startDt2,endDt2,sepChar)
+    statsoutobs <- ObservedStatsOtherMulti(dataPath2,stats,startDt2,endDt2,sepChar)
+    dataOutobs <- getDataLocal(dataPath2,startDt2,endDt2,sepChar)
     }
   } else if (nchar(dataPath2)>1) {
-  statsout2 <- ObservedStatsOtherMulti(dataPath2,stats,startDt2,endDt2,sepChar)
-  dataOut2 <- getDataLocal(dataPath2,startDt2,endDt2,sepChar)
-  } else { statsout2 <- ObservedStatsOtherMulti(dataPath,stats,startDt2,endDt2,sepChar)
-           dataOut2 <- getDataLocal(dataPath,startDt2,endDt2,sepChar)}  
-n <- ncol(statsout1)-1  
-statsout1 <- statsout1[order(as.numeric(statsout1$site_no)),]
-statsout2 <- statsout2[order(as.numeric(statsout2$site_no)),]
-statsout1 <- statsout1[as.numeric(statsout1$site_no) %in% as.numeric(statsout2$site_no),]
-statsout2 <- statsout2[as.numeric(statsout2$site_no) %in% as.numeric(statsout1$site_no),]
-DiffStats <- (statsout2[,4:n]-statsout1[,4:n])/statsout1[,4:n]
+  statsoutobs <- ObservedStatsOtherMulti(dataPath2,stats,startDt2,endDt2,sepChar)
+  dataOutobs <- getDataLocal(dataPath2,startDt2,endDt2,sepChar)
+  } else { statsoutobs <- ObservedStatsOtherMulti(dataPath,stats,startDt2,endDt2,sepChar)
+           dataOutobs <- getDataLocal(dataPath,startDt2,endDt2,sepChar)}  
+n <- ncol(statsoutsim)-1  
+statsoutsim <- statsoutsim[order(as.numeric(statsoutsim$site_no)),]
+statsoutobs <- statsoutobs[order(as.numeric(statsoutobs$site_no)),]
+statsoutsim <- statsoutsim[as.numeric(statsoutsim$site_no) %in% as.numeric(statsoutobs$site_no),]
+statsoutobs <- statsoutobs[as.numeric(statsoutobs$site_no) %in% as.numeric(statsoutsim$site_no),]
+DiffStats <- (statsoutsim[,4:n]-statsoutobs[,4:n])/statsoutobs[,4:n]
 diffnames <- colnames(DiffStats)
-DiffStats <- cbind(statsout1$site_no,DiffStats,stringsAsFactors=FALSE)
+DiffStats <- cbind(statsoutsim$site_no,DiffStats,stringsAsFactors=FALSE)
 diffnames <- c("site_no",diffnames)
 colnames(DiffStats) <- diffnames
-RegGoFstats <- RegionalGoF(statsout1[,c(1,4:n)],statsout2[,c(1,4:n)])
-GoFstats <- matrix(,nrow=nrow(statsout1),ncol=147)
+RegGoFstats <- RegionalGoF(statsoutsim[,c(1,4:n)],statsoutobs[,c(1,4:n)])
+GoFstats <- matrix(,nrow=nrow(statsoutsim),ncol=147)
 flag <- 0
-for (i in 1:nrow(statsout1)) {
-  flow1 <- dataOut1[[i]] 
+for (i in 1:nrow(statsoutsim)) {
+  flow1 <- dataOutsim[[i]] 
   lfunc <- function(e) {data.frame(e$site_no,e$wy_val,e$date,e$discharge,e$month_val,e$year_val,e$day_val,e$jul_val,stringsAsFactors=FALSE)}
-  flow2 <- ldply(dataOut2,lfunc)
+  flow2 <- ldply(dataOutobs,lfunc)
   flow2 <- flow2[as.numeric(flow2$e.site_no)==max(as.numeric(flow1$site_no)),]
   colnames(flow2) <- colnames(flow1)
   a <- SiteGoF(flow1,flow2) 
@@ -75,11 +75,11 @@ for (i in 1:nrow(statsout1)) {
   }
 }
 if (flag==i) {
-  compareOut <- list(statsout1,statsout2,DiffStats,RegGoFstats) 
+  compareOut <- list(statsoutsim,statsoutobs,DiffStats,RegGoFstats) 
 } else {
 GoFstats <- as.data.frame(GoFstats,stringsAsFactors=FALSE)
 colnames(GoFstats) <- GoFnames
-compareOut <- list(statsout1,statsout2,DiffStats,RegGoFstats,GoFstats)
+compareOut <- list(statsoutsim,statsoutobs,DiffStats,RegGoFstats,GoFstats)
 }
 return(compareOut)
 }

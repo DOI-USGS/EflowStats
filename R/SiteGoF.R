@@ -3,8 +3,8 @@
 #' This function accepts observed and modeled data frames of daily flow data and returns a data frame of 
 #' calculated GoF statistics
 #' 
-#' @param Gaged data frame of daily flow data
 #' @param Modeled data frame of daily flow data
+#' @param Gaged data frame of daily flow data
 #' @return Output data frame of calculated statistics
 #' @export
 #' @import hydroGOF
@@ -18,8 +18,8 @@
 #' load_mod<-sampleData
 #' Gaged<-load_data
 #' Modeled<-load_mod
-#' SiteGoF(Gaged,Modeled)
-SiteGoF <- function(Gaged,Modeled) {
+#' SiteGoF(Modeled,Gaged)
+SiteGoF <- function(Modeled,Gaged) {
   Gaged <- Gaged[as.Date(Gaged$date) %in% as.Date(Modeled$date),]
   Modeled <- Modeled[as.Date(Modeled$date) %in% as.Date(Gaged$date),]
   Gaged <- Gaged[order(Gaged$date),]

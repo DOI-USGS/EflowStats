@@ -3,11 +3,11 @@
 #' This function accepts data frames of statistics for observed and modeled daily flow time-series 
 #' and returns a data frame of calculated GoF statistics
 #' 
-#' @param GagedFlowStats data frame of flow stats for observed data
-#' @param ModeledFlowStats data frame of flow stats for modeled data
+#' @param ModeledFlowStats data frame of flow stats for observed data
+#' @param GagedFlowStats data frame of flow stats for modeled data
 #' @return Output data frame of calculated statistics
 #' @export
-RegionalGoF <- function(GagedFlowStats,ModeledFlowStats) {
+RegionalGoF <- function(ModeledFlowStats,GagedFlowStats) {
   Output<-matrix(nrow=nrow(GagedFlowStats)*6,ncol=ncol(GagedFlowStats)+1)
   for (j in 1:nrow(GagedFlowStats)) {
     n<-(j-1)*6
