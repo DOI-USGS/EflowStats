@@ -49,17 +49,20 @@ CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",sepChar=
 n <- ncol(statsoutsim)-1  
 statsoutsim <- statsoutsim[order(as.numeric(statsoutsim$site_no)),]
 statsoutobs <- statsoutobs[order(as.numeric(statsoutobs$site_no)),]
-statsoutsim <- statsoutsim[as.numeric(statsoutsim$site_no) %in% as.numeric(statsoutobs$site_no),]
-statsoutobs <- statsoutobs[as.numeric(statsoutobs$site_no) %in% as.numeric(statsoutsim$site_no),]
-DiffStats <- (statsoutsim[,4:n]-statsoutobs[,4:n])/statsoutobs[,4:n]
+statsoutsim2 <- statsoutsim[which(is.na(statsoutsim$comment) | nchar(statsoutsim$comment)==0),]
+statsoutobs2 <- statsoutobs[which(is.na(statsoutobs$comment) | nchar(statsoutobs$comment)==0),]
+statsoutsim2 <- statsoutsim2[as.numeric(statsoutsim2$site_no) %in% as.numeric(statsoutobs2$site_no),]
+statsoutobs2 <- statsoutobs2[as.numeric(statsoutobs2$site_no) %in% as.numeric(statsoutsim2$site_no),]
+DiffStats <- (statsoutsim2[,4:n]-statsoutobs2[,4:n])/statsoutobs2[,4:n]
 diffnames <- colnames(DiffStats)
-DiffStats <- cbind(statsoutsim$site_no,DiffStats,stringsAsFactors=FALSE)
+DiffStats <- cbind(statsoutsim2$site_no,DiffStats,stringsAsFactors=FALSE)
 diffnames <- c("site_no",diffnames)
 colnames(DiffStats) <- diffnames
-RegGoFstats <- RegionalGoF(statsoutsim[,c(1,4:n)],statsoutobs[,c(1,4:n)])
-GoFstats <- matrix(,nrow=nrow(statsoutsim),ncol=147)
+sitesnum <- min(length(dataOutsim),length(dataOutobs))
+RegGoFstats <- RegionalGoF(statsoutsim2[,c(1,4:n)],statsoutobs2[,c(1,4:n)])
+GoFstats <- matrix(,nrow=sitesnum,ncol=147)
 flag <- 0
-for (i in 1:nrow(statsoutsim)) {
+for (i in 1:sitesnum) {
   flow1 <- dataOutsim[[i]] 
   lfunc <- function(e) {data.frame(e$site_no,e$wy_val,e$date,e$discharge,e$month_val,e$year_val,e$day_val,e$jul_val,stringsAsFactors=FALSE)}
   flow2 <- ldply(dataOutobs,lfunc)

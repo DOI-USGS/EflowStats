@@ -38,6 +38,9 @@ getDataLocal <- function(dataPath,startDt="",endDt="",sepChar=",") {
     if (nchar(endDt)>1) {obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")<=strptime(enddate,"%Y-%m-%d")),]}
     obs_count<-nrow(obs_data)
     cat(paste("get_obsdata run on x_obs for site",site,obs_count,"\n",sep=" "))
+    if (nrow(obs_data)==0) {
+      obs_data<-"No complete water years for site"
+    } else {
     countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
     colnames(countbyyr)<-c("wy","num_samples")
     sub_countbyyr<-countbyyr[countbyyr$num_samples>=365,]
@@ -51,6 +54,6 @@ getDataLocal <- function(dataPath,startDt="",endDt="",sepChar=",") {
       obs_data <- cbind(site_no,obs_data,stringsAsFactors=FALSE)
       }
     dataOut[[i]]<-obs_data
-  }
+  }}
   return(dataOut)
 }

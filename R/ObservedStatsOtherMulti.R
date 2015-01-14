@@ -69,13 +69,16 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
     if (nchar(endDt)>1) {obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")<=strptime(enddate,"%Y-%m-%d")),]}
       obs_count<-nrow(obs_data)
       cat(paste("get_obsdata run on x_obs for site",site[i],obs_count,"\n",sep=" "))
+     if (nrow(obs_data)==0) {
+      comment[i]<-"No complete water years for site"
+     } else {
       drain_area<-drainAreas$darea[which(as.numeric(drainAreas$siteNo)==as.numeric(site[i]))]
       cat(paste("data and drainage area retrieved for site",site[i],drain_area,"\n",sep=" "))
       countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
       colnames(countbyyr)<-c("wy","num_samples")
       sub_countbyyr<-countbyyr[countbyyr$num_samples>=365,]
       if (nrow(sub_countbyyr)==0) {
-        tempArrays$comment[i]<-"No complete water years for site"
+       comment[i]<-"No complete water years for site"
       } else {
         obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
         obs_data<-obs_data[order(obs_data$date),]
@@ -115,7 +118,7 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
           cat(paste("Mag7 stats calculated for site",site[i],"\n",sep=" "))
         }
         comment <- ""
-      }
+      }}
   }
   
   statsout<-data.frame(site,yv,ymaxv,magnifSevenObs,ObsFlowStats,comment,stringsAsFactors=FALSE)
