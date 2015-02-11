@@ -8,7 +8,6 @@
 #' @return Output data frame of calculated statistics
 #' @export
 #' @import hydroGOF
-#' @import XML
 #' @import zoo
 #' @import chron
 #' @import doBy
