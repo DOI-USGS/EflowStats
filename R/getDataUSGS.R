@@ -11,23 +11,19 @@
 #' sites <- c("02177000", "02178400")
 #' startdate <- "2009"
 #' enddate <- "2013"
-#' getDataUSGS(sites,startdate,enddate)
+#' data <- getDataUSGS(sites,startdate,enddate)
 getDataUSGS <- function(sites,startdate,enddate) {
   startdate <- paste(startdate,"10","01",sep="-")
   enddate <- paste(enddate,"09","30",sep="-")
-  # Hardcode NWIS urls and parameters.
-  nwisDvUrl = "http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
-  offering = "00003"
-  property = "00060"
-  drainage_url = "http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
-  interval<-''
-  latest<-''
+
   dataOut <- list()
   for (i in 1:length(sites)) {
     site=sites[i]
-    url2<-paste(nwisDvUrl,site,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')
-    x_obs <- getXMLWML1.1Data(url2)
-    
+
+    x_obs <- dataRetrieval::readNWISdv(site, "00060", startdate, enddate) 
+    x_obs <- renameNWISColumns(x_obs)
+    x_obs <- x_obs[,c("Date","Flow")]
+    names(x_obs) <- c("date","discharge")
     if (nrow(x_obs)>2) {
       obs_data <- get_obsdata(x_obs)
       obs_count<-nrow(obs_data)
