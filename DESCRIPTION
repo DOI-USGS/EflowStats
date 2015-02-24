@@ -11,11 +11,10 @@ Imports:
     zoo,
     chron,
     doBy,
-    XML,
-    RCurl,
     hydroGOF,
     lmomco,
-    plyr
+    plyr,
+    dataRetrieval
 Suggests:
     xtable,
     knitr
