@@ -12,20 +12,15 @@
 #' sites <- c("02177000", "02178400")
 #' startdate <- "2009"
 #' enddate <- "2013"
-#' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
+#' stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 #' \dontrun{
-#' ObservedStatsUSGS(sites,startdate,enddate,stats)
+#' usgsStats <- ObservedStatsUSGS(sites,startdate,enddate,stats)
 #' }
 ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
   startdate <- paste(startdate,"10","01",sep="-")
   enddate <- paste(enddate,"09","30",sep="-")
-  # Hardcode NWIS urls and parameters.
-  nwisDvUrl = "http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="
-  offering = "00003"
-  property = "00060"
+
   drainage_url = "http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
-  interval<-''
-  latest<-''
   
   Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 14) + (length(grep("durStat", stats)) * 44) + (length(grep("timStat", stats)) * 10) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 9)
   Magnifnum <- (length(grep("magnifSeven", stats)) * 7)
@@ -56,8 +51,11 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
   
   for (i in 1:length(sites)) {
     site=sites[i]
-    url2<-paste(nwisDvUrl,site,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')
-    x_obs <- getXMLWML1.1Data(url2)
+    
+    x_obs <- dataRetrieval::readNWISdv(site, "00060", startdate, enddate) 
+    x_obs <- renameNWISColumns(x_obs)
+    x_obs <- x_obs[,c("Date","Flow")]
+    names(x_obs) <- c("date","discharge")
     
     if (nrow(x_obs)>2) {
       obs_data <- get_obsdata(x_obs)
