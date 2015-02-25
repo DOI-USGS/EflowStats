@@ -20,6 +20,8 @@ NWIS site. It returns a drain_area value.
 drainage_url<-"http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
 sites<-"02177000"
 drain_url<-paste(drainage_url,sites,sep="")
-getDrainageArea(drain_url)
+\dontrun{
+da <- getDrainageArea(drain_url)
+}
 }
 
