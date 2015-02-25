@@ -12,10 +12,12 @@
 #' @return statsout data frame containing requested statistics for each station
 #' @export
 #' @examples
+#' dataPath <- system.file("extdata", package="EflowStats")
+#' dataPath <- paste(dataPath, "modeled", sep="/")
+#' 
+#' stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 #' \dontrun{
-#' dataPath <- "C:/Users/jlthomps/Documents/R/JData/modeled/"
-#' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
-#' ObservedStatsOtherMulti(dataPath,stats)
+#' obsStats <- ObservedStatsOtherMulti(dataPath,stats)
 #' }
 ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar=",") {
   if (nchar(startDt)>1) {startdate <- paste(startDt,"10","01",sep="-")}
@@ -28,9 +30,11 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
   drainFile <- fileList[charmatch("drain",fileList)]
   peakFiles <- fileList[charmatch("peak",fileList)]
   if (!is.na(peakFiles)) {
-  sites <- fileList-peakFiles
-  sites <- sites[which(!fileList %in% drainFile)]
-  } else {sites <- fileList[which(!fileList %in% drainFile)]}
+    sites <- fileList-peakFiles
+    sites <- sites[which(!fileList %in% drainFile)]
+  } else {
+    sites <- fileList[which(!fileList %in% drainFile)]
+  }
   Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 14) + (length(grep("durStat", stats)) * 44) + (length(grep("timStat", stats)) * 10) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 9)
   Magnifnum <- (length(grep("magnifSeven", stats)) * 7)
   comment <- vector(length = length(sites))
@@ -57,18 +61,49 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
   namesOtherStat <- c("med_flowObs", "cv_flowObs", "cv_dailyObs", "flow_10Obs", "flow_25Obs", "flow_50Obs", "flow_75Obs", 
                       "flow_90Obs", "flow_15Obs")
   
+  dateFormatCheck <- function(date){  # checks for the format YYYY-MM-DD
+    parts <- strsplit(date,"-",fixed=TRUE)
+    condition <- FALSE
+    if (length(parts[[1]])>1) {
+      if (nchar(parts[[1]][1]) == 4 && nchar(parts[[1]][2]) == 2 && nchar(parts[[1]][3]) == 2){
+        testYear <- as.numeric(parts[[1]][1])
+        testMonth <- as.numeric(parts[[1]][2])
+        testDay <- as.numeric(parts[[1]][3])
+        if (!is.na(testYear) && !is.na(testMonth) && !is.na(testDay)){
+          if (testMonth <= 12 && testDay <= 31){
+            condition <- TRUE
+          }        
+        }      
+      }
+    }
+    return(condition)
+  }
+  
   namesFull <- c("site_no", "min_date", "max_date")
-  drainAreas <- read.table(paste(dataPath,drainFile,sep=""),sep=sepChar,stringsAsFactors=FALSE,header=TRUE)
+  drainAreas <- read.table(file.path(dataPath,drainFile),sep=sepChar,stringsAsFactors=FALSE,header=TRUE)
   colnames(drainAreas) <- c("siteNo","darea")
   for (i in 1:length(sites)) {
-    x_obs <- read.table(paste(dataPath,sites[i],sep=""),sep=sepChar,stringsAsFactors=FALSE,header=TRUE)
+    x_obs <- read.table(file.path(dataPath,sites[i]),
+                        sep=sepChar,stringsAsFactors=FALSE,
+                        header=TRUE, colClasses = "character")
     site[i] <- x_obs[1,1]
     x_obs <- x_obs[,2:3]
-      obs_data <- get_obsdata(x_obs)
-    if (nchar(startDt)>1) {obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")>=strptime(startdate,"%Y-%m-%d")),]}
-    if (nchar(endDt)>1) {obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")<=strptime(enddate,"%Y-%m-%d")),]}
-      obs_count<-nrow(obs_data)
-      cat(paste("get_obsdata run on x_obs for site",site[i],obs_count,"\n",sep=" "))
+    x_obs[,2] <- as.numeric(x_obs[,2])
+    
+    if(!dateFormatCheck(x_obs[,1])){
+      x_obs[,1] <- as.character(as.Date(x_obs[,1],format="%m/%d/%Y"))
+    }
+    
+    obs_data <- get_obsdata(x_obs)
+    if (nchar(startDt)>1) {
+      obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")>=strptime(startdate,"%Y-%m-%d")),]
+    }
+    
+    if (nchar(endDt)>1) {
+      obs_data<-obs_data[which(strptime(obs_data$date,"%Y-%m-%d")<=strptime(enddate,"%Y-%m-%d")),]
+    }
+    obs_count<-nrow(obs_data)
+    cat(paste("get_obsdata run on x_obs for site",site[i],obs_count,"\n",sep=" "))
      if (nrow(obs_data)==0) {
       comment[i]<-"No complete water years for site"
      } else {
@@ -77,13 +112,14 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
       countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
       colnames(countbyyr)<-c("wy","num_samples")
       sub_countbyyr<-countbyyr[countbyyr$num_samples>=365,]
+      
       if (nrow(sub_countbyyr)==0) {
        comment[i]<-"No complete water years for site"
       } else {
         obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
         obs_data<-obs_data[order(obs_data$date),]
         if (!is.na(peakFiles)) {
-          peakData <- read.table(paste(dataPath,peakFiles[i],sep=""),sep=sepChar,stringsAsFactors=FALSE,header=TRUE)
+          peakData <- read.table(file.path(dataPath,peakFiles[i]),sep=sepChar,stringsAsFactors=FALSE,header=TRUE)
           peak <- peakData[1,1]
           peakData <- peak[,2:3]
           colnames(peakData) <- c("date","discharge")
@@ -99,13 +135,14 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
           peakData <- obs_data[paste(obs_data$wy_val,obs_data$discharge) %in% paste(peakData$wy_val,peakData$discharge),]
           peakData$logval <- log10(peakData$discharge)
         }
-        min_date <- min(obs_data[which(obs_data$month_val=="10"&obs_data$day_val=="01"),]$date)
-        max_date <- max(obs_data[which(obs_data$month_val=="09"&obs_data$day_val=="30"),]$date)
+        
+        min_date <- min(obs_data[which(obs_data$month_val==10&obs_data$day_val==01),]$date)
+        max_date <- max(obs_data[which(obs_data$month_val==9&obs_data$day_val==30),]$date)
         obs_data <- obs_data[which(obs_data$date>=min_date&obs_data$date<=max_date),]
         yv[i]<-as.character(min(obs_data$date))
         ymaxv[i]<-as.character(max(obs_data$date))
         cat(paste("dates calculated for site",site[i],"\n",sep=" "))
-        
+          
         obs_data <- obs_data[,c('wy_val','date','discharge','month_val','year_val','day_val','jul_val')]
         obs_count <- nrow(obs_data)
         cat(paste("dfs created for site",site[i],obs_count,"\n",sep=" "))
@@ -118,7 +155,8 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
           cat(paste("Mag7 stats calculated for site",site[i],"\n",sep=" "))
         }
         comment <- ""
-      }}
+      }
+    }
   }
   
   statsout<-data.frame(site,yv,ymaxv,magnifSevenObs,ObsFlowStats,comment,stringsAsFactors=FALSE)
