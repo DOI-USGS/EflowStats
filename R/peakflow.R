@@ -8,17 +8,19 @@
 #' @export
 #' @examples
 #' sites<-"02178400"
-#' getPeakData(sites)
+#' \dontrun{
+#' peakData <- getPeakData(sites)
+#' }
 getPeakData <- function(sites){
-urlpeak <- "http://nwis.waterdata.usgs.gov/nwis/peak?site_no"
-url <- paste(urlpeak,"=",sites,"&agency_cd=USGS&format=rdb",sep="")
-doc<-read.table(url,sep="\t",stringsAsFactors=FALSE)
-peakValues<-data.frame(as.Date(doc$V3[3:nrow(doc)],format="%Y-%m-%d"),as.numeric(doc$V5[3:nrow(doc)]))
-colnames(peakValues)<-c('date','discharge')
-peakValues$year_val<-substr(peakValues$date,1,4)
-peakValues$month_val<-substr(peakValues$date,6,7)
-peakValues$wy_val<-as.numeric(ifelse(as.numeric(peakValues$month_val)>=10,as.character(as.numeric(peakValues$year_val)+1),peakValues$year_val)) 
-peakValues$logval <- log10(peakValues$discharge)
-peakValues <- peakValues[,c(1:2,5:6)]
-return (peakValues)
+  
+  peakValues <- dataRetrieval::readNWISpeak(sites, "", "")
+  peakValues <- peakValues[,c("peak_dt","peak_va")]
+  colnames(peakValues)<-c('date','discharge')
+  
+  peakValues$year_val<-substr(peakValues$date,1,4)
+  peakValues$month_val<-substr(peakValues$date,6,7)
+  peakValues$wy_val<-as.numeric(ifelse(as.numeric(peakValues$month_val)>=10,as.character(as.numeric(peakValues$year_val)+1),peakValues$year_val)) 
+  peakValues$logval <- log10(peakValues$discharge)
+  peakValues <- peakValues[,c(1:2,5:6)]
+  return (peakValues)
 }
