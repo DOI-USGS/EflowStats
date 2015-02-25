@@ -3,7 +3,6 @@
 language: c
 
 os:
-  - osx
   - linux
 
 env:
