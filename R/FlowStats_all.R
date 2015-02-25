@@ -10,11 +10,9 @@
 #' @return Output data frame of calculated statistics
 #' @export
 #' @examples
-#' drainage_url<-"http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
 #' sites<-"02177000"
-#' drain_url<-paste(drainage_url,sites,sep="")
 #' \dontrun{
-#' drain_area<-getDrainageArea(drain_url)
+#' drain_area<-getDrainageArea(sites)
 #' qfiletempf<-sampleData
 #' FlowStatsAll(qfiletempf,drain_area)
 #' }

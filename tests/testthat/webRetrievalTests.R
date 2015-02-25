@@ -2,12 +2,10 @@ context("Functions that call web services")
 
 test_that("General NWIS retrievals working", {
   testthat::skip_on_cran()
-  
-  drainage_url<-"http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
-  sites<-"02177000"
-  drain_url<-paste(drainage_url,sites,sep="")
 
-  da <- getDrainageArea(drain_url)
+  sites<-"02177000"
+
+  da <- getDrainageArea(sites)
   expect_that(da == 207, is_true())
   
   url<-"http://waterservices.usgs.gov/nwis/dv/?format=waterml,1.1&sites="

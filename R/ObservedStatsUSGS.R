@@ -19,8 +19,6 @@
 ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
   startdate <- paste(startdate,"10","01",sep="-")
   enddate <- paste(enddate,"09","30",sep="-")
-
-  drainage_url = "http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
   
   Flownum <- (length(grep("magStat", stats)) * 94) + (length(grep("flowStat", stats)) * 14) + (length(grep("durStat", stats)) * 44) + (length(grep("timStat", stats)) * 10) + (length(grep("rateStat", stats)) * 9) + (length(grep("otherStat", stats)) * 9)
   Magnifnum <- (length(grep("magnifSeven", stats)) * 7)
@@ -61,8 +59,7 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
       obs_data <- get_obsdata(x_obs)
       obs_count<-nrow(obs_data)
       cat(paste("get_obsdata run on x_obs for site",site,obs_count,"\n",sep=" "))
-      drain_url<-paste(drainage_url,site,sep="")
-      drain_area<-getDrainageArea(drain_url)
+      drain_area<-getDrainageArea(site)
       cat(paste("data and drainage area retrieved for site",site,drain_area,"\n",sep=" "))
       countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
       colnames(countbyyr)<-c('wy','num_samples')
