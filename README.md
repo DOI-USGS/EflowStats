@@ -5,10 +5,6 @@ Calculates a suite of ecological flow statistics and fundamental properties of d
 
 The EflowStats package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with USGS (United States Geological Survey) NWIS (National Water Information System) data. This package is intended to be an update of the previously existing USGS NAHAT (National Hydrologic Assessment Tool) program (NAHAT) with additional statistics previously published by Archfield et al (Archfield).
 
-Henriksen, J.A., Heasley, J. Kennen, J.G., and Nieswand, S., 2006, Users' manual for the Hydroecological Integrity Assessment Process software (including the New Jersey Assessment Tools): U.S. Geological Survey Open-File Report 2006-1093. 72 p. (http://www.fort.usgs.gov/products/publications/21598/21598.pdf) 
-
-Archfield, S.A., J.G. Kennen, D.M. Carlisle, and D.M. Wolock. 2013. An Objective and Parsimonious Approach for Classifying Natural Flow Regimes at a Continental Scale. River Res. Applic. doi: 10.1002/rra.2710 (http://onlinelibrary.wiley.com/doi/10.1002/rra.2710/abstract)
-
 To install this package use the following code:
 
 Installation
@@ -17,6 +13,13 @@ Installation
 ```r
 install.packages("EflowStats",repos=c("http://owi.usgs.gov","http://cran.us.r-project.org"))
 ```
+
+References
+----------
+
+Henriksen, J.A., Heasley, J. Kennen, J.G., and Nieswand, S., 2006, Users' manual for the Hydroecological Integrity Assessment Process software (including the New Jersey Assessment Tools): U.S. Geological Survey Open-File Report 2006-1093. 72 p. ([http://www.fort.usgs.gov/products/publications/21598/21598.pdf](http://www.fort.usgs.gov/products/publications/21598/21598.pdf))
+
+Archfield, S.A., J.G. Kennen, D.M. Carlisle, and D.M. Wolock. 2013. An Objective and Parsimonious Approach for Classifying Natural Flow Regimes at a Continental Scale. River Res. Applic. doi: 10.1002/rra.2710 ([http://onlinelibrary.wiley.com/doi/10.1002/rra.2710/abstract](http://onlinelibrary.wiley.com/doi/10.1002/rra.2710/abstract))
 
 Disclaimer
 ----------
