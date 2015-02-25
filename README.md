@@ -14,6 +14,11 @@ To install this package use the following code:
 install.packages("EflowStats",repos=c("http://owi.usgs.gov/R","http://cran.us.r-project.org"))
 ```
 
+Linix Tests: [![travis](https://travis-ci.org/USGS-R/EflowStats.svg)](https://travis-ci.org/USGS-R/EflowStats.svg)
+
+Windows Tests: [![Build status](https://ci.appveyor.com/api/projects/status/a2kogyfplo3valdg?svg=true)](https://ci.appveyor.com/project/ldecicco-USGS/EflowStats)
+
+
 References
 ----------
 

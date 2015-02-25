@@ -25,11 +25,9 @@ This function accepts a data frame of daily flow data and returns a data frame o
 calculated HIT/HAT statistics
 }
 \examples{
-drainage_url<-"http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
 sites<-"02177000"
-drain_url<-paste(drainage_url,sites,sep="")
 \dontrun{
-drain_area<-getDrainageArea(drain_url)
+drain_area<-getDrainageArea(sites)
 qfiletempf<-sampleData
 FlowStatsAll(qfiletempf,drain_area)
 }

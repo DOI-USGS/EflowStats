@@ -3,20 +3,19 @@
 #' This function accepts a url parameter that already contains the desired 
 #' NWIS site. It returns a drain_area value.
 #' 
-#' @param drain_url string containing the url for the retrieval
+#' @param site string containing the USGS site id
 #' @return drain_area a numeric value of the drainage area for a given site
 #' @export
+#' @import dataRetrieval
 #' @examples
-#' drainage_url<-"http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
 #' sites<-"02177000"
-#' drain_url<-paste(drainage_url,sites,sep="")
 #' \dontrun{
-#' da <- getDrainageArea(drain_url)
+#' da <- getDrainageArea(sites)
 #' }
-getDrainageArea <- function(drain_url){
-  cat(paste("Retrieving data from: \n", drain_url, "\n", sep=" "))
-  site_service<-read.delim(drain_url, header=TRUE, quote="\"", dec=".", sep="\t", colClasses=c("character"), fill=TRUE, comment.char="#")
-  site_service<-site_service[2,]
-  drain_area<-as.numeric(site_service$drain_area_va)
+getDrainageArea <- function(site){
+  
+  cat(paste("Retrieving data from USGS site: \n", site, "\n", sep=" "))
+  siteFile <- dataRetrieval::readNWISsite(site)
+  drain_area<-as.numeric(siteFile$drain_area_va)
   return (drain_area)
 }
