@@ -13,9 +13,11 @@
 #' drainage_url<-"http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
 #' sites<-"02177000"
 #' drain_url<-paste(drainage_url,sites,sep="")
+#' \dontrun{
 #' drain_area<-getDrainageArea(drain_url)
 #' qfiletempf<-sampleData
 #' FlowStatsAll(qfiletempf,drain_area)
+#' }
 FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateStat,otherStat,durStat",peakData=0) {
   dfOut <- vector()
   if (length(peakData)==1){

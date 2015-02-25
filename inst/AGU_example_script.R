@@ -19,21 +19,22 @@ stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 statsout <- ObservedStatsOther(daily_data,drain_area,site_id,stats)
 
 # calculate stats for multiple sites in a local data directory
-dataPath="C:/Users/jlthomps/Documents/R/JData/modeled/"
-stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+dataPathBase <- system.file("extdata", package="EflowStats")
+dataPath <- paste(dataPathBase, "modeled", sep="/")
+stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 statsout <- ObservedStatsOtherMulti(dataPath,stats)
 
 # plot monthly means for a daily discharge timeseries
-qfiletempf<-sampleData
-meanmonts<-monthlyMeanTs(qfiletempf)
+qfiletempf <- sampleData
+meanmonts <- monthlyMeanTs(qfiletempf)
 plotMonthlyMean(meanmonts,'02178400')
 
 # NWIS-local
 sites <- c("02186000","02192000","02219000","02317500","02329600")
 startDt <- "1990"
 endDt <- "1999"
-stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
-dataPath="C:/Users/jlthomps/Documents/R/JData/modeled/"
+stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+
 DiffStats <- CompareStats(stats,sites=sites,dataPath=dataPath,startDt=startDt,endDt=endDt)
 stats1 <- DiffStats[[1]]
 stats2 <- DiffStats[[2]]
@@ -47,11 +48,11 @@ startDt <- "1990"
 endDt <- "1999"
 startDt2 <- "2000"
 endDt2 <- "2008"
-stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 DiffStats <- CompareStats(stats,sites=sites,startDt=startDt,endDt=endDt,startDt2=startDt2,endDt2=endDt2)
 
 # local-local
-stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
-dataPath="C:/Users/jlthomps/Documents/R/JData/modeled/"
-dataPath2="C:/Users/jlthomps/Documents/R/JData/observed/"
+stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
+dataPath <- paste(dataPathBase, "modeled", sep="/")
+dataPath2 <- paste(dataPathBase, "observed", sep="/")
 DiffStats <- CompareStats(stats,dataPath=dataPath,dataPath2=dataPath2)

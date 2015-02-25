@@ -39,6 +39,12 @@ enddate <- "2008"
 startdate2 <- "2009"
 enddate2 <- "2013"
 stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
-CompareStats(stats,sites=sites,startDt=startdate,endDt=enddate,startDt2=startdate2,endDt2=enddate2)
+\dontrun{
+compareResults <- CompareStats(stats,sites=sites,
+                               startDt=startdate,
+                               endDt=enddate,
+                               startDt2=startdate2,
+                               endDt2=enddate2)
+}
 }
 

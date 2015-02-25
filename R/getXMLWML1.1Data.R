@@ -15,8 +15,11 @@
 #' enddate<-"2012-10-01"
 #' offering<-'00003'
 #' property<-'00060'
-#' obs_url<-paste(url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')
+#' obs_url<-paste0(url,sites,'&startDT=',startdate,'&endDT=',enddate,
+#'                '&statCd=',offering,'&parameterCd=',property)
+#' \dontrun{
 #' data <- getXMLWML1.1Data(obs_url)
+#' }
 getXMLWML1.1Data <- function(obs_url){
   cat(paste("Retrieving data from: \n", obs_url, "\n", sep = " "))
   Daily <- dataRetrieval::importWaterML1(obs_url, asDateTime = FALSE)

@@ -7,11 +7,7 @@
 #' @export
 #' @examples
 #' timeseries1<-sampleData
-#' timeseries1<-data.frame(timeseries1$date,timeseries1$discharge,timeseries1$month_val,stringsAsFactors=FALSE)
-#' timeseries1$date<-as.Date(timeseries1$timeseries1.date,"%m/%d/%y")
-#' timeseries1<-data.frame(timeseries1$date,timeseries1$timeseries1.discharge,timeseries1$timeseries1.month_val,stringsAsFactors=FALSE)
-#' colnames(timeseries1)<-c("date","discharge","month_val")
-#' deseason(timeseries1)
+#' deseason1 <- deseason(timeseries1)
 deseason<-function(timeseries) {
   
   #Begin the deseasonalizng process by querying the time series for each month

@@ -21,7 +21,13 @@
 #' startdate2 <- "2009"
 #' enddate2 <- "2013"
 #' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
-#' CompareStats(stats,sites=sites,startDt=startdate,endDt=enddate,startDt2=startdate2,endDt2=enddate2)
+#' \dontrun{
+#' compareResults <- CompareStats(stats,sites=sites,
+#'                                startDt=startdate,
+#'                                endDt=enddate,
+#'                                startDt2=startdate2,
+#'                                endDt2=enddate2)
+#' }                               
 CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",sepChar=",",dataPath2="",startDt2="",endDt2="") {
   if (length(sites)>1) {
     statsoutsim <- ObservedStatsUSGS(sites,startDt,endDt,stats)

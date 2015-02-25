@@ -10,7 +10,9 @@
 #' drainage_url<-"http://waterservices.usgs.gov/nwis/site/?siteOutput=Expanded&site="
 #' sites<-"02177000"
 #' drain_url<-paste(drainage_url,sites,sep="")
-#' getDrainageArea(drain_url)
+#' \dontrun{
+#' da <- getDrainageArea(drain_url)
+#' }
 getDrainageArea <- function(drain_url){
   cat(paste("Retrieving data from: \n", drain_url, "\n", sep=" "))
   site_service<-read.delim(drain_url, header=TRUE, quote="\"", dec=".", sep="\t", colClasses=c("character"), fill=TRUE, comment.char="#")

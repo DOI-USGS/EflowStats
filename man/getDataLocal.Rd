@@ -22,9 +22,10 @@ dataOut data frame containing requested flow data for the stations
 This function accepts a list of sites, start and end date and returns a data frame containing requested flow data
 }
 \examples{
-dataPath <- "C:/Users/jlthomps/Documents/R/JData/modeled/"
+dataPath <- system.file("extdata", package="EflowStats")
+dataPath <- paste(dataPath, "modeled", sep="/")
 startdate <- "2009"
 enddate <- "2013"
-getDataLocal(dataPath,startDt=startdate,endDt=enddate)
+localData <- getDataLocal(dataPath,startDt=startdate,endDt=enddate)
 }
 

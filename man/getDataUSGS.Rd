@@ -23,6 +23,8 @@ This function accepts a list of sites, start and end date and returns a data fra
 sites <- c("02177000", "02178400")
 startdate <- "2009"
 enddate <- "2013"
+\dontrun{
 data <- getDataUSGS(sites,startdate,enddate)
+}
 }
 
