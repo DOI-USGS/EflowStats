@@ -737,9 +737,8 @@ mh19
 To install EflowStats:
 
 <<installFromCran,eval = FALSE>>=
-install.packages("EflowStats",repos=c("http://usgs-r.github.com",
-                                      "http://cran.us.r-project.org"),
-                 type="source")
+install.packages("EflowStats",repos=c("http://owi.usgs.gov/R",
+                                      "http://cran.us.r-project.org"))
 @
 
 It is a good idea to re-start R after installing the package, especially if installing an updated version. 
