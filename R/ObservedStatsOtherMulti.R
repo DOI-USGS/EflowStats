@@ -20,8 +20,14 @@
 #' obsStats <- ObservedStatsOtherMulti(dataPath,stats)
 #' }
 ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar=",") {
-  if (nchar(startDt)>1) {startdate <- paste(startDt,"10","01",sep="-")}
-  if (nchar(endDt)>1) {enddate <- paste(endDt,"09","30",sep="-")}
+  if (nchar(startDt)>1) {
+    startdate <- paste(startDt,"10","01",sep="-")
+  }
+  
+  if (nchar(endDt)>1) {
+    enddate <- paste(endDt,"09","30",sep="-")
+  }
+  
   fileList <- list.files(path=dataPath,pattern=".csv")
   for (i in 1:length(fileList)) {
     fileList[i] <- ifelse(nchar(strsplit(fileList[i],".csv"))<nchar(fileList[i]) | nchar(strsplit(fileList[i],".txt"))<nchar(fileList[i]), fileList[i],NA)
@@ -80,8 +86,12 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
   }
   
   namesFull <- c("site_no", "min_date", "max_date")
-  drainAreas <- read.table(file.path(dataPath,drainFile),sep=sepChar,stringsAsFactors=FALSE,header=TRUE)
+  drainAreas <- read.table(file.path(dataPath,drainFile),
+                           sep=sepChar,stringsAsFactors=FALSE,header=TRUE, colClasses = "character")
+  
   colnames(drainAreas) <- c("siteNo","darea")
+  drainAreas$darea <- as.numeric(drainAreas$darea)
+  
   for (i in 1:length(sites)) {
     x_obs <- read.table(file.path(dataPath,sites[i]),
                         sep=sepChar,stringsAsFactors=FALSE,
@@ -119,15 +129,17 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
         obs_data<-merge(obs_data,sub_countbyyr,by.x="wy_val",by.y="wy")
         obs_data<-obs_data[order(obs_data$date),]
         if (!is.na(peakFiles)) {
-          peakData <- read.table(file.path(dataPath,peakFiles[i]),sep=sepChar,stringsAsFactors=FALSE,header=TRUE)
+          peakData <- read.table(file.path(dataPath,peakFiles[i]),sep=sepChar,
+                                 stringsAsFactors=FALSE,header=TRUE, colClasses = "character")
           peak <- peakData[1,1]
           peakData <- peak[,2:3]
+          peakData[,2] <- as.numeric(peakData[,2])
           colnames(peakData) <- c("date","discharge")
-          peakData$month_val <- substr(peakData$date,6,7)
-          peakData$year_val <- substr(peakData$date,1,4)
-          peakData$day_val <- substr(peakData$date,9,10)
-          peakData$jul_val <- strptime(peakData$date,"%Y-%m-%d")$yday+1
-          peakData$wy_val <- ifelse(as.numeric(peakData$month_val)>=10,as.character(as.numeric(peakData$year_val)+1),peakData$year_val)
+          peakData$month_val <- as.integer(substr(peakData$date,6,7))
+          peakData$year_val <- as.integer(substr(peakData$date,1,4))
+          peakData$day_val <- as.integer(substr(peakData$date,9,10))
+          peakData$jul_val <- as.integer(strptime(peakData$date,"%Y-%m-%d")$yday)+1
+          peakData$wy_val <- ifelse(peakData$month_val>=10,as.numeric(peakData$year_val)+1,peakData$year_val)
           peakData$logval <- log10(peakData$discharge)
         } else {
           peakData <- aggregate(obs_data$discharge,by=list(obs_data$wy_val),max)
