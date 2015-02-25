@@ -11,7 +11,9 @@
 #' sites <- c("02177000", "02178400")
 #' startdate <- "2009"
 #' enddate <- "2013"
+#' \dontrun{
 #' data <- getDataUSGS(sites,startdate,enddate)
+#' }
 getDataUSGS <- function(sites,startdate,enddate) {
   startdate <- paste(startdate,"10","01",sep="-")
   enddate <- paste(enddate,"09","30",sep="-")
