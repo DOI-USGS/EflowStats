@@ -24,7 +24,10 @@ startdate<-"2012-09-01"
 enddate<-"2012-10-01"
 offering<-'00003'
 property<-'00060'
-obs_url<-paste(url,sites,'&startDT=',startdate,'&endDT=',enddate,'&statCd=',offering,'&parameterCd=',property,sep='')
+obs_url<-paste0(url,sites,'&startDT=',startdate,'&endDT=',enddate,
+               '&statCd=',offering,'&parameterCd=',property)
+\dontrun{
 data <- getXMLWML1.1Data(obs_url)
+}
 }
 
