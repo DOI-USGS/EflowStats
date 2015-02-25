@@ -16,3 +16,4 @@ test_stats_huc12_modeled_performance.R
 ^\.Rproj\.travis.yml
 ^\.Rproj\appveyor.yml
 appveyor.yml
+EflowStats.bbl
