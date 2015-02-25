@@ -3,7 +3,7 @@ EflowStats
 
 Calculates a suite of ecological flow statistics and fundamental properties of daily streamflow for a given set of data. 
 
-The EflowStats package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with USGS (United States Geological Survey) NWIS (National Water Information System) data. This package is intended to be an update of the previously existing USGS NAHAT (National Hydrologic Assessment Tool) program (NAHAT) with additional statistics previously published by Archfield et al (Archfield).
+The `EflowStats` package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with U.S. Geological Survey (USGS) National Water Information System (NWIS) data. This package is intended to be an update of the previously existing USGS National Hydrologic Assessment Tool (NAHAT) program with additional statistics previously published by Archfield et al (Archfield).
 
 
 Installation
@@ -11,7 +11,7 @@ Installation
 To install this package use the following code:
 
 ```r
-install.packages("EflowStats",repos=c("http://owi.usgs.gov","http://cran.us.r-project.org"))
+install.packages("EflowStats",repos=c("http://owi.usgs.gov/R","http://cran.us.r-project.org"))
 ```
 
 References
