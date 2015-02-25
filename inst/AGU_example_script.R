@@ -16,13 +16,13 @@ drain_area=54
 site_id="Test site"
 daily_data<-dailyData
 stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
-statsout <- ObservedStatsOther(daily_data,drain_area,site_id,stats)
+statsoutOther <- ObservedStatsOther(daily_data,drain_area,site_id,stats)
 
 # calculate stats for multiple sites in a local data directory
 dataPathBase <- system.file("extdata", package="EflowStats")
 dataPath <- paste(dataPathBase, "modeled", sep="/")
 stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
-statsout <- ObservedStatsOtherMulti(dataPath,stats)
+statsoutMulti <- ObservedStatsOtherMulti(dataPath,stats)
 
 # plot monthly means for a daily discharge timeseries
 qfiletempf <- sampleData
@@ -55,4 +55,4 @@ DiffStats <- CompareStats(stats,sites=sites,startDt=startDt,endDt=endDt,startDt2
 stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat,otherStat"
 dataPath <- paste(dataPathBase, "modeled", sep="/")
 dataPath2 <- paste(dataPathBase, "observed", sep="/")
-DiffStats <- CompareStats(stats,dataPath=dataPath,dataPath2=dataPath2)
+DiffStatsLocal <- CompareStats(stats,dataPath=dataPath,dataPath2=dataPath2)
