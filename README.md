@@ -10,7 +10,13 @@ Henriksen, J.A., Heasley, J. Kennen, J.G., and Nieswand, S., 2006, Users' manual
 Archfield, S.A., J.G. Kennen, D.M. Carlisle, and D.M. Wolock. 2013. An Objective and Parsimonious Approach for Classifying Natural Flow Regimes at a Continental Scale. River Res. Applic. doi: 10.1002/rra.2710 (http://onlinelibrary.wiley.com/doi/10.1002/rra.2710/abstract)
 
 To install this package use the following code:
-install.packages("EflowStats",repos=c("http://usgs-r.github.com","http://cran.us.r-project.org"),type="source")
+
+Installation
+----------
+
+```r
+install.packages("EflowStats",repos=c("http://owi.usgs.gov","http://cran.us.r-project.org"))
+```
 
 Disclaimer
 ----------
