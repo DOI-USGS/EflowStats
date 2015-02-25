@@ -18,6 +18,8 @@ containing peak instantaneous annual flow data for the site.
 }
 \examples{
 sites<-"02178400"
-getPeakData(sites)
+\dontrun{
+peakData <- getPeakData(sites)
+}
 }
 

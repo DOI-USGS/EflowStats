@@ -55,4 +55,19 @@ test_that("General NWIS retrievals working", {
   obsStats <- ObservedStatsUSGS(sites,startdate,enddate,stats)
   expect_that(nrow(obsStats) == length(sites), is_true())
 
+  drain_area<-getDrainageArea(drain_url)
+  qfiletempf<-sampleData
+  FlowStatsAll(qfiletempf,drain_area)
+
+  sites<-"02178400"
+  peakData <- getPeakData(sites)
+  expect_is(peakData$date, "Date")
+
+  dataPath <- system.file("extdata", package="EflowStats")
+  dataPath <- paste(dataPath, "modeled", sep="/")
+
+  stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
+  #Takes a looong time:
+#   obsStats <- ObservedStatsOtherMulti(dataPath,stats)
+
 })

@@ -27,10 +27,12 @@ with columns containing site id, date (datetime in format 'YYYY-MM-DD') and disc
 and list of desired statistic groups and returns a data frame containing requested statistics
 }
 \examples{
+dataPath <- system.file("extdata", package="EflowStats")
+dataPath <- paste(dataPath, "modeled", sep="/")
+
+stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 \dontrun{
-dataPath <- "C:/Users/jlthomps/Documents/R/JData/modeled/"
-stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
-ObservedStatsOtherMulti(dataPath,stats)
+obsStats <- ObservedStatsOtherMulti(dataPath,stats)
 }
 }
 
