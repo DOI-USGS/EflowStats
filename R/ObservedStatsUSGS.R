@@ -13,7 +13,9 @@
 #' startdate <- "2009"
 #' enddate <- "2013"
 #' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
+#' \dontrun{
 #' ObservedStatsUSGS(sites,startdate,enddate,stats)
+#' }
 ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
   startdate <- paste(startdate,"10","01",sep="-")
   enddate <- paste(enddate,"09","30",sep="-")
