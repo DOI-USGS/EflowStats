@@ -10,7 +10,7 @@
 #' qfiletempf<-sampleData
 #' medflowbyyear(qfiletempf)
 medflowbyyear <- function(qfiletempf) {
-  medflowbyyear<-aggregate(qfiletempf$discharge, list(qfiletempf$year_val), 
+  medflowbyyear<-aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                            median, na.rm=TRUE)
   return(medflowbyyear)
 }
