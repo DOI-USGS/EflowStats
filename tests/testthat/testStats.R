@@ -13,6 +13,10 @@ test_that("Statistic tests", {
   mgSeven <- magnifSeven(timeseries1)
   expect_equal(mgSeven, c(151.94, 0.37, 0.39, 0.28, 0.28, 0.57, -1.32))
   
+})
+
+test_that("Regional Goodness of Fit", {
+  
   load("data/ModeledFlowStats.rda")
   load("data/GagedFlowStats.rda")
   load('data/RegGoF.rda')
@@ -21,6 +25,10 @@ test_that("Statistic tests", {
   RegGoF_check<-data.matrix(RegGoF_check[,3:ncol(RegGoF_check)])
   expect_equivalent(round(RegGoF_check,digits=2),round(RegGoF,digits=2))
   
+})
+
+test_that("Statistic tests", {
+  
   load("data/Gaged.rda")
   load("data/Modeled.rda")
   load("data/SgoF.rda")
@@ -28,4 +36,5 @@ test_that("Statistic tests", {
   SiteGoF_check<-SiteGoF(Modeled,Gaged)
   SiteGoF_check<-data.matrix(SiteGoF_check[,3:ncol(SiteGoF_check)])
   expect_equivalent(round(SiteGoF_check,digits=2), round(SGoF,digits=2))
+  
 })
