@@ -31,29 +31,29 @@
 CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",
                          sepChar=",",dataPath2="",startDt2="",endDt2="") {
   
-  if (length(sites)>1) {
+  if (length(sites)>1) { # If more than one USGS site, run ObservedStatsUSGS on them and get the data.
     statsoutsim <- ObservedStatsUSGS(sites,startDt,endDt,stats)
     dataOutsim <- getDataUSGS(sites,startDt,endDt)
-  } else {
+  } else { # Otherwise just try and run statistics on the data at path 1.
     statsoutsim <- ObservedStatsOtherMulti(dataPath,stats,startDt,endDt,sepChar)
     dataOutsim <- getDataLocal(dataPath,startDt,endDt,sepChar)
   }
   
-  if (length(sites)>1) {
-    if (nchar(dataPath)+nchar(dataPath2)<3) {
+  if (length(sites)>1) { # if more than one USGS site is given get the second set of stats for usgs sites, or the stats for dataPath1 or dataPath2 
+    if (nchar(dataPath)+nchar(dataPath2)<3) { # If the two data paths are empty get stats and data for the same sites but different time ranges.
       statsoutobs <- ObservedStatsUSGS(sites,startDt2,endDt2,stats)
       dataOutobs <- getDataUSGS(sites,startDt2,endDt2)
-    } else if (nchar(dataPath)>1) {
+    } else if (nchar(dataPath)>1) { # If data path 1 is a thing get stats and data for the data at that path.
       statsoutobs <- ObservedStatsOtherMulti(dataPath,stats,startDt,endDt,sepChar)
       dataOutobs <- getDataLocal(dataPath,startDt,endDt,sepChar)
-    } else if (nchar(dataPath2)>1) {
+    } else if (nchar(dataPath2)>1) { # If data path 2 is a thing get stats and data for the data at that path. This will override dataPath1 numbers.
       statsoutobs <- ObservedStatsOtherMulti(dataPath2,stats,startDt2,endDt2,sepChar)
       dataOutobs <- getDataLocal(dataPath2,startDt2,endDt2,sepChar)
     }
-  } else if (nchar(dataPath2)>1) {
+  } else if (nchar(dataPath2)>1) { # If no sites given, calculate stats and get data for data at dataPath2
     statsoutobs <- ObservedStatsOtherMulti(dataPath2,stats,startDt2,endDt2,sepChar)
     dataOutobs <- getDataLocal(dataPath2,startDt2,endDt2,sepChar)
-  } else { 
+  } else { # calculate second set of stats on original local data with second date range.
     statsoutobs <- ObservedStatsOtherMulti(dataPath,stats,startDt2,endDt2,sepChar)
     dataOutobs <- getDataLocal(dataPath,startDt2,endDt2,sepChar)
   }  
@@ -71,7 +71,7 @@ CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",
   diffnames <- c("site_no",diffnames)
   colnames(DiffStats) <- diffnames
   sitesnum <- min(length(dataOutsim),length(dataOutobs))
-  RegGoFstats <- RegionalGoF(statsoutsim2[,c(1,4:n)],statsoutobs2[,c(1,4:n)])
+  RegGoFstats <- RegionalGoF(statsoutobs2[,c(1,4:n)],statsoutsim2[,c(1,4:n)])
   GoFstats <- matrix(,nrow=sitesnum,ncol=147)
   flag <- 0
   
@@ -87,10 +87,10 @@ CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",
     flow2 <- ldply(dataOutobs,lfunc)
     flow2 <- flow2[as.numeric(flow2$e.site_no)==max(as.numeric(flow1$site_no)),]
     colnames(flow2) <- colnames(flow1)
-    a <- SiteGoF(flow1,flow2) 
+    a <- SiteGoF(flow2,flow1) 
     GoFnames <- colnames(a)
     if (length(a)>1) {
-    GoFstats[i,] <- t(as.vector(SiteGoF(flow1,flow2)))
+    GoFstats[i,] <- t(as.vector(SiteGoF(flow2,flow1)))
     } else {
       flag <- flag+1
       GoFstats[i,] <- rep(NA,147)
