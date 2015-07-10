@@ -13,4 +13,15 @@ test_that("Statistic tests", {
   mgSeven <- magnifSeven(timeseries1)
   expect_equal(mgSeven, c(151.94, 0.37, 0.39, 0.28, 0.28, 0.57, -1.32))
   
+  load("data/ModeledFlowStats.rda")
+  load("data/GagedFlowStats.rda")
+  load('data/RegGoF.rda')
+  RegGoF_check<-RegionalGoF(ModeledFlowStats,GagedFlowStats)
+  expect_equivalent(RegGoF_check, RegGoF)
+  
+  load("data/Gaged.rda")
+  load("data/Modeled.rda")
+  load("data/SgoF.rda")
+  SiteGoF_check<-SiteGoF(Modeled,Gaged)
+  expect_equivalent(SiteGoF_check, SGoF)
 })
