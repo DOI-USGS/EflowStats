@@ -31,7 +31,7 @@
 CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",
                          sepChar=",",dataPath2="",startDt2="",endDt2="") {
   
-  if (length(sites)>1) { # If more than one USGS site, run ObservedStatsUSGS on them and get the data.
+  if (length(sites)>1|nchar(sites[1])>1) { # If more than one USGS site, run ObservedStatsUSGS on them and get the data.
     statsoutsim <- ObservedStatsUSGS(sites,startDt,endDt,stats)
     dataOutsim <- getDataUSGS(sites,startDt,endDt)
   } else { # Otherwise just try and run statistics on the data at path 1.
@@ -39,7 +39,7 @@ CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",
     dataOutsim <- getDataLocal(dataPath,startDt,endDt,sepChar)
   }
   
-  if (length(sites)>1) { # if more than one USGS site is given get the second set of stats for usgs sites, or the stats for dataPath1 or dataPath2 
+  if (length(sites)>1|nchar(sites[1])>1) { # if more than one USGS site is given get the second set of stats for usgs sites, or the stats for dataPath1 or dataPath2 
     if (nchar(dataPath)+nchar(dataPath2)<3) { # If the two data paths are empty get stats and data for the same sites but different time ranges.
       statsoutobs <- ObservedStatsUSGS(sites,startDt2,endDt2,stats)
       dataOutobs <- getDataUSGS(sites,startDt2,endDt2)
