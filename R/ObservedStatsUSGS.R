@@ -50,12 +50,14 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
   for (i in 1:length(sites)) {
     site=sites[i]
     
-    x_obs <- dataRetrieval::readNWISdv(site, "00060", startdate, enddate) 
-    x_obs <- renameNWISColumns(x_obs)
-    x_obs <- x_obs[,c("Date","Flow")]
-    names(x_obs) <- c("date","discharge")
+    
+    x_obs <- dataRetrieval::readNWISdv(site, "00060", startdate, enddate)
+    x_obs <- dataRetrieval::renameNWISColumns(x_obs)
+
     
     if (nrow(x_obs)>2) {
+            x_obs <- x_obs[,c("Date","Flow")]
+            names(x_obs) <- c("date","discharge")
       obs_data <- get_obsdata(x_obs)
       obs_count<-nrow(obs_data)
       cat(paste("get_obsdata run on x_obs for site",site,obs_count,"\n",sep=" "))
@@ -93,6 +95,7 @@ ObservedStatsUSGS <- function(sites,startdate,enddate,stats) {
       }
       comment <- ""
     }} else {
+            warning(paste("No observed data for site #",site))
       comment[i]<-"No observed data for this site"
     }
   }
