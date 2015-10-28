@@ -4,7 +4,9 @@
 #' with columns containing site id, date (datetime in format 'YYYY-MM-DD') and discharge, a file of drainage areas,
 #' and list of desired statistic groups and returns a data frame containing requested statistics
 #' 
-#' @param dataPath path to directory containing data files
+#' @param dataPath path to directory containing data files. 
+#' The peakflow filename must contain the character string "peak",
+#' and drainage area filename must contain the character string "drain".
 #' @param stats string containing desired groups of statistics 
 #' @param startDt beginning water year, will be translated to 10/01
 #' @param endDt ending water year, will be translated to 09/30
@@ -117,7 +119,7 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
      if (nrow(obs_data)==0) {
       comment[i]<-"No complete water years for site"
      } else {
-      drain_area<-drainAreas$darea[which(as.numeric(drainAreas$siteNo)==as.numeric(site[i]))]
+      drain_area<-drainAreas$darea[which(as.character(drainAreas$siteNo)==as.character(site[i]))]
       cat(paste("data and drainage area retrieved for site",site[i],drain_area,"\n",sep=" "))
       countbyyr<-aggregate(obs_data$discharge, list(obs_data$wy_val), length)
       colnames(countbyyr)<-c("wy","num_samples")
