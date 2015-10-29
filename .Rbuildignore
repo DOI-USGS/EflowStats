@@ -17,3 +17,4 @@ test_stats_huc12_modeled_performance.R
 ^\.Rproj\appveyor.yml
 appveyor.yml
 EflowStats.bbl
+^appveyor\.yml$
