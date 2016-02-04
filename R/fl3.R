@@ -15,13 +15,19 @@
 fl3 <- function(qfiletempf, pref = "mean") {
   lfcrit <- 0.05*mean(qfiletempf$discharge)
   lowflow <- subset(qfiletempf,qfiletempf$discharge<lfcrit)
+
   if (nrow(lowflow)>0) {
-    lowbyyr <- aggregate(lowflow$discharge,list(lowflow$wy_val),FUN=length)
+    lowCounts <- aggregate(lowflow$discharge,list(lowflow$wy_val),FUN=length)
+    names(lowCounts) <- c("wy_val","count")
+    lowbyyr <- data.frame(wy_val = unique(qfiletempf$wy_val))
+    lowbyyr <- merge(lowbyyr,lowCounts, by = "wy_val",all=TRUE)
+    lowbyyr$count[is.na(lowbyyr$count)] <- 0
+    
     if (pref == "median") {
-      fl3 <- round(median(lowbyyr$x),digits=2)
+      fl3 <- round(median(lowbyyr$count),digits=2)
     }
     else {
-      fl3 <- round(mean(lowbyyr$x),digits=2)
+      fl3 <- round(mean(lowbyyr$count),digits=2)
     }}
   else {
     fl3 <- 0
