@@ -1,22 +1,27 @@
 #' Function to return the magnificent seven statistics for a given data series
 #' This is a function to compute the 7 statistics of daily streamflow
 #' used by Archfield et al., under revision (June 2013). Input to the function is a
-#' time series of streamflow with date in the format Y-m-d. Data should be arranged in 
-#' four columns with names:  1) date, 2) discharge, 3) month_val and 4) year_val.
+#' time series of streamflow with date as a Date Class. Data should be arranged in 
+#' two columns with names:  1) date, 2) discharge
 #' 
 #' @param timeseries1 data frame of daily flow data
 #' @return magnif7 data frame of calculated statistics
 #' @export
+#' @import lubridate
 #' @examples
 #' timeseries1<-sampleData
 #' mgSeven <- magnifSeven(timeseries1)
 magnifSeven<-function(timeseries1)  {
 
   #Rename columns of timeseries dataframe 
-  timeseries<-data.frame(timeseries1$date,timeseries1$discharge,timeseries1$month_val,timeseries1$year_val,stringsAsFactors=FALSE)
-  colnames(timeseries)<-c("date","discharge","month_val","year_val")
+  timeseries<-data.frame("date" = timeseries1$date,
+                         "discharge" = timeseries1$discharge,
+                         "month_val" = months(timeseries1$date),
+                         "year_val" = year(timeseries1$date),
+                         stringsAsFactors=FALSE)
+                         
   #Subset timeseries to remove NAs
-  timeseries<-subset(timeseries,timeseries$discharge!='NA') 
+  timeseries<-subset(timeseries, !is.na(timeseries$discharge)) 
 
   #Compute L-moment ratios for time series so consistent in function
   complmom<-lmom.ub(timeseries$discharge)
@@ -33,7 +38,7 @@ magnifSeven<-function(timeseries1)  {
   #1) Get decimal year
   rawdates<-timeseries$date
 	dateaschar<-as.character(rawdates)
-	jday<-strptime(timeseries$date, "%Y-%m-%d")$yday+1
+	jday<-as.numeric(strftime(timeseries$date, "%j"))
 	decimal_year<-as.numeric(timeseries$year_val)+(jday/365.25)
   #2) Standardize flows
   std_flows<-scale(timeseries$discharge, center = TRUE, scale = TRUE)
