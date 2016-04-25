@@ -20,7 +20,7 @@ dh17 <- function(qfiletempf) {
   noyrs <- length(noyears$Year)
   hfdur <- rep(0,noyrs)
   for (i in 1:noyrs) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+    subsetyr <- subset(qfiletempf, as.numeric(as.character(qfiletempf$wy_val)) == noyears$Year[i])
     flag <- 0
     pdur <- 0
     nevents <- 0

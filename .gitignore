@@ -1,5 +1,5 @@
-.Rproj.user
-.Rproj
-.Rhistory
-.RData
+*.Rproj.user
+*.Rproj
+*.Rhistory
+*.RData
 README.md
