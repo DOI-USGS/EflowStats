@@ -18,6 +18,8 @@ Linux Tests: [![travis](https://travis-ci.org/USGS-R/EflowStats.svg?branch=maste
 
 Windows Tests: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/USGS-R/EflowStats?branch=master&svg=true)](https://ci.appveyor.com/project/USGS-R/EflowStats)
 
+Code Coverage: [![Coverage Status](https://coveralls.io/repos/USGS-R/EflowStats/badge.svg?branch=master&service=github)](https://coveralls.io/github/USGS-R/EflowStats?branch=master)
+
 
 References
 ----------
