@@ -3,3 +3,4 @@
 *.Rhistory
 *.RData
 README.md
+.Rproj.user

@@ -20,7 +20,7 @@
 #' enddate <- "2008"
 #' startdate2 <- "2009"
 #' enddate2 <- "2013"
-#' stats="magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
+#' stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
 #' \dontrun{
 #' compareResults <- CompareStats(stats,sites=sites,
 #'                                startDt=startdate,

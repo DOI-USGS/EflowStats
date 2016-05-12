@@ -1,9 +1,7 @@
-#########################
-### ma function tests ###
-#########################
+context("MA function tests")
 
-test_that("MA function tests",{
-        
+test_that("MA tests", {
+        ###load the data upfront#
         qfiletempf <- sampleData
         
         expect_equal(ma1(qfiletempf),151.94)
