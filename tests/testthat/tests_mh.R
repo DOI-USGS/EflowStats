@@ -1,10 +1,10 @@
-########################
-### mh function tests### 
-########################
+context("MH hydrologic indicators")
 
 test_that("MH function tests", {
+        load("data/sampleData.RData")
         qfiletempf <- sampleData
         
+
         expect_equal(mh1.12(qfiletempf),list(311,282.5,765.5,831.5,288,300.5,416,166.5,334,205,1325,737)
         )
         expect_equal(mh13(qfiletempf),84.15)

@@ -2,6 +2,8 @@ context("DH hydrologic indicators")
 
 test_that("DH tests", {
         ###load the data upfront#
+        load("data/sampleData.RData")
+        
         qfiletempf <- sampleData
         
         expect_equal(dh1(qfiletempf),1445)
