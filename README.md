@@ -18,7 +18,7 @@ Linux Tests: [![travis](https://travis-ci.org/tmills-usgs/EflowStats.svg?branch=
 
 Windows Tests: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/tmills-usgs/EflowStats?branch=master&svg=true)](https://ci.appveyor.com/project/tmills-usgs/EflowStats)
 
-Code Coverage: [![Coverage Status](https://coveralls.io/repos/tmills-usgs/EflowStats/badge.svg?branch=master&service=github)](https://coveralls.io/github/tmills-usgs/EflowStats?branch=master)
+Code Coverage: [![Coverage Status](https://coveralls.io/repos/github/tmills-usgs/EflowStats/badge.svg?branch=master)](https://coveralls.io/github/tmills-usgs/EflowStats?branch=master)
 
 
 References
