@@ -14,11 +14,11 @@ To install this package use the following code:
 install.packages("EflowStats",repos=c("http://owi.usgs.gov/R","http://cran.us.r-project.org"))
 ```
 
-Linux Tests: [![travis](https://travis-ci.org/tmills-usgs/EflowStats.svg?branch=master)](https://travis-ci.org/tmills-usgs/EflowStats)
+Linux Tests: [![travis](https://travis-ci.org/USGS-R/EflowStats.svg?branch=master)](https://travis-ci.org/USGS-R/EflowStats)
 
 Windows Tests: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/USGS-R/EflowStats?branch=master&svg=true)](https://ci.appveyor.com/project/USGS-R/EflowStats)
 
-Code Coverage: [![Coverage Status](https://coveralls.io/repos/github/tmills-usgs/EflowStats/badge.svg?branch=master)](https://coveralls.io/github/tmills-usgs/EflowStats?branch=master)
+Code Coverage: [![Coverage Status](https://coveralls.io/repos/github/USGS-R/EflowStats/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/EflowStats?branch=master)
 
 
 References
