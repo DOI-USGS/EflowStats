@@ -11,7 +11,7 @@ test_that("DL function tests", {
         expect_equal(dl3(qfiletempf),41.21)
         expect_equal(dl4(qfiletempf),50.28)
         expect_equal(dl5(qfiletempf),97.13)
-        expect_equal(dl6(qfiletempf),10.67)
+        expect_equal(dl6(qfiletempf),10.61)
         expect_equal(dl7(qfiletempf),10.43)
         expect_equal(dl8(qfiletempf),11.03)
         expect_equal(dl9(qfiletempf),8.67)
