@@ -1,7 +1,7 @@
 context("MH hydrologic indicators")
 
 test_that("MH function tests", {
-        load("data/sampleData.RData")
+        load("data/sampleData.rda")
         qfiletempf <- sampleData
         
 

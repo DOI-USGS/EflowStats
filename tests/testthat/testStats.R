@@ -1,7 +1,7 @@
 context("Statistic results")
 
 test_that("Statistic tests", {
-        load("data/sampleData.RData")
+        load("data/sampleData.rda")
         
         qfiletempf<-sampleData
         

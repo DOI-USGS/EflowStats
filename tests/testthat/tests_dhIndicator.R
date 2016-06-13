@@ -2,7 +2,7 @@ context("DH hydrologic indicators")
 
 test_that("DH tests", {
         ###load the data upfront#
-        load("data/sampleData.RData")
+        load("data/sampleData.rda")
         
         qfiletempf <- sampleData
         
