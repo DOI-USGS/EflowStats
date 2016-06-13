@@ -16,7 +16,7 @@ install.packages("EflowStats",repos=c("http://owi.usgs.gov/R","http://cran.us.r-
 
 Linux Tests: [![travis](https://travis-ci.org/USGS-R/EflowStats.svg?branch=master)](https://travis-ci.org/USGS-R/EflowStats)
 
-Windows Tests: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/USGS-R/EflowStats?branch=master&svg=true)](https://ci.appveyor.com/project/USGS-R/EflowStats)
+Windows Tests: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/tmills-usgs/EflowStats?branch=master&svg=true)](https://ci.appveyor.com/project/USGS-R/EflowStats)
 
 Code Coverage: [![Coverage Status](https://coveralls.io/repos/USGS-R/EflowStats/badge.svg?branch=master&service=github)](https://coveralls.io/github/USGS-R/EflowStats?branch=master)
 
