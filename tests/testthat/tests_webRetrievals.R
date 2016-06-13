@@ -53,7 +53,7 @@ test_that("General NWIS retrievals working", {
   obsStats <- ObservedStatsUSGS(sites,startdate,enddate,stats)
   expect_that(nrow(obsStats) == length(sites), is_true())
 
-  drain_area<-getDrainageArea(drain_url)
+  drain_area<-getDrainageArea(sites)
   qfiletempf<-sampleData
   FlowStatsAll(qfiletempf,drain_area)
 
