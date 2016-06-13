@@ -2,6 +2,8 @@ context("DL hydrologic indicators")
 
 
 test_that("DL function tests", {
+        load("data/sampleData.rda")
+        
         qfiletempf <- sampleData
         
         expect_equal(dl1(qfiletempf),40)

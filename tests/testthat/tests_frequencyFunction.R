@@ -1,7 +1,7 @@
 context("frequency indicators")
 
 ###load the data upfront
-load("data/sampleData.RData")
+load("data/sampleData.rda")
 qfiletempf <- sampleData
 
 test_that("fh1.2 test", {

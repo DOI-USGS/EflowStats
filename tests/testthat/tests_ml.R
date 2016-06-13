@@ -3,6 +3,8 @@
 ########################
 
 test_that("ML function tests", {
+        load("data/sampleData.rda")
+        
         qfiletempf <- sampleData
         
         expect_equal(ml1.12(qfiletempf),list(109,110,116.5,176,114,87.5,66,58.5,51.5,40.5,48,100)

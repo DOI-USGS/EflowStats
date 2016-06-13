@@ -2,6 +2,8 @@ context("MA function tests")
 
 test_that("MA tests", {
         ###load the data upfront#
+        load("data/sampleData.rda")
+        
         qfiletempf <- sampleData
         
         expect_equal(ma1(qfiletempf),151.94)
