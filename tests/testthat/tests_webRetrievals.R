@@ -1,7 +1,7 @@
 context("Functions that call web services")
 
 test_that("General NWIS retrievals working", {
-        #testthat::skip_on_cran()
+        testthat::skip_on_cran()
         
         sites<-"02177000"
         
