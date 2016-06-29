@@ -1,13 +1,10 @@
-dataPath <- system.file("extdata", package="EflowStats")
-dataPath <- paste(dataPath, "modeled", sep="/")
-
-stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
-obsStats <- ObservedStatsOtherMulti(dataPath,stats)
-
-context("Miscellanious function tests")
+context("ObservedStatsOther and Multi tests")
 
 
 test_that("ObservedStatsOtherMulti", {
+        
+        testthat::skip_on_cran()
+        
         load("data/ObservedStatsOtherMultiOut.rda")
         
         dataPath <- system.file("extdata", package="EflowStats")
