@@ -12,5 +12,6 @@
 medflowbyyear <- function(qfiletempf) {
   medflowbyyear<-aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
                            median, na.rm=TRUE)
+  colnames(medflowbyyear) <- c("Year","medq")
   return(medflowbyyear)
 }

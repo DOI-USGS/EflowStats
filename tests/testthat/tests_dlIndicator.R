@@ -3,6 +3,7 @@ context("DL hydrologic indicators")
 
 test_that("DL function tests", {
         load("data/sampleData.rda")
+        load("data/qfiletempf_zeroQ.rda")
         
         qfiletempf <- sampleData
         
@@ -22,8 +23,14 @@ test_that("DL function tests", {
         expect_equal(dl14(qfiletempf),c("25%"=0.65))
         expect_equal(dl15(qfiletempf),c("10%"=0.42))
         expect_equal(dl16.17(qfiletempf),list(dl16=10.92,dl17=47.92))
+        
+        expect_equal(dl18(qfiletempf_zeroQ),5)
         expect_equal(dl18(qfiletempf),0)
+        
+        expect_equal(dl19(qfiletempf_zeroQ),141.42)
         expect_equal(dl19(qfiletempf),0)
+        
+        
         expect_equal(dl20(qfiletempf),0)
 })
 
