@@ -15,7 +15,7 @@ Imports:
     doBy,
     hydroGOF,
     lmomco,
-    plyr,
+    dplyr,
     dataRetrieval,
     htmltools,
     XML

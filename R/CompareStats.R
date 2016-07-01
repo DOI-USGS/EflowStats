@@ -13,7 +13,7 @@
 #' @param endDt2 ending water year, will be translated to 09/30
 #' @return statsout data frame containing requested statistics for each station
 #' @export
-#' @import plyr
+#' @import dplyr
 #' @examples
 #' sites <- c("02177000", "02178400")
 #' startdate <- "2003"

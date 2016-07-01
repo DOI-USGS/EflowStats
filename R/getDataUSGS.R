@@ -2,6 +2,7 @@
 #' 
 #' This function accepts a list of sites, start and end date and returns a data frame containing requested flow data
 #' @import htmltools
+#' @import XML
 #' @param sites USGS station ids
 #' @param startdate beginning water year, will be translated to 10/01
 #' @param enddate ending water year, will be translated to 09/30
