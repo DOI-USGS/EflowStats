@@ -16,9 +16,7 @@ Imports:
     hydroGOF,
     lmomco,
     dplyr,
-    dataRetrieval,
-    htmltools,
-    XML
+    dataRetrieval
 Suggests:
     xtable,
     knitr,
