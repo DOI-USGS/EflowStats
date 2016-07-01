@@ -17,7 +17,8 @@ Imports:
     lmomco,
     plyr,
     dataRetrieval,
-    htmltools
+    htmltools,
+    XML
 Suggests:
     xtable,
     knitr,
