@@ -129,11 +129,19 @@ CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",
         }
         
         if (flag==i) {
-                compareOut <- list(statsoutsim,statsoutobs,DiffStats,RegGoFstats) 
+                compareOut <- list(statsoutsim = statsoutsim,
+                                   statsoutobs = statsoutobs,
+                                   DiffStats = DiffStats,
+                                   RegGoFstats = RegGoFstats) 
         } else {
                 GoFstats <- as.data.frame(GoFstats,stringsAsFactors=FALSE)
                 colnames(GoFstats) <- GoFnames
-                compareOut <- list(statsoutsim,statsoutobs,DiffStats,RegGoFstats,GoFstats)
+                compareOut <- list(statsoutsim = statsoutsim,
+                                   statsoutobs = statsoutobs,
+                                   DiffStats = DiffStats,
+                                   RegGoFstats = RegGoFstats,
+                                   GoFstats = GoFstats)
+                
         }
         return(compareOut)
 }
