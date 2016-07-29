@@ -4,7 +4,7 @@
 \alias{SiteGoF}
 \title{Function to calculate GoF statistics for given observed and modeled data sets}
 \usage{
-SiteGoF(Modeled, Gaged)
+SiteGoF(Modeled, Gaged, site_no = "")
 }
 \arguments{
 \item{Modeled}{data frame of daily flow data}
