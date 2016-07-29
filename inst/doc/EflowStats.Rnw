@@ -2,7 +2,7 @@
 %\VignetteEngine{knitr::knitr}
 %\VignetteDepends{}
 %\VignetteSuggests{xtable}
-%\VignetteImports{zoo, XML, RCurl, chron, doBy, hydroGOF, lmomco}
+%\VignetteImports{zoo, RCurl, chron, doBy, hydroGOF, lmomco}
 %\VignettePackage{EflowStats}
 
 \documentclass[a4paper,11pt]{article}
