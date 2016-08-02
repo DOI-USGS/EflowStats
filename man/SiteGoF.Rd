@@ -10,6 +10,8 @@ SiteGoF(Modeled, Gaged, site_no = "")
 \item{Modeled}{data frame of daily flow data}
 
 \item{Gaged}{data frame of daily flow data}
+
+\item{site_no}{Optional site number identifier to be included with output}
 }
 \value{
 Output data frame of calculated statistics

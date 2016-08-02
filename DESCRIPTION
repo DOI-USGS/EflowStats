@@ -16,7 +16,8 @@ Imports:
     hydroGOF,
     lmomco,
     dplyr,
-    dataRetrieval
+    dataRetrieval,
+    lubridate
 Suggests:
     xtable,
     knitr,
