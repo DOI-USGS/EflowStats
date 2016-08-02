@@ -5,6 +5,7 @@
 #' 
 #' @param Modeled data frame of daily flow data
 #' @param Gaged data frame of daily flow data
+#' @param site_no Optional site number identifier to be included with output
 #' @return Output data frame of calculated statistics
 #' @export
 #' @import hydroGOF
