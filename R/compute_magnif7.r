@@ -16,16 +16,13 @@
 #' @importFrom lmomco lmom.ub
 #' @export
 #' @examples
-#' timeseries1<-sampleData
-#' mgSeven <- magnifSeven(timeseries1)
-magnifSeven<-function(timeseries1)  {
+#' timeseries<-sampleData[c("date","discharge")]
+#' mgSeven <- magnifSeven(timeseries)
+magnifSeven<-function(timeseries)  {
         
-        timeseries1$month_val <- lubridate::month(timeseries1$date)
-        timeseries$year_val <- lubridate::year(timeseries1$date)
+        timeseries$month_val <- lubridate::month(timeseries$date)
+        timeseries$year_val <- lubridate::year(timeseries$date)
         
-        #Rename columns of timeseries dataframe 
-        #timeseries<-data.frame(timeseries1$date,timeseries1$discharge,timeseries1$month_val,timeseries1$year_val,stringsAsFactors=FALSE)
-        colnames(timeseries)<-c("date","discharge","month_val","year_val")
         #Subset timeseries to remove NAs
         timeseries<-timeseries[!is.na(timeseries$discharge),]
         timeseries <- timeseries[timeseries$discharge != "NA",]

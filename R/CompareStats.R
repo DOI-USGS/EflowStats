@@ -3,24 +3,34 @@
 #' This function accepts a list of sites, one or two data paths, one or two sets of start and end dates and list of desired statistic groups and returns a data frame containing requested statistics
 #' 
 #' @param sites optional list of USGS station ids
-#' @param dataPath path to local directory containing data files
+#' @param dataPath path to local directory containing data files if \code{sites} unspecified.
 #' @param stats string containing desired groups of statistics
 #' @param startDt beginning water year, will be transalted to 10/01
 #' @param endDt ending water year, will be translated to 09/30
 #' @param sepChar string containing the datafile separator, default is comma
-#' @param dataPath2 path to local directory containing data files
+#' @param dataPath2 path to local directory containing data files if \code{sites} unspecified.
 #' @param startDt2 beginning water year, will be transalted to 10/01
 #' @param endDt2 ending water year, will be translated to 09/30
-#' @return statsout data frame containing requested statistics for each station
+#' @return statsout List of data.frames containing requested statistics for each station. See details for description of data.frames. 
+#' @details \code{CompareStats} outputs a list containing the following data.frames of requested statistics:
+#' \describe{
+#'      \item{statsoutsim}{data.frame of statistics for simulated data}
+#'      \item{statsoutobs}{data.frame of statistics for observed data}
+#'      \item{DiffStats}{data.frame of relative difference in between simulated and observed statistics}
+#'      \item{RegGoFstats}{data.frame of containing regional goodness of fit statistics between simulated and observed statistics.}
+#'      \item{GoFstats}{data.frame of containing goodness of fit statistics between simulated and observed statistics.}
+
+#' }
 #' @export
 #' @import dplyr
 #' @examples
-#' sites <- c("02177000", "02178400")
-#' startdate <- "2003"
-#' enddate <- "2008"
-#' startdate2 <- "2009"
-#' enddate2 <- "2013"
 #' stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
+#' sites <- c("02177000", "02178400")
+#' startDt <- "2003"
+#' endDt <- "2008"
+#' startDt2 <- "2009"
+#' endDt2 <- "2013"
+
 #' \dontrun{
 #' compareResults <- CompareStats(stats,sites=sites,
 #'                                startDt=startdate,
@@ -28,8 +38,15 @@
 #'                                startDt2=startdate2,
 #'                                endDt2=enddate2)
 #' }                               
-CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",
-                         sepChar=",",dataPath2="",startDt2="",endDt2="") {
+CompareStats <- function(stats,
+                         sites="",
+                         dataPath="",
+                         startDt="",
+                         endDt="",
+                         sepChar=",",
+                         dataPath2="",
+                         startDt2="",
+                         endDt2="") {
         
         if (length(sites)>1|nchar(sites[1])>1) { # If more than one USGS site, run ObservedStatsUSGS on them and get the data.
                 statsoutsim <- ObservedStatsUSGS(sites,startDt,endDt,stats)
@@ -94,6 +111,8 @@ CompareStats <- function(stats,sites="",dataPath="",startDt="",endDt="",
         ###This can be vectorized, but will put off for now.
         
         sites <- unique(c(modeledFlow$site_no,gagedFlow$site_no))
+        
+        
 
         for (i in 1:sitesnum) {
                 
