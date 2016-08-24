@@ -23,42 +23,38 @@
 #' in daily flows is computed like MA9 except using the 20th and 80th percentiles (dimensionless-spatial). MA11; 
 #' Spread in daily flows is computed like MA9 except using the 25th and 75th percentiles (dimensionless-spatial).
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
-#' @return ma4.11 list of the MA4-MA11 statistics for the given data frame
+#' @param x numeric vector of flow values.
+#' @return A named numeric vector containing the MA4 through MA11 flow statistics.
 #' @export
 #' @examples
 #' qfiletempf<-sampleData
 #' ma4.11(qfiletempf)
 ma4.11<-function(x) {
-  isolateq <- x$discharge
-  sortq <- sort(isolateq)
-  percentiles<-vector(length=19)
-  percentiles[1] <- quantile(sortq,.95,type=6)  
-  percentiles[2] <- quantile(sortq,.90,type=6)
-  percentiles[3] <- quantile(sortq,.85,type=6)
-  percentiles[4] <- quantile(sortq,.80,type=6)
-  percentiles[5] <- quantile(sortq,.75,type=6)
-  percentiles[6] <- quantile(sortq,.7,type=6)
-  percentiles[7] <- quantile(sortq,.65,type=6)
-  percentiles[8] <- quantile(sortq,.6,type=6)
-  percentiles[9] <- quantile(sortq,.55,type=6)
-  percentiles[10] <- quantile(sortq,.5,type=6)
-  percentiles[11] <- quantile(sortq,.45,type=6)
-  percentiles[12] <- quantile(sortq,.4,type=6)
-  percentiles[13] <- quantile(sortq,.35,type=6)
-  percentiles[14] <- quantile(sortq,.3,type=6)
-  percentiles[15] <- quantile(sortq,.25,type=6)
-  percentiles[16] <- quantile(sortq,.2,type=6)
-  percentiles[17] <- quantile(sortq,.15,type=6)
-  percentiles[18] <- quantile(sortq,.1,type=6)
-  percentiles[19] <- quantile(sortq,.05,type=6)
-  mean <- mean(percentiles,na.rm=TRUE)
-  sdev <- sd(percentiles, na.rm=TRUE)
-  ma4 <- round((sdev/mean)*100,digits=2)
+        
+  x <- sort(x)
+  
+  percentiles <- quantile(x,probs=seq(0.05,0.95,0.05),type=6)
+  percMean <- mean(percentiles,na.rm=TRUE)
+  percSD <- sd(percentiles,na.rm=TRUE)
+          
+  ma4 <- round(percMean/percSD*100,digits=2)
+  
   ma5 <- round(ma1(x)/ma2(x),digits=2)
-  ma6 <- round(percentiles[2]/percentiles[18],digits=2)
-  ma7 <- round(percentiles[4]/percentiles[16],digits=2)
-  ma8 <- round(percentiles[5]/percentiles[15],digits=2)
+  
+  ma6 <- round(as.numeric(percentiles["90%"]/percentiles["10%"]), digits=2)
+          
+          round(quantile(sortq,.90,type=6)/
+                       quantile(sortq,.1,type=6),
+               digits=2)
+  
+  ma7 <- round(quantile(sortq,.80,type=6)/
+                       quantile(sortq,.2,type=6),
+               digits=2)
+  
+  ma8 <- round(quantile(sortq,.75,type=6)/
+                       quantile(sortq,.25,type=6),
+               digits=2)
+  
   ma9 <- round((percentiles[2]-percentiles[18])/ma2(x),digits=2)
   ma10 <- round((percentiles[4]-percentiles[16])/(ma2(x)),digits=2)
   ma11 <- round((percentiles[5]-percentiles[15])/(ma2(x)),digits=2)

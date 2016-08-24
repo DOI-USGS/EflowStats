@@ -16,7 +16,7 @@
 #' \describe{
 #'      \item{statsoutsim}{data.frame of statistics for simulated data}
 #'      \item{statsoutobs}{data.frame of statistics for observed data}
-#'      \item{DiffStats}{data.frame of relative difference in between simulated and observed statistics}
+#'      \item{DiffStats}{data.frame of relative difference between simulated and observed statistics}
 #'      \item{RegGoFstats}{data.frame of containing regional goodness of fit statistics between simulated and observed statistics.}
 #'      \item{GoFstats}{data.frame of containing goodness of fit statistics between simulated and observed statistics.}
 

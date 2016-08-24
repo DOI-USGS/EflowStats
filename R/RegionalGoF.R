@@ -3,11 +3,18 @@
 #' This function accepts data frames of statistics for observed and modeled daily flow time-series 
 #' and returns a data frame of calculated GoF statistics
 #' 
-#' @param ModeledFlowStats data frame of flow stats for observed data
-#' @param GagedFlowStats data frame of flow stats for modeled data
+#' @param simStats data.frame of statistics output by \code{ObservedStatsUSGS},
+#'  \code{ObservedStatsOther}, or \code{ObservedStatsOtherMulti} to be considered simulated data for comparison purposes.
+#' @param simStats data.frame of statistics output by \code{ObservedStatsUSGS},
+#'  \code{ObservedStatsOther}, or \code{ObservedStatsOtherMulti} to be considered observed data for comparison purposes.
 #' @return Output data frame of calculated statistics
 #' @export
-RegionalGoF <- function(ModeledFlowStats,GagedFlowStats) {
+RegionalGoF <- function(simStats,obsStats) {
+        
+        simStats <- reshape2::melt(simStats,
+                                   id.vars=c("site_no","min_date","max_date"))
+        
+        
   Output<-matrix(nrow=nrow(GagedFlowStats)*6,ncol=ncol(GagedFlowStats)+1)
   for (j in 1:nrow(GagedFlowStats)) {
     n<-(j-1)*6
@@ -37,5 +44,8 @@ RegionalGoF <- function(ModeledFlowStats,GagedFlowStats) {
   a <- c("stat",a)
   colnames(Output) <- (a)
   Output <- Output[order(as.numeric(Output$site_no)),]
+  
+  
+  
   return(Output)
 }

@@ -10,7 +10,7 @@
 #' cv(qfiletempf$discharge)
 cv <- function(x) {
   x1 <- mean(x,na.rm=TRUE)
-  x2 <- sdev(x)
+  x2 <- sd(x, na.rm=TRUE)
   cv <- x2/x1
   return(cv)
 }

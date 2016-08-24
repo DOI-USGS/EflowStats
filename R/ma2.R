@@ -1,4 +1,4 @@
-#' Function to return the MA2 hydrologic indicator statistic for a given data frame
+#' Internal function to return the MA2 hydrologic indicator statistic for a given data frame
 #' 
 #' This function accepts a data frame that contains a column named "discharge" and 
 #' calculates the median of the daily flow values for the entire record (cubic feet per second)

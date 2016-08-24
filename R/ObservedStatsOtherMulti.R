@@ -168,7 +168,7 @@ ObservedStatsOtherMulti <- function(dataPath,stats,startDt="",endDt="",sepChar="
           magnifSevenObs[i,] <- magnifSeven(obs_data)
           cat(paste("Mag7 stats calculated for site",site[i],"\n",sep=" "))
         }
-        comment <- ""
+        comment <- NA
       }
     }
   }

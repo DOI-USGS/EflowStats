@@ -17,7 +17,8 @@ Imports:
     lmomco,
     dplyr,
     dataRetrieval,
-    lubridate
+    lubridate,
+    reshape2
 Suggests:
     xtable,
     knitr,

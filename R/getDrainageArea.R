@@ -12,10 +12,10 @@
 #' \dontrun{
 #' da <- getDrainageArea(sites)
 #' }
-getDrainageArea <- function(site){
+getDrainageArea <- function(sites){
   
-  cat(paste("Retrieving data from USGS site: \n", site, "\n", sep=" "))
-  siteFile <- dataRetrieval::readNWISsite(site)
-  drain_area<-as.numeric(siteFile$drain_area_va)
+  cat("Retrieving data from USGS sites: \n", sites,sep=" ")
+  siteFile <- dataRetrieval::readNWISsite(sites)
+  drain_area<-siteFile[c("site_no","drain_area_va")]
   return (drain_area)
 }
