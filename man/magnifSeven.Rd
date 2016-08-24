@@ -8,13 +8,13 @@ used by Archfield et al., under revision (June 2013). Input to the function is a
 time series of streamflow with date in the format Y-m-d. Data should be arranged in 
 four columns with names:  1) date, 2) discharge, 3) month_val and 4) year_val.}
 \usage{
-magnifSeven(timeseries1)
+magnifSeven(timeseries)
 }
 \arguments{
-\item{timeseries1}{data frame of daily flow data}
+\item{timeseries1}{data.frame of daily flow data. See \details for data.frame variables.}
 }
 \value{
-magnif7 data frame of calculated statistics
+data.frame of calculated statistics
 }
 \description{
 Function to return the magnificent seven statistics for a given data series
@@ -23,8 +23,15 @@ used by Archfield et al., under revision (June 2013). Input to the function is a
 time series of streamflow with date in the format Y-m-d. Data should be arranged in 
 four columns with names:  1) date, 2) discharge, 3) month_val and 4) year_val.
 }
+\details{
+The \code{timeseries1} data.frame must contain the following named variables:
+\describe{
+     \item{date}{A vector of class \code{date} cooresponding to dates of observations}
+     \item{discharge}{A vector of class \code{numeric} containing discharge measurements}
+}
+}
 \examples{
-timeseries1<-sampleData
-mgSeven <- magnifSeven(timeseries1)
+timeseries<-sampleData[c("date","discharge")]
+mgSeven <- magnifSeven(timeseries)
 }
 

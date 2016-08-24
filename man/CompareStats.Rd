@@ -12,7 +12,7 @@ CompareStats(stats, sites = "", dataPath = "", startDt = "", endDt = "",
 
 \item{sites}{optional list of USGS station ids}
 
-\item{dataPath}{path to local directory containing data files}
+\item{dataPath}{path to local directory containing data files if \code{sites} unspecified.}
 
 \item{startDt}{beginning water year, will be transalted to 10/01}
 
@@ -20,25 +20,35 @@ CompareStats(stats, sites = "", dataPath = "", startDt = "", endDt = "",
 
 \item{sepChar}{string containing the datafile separator, default is comma}
 
-\item{dataPath2}{path to local directory containing data files}
+\item{dataPath2}{path to local directory containing data files if \code{sites} unspecified.}
 
 \item{startDt2}{beginning water year, will be transalted to 10/01}
 
 \item{endDt2}{ending water year, will be translated to 09/30}
 }
 \value{
-statsout data frame containing requested statistics for each station
+statsout List of data.frames containing requested statistics for each station. See details for description of data.frames.
 }
 \description{
 This function accepts a list of sites, one or two data paths, one or two sets of start and end dates and list of desired statistic groups and returns a data frame containing requested statistics
 }
+\details{
+\code{CompareStats} outputs a list containing the following data.frames of requested statistics:
+\describe{
+     \item{statsoutsim}{data.frame of statistics for simulated data}
+     \item{statsoutobs}{data.frame of statistics for observed data}
+     \item{DiffStats}{data.frame of relative difference in between simulated and observed statistics}
+     \item{RegGoFstats}{data.frame of containing regional goodness of fit statistics between simulated and observed statistics.}
+     \item{GoFstats}{data.frame of containing goodness of fit statistics between simulated and observed statistics.}
+}
+}
 \examples{
-sites <- c("02177000", "02178400")
-startdate <- "2003"
-enddate <- "2008"
-startdate2 <- "2009"
-enddate2 <- "2013"
 stats <- "magnifSeven,magStat,flowStat,durStat,timStat,rateStat"
+sites <- c("02177000", "02178400")
+startDt <- "2003"
+endDt <- "2008"
+startDt2 <- "2009"
+endDt2 <- "2013"
 \dontrun{
 compareResults <- CompareStats(stats,sites=sites,
                                startDt=startdate,

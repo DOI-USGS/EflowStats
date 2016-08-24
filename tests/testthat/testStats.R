@@ -34,7 +34,6 @@ test_that("Statistic tests", {
         load("data/Gaged.rda")
         load("data/Modeled.rda")
         load("data/SGoF.rda")
-        SGoF<-data.matrix(SGoF[,3:ncol(SGoF)])
         SiteGoF_check<-SiteGoF(Modeled,Gaged)
         SiteGoF_check<-data.matrix(SiteGoF_check[,3:ncol(SiteGoF_check)])
         expect_equivalent(round(SiteGoF_check,digits=2), round(SGoF,digits=2))
