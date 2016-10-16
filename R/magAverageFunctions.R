@@ -1,5 +1,8 @@
-#magAverage low level functions
 
+
+#####################################################
+
+#magAverage low level functions
 ###MA1
 ma1 = function(x,...) mean(x$flow,na.rm=TRUE)
 
@@ -17,7 +20,7 @@ ma3 = function(x,...) {
         
         ma3_median <- c(ma3_median = median(ma3_temp$cv))
         ma3_mean <- c(ma3_mean = mean(ma3_temp$cv))
-        c(ma3_median,ma3_mean)
+        return(c(ma3_median,ma3_mean))
 }
 
 
@@ -28,26 +31,26 @@ ma3 = function(x,...) {
 
 ma4 = function(percMean,percSD,...){ percMean/percSD*100}
 
-ma5 <- function(x) mean(x$flow,na.rm=TRUE)/median(x$flow,na.rm=TRUE)
+ma5 = function(x,...) mean(x$flow,na.rm=TRUE)/median(x$flow,na.rm=TRUE)
 
-ma6 <- function(percentiles) as.numeric(percentiles["90%"]/percentiles["10%"])
+ma6 = function(percentiles,...) as.numeric(percentiles["90%"]/percentiles["10%"])
 
-ma7 <- function(percentiles) as.numeric(percentiles["80%"]/percentiles["20%"])
+ma7 = function(percentiles,...) as.numeric(percentiles["80%"]/percentiles["20%"])
 
-ma8 <- function(percentiles) as.numeric(percentiles["75%"]/percentiles["25%"])
+ma8 = function(percentiles,...) as.numeric(percentiles["75%"]/percentiles["25%"])
 
-ma9 <- function(percentiles) as.numeric(percentiles["10%"]-percentiles["90%"])/median(x$flow,na.rm=TRUE))
+ma9 = function(percentiles,...) as.numeric(percentiles["10%"]-percentiles["90%"])/median(x$flow,na.rm=TRUE)
 
-ma10 <- function(percentiles) as.numeric(percentiles["20%"]-percentiles["80%"])/median(x$flow,na.rm=TRUE))
+ma10 = function(percentiles,...) as.numeric(percentiles["20%"]-percentiles["80%"])/median(x$flow,na.rm=TRUE)
 
-ma11 <- function(percentiles) as.numeric(percentiles["25%"]-percentiles["75%"])/median(x$flow,na.rm=TRUE))
+ma11 = function(percentiles,...) as.numeric(percentiles["25%"]-percentiles["75%"])/median(x$flow,na.rm=TRUE)
 
 
-rm(list=c("percentiles","percMean","percSD"))
 
 ########################
 ###MA12 through MA23
 ########################
+ma12.23 = function(x,...) {
 ma12.23_med_temp <- aggregate(x$flow, list(x$month_val),
                               median, na.rm=TRUE)
 names(ma12.23_med_temp) <- c("month","value")
@@ -66,13 +69,13 @@ ma12.23_mean_temp$variable <- paste0("MA",seq(from=12,to=23,by=1),"_",ma12.23_me
 ma12.23_mean <- c(ma12.23_mean_temp$value)
 names(ma12.23_mean) <- ma12.23_mean_temp$variable
 
-rm(list=c("ma12.23_med_temp","ma12.23_mean_temp"))
-
-
+return(ma12.23_mean)
+}
 ########################
 ###MA24 through MA35. 
 ########################
 
+ma24.35 = function(x,...) {
 ma24.35_temp <- aggregate(x$flow, list(x$year_val,
                                        x$month_val), FUN = cv)
 names(ma24.35_temp) <- c("year_val","month_val","cv")
@@ -96,12 +99,13 @@ ma24.35_mean_temp$variable <- paste0("MA",seq(from=24,to=35,by=1),"_",ma24.35_me
 ma24.35_mean <- c(ma24.35_mean_temp$value)
 names(ma24.35_mean) <- ma24.35_mean_temp$variable
 
-rm(list=c("ma24.35_temp","ma24.35_median_temp","ma24.35_mean_temp"))
+return(ma24.35_mean)
+}
 
 ########################
 ###MA36 through MA40. 
 ########################
-
+ma36.40 = function(x,...) {
 monthlyMean <- aggregate(x$flow, list(x$month_val,x$year_val), FUN = mean, na.rm=TRUE)
 colnames(monthlyMean) <- c("month_val","year_val","meanmo")
 
@@ -122,12 +126,14 @@ ma38 <- c(ma38 = as.numeric((percentiles["90%"]-percentiles["10%"])/medMonthlyFl
 ma39 <- c(ma39 = (sd(monthlyMean$meanmo)*100)/meanMonthlyFlow)
 ma40 <- c(ma40 = (meanMonthlyFlow-medMonthlyFlow)/medMonthlyFlow)
 
-rm(list=c("monthlyMean","monthlyMax","monthlyMin","percentiles","medMonthlyFlow","meanMonthlyFlow"))
+return(c(ma36,ma37,ma38,ma39,ma40))
+}
 
 ########################
 ###MA41 through MA45. 
 ########################
-
+ma41.45 = function(x,drainArea=NULL,...) {
+        
 yearlyMean <- aggregate(x$flow, list(x$year_val), FUN = mean, na.rm=TRUE)
 colnames(yearlyMean) <- c("year_val","meanyr")
 
@@ -136,7 +142,7 @@ percentiles <- quantile(yearlyMean$meanyr,probs=c(0.1,0.25,0.75,0.9),type=6)
 if(!is.null(drainArea))
 {
         ma41 <- c(ma41 = mean(yearlyMean$meanyr)/drainArea)     
-}
+} else(ma41 <- c(ma41 = "missing drainage area"))
 
 medYearlyFlow <- median(yearlyMean$meanyr, na.rm=TRUE)
 meanYearlyFlow <- mean(yearlyMean$meanyr)
@@ -145,3 +151,6 @@ ma42 <- c(ma42 = (max(yearlyMean$meanyr)-min(yearlyMean$meanyr))/medYearlyFlow)
 ma43 <- c(ma43 = as.numeric((percentiles["75%"]-percentiles["25%"])/medYearlyFlow))
 ma44 <- c(ma44 = as.numeric((percentiles["90%"]-percentiles["10%"])/medYearlyFlow))
 ma45 <- c(ma45 = (meanYearlyFlow-medYearlyFlow)/medYearlyFlow)
+
+return(c(ma41,ma42,ma43,ma44,ma45))
+}

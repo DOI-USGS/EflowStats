@@ -73,12 +73,29 @@ magAverage <- function(x,stats = "All",drainArea = NULL, yearType = "water",digi
         statsFuns <- list(ma1=ma1,
                           ma2=ma2,
                           ma3=ma3,
-                          ma4=ma4)
-        stats <- c("ma1","ma3","ma4")
+                          ma4=ma4,
+                          ma5=ma5,
+                          ma6=ma6,
+                          ma7=ma7,
+                          ma8=ma8,
+                          ma9=ma9,
+                          ma10=ma10,
+                          ma11=ma11,
+                          ma12_23=ma12.23,
+                          ma24_35=ma24.35,
+                          ma36_40=ma36.40,
+                          ma41_45=ma41.45)
+        if(stats == "All")
+        {
+                stats <- names(statsFuns)
+        }
+        
         statsOut <- lapply(statsFuns[stats], do.call, list(x=x,
                                                            percentiles=percentiles,
                                                            percMean = percMean,
-                                                           percSD = percSD))
+                                                           percSD = percSD,
+                                                           drainArea=drainArea))
+        return(statsOut)
         
 }
 
