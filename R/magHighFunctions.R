@@ -182,7 +182,7 @@ mh19 <- function(x) {
 #' x<-sampleData
 #' mh21(x)
 
-mh21.24 <- function(x) {
+mh21.23 <- function(x) {
         #Get median for threhsold mh21
         medThreshold <- median(x$discharge,na.rm=TRUE)
         
@@ -223,4 +223,49 @@ mh21.24 <- function(x) {
         #Calculate the mh21-23 statistics
         mh21_23 <- totalFlow/numEvents/medThreshold
         return(mh21_23)
+}
+
+#' Function to return the MH24 hydrologic indicator statistic for a given data frame
+#' 
+#' This function accepts a data frame that contains a column named "discharge" and 
+#' calculates MH24, high peak flow. Compute the average peak flow value for flow events above a threshold equal 
+#' to the median flow for the entire record. MH24 is the average peak flow divided by the median flow for the 
+#' entire record (dimensionless-temporal).
+#' 
+#' @param x data frame containing a "discharge" column containing daily flow values
+#' @return mh24 numeric value of MH24 for the given data frame
+#' @examples
+#' x<-sampleData
+#' mh24(x)
+mh24 <- function(x) {
+        
+        #some useful code c(1,1+which(diff(highFlowEvents$mh21)!=0))
+
+        threshold <- median(x$discharge,na.rm=TRUE)
+        noyears <- aggregate(x$discharge, list(x$wy_val), 
+                             FUN = median, na.rm=TRUE)
+        colnames(noyears) <- c("year", "momax")
+        noyrs <- length(noyears$year)
+        peak <- rep(0,nrow(x))
+        
+        flag <- 0
+        nevents <- 0
+        for (i in 1:noyrs) {
+                subsetyr <- subset(x, as.numeric(x$wy_val) == noyears$year[i])
+                
+                for (j in 1:nrow(subsetyr)) {
+                        if (subsetyr$discharge[j]>threshold) {
+                                flag <- flag+1
+                                temp <- subsetyr$discharge[j]
+                                nevents <- ifelse(flag==1,nevents+1,nevents)
+                                peak[nevents] <- ifelse(temp>peak[nevents],temp,peak[nevents])
+                        } else {flag <- 0}
+                }
+        
+                
+                }
+        peak_sub <- subset(peak,peak>0)
+        meanex <- mean(peak_sub)
+        mh24 <- round(meanex/ma2(x),digits=2)
+        return(mh24)
 }
