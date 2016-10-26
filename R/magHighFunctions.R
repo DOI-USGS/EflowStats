@@ -238,8 +238,8 @@ mh21.27 <- function(x,...) {
         
         #Calculate the 24-27 statistics
         mh24.27 <- lapply(eventsList,function(x,...){
-                eventMax <- group_by(x[c("flow","event")],event)
-                eventMax <- summarize(eventMax,maxQ = max(flow,na.rm=TRUE))
+                eventMax <- dplyr::group_by(x[c("flow","event")],event)
+                eventMax <- dplyr::summarize(eventMax,maxQ = max(flow,na.rm=TRUE))
                 eventMax <- na.omit(eventMax)
                 mean(eventMax$maxQ,na.rm=TRUE)/thresholdMed
         })
