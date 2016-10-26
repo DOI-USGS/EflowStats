@@ -13,38 +13,36 @@
 mh1.12 <- function(x,pref="mean") {
         maxbymonyr <- aggregate(x$discharge, list(x$year_val, x$month_val), FUN = max, na.rm=TRUE)
         colnames(maxbymonyr) <- c("Year","Month","maxmo")
-        if(pref = "mean")
+        if(pref == "mean")
         {
                 meanmaxbymon <- aggregate(maxbymonyr$maxmo, list(maxbymonyr$Month), FUN = mean, na.rm=TRUE)
-                mh1 <- c(mh1_Jan_meanMax = round(meanmaxbymon[1,2],digits=2))
-                mh2 <- c(mh2_Feb_meanMax = round(meanmaxbymon[2,2],digits=2))
-                mh3 <- c(mh3_Mar_meanMax = round(meanmaxbymon[3,2],digits=2))
-                mh4 <- c(mh4_Apr_meanMax = round(meanmaxbymon[4,2],digits=2))
-                mh5 <- c(mh5_May_meanMax = round(meanmaxbymon[5,2],digits=2))
-                mh6 <- c(mh6_Jun_meanMax = round(meanmaxbymon[6,2],digits=2))
-                mh7 <- c(mh7_Jul_meanMax = round(meanmaxbymon[7,2],digits=2))
-                mh8 <- c(mh8_Aug_meanMax = round(meanmaxbymon[8,2],digits=2))
-                mh9 <- c(mh9_Sep_meanMax = round(meanmaxbymon[9,2],digits=2))
-                mh10 <- c(m10_Oct_meanMax = round(meanmaxbymon[10,2],digits=2))
-                mh11 <- c(mh11_Nov_meanMax = round(meanmaxbymon[11,2],digits=2))
-                mh12 <- c(mh12_Dec_meanMax = round(meanmaxbymon[12,2],digits=2))
-                mh1.12 <- c(mh1,mh2,mh3,mh4,mh5,mh6,mh7,mh8,mh9,mh10,mh11,mh12)
+                mh1.12 <- c(mh1_Jan_meanMax = meanmaxbymon[1,2],
+                            mh2_Feb_meanMax = meanmaxbymon[2,2],
+                            mh3_Mar_meanMax = meanmaxbymon[3,2],
+                            mh4_Apr_meanMax = meanmaxbymon[4,2],
+                            mh5_May_meanMax = meanmaxbymon[5,2],
+                            mh6_Jun_meanMax = meanmaxbymon[6,2],
+                            mh7_Jul_meanMax = meanmaxbymon[7,2],
+                            mh8_Aug_meanMax = meanmaxbymon[8,2],
+                            mh9_Sep_meanMax = meanmaxbymon[9,2],
+                            m10_Oct_meanMax = meanmaxbymon[10,2],
+                            mh11_Nov_meanMax = meanmaxbymon[11,2],
+                            mh12_Dec_meanMax = meanmaxbymon[12,2])
                 return(mh1.12)
         } else {
-                medmaxbymon <- aggregate(maxbymonyr$maxmo, list(maxbymonyr$Month), FUN = median, na.rm=TRUE)
-                mh1 <- c(mh1_Jan_medMax = round(medmaxbymon[1,2],digits=2))
-                mh2 <- c(mh2_Feb_medMax = round(medmaxbymon[2,2],digits=2))
-                mh3 <- c(mh3_Mar_medMax = round(medmaxbymon[3,2],digits=2))
-                mh4 <- c(mh4_Apr_medMax = round(medmaxbymon[4,2],digits=2))
-                mh5 <- c(mh5_May_medMax = round(medmaxbymon[5,2],digits=2))
-                mh6 <- c(mh6_Jun_medMax = round(medmaxbymon[6,2],digits=2))
-                mh7 <- c(mh7_Jul_medMax = round(medmaxbymon[7,2],digits=2))
-                mh8 <- c(mh8_Aug_medMax = round(medmaxbymon[8,2],digits=2))
-                mh9 <- c(mh9_Sep_medMax = round(medmaxbymon[9,2],digits=2))
-                mh10 <- c(m10_Oct_medMax = round(medmaxbymon[10,2],digits=2))
-                mh11 <- c(mh11_Nov_medMax = round(medmaxbymon[11,2],digits=2))
-                mh12 <- c(mh12_Dec_medMax = round(medmaxbymon[12,2],digits=2))
-                mh1.12 <- c(mh1,mh2,mh3,mh4,mh5,mh6,mh7,mh8,mh9,mh10,mh11,mh12)
+                medianmaxbymon <- aggregate(maxbymonyr$maxmo, list(maxbymonyr$Month), FUN = median, na.rm=TRUE)
+                mh1.12 <- c(mh1_Jan_medianMax = medianmaxbymon[1,2],
+                            mh2_Feb_medianMax = medianmaxbymon[2,2],
+                            mh3_Mar_medianMax = medianmaxbymon[3,2],
+                            mh4_Apr_medianMax = medianmaxbymon[4,2],
+                            mh5_May_medianMax = medianmaxbymon[5,2],
+                            mh6_Jun_medianMax = medianmaxbymon[6,2],
+                            mh7_Jul_medianMax = medianmaxbymon[7,2],
+                            mh8_Aug_medianMax = medianmaxbymon[8,2],
+                            mh9_Sep_medianMax = medianmaxbymon[9,2],
+                            m10_Oct_medianMax = medianmaxbymon[10,2],
+                            mh11_Nov_medianMax = medianmaxbymon[11,2],
+                            mh12_Dec_medianMax = medianmaxbymon[12,2])
                 return(mh1.12)
         }
 }
@@ -169,89 +167,80 @@ mh19 <- function(x) {
         return(mh19)
 }
 
-#' Function to return the MH21 hydrologic indicator statistic for a given data frame
+#' Function to return the MH20 hydrologic indicator statistic for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates MH21, high flow volume index. Compute the average volume for flow events above a threshold equal to 
-#' the median flow for the entire record. MH21 is the average volume divided by the median flow for the entire 
-#' record (days-temporal).
+#' This function accepts a data frame that contains columns named "discharge" and "year_val" and 
+#' calculates MH20, specific mean annual maximum flow. MH20 is the mean (or median-Use Preference option) of 
+#' the annual maximum flows divided by the drainage area (cubic feet per second/square mile-temporal).
 #' 
 #' @param x data frame containing a "discharge" column containing daily flow values
-#' @return mh21 numeric value of MH21 for the given data frame
+#' @param drainarea numeric value of drainage area for a site
+#' @param pref string containing a "mean" or "median" preference
+#' @return mh20 numeric value of MH20 for the given data frame
+#' @export
 #' @examples
-#' mh21.23(x)
-
-mh21.23 <- function(x) {
-        #Get median for threhsold mh21
-        medThreshold <- median(x$discharge,na.rm=TRUE)
-        
-        #Make a named vector of exceedence thresholds for each statistic
-        thresholds <- c(mh21 = medThreshold,
-                        mh22 = medThreshold*3,
-                        mh23 = medThreshold*7)
-        
-        #Calculate flows in excess of each threshold
-        highFlows <- data.frame(mh21= x$discharge - thresholds["mh21"],
-                                mh22 = x$discharge - thresholds["mh22"],
-                                mh23 = x$discharge - thresholds["mh23"])
-        
-        #Define exceedence events as any flow greater than respective threshold,
-        #i.e. highFlows is positive
-        highFlowEvents <- data.frame(mh21= ifelse(highFlows$mh21 >0,T,F),
-                                     mh22 = ifelse(highFlows$mh22 >0,T,F),
-                                     mh23 = ifelse(highFlows$mh23 >0,T,F))
-        
-        
-        #Count the number of events where 1 event is all consecutive flow values
-        #above the respective threshold
-        numEvents <-list(mh21 = rle(highFlowEvents$mh21)$values,
-                         mh22 = rle(highFlowEvents$mh22)$values,
-                         mh23 = rle(highFlowEvents$mh23)$values)
-        
-        #Goes with above to do the actual count
-        numEvents <-c(mh21 = length(numEvents$mh21[numEvents$mh21==T]),
-                      mh22 = length(numEvents$mh22[numEvents$mh22==T]),
-                      mh23 = length(numEvents$mh23[numEvents$mh23==T]))
-        
-        #Calculate total amount of flow that occured during all exceedence events for 
-        #each threshold
-        totalFlow <- c(mh21 = sum(highFlows$mh21[highFlows$mh21 > 0]),
-                       mh22 = sum(highFlows$mh22[highFlows$mh22 > 0]),
-                       mh23 = sum(highFlows$mh23[highFlows$mh23 > 0]))
-        
-        #Calculate the mh21-23 statistics
-        mh21_23 <- totalFlow/numEvents/medThreshold
-        return(mh21_23)
+#' qfiletempf<-sampleData
+#' drainarea<-56.5
+#' mh20(qfiletempf,drainarea)
+mh20 <- function(x,drainarea,pref = "mean") {
+        maxbyyr <- aggregate(x$discharge,list(x$wy_val),FUN=max,na.rm=TRUE)
+        colnames(maxbyyr) <- c("Year","yrmax")
+        if (pref == "median") {
+                mh20 <- median(maxbyyr$yrmax)/drainarea
+        } 
+        else {
+                mh20 <- mean(maxbyyr$yrmax)/drainarea
+        }
+        return(mh20)
 }
 
-#' Function to return the MH24 hydrologic indicator statistic for a given data frame
+
+#' Function to return the MH21-27 hydrologic indicator statistics for a given discharge timeseries
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
-#' calculates MH24, high peak flow. Compute the average peak flow value for flow events above a threshold equal 
-#' to the median flow for the entire record. MH24 is the average peak flow divided by the median flow for the 
-#' entire record (dimensionless-temporal).
+#' This function accepts a vector of daily flow values and 
+#' calculates the MH21 through MH27 statistics.
 #' 
-#' @param x data frame containing a "discharge" column containing daily flow values
-#' @return mh24 numeric value of MH24 for the given data frame
+#' @param x vector of daily flow values
+#' @return A named numeric vector of MH21 through MH27 indicator statistics
 #' @examples
 #' x <- sampleData$discharge
-#' mh24.26(x)
-mh24.26 <- function(x) {
+#' mh21.27(x)
+mh21.27 <- function(x) {
+        #define thresholds, thresholds are further definer in next code chunk as 
+        #a factor of the median (eg 3xmedian)
         thresholdMed <- median(x,na.rm=TRUE)
         thresholdQuant <- quantile(x,.75,type=6,na.rm=TRUE)
         
-        eventsList <- list(mh24 = calcHighEvents(x,threshold=thresholdMed),
-                           mh25 = calcHighEvents(x,threshold=thresholdMed*3),
-                           mh26 = calcHighEvents(x,threshold=thresholdMed*7),
+        #Identify events above designated thresholds
+        eventsList <- list(mh21_24 = calcHighEvents(x,threshold=thresholdMed),
+                           mh22_25 = calcHighEvents(x,threshold=thresholdMed*3),
+                           mh23_26 = calcHighEvents(x,threshold=thresholdMed*7),
                            mh27 = calcHighEvents(x,threshold=thresholdQuant))
-        mh24.27 <- lapply(eventsList,function(x){
+        
+        #Calculate the 21-23 statistics
+        mh21.23 <- lapply(eventsList[1:3],function(x,...){
+                eventData <- na.omit(x)
+                numEvents <- length(unique(eventData$event))
+                totalFlow <- sum(eventData$discharge-thresholdMed)
+                totalFlow/numEvents/thresholdMed
+
+        })
+        mh21.23 <- unlist(mh21.23)
+        names(mh21.23) <- c("mh21","mh22","mh23")
+        
+        #Calculate the 24-27 statistics
+        mh24.27 <- lapply(eventsList,function(x,...){
                 eventMax <- group_by(x[c("discharge","event")],event)
                 eventMax <- summarize(eventMax,maxQ = max(discharge,na.rm=TRUE))
                 eventMax <- na.omit(eventMax)
-                mean(eventMax$maxQ,na.rm=TRUE)/median(x,na.rm=TRUE)
+                mean(eventMax$maxQ,na.rm=TRUE)/thresholdMed
         })
         
         mh24.27 <- unlist(mh24.27)
-return(mh24.27)
+        names(mh24.27) <- c("mh24","mh25","mh26","mh27")
+        
+        #Combine into one vector and ouput
+        mh21.27 <- c(mh21.23,mh24.27)
+return(mh21.27)
 }
 
