@@ -1,22 +1,22 @@
-#' Function to decompose a discharge series into high flow events defined as flows above a given threshold.
+#' Function to decompose a flow series into high flow events defined as flows above a given threshold.
 #' 
 #' This function accepts a vector of flow values, tests if each value in the flow vector
-#' is above a defined threshold, and classifies the discharge vector into events. An event
+#' is above a defined threshold, and classifies the flow vector into events. An event
 #' is defined as consecutive entries above the given threshold.
 #' 
 #' @param flow A vector of flow values
-#' @return A dataframe with columns "discharge" and "event"
+#' @return A dataframe with columns "flow" and "event"
 #' @examples
-#' x <- sampleData$discharge
+#' x <- sampleData$flow
 #' threshold <- median(x,na.rm=TRUE)
 #' highFlowEvents(x,threshold)
 calcHighEvents <- function(x,threshold) {
         
-        x <- data.frame(discharge = x)
+        x <- data.frame(flow = x)
         
         #Calculate flows in excess of threshold
         #And define high flow as positive number
-        x$highFlow <- ifelse(x$discharge - threshold > 0,T,F)
+        x$highFlow <- ifelse(x$flow - threshold > 0,T,F)
         
         #Calculate run lengths of T of F values to classify events
         runLengths <- rle(x$highFlow)
@@ -34,6 +34,6 @@ calcHighEvents <- function(x,threshold) {
         #Bind events to X
         x$event <- eventVector
         
-        flowEvents <- x[c("discharge","event")]
+        flowEvents <- x[c("flow","event")]
         return(flowEvents)
 }
