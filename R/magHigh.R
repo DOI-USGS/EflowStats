@@ -51,9 +51,9 @@
 #' @export
 #' @examples
 #' #Need example
-x <- sampleData[c("date","discharge")]
-drainArea <- 50
-yearType = "water"
+# x <- sampleData[c("date","discharge")]
+# drainArea <- 50
+# yearType = "water"
 
 magHigh <- function(x,stats = "All",yearType = "water",digits=3,drainArea = NULL,pref="mean") {
         
