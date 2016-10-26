@@ -51,7 +51,7 @@ ma11 = function(percentiles,...) as.numeric(percentiles["25%"]-percentiles["75%"
 ###MA12 through MA23
 ########################
 ma12.23 = function(x,pref="mean",...) {
-        if(pref="meadian")
+        if(pref=="median")
         {
                 ma12.23_med_temp <- aggregate(x$flow, list(x$month_val),
                                               median, na.rm=TRUE)
@@ -61,7 +61,7 @@ ma12.23 = function(x,pref="mean",...) {
                 
                 ma12.23 <- c(ma12.23_med_temp$value)
                 names(ma12.23) <- ma12.23_med_temp$variable
-        } else if (pref= "mean") {
+        } else if (pref== "mean") {
                 ma12.23_mean_temp <- aggregate(x$flow, list(x$month_val),
                                                mean, na.rm=TRUE)
                 names(ma12.23_mean_temp) <- c("month","value")
@@ -84,7 +84,7 @@ ma24.35 = function(x,pref="mean",...) {
                                                x$month_val), FUN = cv)
         names(ma24.35_temp) <- c("year_val","month_val","cv")
         
-        if(pref = "mean") {
+        if(pref == "mean") {
         ma24.35_mean_temp <- aggregate(ma24.35_temp$cv, list(ma24.35_temp$month_val), FUN = mean,na.rm=TRUE)
         names(ma24.35_mean_temp) <- c("month","value")
         

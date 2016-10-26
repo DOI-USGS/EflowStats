@@ -179,8 +179,7 @@ mh19 <- function(x) {
 #' @param x data frame containing a "discharge" column containing daily flow values
 #' @return mh21 numeric value of MH21 for the given data frame
 #' @examples
-#' x<-sampleData
-#' mh21(x)
+#' mh21.23(x)
 
 mh21.23 <- function(x) {
         #Get median for threhsold mh21
@@ -199,8 +198,8 @@ mh21.23 <- function(x) {
         #Define exceedence events as any flow greater than respective threshold,
         #i.e. highFlows is positive
         highFlowEvents <- data.frame(mh21= ifelse(highFlows$mh21 >0,T,F),
-                                      mh22 = ifelse(highFlows$mh22 >0,T,F),
-                                      mh23 = ifelse(highFlows$mh23 >0,T,F))
+                                     mh22 = ifelse(highFlows$mh22 >0,T,F),
+                                     mh23 = ifelse(highFlows$mh23 >0,T,F))
         
         
         #Count the number of events where 1 event is all consecutive flow values
@@ -211,8 +210,8 @@ mh21.23 <- function(x) {
         
         #Goes with above to do the actual count
         numEvents <-c(mh21 = length(numEvents$mh21[numEvents$mh21==T]),
-                         mh22 = length(numEvents$mh22[numEvents$mh22==T]),
-                         mh23 = length(numEvents$mh23[numEvents$mh23==T]))
+                      mh22 = length(numEvents$mh22[numEvents$mh22==T]),
+                      mh23 = length(numEvents$mh23[numEvents$mh23==T]))
         
         #Calculate total amount of flow that occured during all exceedence events for 
         #each threshold
@@ -235,37 +234,24 @@ mh21.23 <- function(x) {
 #' @param x data frame containing a "discharge" column containing daily flow values
 #' @return mh24 numeric value of MH24 for the given data frame
 #' @examples
-#' x<-sampleData
-#' mh24(x)
-mh24 <- function(x) {
+#' x <- sampleData$discharge
+#' mh24.26(x)
+mh24.26 <- function(x) {
+        thresholdMed <- median(x,na.rm=TRUE)
+        thresholdQuant <- quantile(x,.75,type=6,na.rm=TRUE)
         
-        #some useful code c(1,1+which(diff(highFlowEvents$mh21)!=0))
-
-        threshold <- median(x$discharge,na.rm=TRUE)
-        noyears <- aggregate(x$discharge, list(x$wy_val), 
-                             FUN = median, na.rm=TRUE)
-        colnames(noyears) <- c("year", "momax")
-        noyrs <- length(noyears$year)
-        peak <- rep(0,nrow(x))
+        eventsList <- list(mh24 = calcHighEvents(x,threshold=thresholdMed),
+                           mh25 = calcHighEvents(x,threshold=thresholdMed*3),
+                           mh26 = calcHighEvents(x,threshold=thresholdMed*7),
+                           mh27 = calcHighEvents(x,threshold=thresholdQuant))
+        mh24.27 <- lapply(eventsList,function(x){
+                eventMax <- group_by(x[c("discharge","event")],event)
+                eventMax <- summarize(eventMax,maxQ = max(discharge,na.rm=TRUE))
+                eventMax <- na.omit(eventMax)
+                mean(eventMax$maxQ,na.rm=TRUE)/median(x,na.rm=TRUE)
+        })
         
-        flag <- 0
-        nevents <- 0
-        for (i in 1:noyrs) {
-                subsetyr <- subset(x, as.numeric(x$wy_val) == noyears$year[i])
-                
-                for (j in 1:nrow(subsetyr)) {
-                        if (subsetyr$discharge[j]>threshold) {
-                                flag <- flag+1
-                                temp <- subsetyr$discharge[j]
-                                nevents <- ifelse(flag==1,nevents+1,nevents)
-                                peak[nevents] <- ifelse(temp>peak[nevents],temp,peak[nevents])
-                        } else {flag <- 0}
-                }
-        
-                
-                }
-        peak_sub <- subset(peak,peak>0)
-        meanex <- mean(peak_sub)
-        mh24 <- round(meanex/ma2(x),digits=2)
-        return(mh24)
+        mh24.27 <- unlist(mh24.27)
+return(mh24.27)
 }
+
