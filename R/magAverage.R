@@ -7,7 +7,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param drainArea A numeric specifying the drainage area. Only required for ma41 statistic. See details.
 #' @param pref A character indicating whether to use mean or median in monthly aggregation. Only required for ma12_23 statistics. See details.
-#' @param 
+#' @param asList Logial If TRUE returns a named list of statistics. If FALSE, returns a dataframe. Default is FALSE
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item ma1  Mean of the daily mean flow values for the entire flow record 
@@ -33,12 +33,12 @@
 #' @importFrom lubridate year
 #' @export
 #' @examples
-#' #Need example
-#x <- sampleData[c("date","discharge")]
-#drainArea <- 50
-#yearType = "water"
+#' x <- sampleData[c("date","discharge")]
+#' drainArea <- 50
+#' yearType = "water"
+#' magAverage(x=x,stats="All")
 
-magAverage <- function(x,stats = "All",yearType = "water",digits=3,drainArea = NULL,pref="mean") {
+magAverage <- function(x,stats = "All",yearType = "water",digits=3,drainArea = NULL,pref="mean",asList = FALSE) {
         
         ###Check dataframe inputs
         if(class(x[,1]) != "Date" && class(x[,2]) != "numeric")
@@ -62,7 +62,7 @@ magAverage <- function(x,stats = "All",yearType = "water",digits=3,drainArea = N
         ###Get water year value
         if(yearType == "water")
         {
-        x$year_val <- waterYear(x$date)
+                x$year_val <- waterYear(x$date)
         } else {
                 x$year_val <- lubridate::year(x$date)   
         }
@@ -99,13 +99,20 @@ magAverage <- function(x,stats = "All",yearType = "water",digits=3,drainArea = N
                                                            percMean = percMean,
                                                            percSD = percSD,
                                                            drainArea=drainArea))
+        if(asList == F)
+        {
+                statsOut <- unlist(statsOut)
+                statsOut <- data.frame(indice = names(statsOut),
+                                       value = unname(statsOut),
+                                       stringsAsFactors = F)
+                statsOut$value <- round(as.numeric(statsOut$value),digits=digits)
+        }
         return(statsOut)
         
 }
 
-        
 
 
-        
-        
-        
+
+
+

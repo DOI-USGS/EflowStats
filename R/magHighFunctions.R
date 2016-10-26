@@ -193,7 +193,7 @@ mh20 <- function(x,drainArea,pref = "mean",...) {
                 else {
                         mh20 <- mean(maxbyyr$yrmax)/drainArea
                 }        
-        } else(mh20 <- c(mh20 = "missing drainage area"))
+        } else(mh20 <- c(mh20 = NA))
         
         
         return(mh20)

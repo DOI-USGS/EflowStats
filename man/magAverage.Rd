@@ -5,7 +5,7 @@
 \title{Indices describing magnitude of the average flow condition.}
 \usage{
 magAverage(x, stats = "All", yearType = "water", digits = 3,
-  drainArea = NULL, pref = "mean")
+  drainArea = NULL, pref = "mean", asList = FALSE)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}
@@ -19,6 +19,8 @@ magAverage(x, stats = "All", yearType = "water", digits = 3,
 \item{drainArea}{A numeric specifying the drainage area. Only required for ma41 statistic. See details.}
 
 \item{pref}{A character indicating whether to use mean or median in monthly aggregation. Only required for ma12_23 statistics. See details.}
+
+\item{asList}{Logial If TRUE returns a named list of statistics. If FALSE, returns a dataframe. Default is FALSE}
 }
 \value{
 A vector of selected flow statistics
@@ -51,6 +53,9 @@ coefficients of variation
 }
 }
 \examples{
-#Need example
+x <- sampleData[c("date","discharge")]
+drainArea <- 50
+yearType = "water"
+magAverage(x=x,stats="All")
 }
 

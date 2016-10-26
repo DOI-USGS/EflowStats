@@ -148,7 +148,7 @@ ma41.45 = function(x,drainArea=NULL,...) {
         if(!is.null(drainArea))
         {
                 ma41 <- c(ma41 = mean(yearlyMean$meanyr)/drainArea)     
-        } else(ma41 <- c(ma41 = "missing drainage area"))
+        } else(ma41 <- c(ma41 = NA))
         
         medYearlyFlow <- median(yearlyMean$meanyr, na.rm=TRUE)
         meanYearlyFlow <- mean(yearlyMean$meanyr)

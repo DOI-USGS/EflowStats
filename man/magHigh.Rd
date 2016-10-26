@@ -5,7 +5,7 @@
 \title{Indices describing magnitude of the peak flow condition.}
 \usage{
 magHigh(x, stats = "All", yearType = "water", digits = 3,
-  drainArea = NULL, pref = "mean")
+  drainArea = NULL, pref = "mean", asList = FALSE)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}
@@ -19,6 +19,8 @@ magHigh(x, stats = "All", yearType = "water", digits = 3,
 \item{drainArea}{A numeric specifying the drainage area. Only required for mh20 statistic. See details.}
 
 \item{pref}{A character indicating whether to use mean or median in monthly aggregation. Only required for ma1_12 statistics. See details.}
+
+\item{asList}{Logial If TRUE returns a named list of statistics. If FALSE, returns a dataframe. Default is FALSE}
 }
 \value{
 A vector of selected flow statistics
@@ -68,6 +70,9 @@ entire record (dimensionless-temporal)
 }
 }
 \examples{
-#Need example
+x <- sampleData[c("date","discharge")]
+drainArea <- 50
+yearType = "water"
+magHigh(x=x,stats="All")
 }
 

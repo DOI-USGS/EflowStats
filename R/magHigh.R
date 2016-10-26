@@ -7,7 +7,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param drainArea A numeric specifying the drainage area. Only required for mh20 statistic. See details.
 #' @param pref A character indicating whether to use mean or median in monthly aggregation. Only required for ma1_12 statistics. See details.
-#' @param 
+#' @param asList Logial If TRUE returns a named list of statistics. If FALSE, returns a dataframe. Default is FALSE
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item mh1_12  Requires pref argument to be either "mean" or "median" specifying monthly aggregation function. 
@@ -50,12 +50,12 @@
 #' @importFrom lubridate year
 #' @export
 #' @examples
-#' #Need example
-# x <- sampleData[c("date","discharge")]
-# drainArea <- 50
-# yearType = "water"
+#' x <- sampleData[c("date","discharge")]
+#' drainArea <- 50
+#' yearType = "water"
+#' magHigh(x=x,stats="All")
 
-magHigh <- function(x,stats = "All",yearType = "water",digits=3,drainArea = NULL,pref="mean") {
+magHigh <- function(x,stats = "All",yearType = "water",digits=3,drainArea = NULL,pref="mean",asList=FALSE) {
         
         ###Check dataframe inputs
         if(class(x[,1]) != "Date" && class(x[,2]) != "numeric")
@@ -101,6 +101,16 @@ magHigh <- function(x,stats = "All",yearType = "water",digits=3,drainArea = NULL
         
         statsOut <- lapply(statsFuns[stats], do.call, list(x=x,
                                                            drainArea=drainArea))
+        
+        if(asList == F)
+        {
+                statsOut <- unlist(statsOut)
+                statsOut <- data.frame(indice = names(statsOut),
+                                       value = unname(statsOut),
+                                       stringsAsFactors = F)
+                statsOut$value <- round(as.numeric(statsOut$value),digits=digits)
+        }
+        
         return(statsOut)
         
 }
