@@ -7,6 +7,7 @@
 #' 
 #' @param x data frame containing "flow", "year_val", and "month_val" columns containing daily flow values, year, and month
 #' @return mh1.12 data frame containing the mean or median maximum flows for each month
+#' @import dplyr
 #' @examples
 #' x<-sampleData
 #' mh1.12(x)

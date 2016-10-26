@@ -30,13 +30,13 @@
 #' \item ma41_45 ma41 requires drainArea to be specified. Annual runoff and the variability and skewness across annual flows. ma41 - compute the annual mean daily flows. ma41 is the mean of the annual means divided by the drainage area. ma42 is the maximum annual flow minus the minimum annual flow divided by the median annual flow. ma43 - compute the first (25th percentile) and third (75th percentile) quartiles for the annual means. ma43 is the third quartile minus the first quartile divided by the median of the annual means. ma44 - compute the 10th and 90th percentiles for the annual means. ma44 is the 90th percentile minus the 10th percentile divided by the median of the annual means. ma45 - skewness in the annual flows. ma45 is the mean of the annual flow means minus the median of the annual means divided by the median of the annual means.
 #' }
 #' @return A vector of selected flow statistics
-#' @importFrom lubridate(year)
+#' @importFrom lubridate year
 #' @export
 #' @examples
 #' #Need example
-x <- sampleData[c("date","discharge")]
-drainArea <- 50
-yearType = "water"
+#x <- sampleData[c("date","discharge")]
+#drainArea <- 50
+#yearType = "water"
 
 magAverage <- function(x,stats = "All",yearType = "water",digits=3,drainArea = NULL,pref="mean") {
         

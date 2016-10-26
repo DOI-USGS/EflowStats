@@ -1,10 +1,10 @@
-Package: EflowStats
+Package: EflowStatslite
 Type: Package
 Title: Returns Hydrologic Indicator stats for a given set of data
-Version: 4.1.1
-Date: 2015-02-25
-Authors@R: c( person("Jessica", "Thompson", role = c("aut","cre"),
-    email = "jlthomps@usgs.gov"),
+Version: 0.1
+Date: 2016-10-26
+Authors@R: c( person("Joe", "Mills", role = c("aut","cre"),
+    email = "tmills@usgs.gov"),
     person("Stacey", "Archfield", role = c("aut"),
     email = "sarch@usgs.gov "))
 Depends:

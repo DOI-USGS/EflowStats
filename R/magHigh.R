@@ -47,7 +47,7 @@
 #' entire record (dimensionless-temporal)
 #' }
 #' @return A vector of selected flow statistics
-#' @importFrom lubridate(year)
+#' @importFrom lubridate year
 #' @export
 #' @examples
 #' #Need example
