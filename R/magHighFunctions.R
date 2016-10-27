@@ -12,40 +12,21 @@
 #' x<-sampleData
 #' mh1.12(x)
 mh1.12 <- function(x,pref="mean",...) {
-        maxbymonyr <- aggregate(x$flow, list(x$year_val, x$month_val), FUN = max, na.rm=TRUE)
-        colnames(maxbymonyr) <- c("Year","Month","maxmo")
+        
+        x <- dplyr::group_by(x,year_val,month_val)
+        mh1.12 <- dplyr::summarize(x,maxFlow = max(flow,na.rm=TRUE))
+        mh1.12 <- dplyr::group_by(mh1.12,month_val)
+        
         if(pref == "mean")
         {
-                meanmaxbymon <- aggregate(maxbymonyr$maxmo, list(maxbymonyr$Month), FUN = mean, na.rm=TRUE)
-                mh1.12 <- c(mh1_Jan_meanMax = meanmaxbymon[1,2],
-                            mh2_Feb_meanMax = meanmaxbymon[2,2],
-                            mh3_Mar_meanMax = meanmaxbymon[3,2],
-                            mh4_Apr_meanMax = meanmaxbymon[4,2],
-                            mh5_May_meanMax = meanmaxbymon[5,2],
-                            mh6_Jun_meanMax = meanmaxbymon[6,2],
-                            mh7_Jul_meanMax = meanmaxbymon[7,2],
-                            mh8_Aug_meanMax = meanmaxbymon[8,2],
-                            mh9_Sep_meanMax = meanmaxbymon[9,2],
-                            m10_Oct_meanMax = meanmaxbymon[10,2],
-                            mh11_Nov_meanMax = meanmaxbymon[11,2],
-                            mh12_Dec_meanMax = meanmaxbymon[12,2])
-                return(mh1.12)
+                mh1.12 <- dplyr::summarize(mh1.12,meanMon = mean(maxFlow,na.rm=TRUE))
         } else {
-                medianmaxbymon <- aggregate(maxbymonyr$maxmo, list(maxbymonyr$Month), FUN = median, na.rm=TRUE)
-                mh1.12 <- c(mh1_Jan_medianMax = medianmaxbymon[1,2],
-                            mh2_Feb_medianMax = medianmaxbymon[2,2],
-                            mh3_Mar_medianMax = medianmaxbymon[3,2],
-                            mh4_Apr_medianMax = medianmaxbymon[4,2],
-                            mh5_May_medianMax = medianmaxbymon[5,2],
-                            mh6_Jun_medianMax = medianmaxbymon[6,2],
-                            mh7_Jul_medianMax = medianmaxbymon[7,2],
-                            mh8_Aug_medianMax = medianmaxbymon[8,2],
-                            mh9_Sep_medianMax = medianmaxbymon[9,2],
-                            m10_Oct_medianMax = medianmaxbymon[10,2],
-                            mh11_Nov_medianMax = medianmaxbymon[11,2],
-                            mh12_Dec_medianMax = medianmaxbymon[12,2])
-                return(mh1.12)
+                mh1.12 <- dplyr::summarize(mh1.12,meanMon = median(maxFlow,na.rm=TRUE))
         }
+        mh1.12out <- mh1.12$meanMon
+        names(mh1.12out) <- paste0("mh",mh1.12$month_val)
+        return(mh1.12out)
+        
 }
 
 #' Function to return the MH13 hydrologic indicator statistic for a given data frame
@@ -61,12 +42,10 @@ mh1.12 <- function(x,pref="mean",...) {
 #' x<-sampleData
 #' mh13(x)
 mh13 <- function(x,...) {
-        maxmonbyyr <- aggregate(x$flow, list(x$year_val, 
-                                             x$month_val), FUN = max, na.rm=TRUE)
-        colnames(maxmonbyyr) <- c("Year", "Month", "maxmo")
-        sdmaxmonflows <- sd(maxmonbyyr$maxmo)
-        meanmaxmonflows <- mean(maxmonbyyr$maxmo)
-        mh13 <- (sdmaxmonflows * 100)/meanmaxmonflows
+        x <- dplyr::group_by(x,year_val,month_val)
+        maxSum <- dplyr::summarize(x,
+                                   maxFlow = max(flow,na.rm=TRUE))
+        mh13 <- (sd(maxSum$maxFlow)*100)/mean(maxSum$maxFlow)
         return(mh13)
 }
 
