@@ -124,4 +124,124 @@ magHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean") 
         ml14 <- mean(flowSum_year$minFlow/flowSum_year$medFlow)
         ml15 <- mean(flowSum_year$minFlow/flowSum_year$meanFlow)
         ml16 <- median(flowSum_year$minFlow/flowSum_year$medFlow)
+        ml14.16 <- data.frame(indice = c("ml14","ml15","ml16"),
+                              statistic = c(ml14,ml15,ml16))
+        
+        #ml17-18
+        bfibyyear <- dplyr::summarize(dplyr::group_by(x,year_val),
+                                      bfi = bfi(discharge))
+        
+        if (pref == "mean") {
+                ml17 <- mean(bfibyyear$bfi)
+        } else {
+                ml17 <- median(bfibyyear$bfi)
+        }
+        
+        sdbfi <- sd(bfibyyear$bfi)
+        meanbfi <- mean(bfibyyear$bfi)
+        
+        ml18 <- (sdbfi/meanbfi)*100
+        
+        ml17.18 <- data.frame(indice = c("ml17","ml18"),
+                              statistic = c(ml17,ml18))
+        
+        #ml19
+        ratiominmean <- (flowSum_year$minFlow/flowSum_year$meanFlow)
+        if (pref == "mean") {
+                ml19 <- mean(ratiominmean)*100
+        } else {
+                ml19 <- median(ratiominmean)*100
+        }
+        
+        ml19 <- data.frame(indice = "ml19",
+                           statistic = ml19)
+        
+        #ml20
+        #' This function accepts a data frame that contains a column named "discharge" and 
+        #' calculates base flow index ML20. Divide the daily flow record into 5-day blocks. Find the minimum flow for 
+        #' each block. Assign the minimum flow as a base flow for that block if 90 percent of that minimum flow is less 
+        #' than the minimum flows for the blocks on either side. Otherwise, set it to zero. Fill in the zero values 
+        #' using linear interpolation. Compute the total flow for the entire record and the total base flow for the 
+        #' entire record. ML20 is the ratio of total base flow to total flow (dimensionless-spatial).
+        #' 
+        #'
+        ##MAke blocking variable to divide flow record into 5 day blocks
+        numsets <- floor(nrow(x)/5)
+        blocks <- rep(1:numsets,5)
+        blocks <- blocks[order(blocks)]
+        blocks <- blocks[seq(nrow(x))]
+        x$block <- blocks
+        ###Remove remainder days that do not form a commplete block
+        x<-na.omit(x)
+        
+        ##Calculate mins for each block
+        blockMins <- dplyr::summarize(dplyr::group_by(x,block),
+                                      minFlow = min(discharge))
+        
+        ##Calculate 3 day rolling minimum for blocks
+        block3min <- RcppRoll::roll_min(blockMins$minFlow,n=3,by=1,align = "center")
+        ###Fill in missing 1st and last day of record caused by 3 day rolling
+        block3min <- c(NA,block3min,NA)
+        
+        ##Check if 0.9 times the minimum flow of each block is less than the 3 day rolling min, i.e. that it is 
+        ##less than the minimum of the block on either side of it
+        #blockMins <- blockMins[c(-1,-nrow(blockMins)),]
+        blockMins$baseflow <- ifelse(blockMins$minFlow*0.9 < block3min,blockMins$minFlow,NA)
+        
+        ###Fill in NAs at start and end of record for na.approx
+        if(is.na(blockMins$baseflow[1]))
+        {
+                blockMins$baseflow[1] <- blockMins$minFlow[1]
+        }
+        if(is.na(blockMins$baseflow[nrow(blockMins)]))
+        {
+                blockMins$baseflow[nrow(blockMins)] <- blockMins$minFlow[nrow(blockMins)]
+        }
+        
+        ##Approximate NA values using linear interpolation
+        blockMins$baseflow <- na.approx(blockMins$baseflow)
+        
+        
+        totalFlow <- sum(x$discharge)
+        totalBaseflow <- sum((blockMins$baseflow*5))
+        
+        ml20 <- totalBaseflow/totalFlow
+        
+        ml20 <- data.frame(indice = "ml20",
+                           statistic = ml20)
+        
+        
+        #ml21
+        ml21 <- (sd(flowSum_year$minFlow)*100)/mean(flowSum_year$minFlow)
+        ml21 <- data.frame(indice = "ml21",
+                           statistic = ml21)
+        
+        #ml22
+        if(!is.null(drainArea))
+        {
+                if (pref == "mean") {
+                        ml22 <- (mean(flowSum_year$minFlow))/drainArea
+                } 
+                else {
+                        ml22 <- (median(flowSum_year$minFlow))/drainArea
+                }
+        } else (ml22 = NA)
+        ml22 <- data.frame(indice = "ml22",
+                           statistic = ml22)
+        
+        
+        #Jointogether and return
+        mlOut <- dplyr::bind_rows(ml1.12,
+                                  ml13,
+                                  ml14.16,
+                                  ml17.18,
+                                  ml19,
+                                  ml20,
+                                  ml21,
+                                  ml22)
+        
+        return(mlOut)
+}
+
+
 
