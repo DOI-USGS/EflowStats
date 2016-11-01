@@ -37,8 +37,9 @@
 #' drainArea <- 50
 #' yearType = "water"
 #' magAverage(x=x,stats="All")
-#' 
-magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean") {
+
+magAverage <- function(x,stats = "All",yearType = "water",digits=3,drainArea = NULL,pref="mean",asList = FALSE) {
+        
         ###Check dataframe inputs
         if(class(x[,1]) != "Date" && class(x[,2]) != "numeric")
         {
@@ -55,13 +56,8 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
                 stop("yearType must be one of either 'water' or 'calendar'")
         }
         
-        if(any(is.na(x)))
-        {
-                warning("dataframe x contains missing values. Missing values will be removed.")
-                x <- na.omit(x)
-        }
         ###rename dataframe for convenient use inside function
-        names(x) <- c("date","discharge")
+        names(x) <- c("date","flow")
         
         ###Get water year value
         if(yearType == "water")
@@ -73,126 +69,50 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         
         x$month_val <- lubridate::month(x$date)
         
+        ##Calculations needed for MA4 through MA11
+        percentiles <- quantile(x$flow,probs=seq(0.05,0.95,0.05),type=6)
+        percMean <- mean(percentiles,na.rm=TRUE)
+        percSD <- sd(percentiles,na.rm=TRUE)
         
-        meanFlow <- mean(x$discharge,na.rm=TRUE)     
-        medFlow <- median(x$discharge,na.rm=TRUE)     
-        
-        #ma1-2
-        ma1.2 <- data.frame(indice = c("ma1","ma2"),
-                            statistic = c(meanFlow,medFlow)
-        )
-        
-        #ma3
-        ma3 <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                CV = cv(discharge))
-        if(pref=="mean")
+        statsFuns <- list(ma1=ma1,
+                          ma2=ma2,
+                          ma3=ma3,
+                          ma4=ma4,
+                          ma5=ma5,
+                          ma6=ma6,
+                          ma7=ma7,
+                          ma8=ma8,
+                          ma9=ma9,
+                          ma10=ma10,
+                          ma11=ma11,
+                          ma12_23=ma12.23,
+                          ma24_35=ma24.35,
+                          ma36_40=ma36.40,
+                          ma41_45=ma41.45)
+        if(stats == "All")
         {
-                ma3 = data.frame(indice="ma3",
-                                 statistic = mean(ma3$CV))
-        } else {
-                ma3 = data.frame(indice="ma3",
-                                 statistic = median(ma3$CV))   
+                stats <- names(statsFuns)
         }
         
-        #ma4-11
-        percentiles <- quantile(x$discharge,probs=seq(0.05,0.95,0.05),type=6)
-        percMean <- mean(percentiles)
-        percSD <- sd(percentiles)
-        
-        
-        ma4 <- percMean/percSD*100
-        ma5 <- mean(x$discharge)/median(x$discharge)
-        ma6 <- as.numeric(percentiles["90%"]/percentiles["10%"])
-        ma7 <- as.numeric(percentiles["80%"]/percentiles["20%"])
-        ma8 <- as.numeric(percentiles["75%"]/percentiles["25%"])
-        ma9 <- as.numeric(percentiles["10%"]-percentiles["90%"])/median(x$discharge)
-        ma10 <- as.numeric(percentiles["20%"]-percentiles["80%"])/median(x$discharge)
-        ma11 <- as.numeric(percentiles["25%"]-percentiles["75%"])/median(x$discharge)
-        
-        ma4.11 = data.frame(indice = c("ma4","ma5","ma6","ma7","ma8","ma9","ma10","ma11"),
-                            statistic = c(ma4,ma5,ma6,ma7,ma8,ma9,ma10,ma11))
-        
-        #ma12-23
-        if (pref== "mean") {
-                flowSum_month <- dplyr::summarize(dplyr::group_by(x,month_val),
-                                                  meanFlow = mean(discharge))
-                ma12.23 <- data.frame(indice = paste0("ma",flowSum_month$month_val),
-                                      statistic = flowSum_month$meanFlow)
-        } else {
-                flowSum_month <- dplyr::summarize(dplyr::group_by(x,month_val),
-                                                  meanFlow = median(discharge))
-                ma12.23 <- data.frame(indice = paste0("ma",flowSum_month$month_val),
-                                      statistic = flowSum_month$meanFlow)
-        }
-        
-        #ma24-35
-        ma24.35 <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                    CV = cv(discharge))
-        
-        if(pref == "mean") {
-                ma24.35 <- dplyr::summarize(dplyr::group_by(ma24.35,month_val),
-                                            meanCV = mean(CV))
-                ma24.35 <- data.frame(indice = paste0("ma",seq(from=24,to=35,by=1)),
-                                      statistic= ma24.35$meanCV)
-        } else {
-                ma24.35 <- dplyr::summarize(dplyr::group_by(ma24.35,month_val),
-                                            medianCV = median(CV))
-                ma24.35 <- data.frame(indice = paste0("ma",seq(from=24,to=35,by=1)),
-                                      statistic= ma24.35$medianCV)
-        }
-        
-        #ma36-40
-        flowSum_yearMon <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                            minFlow = min(discharge),
-                                            maxFlow = max(discharge),
-                                            meanFlow = mean(discharge))
-        medMonthlyFlow <- median(flowSum_yearMon$meanFlow)
-        meanMonthlyFlow <- mean(flowSum_yearMon$meanFlow)
-        
-        percentiles <- quantile(flowSum_yearMon$meanFlow,probs=c(0.1,0.25,0.75,0.9),type=6)
-
-        ma36 <- (max(flowSum_yearMon$meanFlow)-min(flowSum_yearMon$meanFlow))/medMonthlyFlow
-        
-        ma37 <- (percentiles["75%"]-percentiles["25%"])/medMonthlyFlow
-        ma38 <- (percentiles["90%"]-percentiles["10%"])/medMonthlyFlow
-        ma39 <- (sd(flowSum_yearMon$meanFlow)*100)/meanMonthlyFlow
-        ma40 <- (meanMonthlyFlow-medMonthlyFlow)/medMonthlyFlow
-        
-        ma36.40 <- data.frame(indice = c("ma36","ma37","ma38","ma39","ma40"),
-                              statistic = c(ma36,ma37,ma38,ma39,ma40))
-        #ma41-45
-        flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         meanFlow = mean(discharge))
-        
-        medYearlyFlow <- median(flowSum_year$meanFlow)
-        meanYearlyFlow <- mean(flowSum_year$meanFlow)
-        
-        percentiles <- quantile(flowSum_year$meanFlow,probs=c(0.1,0.25,0.75,0.9),type=6)
-        
-        if(!is.null(drainArea))
+        statsOut <- lapply(statsFuns[stats], do.call, list(x=x,
+                                                           percentiles=percentiles,
+                                                           percMean = percMean,
+                                                           percSD = percSD,
+                                                           drainArea=drainArea))
+        if(asList == F)
         {
-                ma41 <- meanYearlyFlow/drainArea     
-        } else(ma41 <- NA)
-
+                statsOut <- unlist(statsOut)
+                statsOut <- data.frame(indice = names(statsOut),
+                                       value = unname(statsOut),
+                                       stringsAsFactors = F)
+                statsOut$value <- round(as.numeric(statsOut$value),digits=digits)
+        }
+        return(statsOut)
         
-        ma42 <- (max(flowSum_year$meanFlow)-min(flowSum_year$meanFlow))/medYearlyFlow
-        ma43 <- (percentiles["75%"]-percentiles["25%"])/medYearlyFlow
-        ma44 <- (percentiles["90%"]-percentiles["10%"])/medYearlyFlow
-        ma45 <- (meanYearlyFlow-medYearlyFlow)/medYearlyFlow
-        
-        ma41.45 <- data.frame(indice = c("ma41","ma42","ma43","ma44","ma45"),
-                              statistic = c(ma41,ma42,ma43,ma44,ma45))
-        
-        #Output the dataframe
-        maStats <- dplyr::bind_rows(ma1.2,
-                                    ma3,
-                                    ma4.11,
-                                    ma12.23,
-                                    ma24.35,
-                                    ma36.40,
-                                    ma41.45)
-        return(maStats)
-
 }
+
+
+
+
 
 

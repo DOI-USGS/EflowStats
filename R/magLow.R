@@ -45,16 +45,19 @@
 #' record (days-temporal). MH24 through 27 are the average peak flows divided by the median flow for the 
 #' entire record (dimensionless-temporal)
 #' }
-#' @return A vector of selected flow statistics
+#' @return A data.frame of flow statistics
 #' @importFrom lubridate year
+#' @importFrom zoo na.approx
+#' @importFrom RcppRoll roll_min
+#' @import dplyr
 #' @export
 #' @examples
 #' x <- sampleData[c("date","discharge")]
 #' drainArea <- 50
 #' yearType = "water"
-#' magHigh(x=x,stats="All")
+#' magLow(x=x)
 #' 
-magHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean") {
+magLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean") {
         ###Check dataframe inputs
         if(class(x[,1]) != "Date" && class(x[,2]) != "numeric")
         {
@@ -199,7 +202,7 @@ magHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean") 
         }
         
         ##Approximate NA values using linear interpolation
-        blockMins$baseflow <- na.approx(blockMins$baseflow)
+        blockMins$baseflow <- zoo::na.approx(blockMins$baseflow)
         
         
         totalFlow <- sum(x$discharge)

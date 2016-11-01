@@ -9,7 +9,7 @@
 #' @examples
 #' x <- sampleData$flow
 #' threshold <- median(x,na.rm=TRUE)
-#' highFlowEvents(x,threshold)
+#' calcHighEvents(x,threshold)
 calcHighEvents <- function(x,threshold) {
         
         x <- data.frame(flow = x)

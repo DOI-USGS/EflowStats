@@ -6,7 +6,7 @@
 #' @param x A numeric vector of consecutive daily mean discharge values
 #' @return bfi numeric value of the base flow index for the given data frame
 #' @export
-#' @importFrom RcppRoll::roll_mean
+#' @importFrom RcppRoll roll_mean
 #' @examples
 #' x<-sampleData$discharge
 #' bfi(x)

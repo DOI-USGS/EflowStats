@@ -4,13 +4,11 @@
 \alias{magAverage}
 \title{Indices describing magnitude of the average flow condition.}
 \usage{
-magAverage(x, stats = "All", yearType = "water", digits = 3,
-  drainArea = NULL, pref = "mean", asList = FALSE)
+magAverage(x, yearType = "water", digits = 3, drainArea = NULL,
+  pref = "mean")
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}
-
-\item{stats}{A character vector containing names of indices to calculate or "All" for all stats. Specific statistics and groups of statistics are listed in details.}
 
 \item{yearType}{A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.}
 
@@ -20,10 +18,12 @@ magAverage(x, stats = "All", yearType = "water", digits = 3,
 
 \item{pref}{A character indicating whether to use mean or median in monthly aggregation. Only required for ma12_23 statistics. See details.}
 
+\item{stats}{A character vector containing names of indices to calculate or "All" for all stats. Specific statistics and groups of statistics are listed in details.}
+
 \item{asList}{Logial If TRUE returns a named list of statistics. If FALSE, returns a dataframe. Default is FALSE}
 }
 \value{
-A vector of selected flow statistics
+A data.frame flow statistics
 }
 \description{
 Calculates 45 indices used to describe the magnitude of the average flow condition. 
@@ -56,6 +56,7 @@ coefficients of variation
 x <- sampleData[c("date","discharge")]
 drainArea <- 50
 yearType = "water"
-magAverage(x=x,stats="All")
+magAverage(x=x)
+
 }
 
