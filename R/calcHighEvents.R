@@ -16,7 +16,7 @@ calcHighEvents <- function(x,threshold) {
         
         #Calculate flows in excess of threshold
         #And define high flow as positive number
-        x$highFlow <- ifelse(x$flow - threshold > 0,T,F)
+        x$highFlow <- ifelse(x$flow > threshold,T,F)
         
         #Calculate run lengths of T of F values to classify events
         runLengths <- rle(x$highFlow)

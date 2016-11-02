@@ -63,6 +63,8 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         }
         ###rename dataframe for convenient use inside function
         names(x) <- c("date","discharge")
+        ###Order by date
+        x <- x[order(x$date),]
         
         ###Get water year value
         if(yearType == "water")
