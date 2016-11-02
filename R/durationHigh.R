@@ -173,11 +173,15 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
         dh15.16 <- data.frame(indice=c("dh15","dh16"),
                               statistic = c(dh15,dh16))
         
-        #dh17-18 #differs than EflowStats because EflowSTats calculates the mean of yearly means 
+        #dh17-20 #differs than EflowStats because EflowSTats calculates the mean of yearly means 
         #instead of the mean lfow duration for the entire period of record as the documentation states
+        percentiles <- quantile(discharge,probs=c(0.25,0.75),type=6)
         dh17 <-  eventDuration(x$discharge,threshold=medFlow,average=TRUE)
-        dh18 <-  eventDuration(x$discharge[x$year_val==2011],threshold=medFlow*3,average=FALSE)
-        mean(c(test2012,test2010))
+        dh18 <-  eventDuration(x$discharge,threshold=medFlow*3,average=TRUE)
+        dh19 <-  eventDuration(x$discharge,threshold=medFlow*7,average=TRUE)
+        dh20 <-  eventDuration(x$discharge,threshold=percentiles["75%"],average=TRUE)
+        dh21 <-  eventDuration(x$discharge,threshold=percentiles["25%"],average=TRUE)
+        
 
         
 
