@@ -26,11 +26,11 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
   }
   thresh_60<-getPeakThresh(data,peakData,.6)
   thresh_40<-getPeakThresh(data,peakData,.4)
-  if (length(grep("otherStat",stats))>0) {
+  if (grepl("otherStat",stats)) {
     otherstat <- OtherStats(data)
     dfOut <- c(dfOut,otherstat)
   }
-  if (length(grep("magStat",stats))>0) {
+  if (grepl("magStat",stats)) {
     ma1v<-ma1(data)
     ma2v<-ma2(data)
     ma3v<-ma3(data)
@@ -132,7 +132,7 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
              ml17v,ml18v,ml19v,ml20v,ml21v,ml22v,mh1v,mh2v,mh3v,mh4v,mh5v,mh6v,mh7v,mh8v,mh9v,mh10v,mh11v,
              mh12v,mh13v,mh14v,mh15v,mh16v,mh17v,mh18v,mh19v,mh20v,mh21v,mh22v,mh23v,mh24v,mh25v,mh26v,mh27v)
   }
-  if (length(grep("flowStat",stats))>0) {
+  if (grepl("flowStat",stats)) {
     fl1v<-unname(unlist(fl1.2(data)[1]))
     fl2v<-unname(unlist(fl1.2(data)[2]))
     fl3v<-fl3(data)
@@ -151,7 +151,7 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
     } else {fh11v<-NA}
   dfOut <- c(dfOut,fl1v,fl2v,fl3v,fh1v,fh2v,fh3v,fh4v,fh5v,fh6v,fh7v,fh8v,fh9v,fh10v,fh11v)
   }
-  if (length(grep("durStat",stats))>0) {
+  if (grepl("durStat",stats)) {
     dl1v<-dl1(data)
     dl2v<-dl2(data)
     dl3v<-dl3(data)
@@ -207,7 +207,7 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
              dh1v,dh2v,dh3v,dh4v,dh5v,dh6v,dh7v,dh8v,dh9v,dh10v,dh11v,dh12v,dh13v,dh14v,dh15v,
              dh16v,dh17v,dh18v,dh19v,dh20v,dh21v,dh22v,dh23v,dh24v)
   }
-  if (length(grep("timStat",stats))>0) {
+  if (grepl("timStat",stats)) {
     ta1v<-unname(unlist(ta1.2(data)[1]))
     ta2v<-unname(unlist(ta1.2(data)[2]))
     if (!is.na(thresh_60)) {
@@ -228,7 +228,7 @@ FlowStatsAll <- function(data,drain_area,stats="magStat,flowStat,timStat,rateSta
     } else {th3v<-NA}
   dfOut <- c(dfOut,ta1v,ta2v,ta3v,tl1v,tl2v,tl3v,tl4v,th1v,th2v,th3v)
   }
-  if (length(grep("rateStat",stats))>0) {
+  if (grepl("rateStat",stats)) {
     ra1v<-ra1(data)
     ra2v<-ra2(data)
     ra3v<-ra3(data)
