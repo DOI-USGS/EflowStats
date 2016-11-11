@@ -5,21 +5,31 @@
 #' is defined as consecutive entries above the given threshold.
 #' 
 #' @param flow A vector of flow values
+#' @param threshold Threshold value defining event
+#' @param type character indicating type of event. High flags events above threshold, low flags events below threshold.
 #' @return A dataframe with columns "flow" and "event"
 #' @examples
-#' x <- sampleData$flow
+#' x <- sampleData$discharge
 #' threshold <- median(x,na.rm=TRUE)
 #' calcHighEvents(x,threshold)
-calcHighEvents <- function(x,threshold) {
+calcEvents <- function(x,threshold,type="high") {
         
         x <- data.frame(flow = x)
         
+        if(type=="high")
+        {
         #Calculate flows in excess of threshold
         #And define high flow as positive number
-        x$highFlow <- ifelse(x$flow > threshold,T,F)
+
+        x$event <- ifelse(x$flow > threshold,T,F)
+        } else {
+                x$event <- ifelse(x$flow < threshold,T,F)
+                ###Remove first "event" since the time at strt of year before flood is not between 2 floods
+        }
         
+                
         #Calculate run lengths of T of F values to classify events
-        runLengths <- rle(x$highFlow)
+        runLengths <- rle(x$event)
         runLengths <- data.frame(lengths = runLengths$lengths,
                                  values = runLengths$values,
                                  eventNum = NA)
@@ -35,5 +45,14 @@ calcHighEvents <- function(x,threshold) {
         x$event <- eventVector
         
         flowEvents <- x[c("flow","event")]
+        
+        if(type=="low")
+        {
+        ###Remove first and last "event" since the time at strt of year before flood is not between 2 floods
+                #flowEvents$event[flowEvents$event==1] <- NA
+                flowEvents$event[flowEvents$event==max(flowEvents$event,na.rm=TRUE)] <- NA
+                
+        }
+        
         return(flowEvents)
 }

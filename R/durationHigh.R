@@ -7,6 +7,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param drainArea A numeric specifying the drainage area. Only required for mh20 statistic. See details.
 #' @param pref A character indicating whether to use mean or median in monthly aggregation. Only required for ma1_12 statistics. See details.
+#' @param peakThresh Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item dh1 Annual maximum daily flow. Compute the maximum of a 1-day moving average flow for each year. DH1 is the 
@@ -24,11 +25,11 @@
 #' \item DH7 Variability of annual maximum of 3-day moving average flows. Compute the standard deviation for the 
 #' maximum 3-day moving averages. DH7 is 100 times the standard deviation divided by the mean.
 #' \item DH8 Variability of annual maximum of 7-day moving average flows. Compute the standard deviation for the 
-#' maximum 7-day moving averages. DH7 is 100 times the standard deviation divided by the mean.
+#' maximum 7-day moving averages. DH8 is 100 times the standard deviation divided by the mean.
 #' \item DH9 Variability of annual maximum of 30-day moving average flows. Compute the standard deviation for the 
-#' maximum 30-day moving averages. DH7 is 100 times the standard deviation divided by the mean.
+#' maximum 30-day moving averages. DH9 is 100 times the standard deviation divided by the mean.
 #' \item DH10 Variability of annual maximum of 90-day moving average flows. Compute the standard deviation for the 
-#' maximum 90-day moving averages. DH7 is 100 times the standard deviation divided by the mean.
+#' maximum 90-day moving averages. DH10 is 100 times the standard deviation divided by the mean.
 #' \item DH11 Annual maximum of 1-day moving average flows divided by the median for the entire record. Compute the 
 #' maximum of a 1-day moving average flow for each year. DH11 is the mean of these values divided by the median 
 #' for the entire record.
@@ -44,7 +45,24 @@
 #' to the 75th percentile value for each year in the flow record. DH15 is the median of the yearly average durations.
 #' \item DH16 Variability in high flow pulse duration. Compute the standard deviation for the yearly average high pulse 
 #' durations. DH16 is 100 times the standard deviation divided by the mean of the yearly average high pulse durations.
-
+#' \item DH17 High flow duration. Compute the average duration of flow events with flows above a threshold equal to 
+#' the median flow value for the entire flow record. DH17 is the mean duration 
+#' of the events.
+#' \item DH18 High flow duration. Compute the average duration of flow events with flows above a threshold equal to 
+#' three times the median flow value for the entire flow record. DH18 is the mean 
+#' duration of the events.
+#' \item DH19 High flow duration. Compute the average duration of flow events with flows above a threshold equal to 
+#' seven times the median flow value for the entire flow record. DH19 is the mean
+#' duration of the events .
+#' \item DH20 High flow duration. Compute the 75th percentile value for the entire flow record. Compute the average 
+#' duration of flow events with flows above a threshold equal to the 75th percentile value for the median annual 
+#' flows. DH20 is the average duration of the events.
+#' \item DH21 High flow duration. Compute the 25th percentile value for the entire flow record. Compute the average 
+#' duration of flow events with flows above a threshold equal to the 25th percentile value for the entire set 
+#' of flows. DH21 is the average duration of the events. 
+#' \item DH22 Flood interval. Compute the flood threshold as the flow equivalent for a flood recurrence of 1.67 years. 
+#' Determine the median number of days between flood events for each year. DH22 is the mean (or median-Use 
+#' Preference option) of the yearly median number of days between flood events.
 #' }
 #' @return A data.frame of flow statistics
 #' @importFrom lubridate year
@@ -58,7 +76,7 @@
 #' yearType = "water"
 #' durationHigh(x=x)
 #' 
-durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean") {
+durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",floodThreshold = NULL) {
         ###Check dataframe inputs
         if(class(x[,1]) != "Date" && class(x[,2]) != "numeric")
         {
@@ -173,7 +191,7 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
         dh15.16 <- data.frame(indice=c("dh15","dh16"),
                               statistic = c(dh15,dh16))
         
-        #dh17-20 #differs than EflowStats because EflowSTats calculates the mean of yearly means 
+        #dh17-21 #differs than EflowStats because EflowSTats calculates the mean of yearly means 
         #instead of the mean lfow duration for the entire period of record as the documentation states
         percentiles <- quantile(discharge,probs=c(0.25,0.75),type=6)
         dh17 <-  eventDuration(x$discharge,threshold=medFlow,average=TRUE)
@@ -182,6 +200,114 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
         dh20 <-  eventDuration(x$discharge,threshold=percentiles["75%"],average=TRUE)
         dh21 <-  eventDuration(x$discharge,threshold=percentiles["25%"],average=TRUE)
         
+        dh17.21 <- data.frame(indice=c("dh17","dh18","dh18","dh20","dh21"),
+                              statistic = c(dh17,dh18,dh19,dh20,dh21))
+        
+        #dh22
+        if(!is.null(floodThreshold))
+        {
+
+                dh22 <- dplyr::summarize(dplyr::group_by(x,year_val),
+                                 duration = eventDuration(discharge,
+                                               threshold=floodThreshold,
+                                               type="low",pref="median"))
+                if(pref=="mean")
+                {
+                        dh22 <- mean(dh22$duration)
+                } else(dh22 <- median(dh22$duration))
+        }else(dh22 <- NA)
+        
+        dh22 <- data.frame(indice="dh22",
+                           statistic = dh22)
+        
+        #dh23
+        if(!is.null(floodThreshold))
+        {
+                
+                dh23 <- dplyr::summarize(dplyr::group_by(x,year_val),
+                                         maxDuration = max(eventDuration(discharge,
+                                                                  threshold=floodThreshold,
+                                                                  type="high",
+                                                                  average=FALSE,
+                                                                  pref="median")))
+                if(pref=="mean")
+                {
+                        dh23 <- mean(dh23$maxDuration)
+                } else(dh23 <- median(dh23$maxDuration))
+        }else(dh23 <- NA)
+        
+        dh23 <- data.frame(indice="dh23",
+                           statistic = dh23)
+        
+        #dh24
+        if(!is.null(floodThreshold))
+        {
+                
+                dh24 <- dplyr::summarize(dplyr::group_by(x,year_val),
+                                         maxDuration = max(eventDuration(discharge,
+                                                                         threshold=floodThreshold,
+                                                                         type="low",
+                                                                         average=FALSE,
+                                                                         pref="median")))
+                if(pref=="mean")
+                {
+                        dh24 <- mean(dh24$maxDuration)
+                } else(dh24 <- median(dh24$maxDuration))
+        }else(dh23 <- NA)
+        
+        dh24 <- data.frame(indice="dh24",
+                           statistic = dh24)
+        
+        
+        
+        
+        
+
+                
+                
+                
+                test <- eventDuration(sampleData$discharge,threshold=1158,type="low",average=FALSE)
+               #calculate number of days between
+               eventDurations <- dplyr::summarize(dplyr::group_by(flowEvents,event),
+                                                  duration = length(event)
+               )
+               
+               
+                qfiletempf <- qfiletempf[order(qfiletempf$date),]
+                lfcrit <- thresh
+                noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
+                                     FUN = median, na.rm=TRUE)
+                colnames(noyears) <- c("Year", "momax")
+                noyrs <- length(noyears$Year)
+                dur <- data.frame(Year = rep(0,nrow(qfiletempf)), dur = rep(1,nrow(qfiletempf)))
+                med_yr <- rep(0,noyrs)
+                for (i in 1:noyrs) {
+                        subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
+                        flag <- 0
+                        pdur <- 0
+                        nevents <- 0
+                        for (j in 1:nrow(subsetyr)) {
+                                if (subsetyr$discharge[j]<lfcrit) {
+                                        flag <- flag+1
+                                        nevents <- ifelse(flag==1,nevents+1,nevents)
+                                        pdur <- pdur+1
+                                } else {
+                                        if (flag > 0) {
+                                                dur$dur[nevents]<-pdur
+                                                dur$Year[nevents]<-subsetyr$wy_val[j]
+                                        }
+                                        flag <- 0
+                                        pdur <- 0
+                                }
+                        }
+                        dur_sub <- dur$dur[dur$Year==subsetyr$wy_val[j]]
+                        med_yr[i] <- median(dur_sub)
+                }
+                
+                med_yr[is.na(med_yr)]<-0
+                dh22 <- round(mean(med_yr,na.rm=TRUE),digits=2)                
+        } else(dh22 <- NA)
+
 
         
 

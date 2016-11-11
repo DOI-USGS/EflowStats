@@ -15,9 +15,9 @@
 #' x <- sampleData$discharge
 #' threshold <- median(x,na.rm=TRUE)
 #' eventDuration(x,threshold)
-eventDuration <- function(x,threshold,average = TRUE) {
+eventDuration <- function(x,threshold,average = TRUE,type="high",pref="mean") {
         
-        flowEvents <- calcHighEvents(x,threshold)
+        flowEvents <- calcEvents(x,threshold,type)
         flowEvents <- na.omit(flowEvents)
 
         eventDurations <- dplyr::summarize(dplyr::group_by(flowEvents,event),
@@ -26,7 +26,13 @@ eventDuration <- function(x,threshold,average = TRUE) {
         
         if(average == TRUE)
         {
+                if(pref=="mean")
+                {
                 eventDurations <- mean(eventDurations$duration)
+                } else if (pref=="median")
+                {
+                        eventDurations <- median(eventDurations$duration)
+                }
         }
         
         return(eventDurations)
