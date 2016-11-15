@@ -1,13 +1,14 @@
 #' Function to decompose a flow series into high flow events defined as flows above a given threshold.
 #' 
 #' This function accepts a vector of flow values, tests if each value in the flow vector
-#' is above a defined threshold, and classifies the flow vector into events. An event
-#' is defined as consecutive entries above the given threshold.
+#' is above or below a defined threshold, and classifies the flow vector into events. An event
+#' is defined as consecutive entries above or below the given threshold.
 #' 
 #' @param flow A vector of flow values
 #' @param threshold Threshold value defining event
 #' @param type character indicating type of event. High flags events above threshold, low flags events below threshold.
 #' @return A dataframe with columns "flow" and "event"
+#' @export
 #' @examples
 #' x <- sampleData$discharge
 #' threshold <- median(x,na.rm=TRUE)

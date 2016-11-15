@@ -10,7 +10,7 @@
 #' @param peakThresh Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
 #' @details Descriptions of indices.
 #' \itemize{
-#' \item dh1 Annual maximum daily flow. Compute the maximum of a 1-day moving average flow for each year. DH1 is the 
+#' \item DH1 Annual maximum daily flow. Compute the maximum of a 1-day moving average flow for each year. DH1 is the 
 #' mean (or median-Use Preference option) of these values.
 #' \item DH2 Annual maximum of 3-day moving average flows. Compute the maximum of a 3-day moving average flow for 
 #' each year. DH2 is the mean (or median-Use Preference option) of these values; 
@@ -135,12 +135,10 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
         #dh1
         if (pref == "mean") {
                 dh1 <- mean(flowSum_year$maxFlow)
-        }
-        else {
+        } else {
                 dh1 <- median(flowSum_year$maxFlow)
         }
-        dh1 <- data.frame(indice = "dh1",
-                          statistic = dh1)
+
         
         #dh2-dh5
         if (pref == "mean") {
@@ -152,31 +150,29 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
                                median,
                                MARGIN=2)
         }
-        dh2.5 <- data.frame(indice = c("dh2","dh3","dh4","dh5"),
-                            statistic = unname(dh2.5))
+                ##Unname
+                dh2.5 <- unname(dh2.5)
+
         
         #dh6-10
         dh6 <- (sd(flowSum_year$maxFlow) * 100)/mean(flowSum_year$maxFlow)
         dh7.10 <- apply(maxRollingMean[2:5],
                         function(x) (sd(x)*100)/mean(x),
                         MARGIN=2)
-        dh6.10 <- data.frame(indice=c("dh6","dh7","dh8","dh9","dh10"),
-                          statistic = c(dh6,unname(dh7.10))
-                          )
+        dh7.10 <- unname(dh7.10)
+
         
         #dh11-13
-        dh11 <- dh1$statistic/medFlow
-        dh12.13 <- dh2.5$statistic[c(2,3)]/medFlow 
-        dh11.13 <- data.frame(indice = c("dh11","dh12","dh13"),
-                              statistic = c(dh11,dh12.13))
+        dh11 <- mean(x$discharge)/medFlow
+        dh12.13 <- dh2.5[c(2,3)]/medFlow 
+
         
         #dh14
         
         quant95 <- quantile(flowSum_yearMon$meanFlow,.95,type=6)
         dh14 <- quant95/mean(flowSum_yearMon$meanFlow)
         dh14 <- unname(dh14)
-        dh14 <- data.frame(indice = "dh14",
-                           statistic = dh14)
+
         #dh15.16 #this will differ from EflowStats because the quantile is calculated on the whole record
         #instead of on a yearly basis as it says in the documentation
 
@@ -188,20 +184,15 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
 
         dh15 <- median(yearlyDurations$avgDuration)
         dh16 <- (sd(yearlyDurations$avgDuration)*100)/mean(yearlyDurations$avgDuration)
-        dh15.16 <- data.frame(indice=c("dh15","dh16"),
-                              statistic = c(dh15,dh16))
-        
+
         #dh17-21 #differs than EflowStats because EflowSTats calculates the mean of yearly means 
         #instead of the mean lfow duration for the entire period of record as the documentation states
-        percentiles <- quantile(discharge,probs=c(0.25,0.75),type=6)
+        percentiles <- quantile(x$discharge,probs=c(0.25,0.75),type=6)
         dh17 <-  eventDuration(x$discharge,threshold=medFlow,average=TRUE)
         dh18 <-  eventDuration(x$discharge,threshold=medFlow*3,average=TRUE)
         dh19 <-  eventDuration(x$discharge,threshold=medFlow*7,average=TRUE)
         dh20 <-  eventDuration(x$discharge,threshold=percentiles["75%"],average=TRUE)
         dh21 <-  eventDuration(x$discharge,threshold=percentiles["25%"],average=TRUE)
-        
-        dh17.21 <- data.frame(indice=c("dh17","dh18","dh18","dh20","dh21"),
-                              statistic = c(dh17,dh18,dh19,dh20,dh21))
         
         #dh22
         if(!is.null(floodThreshold))
@@ -211,38 +202,12 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
                                  duration = eventDuration(discharge,
                                                threshold=floodThreshold,
                                                type="low",pref="median"))
-                if(pref=="mean")
-                {
-                        dh22 <- mean(dh22$duration)
-                } else(dh22 <- median(dh22$duration))
-        }else(dh22 <- NA)
-        
-        dh22 <- data.frame(indice="dh22",
-                           statistic = dh22)
-        
-        #dh23
-        if(!is.null(floodThreshold))
-        {
-                
                 dh23 <- dplyr::summarize(dplyr::group_by(x,year_val),
                                          maxDuration = max(eventDuration(discharge,
-                                                                  threshold=floodThreshold,
-                                                                  type="high",
-                                                                  average=FALSE,
-                                                                  pref="median")))
-                if(pref=="mean")
-                {
-                        dh23 <- mean(dh23$maxDuration)
-                } else(dh23 <- median(dh23$maxDuration))
-        }else(dh23 <- NA)
-        
-        dh23 <- data.frame(indice="dh23",
-                           statistic = dh23)
-        
-        #dh24
-        if(!is.null(floodThreshold))
-        {
-                
+                                                                         threshold=floodThreshold,
+                                                                         type="high",
+                                                                         average=FALSE,
+                                                                         pref="median")))
                 dh24 <- dplyr::summarize(dplyr::group_by(x,year_val),
                                          maxDuration = max(eventDuration(discharge,
                                                                          threshold=floodThreshold,
@@ -251,69 +216,48 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
                                                                          pref="median")))
                 if(pref=="mean")
                 {
+                        dh22 <- mean(dh22$duration)
+                        dh23 <- mean(dh23$maxDuration)
                         dh24 <- mean(dh24$maxDuration)
-                } else(dh24 <- median(dh24$maxDuration))
-        }else(dh23 <- NA)
-        
-        dh24 <- data.frame(indice="dh24",
-                           statistic = dh24)
-        
-        
-        
-        
-        
-
-                
-                
-                
-                test <- eventDuration(sampleData$discharge,threshold=1158,type="low",average=FALSE)
-               #calculate number of days between
-               eventDurations <- dplyr::summarize(dplyr::group_by(flowEvents,event),
-                                                  duration = length(event)
-               )
-               
-               
-                qfiletempf <- qfiletempf[order(qfiletempf$date),]
-                lfcrit <- thresh
-                noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
-                                     FUN = median, na.rm=TRUE)
-                colnames(noyears) <- c("Year", "momax")
-                noyrs <- length(noyears$Year)
-                dur <- data.frame(Year = rep(0,nrow(qfiletempf)), dur = rep(1,nrow(qfiletempf)))
-                med_yr <- rep(0,noyrs)
-                for (i in 1:noyrs) {
-                        subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
-                        flag <- 0
-                        pdur <- 0
-                        nevents <- 0
-                        for (j in 1:nrow(subsetyr)) {
-                                if (subsetyr$discharge[j]<lfcrit) {
-                                        flag <- flag+1
-                                        nevents <- ifelse(flag==1,nevents+1,nevents)
-                                        pdur <- pdur+1
-                                } else {
-                                        if (flag > 0) {
-                                                dur$dur[nevents]<-pdur
-                                                dur$Year[nevents]<-subsetyr$wy_val[j]
-                                        }
-                                        flag <- 0
-                                        pdur <- 0
-                                }
-                        }
-                        dur_sub <- dur$dur[dur$Year==subsetyr$wy_val[j]]
-                        med_yr[i] <- median(dur_sub)
+                        
+                } else {
+                        dh22 <- median(dh22$duration)
+                        dh23 <- median(dh23$maxDuration)
+                        dh24 <- median(dh24$maxDuration)
                 }
-                
-                med_yr[is.na(med_yr)]<-0
-                dh22 <- round(mean(med_yr,na.rm=TRUE),digits=2)                
-        } else(dh22 <- NA)
-
-
-        
+        } else{
+                dh22 <- NA
+                dh23 <- NA
+                dh24 <- NA
+        }
 
         
+        #Output stats
+        dhOut <- data.frame(indice = c(paste0("dh",1:24)),
+                            statistic = c(dh1,
+                                          dh2.5,
+                                          dh6,
+                                          dh7.10,
+                                          dh11,
+                                          dh12.13,
+                                          dh14,
+                                          dh15,
+                                          dh16,
+                                          dh17,
+                                          dh18,
+                                          dh19,
+                                          dh20,
+                                          dh21,
+                                          dh22,
+                                          dh23,
+                                          dh24)
+        )
+        
+        return(dhOut)
 }
 
-
-
-
+        
+        
+        
+        
+        
