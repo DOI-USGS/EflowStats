@@ -7,7 +7,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param drainArea A numeric specifying the drainage area. Only required for mh20 statistic. See details.
 #' @param pref A character indicating whether to use mean or median in monthly aggregation. Only required for ma1_12 statistics. See details.
-#' @param peakThresh Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
+#' @param floodThreshold Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item DH1 Annual maximum daily flow. Compute the maximum of a 1-day moving average flow for each year. DH1 is the 
@@ -95,8 +95,7 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
         
         if(any(is.na(x)))
         {
-                warning("dataframe x contains missing values. Missing values will be removed.")
-                x <- na.omit(x)
+                stop("dataframe x cannot contain NA values")
         }
         
         ###rename dataframe for convenient use inside function
@@ -163,7 +162,7 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
 
         
         #dh11-13
-        dh11 <- mean(x$discharge)/medFlow
+        dh11 <- mean(flowSum_year$maxFlow)/medFlow
         dh12.13 <- dh2.5[c(2,3)]/medFlow 
 
         
