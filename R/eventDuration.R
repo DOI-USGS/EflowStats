@@ -17,7 +17,7 @@
 #' eventDuration(x,threshold)
 eventDuration <- function(x,threshold,average = TRUE,type="high",pref="mean") {
         
-        flowEvents <- calcEvents(x,threshold,type)
+        flowEvents <- calcEvents(x=x,threshold=threshold,type=type)
         flowEvents <- na.omit(flowEvents)
 
         eventDurations <- dplyr::summarize(dplyr::group_by(flowEvents,event),

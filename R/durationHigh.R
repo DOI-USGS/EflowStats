@@ -172,9 +172,7 @@ durationHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
         dh14 <- quant95/mean(flowSum_yearMon$meanFlow)
         dh14 <- unname(dh14)
 
-        #dh15.16 #this will differ from EflowStats because the quantile is calculated on the whole record
-        #instead of on a yearly basis as it says in the documentation
-
+        #dh15.16
         yearlyDurations <- dplyr::summarize(dplyr::group_by(x,year_val),
                                      avgDuration = eventDuration(x=discharge,
                                                    threshold = quantile(discharge,probs=0.75,type=6),

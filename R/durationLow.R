@@ -32,21 +32,21 @@
 #' minimum 90-day moving averages. DH10 is 100 times the standard deviation divided by the mean.
 #' \item DL11 Annual minimum daily flow divided by the median for the entire record. Compute the minimum daily flow 
 #' for each year. DL11 is the mean of these values divided by the median for the entire record.
-#' \item DH12 Annual maximum of 7-day moving average flows divided by the median for the entire record. Compute the 
-#' maximum of a 7-day moving average flow for each year. DH12 is the mean of these values divided by the median 
+#' \item DL12 Annual minimum of 7-day moving average flows divided by the median for the entire record. Compute the 
+#' minimum of a 7-day moving average flow for each year. DL12 is the mean of these values divided by the median 
 #' for the entire record.
-#' \item DH13 Annual maximum of 30-day moving average flows divided by the median for the entire record. Compute the 
-#' maximum of a 30-day moving average flow for each year. DH13 is the mean of these values divided by the median 
+#' \item DL13 Annual minimum of 30-day moving average flows divided by the median for the entire record. Compute the 
+#' minimum of a 30-day moving average flow for each year. DL13 is the mean of these values divided by the median 
 #' for the entire record.
-#' \item DH14 Flood duration. Compute the mean of the mean monthly flow values. Find the 95th percentile for the 
-#' mean monthly flows. DH14 is the 95th percentile value divided by the mean of the monthly means.
-#' \item DH15 High flow pulse duration. Compute the average duration for flow events with flows above a threshold equal 
-#' to the 75th percentile value for each year in the flow record. DH15 is the median of the yearly average durations.
-#' \item DH16 Variability in high flow pulse duration. Compute the standard deviation for the yearly average high pulse 
-#' durations. DH16 is 100 times the standard deviation divided by the mean of the yearly average high pulse durations.
-#' \item DH17 High flow duration. Compute the average duration of flow events with flows above a threshold equal to 
-#' the median flow value for the entire flow record. DH17 is the mean duration 
-#' of the events.
+#' \item DL14 Low exceedence flows. Compute the 75-percent exceedence value for the entire flow record. DL14 is 
+#' the exceedence value divided by the median for the entire record.
+#' \item DL15 Low exceedence flows. Compute the 90-percent exceedence value for the entire flow record. DL15 is the 
+#' exceedence value divided by the median for the entire record.
+#' \item DL16 Low flow pulse duration. Compute the average pulse duration for each year for flow events below a 
+#' threshold equal to the 25th percentile value for the entire flow record. DL16 is the median of the yearly 
+#' average durations.
+#' \item DL17; Variability in low pulse duration. Compute the standard deviation for the yearly average low pulse durations. 
+#' DL17 is 100 times the standard deviation divided by the mean of the yearly average low pulse durations.
 #' \item DH18 High flow duration. Compute the average duration of flow events with flows above a threshold equal to 
 #' three times the median flow value for the entire flow record. DH18 is the mean 
 #' duration of the events.
@@ -161,6 +161,26 @@ durationLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mea
         dl12.13 <- dl2.5[c(2,3)]/medFlow 
         ##Unname
         dl12.13 <- unname(dl12.13)
+        
+        #dl14.15
+        quant25.10 <- quantile(x$discharge,c(.25,.1),type=6)
+        dl14.15 <- quant25.10/median(x$discharge)
+        dl14.15 <- unname(dl14.15)
+        
+        #dl16.17 . 
+        yearlyDurations <- dplyr::summarize(dplyr::group_by(x,year_val),
+                                            avgDuration = eventDuration(x=discharge,
+                                                                        threshold = quantile(discharge,probs=0.25,type=6),
+                                                                        average = TRUE,
+                                                                        type="low")
+        )
+        
+        dl16 <- median(yearlyDurations$avgDuration)
+        dl17 <- (sd(yearlyDurations$avgDuration)*100)/mean(yearlyDurations$avgDuration)
+        
+        
+        
+
         
         
         
