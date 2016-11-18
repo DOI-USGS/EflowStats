@@ -12,8 +12,8 @@
 #' @export
 seasonality <- function(x) {
 
-        x[,1] <- as.Date(x[,1])
-        x[,2] <- as.numeric(x[,2])
+        # x[,1] <- as.Date(x[,1])
+        # x[,2] <- as.numeric(x[,2])
         
         # ###Check dataframe inputs
         # if(class(x[,1]) != "Date" && class(x[,2]) != "numeric")
@@ -32,7 +32,7 @@ seasonality <- function(x) {
         # }
         
         ###rename dataframe for convenient use inside function
-        names(x) <- c("date","discharge")
+        #names(x) <- c("date","discharge")
         
         ###Order by date
         x <- x[order(x$date),]
