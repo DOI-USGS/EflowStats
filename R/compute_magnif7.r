@@ -37,26 +37,18 @@ magnifSeven<-function(timeseries)  {
         #Compute AR(1) correlation coefficienct
         ar1v<-ar1(timeseries)
         
-        #Compute seasonal factors (amplitude and phase)
-        #Compute seasonality variables by first standardizing flows, the fitting relation A*cos(2*pi*t) + B*sin(2*pi*t)
-        #1) Get decimal year
-        rawdates<-timeseries$date
-        dateaschar<-as.character(rawdates)
-        jday<-strptime(timeseries$date, "%Y-%m-%d")$yday+1
-        decimal_year<-as.numeric(timeseries$year_val)+(jday/365.25)
-        #2) Standardize flows
-        std_flows<-scale(timeseries$discharge, center = TRUE, scale = TRUE)
-        #3) Use linear model to fit 
-        seasonfit<-lm(std_flows~cos(2*pi*decimal_year)+sin(2*pi*decimal_year))
-        seasonA<-as.vector(seasonfit$coefficients[2])
-        seasonB<-as.vector(seasonfit$coefficients[3]) 
-        #Now compute the amplitude and phase of the seasonal signal
         seasonality_vars <- seasonality(timeseries)
         amplitude<-seasonality_vars[1]
         phase<-seasonality_vars[2]
         
         #Now output the results
-        magnifSeven1<-c(lam1,tau2,tau3,tau4,ar1v,amplitude,phase)
+        magnifSeven1<-c(lam1=lam1,
+                        tau2=tau2,
+                        tau3=tau3,
+                        tau4=tau4,
+                        ar1=ar1v,
+                        amplitude=amplitude,
+                        phase=phase)
         #colnames(magnifSeven1)<-c("lam1","tau2","tau3","tau4","ar1","amplitude","phase")                                      
         magnif7<-magnifSeven1
         return(magnif7)
