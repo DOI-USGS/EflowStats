@@ -43,9 +43,9 @@ seasonality <- function(x) {
   #2) Standardize flows
   std_flows<-scale(x$discharge, center = TRUE, scale = TRUE)
   #3) Use linear model to fit 
-  seasonfit<-lm(std_flows~cos(2*pi*decimal_year)+sin(2*pi*decimal_year))
-  b2<-as.vector(seasonfit$coefficients[2])
-  b1<-as.vector(seasonfit$coefficients[3]) 
+  seasonfit<-lm(std_flows~sin(2*pi*decimal_year)+cos(2*pi*decimal_year))
+  b1<-as.vector(seasonfit$coefficients[2])
+  b2<-as.vector(seasonfit$coefficients[3]) 
   #Now compute the amplitude and phase of the seasonal signal
   amplitude<-round(sqrt((b2^2)+(b1^2)),digits=2)
   #phase<-round(atan((-seasonB)/seasonA),digits=2)
