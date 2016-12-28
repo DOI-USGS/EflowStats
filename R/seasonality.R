@@ -11,25 +11,28 @@
 #' seasonality(x=x)
 #' @export
 seasonality <- function(x) {
+
+        # x[,1] <- as.Date(x[,1])
+        # x[,2] <- as.numeric(x[,2])
         
-        ###Check dataframe inputs
-        if(class(x[,1]) != "Date" && class(x[,2]) != "numeric")
-        {
-                stop("First column of x must contain a vector of class date.\nSecond column of x must contain a vector of class numeric.") 
-        } else if (class(x[,1]) != "Date")
-        {
-                stop("First column of x must contain a vector of class date.") 
-        } else if (class(x[,2]) != "numeric" & class(x[,2]) != "integer")
-        {
-                stop("Second column of x must contain a vector of class numeric.") 
-        }
-        if(any(is.na(x)))
-        {
-                stop("dataframe x cannot contain NA values")
-        }
+        # ###Check dataframe inputs
+        # if(class(x[,1]) != "Date" && class(x[,2]) != "numeric")
+        # {
+        #         stop("First column of x must contain a vector of class date.\nSecond column of x must contain a vector of class numeric.") 
+        # } else if (class(x[,1]) != "Date")
+        # {
+        #         stop("First column of x must contain a vector of class date.") 
+        # } else if (class(x[,2]) != "numeric" & class(x[,2]) != "integer")
+        # {
+        #         stop("Second column of x must contain a vector of class numeric.") 
+        # }
+        # if(any(is.na(x)))
+        # {
+        #         stop("dataframe x cannot contain NA values")
+        # }
         
         ###rename dataframe for convenient use inside function
-        names(x) <- c("date","discharge")
+        #names(x) <- c("date","discharge")
         
         ###Order by date
         x <- x[order(x$date),]
