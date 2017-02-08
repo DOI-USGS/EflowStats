@@ -13,7 +13,7 @@ Installation
 To install this package use the following code:
 
 ```r
-install.packages("EflowStats",repos=c("http://owi.usgs.gov/R","http://cran.us.r-project.org"))
+install.packages("EflowStats",repos=c("https://owi.usgs.gov/R","http://cran.us.r-project.org"))
 ```
 
 Linux Tests: [![travis](https://travis-ci.org/USGS-R/EflowStats.svg?branch=master)](https://travis-ci.org/USGS-R/EflowStats)
