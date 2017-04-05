@@ -18,7 +18,7 @@ Installation
 To install this package use the following code:
 
 ```r
-devtools::install_github("tmills-usgs/EflowStatsLite")
+devtools::install_github("USGS-R/EflowStats")
 ```
 
 Linux Tests: [![travis](https://travis-ci.org/tmills-usgs/EflowStatsLite.svg?branch=master)](https://travis-ci.org/tmills-usgs/EflowStatsLite)
