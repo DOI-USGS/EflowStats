@@ -7,16 +7,18 @@
 cv(x)
 }
 \arguments{
-\item{x}{data frame containing value data for the chosen timeseries}
+\item{x}{numeric vector of flow values}
 }
 \value{
-cv coefficient of variation for the given data frame
+numeric coefficient of variation for the given data frame
 }
 \description{
-This function accepts a data frame containing daily data and returns the coefficient of variation
+Function to return the coefficient of variation for a given data series
+}
+\details{
+This functions accepts a numeric vector of flow values and calculates the coefficient of variation, defined as the mean/standard deviation
 }
 \examples{
-qfiletempf<-sampleData
-cv(qfiletempf$discharge)
+cv(sampleData$discharge)
 }
 

@@ -1,39 +1,24 @@
 Package: EflowStats
 Type: Package
 Title: Returns Hydrologic Indicator stats for a given set of data
-Version: 4.1.1
-Date: 2015-02-25
-Authors@R: c( person("Jessica", "Thompson", role = c("aut","cre"),
-    email = "jlthomps@usgs.gov"),
-    person("Stacey", "Archfield", role = c("aut"),
-    email = "sarch@usgs.gov "))
+Version: 0.1
+Date: 2017-04-04
+Authors@R: c( person("Joe", "Mills", role = c("aut","cre"),
+    email = "tmills@usgs.gov"))
 Depends:
-    R (>= 3.0)
+    R (>= 3.3)
 Imports:
     zoo,
-    chron,
-    doBy,
-    hydroGOF,
     lmomco,
     dplyr,
-    dataRetrieval,
-    lubridate
+    lubridate,
+    RcppRoll
 Suggests:
     xtable,
     knitr,
-    testthat
-Description: Uses USGS NWISWeb web services to fetch data for the user's
-    desired USGS NWIS stations; calculates a suite of ecological flow
-    statistics; and returns these statistics in a text output file. Statistics
-    are references: Henriksen, J.A., Heasley, J. Kennen, J.G., and Nieswand,
-    S., 2006, Users' manual for the Hydroecological Integrity Assessment
-    Process software (including the New Jersey Assessment Tools): U.S.
-    Geological Survey Open-File Report 2006-1093. 72 p.
-    (http://www.fort.usgs.gov/products/publications/21598/21598.pdf);
-    Archfield, S.A., J.G. Kennen, D.M. Carlisle, and D.M. Wolock. 2013. An
-    Objective and Parsimonious Approach for Classifying Natural Flow Regimes at
-    a Continental Scale. River Res. Applic. doi: 10.1002/rra.2710
-    (http://onlinelibrary.wiley.com/doi/10.1002/rra.2710/abstract).
+    testthat,
+    rmarkdown
+Description: EflowStats is a reimplementation of the Hydrologic Index Tool (HIT; Henriksen et al, 2006) for calculating 171 hydrologic indices for stream classification analysis. EflowStats also calculates 7 additional statistics used for streamflow classification reffered to as the "Magnificent Seven" (MAG7, Archfield et al., 2013). Unlike the original HIT, EflowStatsLite has been redesigned to injest general hydrologic timeseries data and is not restricted to data formats used by the USGS National Water Information System.
 License: CC0
 LazyLoad: yes
 LazyData: yes
