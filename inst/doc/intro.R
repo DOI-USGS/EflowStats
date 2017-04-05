@@ -1,6 +1,6 @@
 ## ----message=FALSE, echo=TRUE, eval=FALSE--------------------------------
 #  library(dataRetrieval)
-#  library(EflowStatslite)
+#  library(EflowStats)
 #  
 #  #Get some data
 #  dailyQ <- readNWISdv(siteNumber = "04085427",
