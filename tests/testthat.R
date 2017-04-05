@@ -1,3 +1,3 @@
 library(testthat)
 library(EflowStats)
-test_check("EflowStatslite")
+test_check("EflowStats")
