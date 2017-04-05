@@ -1,0 +1,66 @@
+---
+title: "Introduction and basic workflow for EflowStatsLite"
+author: "T. Joe Mills"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{EflowStatsLite Intro}
+  \usepackage[utf8]{inputenc}
+---
+  
+  
+  
+## Overview
+  
+`EflowStatsLite` Is a reimplementation of the Hydrologic Index Tool (HIT; Henriksen et al, 2006) for calculating 171 hydrologic indices for stream classification analysis. Additionally, `EflowStatsLite` can calculate 7 additional statistics used for streamflow classification reffered to as the "Magnificent Seven" (MAG7, Archfield et al., 2013). Unlike the original HIT, EflowStatsLite has been redesigned to injest general hydrologic timeseries data and is not restricted to data formats used by the USGS National Water Information System.
+  
+##A basic workflow 
+  
+`EflowStatsLite` can be used with the `dataRetrieval` R package to seamlessy calculate HIT and MAG7 satistics for any USGS stream gage. 
+  
+  
+```{r message=FALSE, echo=TRUE, eval=FALSE}
+library(dataRetrieval)
+library(EflowStats)
+
+#Get some data
+dailyQ <- readNWISdv(siteNumber = "04085427",
+parameterCd = "00060",
+startDate = "2000-10-01",
+endDate = "2012-9-30")
+
+#Check data for completeness
+dailyQClean <- dataCheck(dailyQ[c("Date","X_00060_00003")],yearType="water")
+
+#Get drainage area
+siteInfo <- readNWISsite(siteNumber = "04085427")
+drainageArea <- siteInfo$drain_area_va
+
+#Get peak flows
+peakFlows <- readNWISpeak(siteNumber = "04085427",
+startDate = "2000-10-01",
+endDate = "2012-9-30")
+
+#Get flood recurence threshold
+floodThresh <- peakThreshold(dailyQClean[c("date","discharge")],
+peakFlows[c("peak_dt","peak_va")])
+
+#Calculate all hit stats
+hitStatsOut <- hitStats(dailyQClean,
+drainArea=drainageArea,
+floodThreshold=floodThresh)
+
+#Calculate mag7 stats
+magnifStatsOut <- magnifSeven(dailyQClean,yearType="water",digits=3)
+
+```
+
+
+
+##References
+Henriksen, J. A., Heasley, J., Kennen, J.G., and Niewsand, S. 2006, Users’ manual for the hydroecological
+integrity assessment process software (including the New Jersey Assessment Tools): U.S. Geological
+Survey, Biological Resources Discipline, Open File Report 2006-1093, 71 p. 
+
+Archfield, S.A., J.G. Kennen, D.M. Carlisle, and D.M. Wolock. 2013. An Objective and Parsimonious Approach for Classifying Natural Flow Regimes at a Continental Scale. River Res. Applic. doi: 10.1002/rra.2710 

@@ -1,28 +1,21 @@
 #' Function to return the base flow index for a given data frame
 #' 
-#' This function accepts a data frame that contains a column named "discharge" and 
+#' This function accepts a vector of daily mean discharge values and 
 #' calculates the base flow index of the daily flow values for the entire record
 #' 
-#' @param qfiletempf data frame containing a "discharge" column containing daily flow values
+#' @details The mean for a 7 day right-aligned moving window is calculated for the supplied flow vector. The baseflow index is calculated as the minimum 7day average flow divided by the mean flow
+#' @param x A numeric vector of consecutive daily mean discharge values
 #' @return bfi numeric value of the base flow index for the given data frame
 #' @export
-#' @import zoo chron lmomco doBy hydroGOF
+#' @importFrom RcppRoll roll_mean
 #' @examples
-#' qfiletempf<-sampleData
-#' bfi(qfiletempf)
-bfi <- function(qfiletempf) {
-  noyears <- aggregate(qfiletempf$discharge, list(qfiletempf$wy_val), 
-                       FUN = median, na.rm=TRUE)
-  colnames(noyears) <- c("Year", "momax")
-  noyrs <- length(noyears$Year)
-  compbfi <- rep(0,noyrs)
-  for (i in 1:noyrs) {
-    subsetyr <- subset(qfiletempf, as.numeric(qfiletempf$wy_val) == noyears$Year[i])
-    day7mean <- rollmean(subsetyr$discharge, 6, align = "right", partial = TRUE)
-    min7daybyyear <- min(day7mean)
-    meanflow <- mean(subsetyr$discharge)
-    compbfi[i] <- min7daybyyear/meanflow 
-  }
-  bfi <- compbfi
+#' x<-sampleData$discharge
+#' bfi(x)
+bfi <- function(x) {
+
+    day7mean <- RcppRoll::roll_mean(x, 6, align = "right", partial = TRUE)
+    min7day <- min(day7mean)
+    meanflow <- mean(x)
+    bfi <- min7day/meanflow 
   return(bfi)
 }
