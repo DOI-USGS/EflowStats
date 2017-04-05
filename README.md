@@ -21,11 +21,11 @@ To install this package use the following code:
 devtools::install_github("USGS-R/EflowStats")
 ```
 
-Linux Tests: [![travis](https://travis-ci.org/tmills-usgs/EflowStatsLite.svg?branch=master)](https://travis-ci.org/tmills-usgs/EflowStatsLite)
+Linux Tests: [![travis](https://travis-ci.org/USGS-R/EflowStats.svg?branch=master)](https://travis-ci.org/USGS-R/EflowStats)
 
-Windows Tests: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/jwu0g40slsui06ln/branch/master?svg=true)](https://ci.appveyor.com/project/tmills-usgs/eflowstatslite/branch/master)
+Windows Tests: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/USGS-R/EflowStats?branch=master&svg=true)](https://ci.appveyor.com/project/USGS-R/EflowStats)
 
-Code coverage: [![Coverage Status](https://coveralls.io/repos/github/tmills-usgs/EflowStatsLite/badge.svg?branch=master)](https://coveralls.io/github/tmills-usgs/EflowStatsLite?branch=master)
+Code Coverage: [![Coverage Status](https://coveralls.io/repos/github/USGS-R/EflowStats/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/EflowStats?branch=master)
 
 Summary of bugs and updates
 ---------------------------
