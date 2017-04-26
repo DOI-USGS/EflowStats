@@ -21,7 +21,7 @@ seasonality <- function(x,yearType = "water") {
         
         rawdates<-x$date
         dateaschar<-as.character(rawdates)
-        jday<-strptime(x$date, "%Y-%m-%d")$yday+1
+        jday<-lubridate::yday(x$date)
         decimal_year<-as.numeric(x$year_val)+(jday/365.25)
         #2) Standardize flows
         std_flows<-scale(x$discharge, center = TRUE, scale = TRUE)
