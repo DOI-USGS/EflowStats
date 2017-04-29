@@ -63,28 +63,33 @@ timingAverage <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         x$day[is.leapyear(x$year_val) & 
                       x$day > 152] <- x$day[is.leapyear(x$year_val) & 
                                                             x$day > 152] - 1
-        #Calculate the colwell matrix using. 
-        colwellMatrix <- dplyr::summarize(dplyr::group_by(x,day),
-                                          cat1 = length(discharge[log10(discharge)<(.1*log10(meanFlow))]),
-                                          cat2 = length(discharge[log10(discharge)>=(.1*log10(meanFlow)) & 
-                                                                          log10(discharge)<(.25*log10(meanFlow))]),
-                                          cat3 = length(discharge[log10(discharge)>=(.25*log10(meanFlow)) & log10(discharge)<(.5*log10(meanFlow))]),
-                                          cat4 = length(discharge[log10(discharge)>=(.5*log10(meanFlow)) & 
-                                                                          log10(discharge)<(.75*log10(meanFlow))]),
-                                          cat5 = length(discharge[log10(discharge)>=(.75*log10(meanFlow)) & log10(discharge)<(1*log10(meanFlow))]),
+        #Calculate the colwell matrix 
+        log_meanFlow = log10(meanFlow)
+        x$log_discharge = log10(x$discharge)
 
-                                          cat6 = length(discharge[log10(discharge)>=(1*log10(meanFlow)) & 
-                                                                          log10(discharge)<(1.25*log10(meanFlow))]),
-                                          cat7 = length(discharge[log10(discharge)>=(1.25*log10(meanFlow)) & 
-                                                                          log10(discharge)<(1.5*log10(meanFlow))]),
-                                          cat8 = length(discharge[log10(discharge)>=(1.5*log10(meanFlow)) & 
-                                                                        log10(discharge)<(1.75*log10(meanFlow))]),
-                                          cat9 = length(discharge[log10(discharge)>=(1.75*log10(meanFlow)) & 
-                                                                        log10(discharge)<(2*log10(meanFlow))]),
-                                          cat10 = length(discharge[log10(discharge)>=(2*log10(meanFlow)) & 
-                                                                         log10(discharge)<(2.25*log10(meanFlow))]),
-                                          cat11 = length(discharge[log10(discharge)>=(2.25*log10(meanFlow))])
+
+        colwellMatrix <- dplyr::summarize(dplyr::group_by(x,day),
+                                          cat1 = length(discharge[log_discharge<(.1*log_meanFlow)]),
+                                          cat2 = length(discharge[log_discharge>=(.1*log_meanFlow) & 
+                                                                          log_discharge<(.25*log_meanFlow)]),
+                                          cat3 = length(discharge[log_discharge>=(.25*log_meanFlow) & log_discharge<(.5*log_meanFlow)]),
+                                          cat4 = length(discharge[log_discharge>=(.5*log_meanFlow) & 
+                                                                          log_discharge<(.75*log_meanFlow)]),
+                                          cat5 = length(discharge[log_discharge>=(.75*log_meanFlow) & log_discharge<(1*log_meanFlow)]),
+
+                                          cat6 = length(discharge[log_discharge>=(1*log_meanFlow) & 
+                                                                          log_discharge<(1.25*log_meanFlow)]),
+                                          cat7 = length(discharge[log_discharge>=(1.25*log_meanFlow) & 
+                                                                          log_discharge<(1.5*log_meanFlow)]),
+                                          cat8 = length(discharge[log_discharge>=(1.5*log_meanFlow) & 
+                                                                        log_discharge<(1.75*log_meanFlow)]),
+                                          cat9 = length(discharge[log_discharge>=(1.75*log_meanFlow) & 
+                                                                        log_discharge<(2*log_meanFlow)]),
+                                          cat10 = length(discharge[log_discharge>=(2*log_meanFlow) & 
+                                                                         log_discharge<(2.25*log_meanFlow)]),
+                                          cat11 = length(discharge[log_discharge>=(2.25*log_meanFlow)])
                                           )
+
 
          colwellMatrix <- as.matrix(colwellMatrix[,2:12])
         

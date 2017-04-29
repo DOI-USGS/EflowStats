@@ -33,18 +33,21 @@ peakThreshold <- function(x,peakValues,perc=0.6,yearType = "water") {
                 stop("peakValues must have a minimum of two annual values")
         }
         
-        if(class(peakValues[,1]) != "Date" && class(peakValues[,2]) != "numeric")
+        col1_class = class(peakValues[,1])
+        col2_class = class(peakValues[,2])
+        
+        if(col1_class != "Date" && col2_class != "numeric")
         {
                 stop("First column of peakValues must contain a vector of class date.\nSecond column of peakValues must contain a vector of class numeric.") 
-        } else if (class(peakValues[,1]) != "Date")
+        } else if (col1_class != "Date")
         {
                 stop("First column of peakValues must contain a vector of class date.") 
-        } else if (class(peakValues[,2]) != "numeric" & class(peakValues[,2]) != "integer")
+        } else if (col2_class != "numeric" & col2_class != "integer")
         {
                 stop("Second column of peakValues must contain a vector of class numeric.") 
         }
         
-        if(any(is.na(peakValues)))
+        if(anyNA(peakValues))
         {
                 stop("dataframe peakValues cannot contain NA values")
         }

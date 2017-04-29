@@ -13,16 +13,20 @@ dataCheck <- function(x,yearType) {
         #Just grab first two columns incase it has been run through dataCheck already
         x <- x[,1:2]
         
+        # Class variables
+        col1_class = class(x[,1])
+        col2_class = class(x[,2])
+        
         ###Check dataframe inputs
-        if(class(x[,1]) != "Date" && class(x[,2]) != "numeric")
+        if(col1_class != "Date" && col2_class != "numeric")
         {
                 warning("First column of x must contain a vector of class date.\nSecond column of x must contain a vector of class numeric.")
                 return(FALSE)
-        } else if (class(x[,1]) != "Date")
+        } else if (col1_class != "Date")
         {
                 warning("First column of x must contain a vector of class date.") 
                 return(FALSE)
-        } else if (class(x[,2]) != "numeric" & class(x[,2]) != "integer")
+        } else if (col2_class != "numeric" & col2_class != "integer")
         {
                 warning("Second column of x must contain a vector of class numeric.") 
                 return(FALSE)
@@ -33,7 +37,7 @@ dataCheck <- function(x,yearType) {
                 return(FALSE)
         }
         
-        if(any(is.na(x)))
+        if(anyNA(x))
         {
                 warning("dataframe x cannot contain NA values")
                 return(FALSE)
@@ -43,7 +47,7 @@ dataCheck <- function(x,yearType) {
         names(x) <- c("date","discharge")
         
         ###Order by date
-        x <- x[order(x$date),]
+        x = dplyr::arrange(x, date)
         ###Get water year value
         if(yearType == "water")
         {

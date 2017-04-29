@@ -86,7 +86,7 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         } else {
                 flowSum_month <- dplyr::summarize(dplyr::group_by(x,month_val),
                                                   medianFlow = median(discharge))
-                ma12.23 <- flowSum_month$meadianFlow
+                ma12.23 <- flowSum_month$medianFlow
         }
         
         #ma24-35
