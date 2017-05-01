@@ -1,8 +1,34 @@
-# Sample .travis.yml for R projects
+# Defines the options for building the project on linux with Travis-CI
+# For more configuration options, see the wiki:
+# https://github.com/craigcitro/r-travis/wiki/Porting-to-native-R-support-in-Travis
 
 language: r
-warnings_are_errors: true
-sudo: required
+cache: packages
+sudo: true
+dist: trusty
+warnings_are_errors: false
+
+r_build_args: --no-build-vignettes --no-manual --no-multiarch
+r_check_args: --no-build-vignettes --no-manual
+
+repos:
+  CRAN: https://cran.rstudio.com
+  GRAN: https://owi.usgs.gov/R
+
+before_script:
+  - Rscript -e "install.packages('knitr')"
+  - Rscript -e "install.packages('rmarkdown')"
+
+r_github_packages:
+  - jimhester/covr
+
+after_success:
+  - Rscript -e 'covr::coveralls()'
+
+after_failure:
+  - ./travis-tool.sh dump_logs
 
 notifications:
-  slack: cowsc-datascience:iIMgl9BANsTVPnrsDQVuz31r
+  email:
+    on_success: change
+    on_failure: change
