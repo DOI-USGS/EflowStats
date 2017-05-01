@@ -11,7 +11,7 @@
 #' \itemize{
 #' \item ma1  Mean of the daily mean flow values for the entire flow record 
 #' \item ma2  Median of the daily mean flow values for the entire flow record 
-#' \item  ma3  Mean (or median - use preference option) of the coefficients of 
+#' \item ma3  Mean (or median - use preference option) of the coefficients of 
 #' variation (standard deviation/mean) for each year. Compute the coefficient 
 #' of variation for each year of daily flows. Compute the mean of the annual 
 #' coefficients of variation 
@@ -39,49 +39,55 @@
 #' magAverage(x=x,yearType=yearType,drainArea=drainArea)
 #' 
 magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",...) {
+        
+        # Check pref input
+        if(!pref %in% c("mean", "median")){ stop("Preference must be either mean or median") }
+        
         #Check data inputs
         x <- dataCheck(x,yearType)
         
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)
         
+        # percentiles
+        percentiles <- quantile(x$discharge,probs=seq(0.05,0.95,0.05),type=6)
         
-        meanFlow <- mean(x$discharge,na.rm=TRUE)     
-        medFlow <- median(x$discharge,na.rm=TRUE)     
+        meanFlow <- mean.default(x$discharge)     
+        medFlow <- percentiles["50%"]
         
         #ma1-2
         ma1 <- meanFlow
         ma2 <- medFlow
-
+        
         #ma3
-        ma3 <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                CV = cv(discharge))
+        yearAgg <- dplyr::summarize(dplyr::group_by(x,year_val),
+                                    meanFlow = mean.default(discharge), #ma41-45
+                                    CV = sd(discharge)/meanFlow) #ma3
         if(pref=="mean")
         {
-                ma3 <- mean(ma3$CV)*100
+                ma3 <- mean.default(yearAgg$CV)*100
         } else {
-                ma3 <- median(ma3$CV)*100   
+                ma3 <- median(yearAgg$CV)*100   
         }
         
-        #ma4-11
-        percentiles <- quantile(x$discharge,probs=seq(0.05,0.95,0.05),type=6)
-        percMean <- mean(percentiles)
+        #ma4-11 
+        percMean <- mean.default(percentiles)
         percSD <- sd(percentiles)
         
         
         ma4 <- percSD/percMean*100
-        ma5 <- mean(x$discharge)/median(x$discharge)
+        ma5 <- ma1/ma2
         ma6 <- as.numeric(percentiles["90%"]/percentiles["10%"])
         ma7 <- as.numeric(percentiles["80%"]/percentiles["20%"])
         ma8 <- as.numeric(percentiles["75%"]/percentiles["25%"])
-        ma9 <- as.numeric(percentiles["90%"]-percentiles["10%"])/median(x$discharge)
-        ma10 <- as.numeric(percentiles["80%"]-percentiles["20%"])/median(x$discharge)
-        ma11 <- as.numeric(percentiles["75%"]-percentiles["25%"])/median(x$discharge)
-
+        ma9 <- as.numeric(percentiles["90%"]-percentiles["10%"])/ma2
+        ma10 <- as.numeric(percentiles["80%"]-percentiles["20%"])/ma2
+        ma11 <- as.numeric(percentiles["75%"]-percentiles["25%"])/ma2
+        
         #ma12-23
         if (pref== "mean") {
                 flowSum_month <- dplyr::summarize(dplyr::group_by(x,month_val),
-                                                  meanFlow = mean(discharge))
+                                                  meanFlow = mean.default(discharge))
                 ma12.23 <- flowSum_month$meanFlow
         } else {
                 flowSum_month <- dplyr::summarize(dplyr::group_by(x,month_val),
@@ -90,44 +96,41 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         }
         
         #ma24-35
-        ma24.35 <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                    CV = cv(discharge))
+        yearMonthAgg = dplyr::summarize(dplyr::group_by(x,year_val,month_val),
+                                        meanFlow = mean.default(discharge), #ma36-40
+                                        CV = sd(discharge)/meanFlow #), #ma24-35 #UNUSED?
+                                        #minFlow = min(discharge), #ma36-40 #UNUSED?
+                                        #maxFlow = max(discharge) #ma36-40 #UNUSED?
+        )
         
         if(pref == "mean") {
-                ma24.35 <- dplyr::summarize(dplyr::group_by(ma24.35,month_val),
-                                            meanCV = mean(CV))
+                ma24.35 <- dplyr::summarize(dplyr::group_by(yearMonthAgg,month_val),
+                                            meanCV = mean.default(CV))
                 ma24.35 <- ma24.35$meanCV*100
         } else {
-                ma24.35 <- dplyr::summarize(dplyr::group_by(ma24.35,month_val),
+                ma24.35 <- dplyr::summarize(dplyr::group_by(yearMonthAgg,month_val),
                                             medianCV = median(CV))
                 ma24.35 <- ma24.35$medianCV*100
         }
         
         #ma36-40
-        flowSum_yearMon <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                            minFlow = min(discharge),
-                                            maxFlow = max(discharge),
-                                            meanFlow = mean(discharge))
-        medMonthlyFlow <- median(flowSum_yearMon$meanFlow)
-        meanMonthlyFlow <- mean(flowSum_yearMon$meanFlow)
+        medMonthlyFlow <- median(yearMonthAgg$meanFlow)
+        meanMonthlyFlow <- mean.default(yearMonthAgg$meanFlow)
         
-        percentiles <- quantile(flowSum_yearMon$meanFlow,probs=c(0.1,0.25,0.75,0.9),type=6)
+        percentiles <- quantile(yearMonthAgg$meanFlow,probs=c(0.1,0.25,0.75,0.9),type=6)
         
-        ma36 <- (max(flowSum_yearMon$meanFlow)-min(flowSum_yearMon$meanFlow))/medMonthlyFlow
+        ma36 <- (max(yearMonthAgg$meanFlow) -min(yearMonthAgg$meanFlow))/medMonthlyFlow
         
         ma37 <- (percentiles["75%"]-percentiles["25%"])/medMonthlyFlow
         ma38 <- (percentiles["90%"]-percentiles["10%"])/medMonthlyFlow
-        ma39 <- (sd(flowSum_yearMon$meanFlow)*100)/meanMonthlyFlow
+        ma39 <- (sd(yearMonthAgg$meanFlow)*100)/meanMonthlyFlow
         ma40 <- (meanMonthlyFlow-medMonthlyFlow)/medMonthlyFlow
         
-        #ma41-45
-        flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         meanFlow = mean(discharge))
+        #ma41-45        
+        medYearlyFlow <- median(yearAgg$meanFlow)
+        meanYearlyFlow <- mean.default(yearAgg$meanFlow)
         
-        medYearlyFlow <- median(flowSum_year$meanFlow)
-        meanYearlyFlow <- mean(flowSum_year$meanFlow)
-        
-        percentiles <- quantile(flowSum_year$meanFlow,probs=c(0.1,0.25,0.75,0.9),type=6)
+        percentiles <- quantile(yearAgg$meanFlow,probs=c(0.1,0.25,0.75,0.9),type=6)
         
         if(!is.null(drainArea))
         {
@@ -135,11 +138,11 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         } else(ma41 <- NA)
         
         
-        ma42 <- (max(flowSum_year$meanFlow)-min(flowSum_year$meanFlow))/medYearlyFlow
+        ma42 <- (max(yearAgg$meanFlow) -min(yearAgg$meanFlow))/medYearlyFlow
         ma43 <- (percentiles["75%"]-percentiles["25%"])/medYearlyFlow
         ma44 <- (percentiles["90%"]-percentiles["10%"])/medYearlyFlow
         ma45 <- (meanYearlyFlow-medYearlyFlow)/medYearlyFlow
-
+        
         
         #Output the dataframe
         maOut <- data.frame(indice = c(paste0("ma",1:45)),
@@ -171,7 +174,7 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         
         maOut$statistic <- round(maOut$statistic,digits=digits)
         
-
+        
         return(maOut)
         
 }
