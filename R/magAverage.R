@@ -98,7 +98,7 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         #ma24-35
         yearMonthAgg = dplyr::summarize(dplyr::group_by(x,year_val,month_val),
                                         meanFlow = mean.default(discharge), #ma36-40
-                                        CV = sd(discharge)/meanFlow #), #ma24-35 #UNUSED?
+                                        CV = sd(discharge)/meanFlow #), #ma24-35
                                         #minFlow = min(discharge), #ma36-40 #UNUSED?
                                         #maxFlow = max(discharge) #ma36-40 #UNUSED?
         )
