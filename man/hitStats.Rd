@@ -48,4 +48,3 @@ Detailed descriptions of the indices and \code{pref} argument behavior are provi
 x <- sampleData[c("date","discharge")]
 hitStats(x=x,yearType="water",stats="all",pref="mean",drainArea=50)
 }
-

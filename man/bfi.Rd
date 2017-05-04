@@ -23,4 +23,3 @@ The mean for a 7 day right-aligned moving window is calculated for the supplied 
 x<-sampleData$discharge
 bfi(x)
 }
-

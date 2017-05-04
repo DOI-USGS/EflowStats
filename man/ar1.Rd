@@ -26,4 +26,3 @@ correlation coefficient
 x <- sampleData[c("date","discharge")]
 ar1(x)
 }
-

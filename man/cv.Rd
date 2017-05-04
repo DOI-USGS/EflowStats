@@ -21,4 +21,3 @@ This functions accepts a numeric vector of flow values and calculates the coeffi
 \examples{
 cv(sampleData$discharge)
 }
-

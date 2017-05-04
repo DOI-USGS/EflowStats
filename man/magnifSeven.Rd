@@ -27,4 +27,3 @@ used by Archfield et al., under revision (June 2013).
 x<-sampleData[c("date","discharge")]
 magSeven <- magnifSeven(x)
 }
-

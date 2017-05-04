@@ -57,4 +57,3 @@ yearType = "water"
 magAverage(x=x,yearType=yearType,drainArea=drainArea)
 
 }
-

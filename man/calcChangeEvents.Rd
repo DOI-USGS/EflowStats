@@ -25,4 +25,3 @@ If there is no change in flow from one day to the next it is considered part of 
 x <- sampleData$discharge
 calcChangeEvents(x)
 }
-
