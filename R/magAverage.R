@@ -76,13 +76,13 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         
         
         ma4 <- percSD/percMean*100
-        ma5 <- ma1/ma2
+        ma5 <- meanFlow/medFlow
         ma6 <- as.numeric(percentiles["90%"]/percentiles["10%"])
         ma7 <- as.numeric(percentiles["80%"]/percentiles["20%"])
         ma8 <- as.numeric(percentiles["75%"]/percentiles["25%"])
-        ma9 <- as.numeric(percentiles["90%"]-percentiles["10%"])/ma2
-        ma10 <- as.numeric(percentiles["80%"]-percentiles["20%"])/ma2
-        ma11 <- as.numeric(percentiles["75%"]-percentiles["25%"])/ma2
+        ma9 <- as.numeric(percentiles["90%"]-percentiles["10%"])/medFlow
+        ma10 <- as.numeric(percentiles["80%"]-percentiles["20%"])/medFlow
+        ma11 <- as.numeric(percentiles["75%"]-percentiles["25%"])/medFlow
         
         #ma12-23
         if (pref== "mean") {
