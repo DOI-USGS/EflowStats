@@ -68,4 +68,3 @@ yearType = "water"
 magLow(x=x,yearType=yearType,drainArea=drainArea)
 
 }
-

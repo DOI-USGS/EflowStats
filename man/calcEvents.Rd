@@ -26,4 +26,3 @@ x <- sampleData$discharge
 threshold <- median(x,na.rm=TRUE)
 calcEvents(x,threshold)
 }
-

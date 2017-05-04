@@ -22,4 +22,3 @@ x <- sampleData[c("date","discharge")]
 yearType = "water"
 dataCheck(x=x,yearType=yearType)
 }
-

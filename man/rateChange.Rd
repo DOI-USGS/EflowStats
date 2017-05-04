@@ -53,4 +53,3 @@ x <- sampleData[c("date","discharge")]
 yearType = "water"
 rateChange(x=x,yearType=yearType)
 }
-
