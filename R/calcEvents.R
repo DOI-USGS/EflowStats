@@ -36,7 +36,7 @@ calcEvents <- function(x,threshold,type="high") {
                                  eventNum = NA)
         
         #Make sequence of numbers to number events
-        events <- seq(1:length(runLengths$values[runLengths$values==T]))
+        events <- 1:sum(runLengths$values==T)
         
         #Number events
         runLengths$eventNum[runLengths$values==T] <- events
