@@ -7,7 +7,7 @@
 #' used by Archfield et al., under revision (June 2013). 
 #' @importFrom lubridate month
 #' @importFrom lubridate year
-#' @importFrom lmomco lmom.ub
+#' @importFrom lmom .samlmu
 #' @export
 #' @examples
 #' x<-sampleData[c("date","discharge")]
@@ -21,11 +21,13 @@ magnifSeven<-function(x,yearType = "water",digits=3)  {
         x$month_val <- lubridate::month(x$date)
         
         #Compute L-moment ratios for time series so consistent in function
-        complmom<-lmomco::lmom.ub(x$discharge)
-        lam1<-round(complmom$L1,digits=2)
-        tau2<-round(complmom$LCV,digits=2)
-        tau3<-round(complmom$TAU3,digits=2)
-        tau4<-round(complmom$TAU4,digits=2)
+        complmom <- lmom::.samlmu(x$discharge)
+        complmom[2] = complmom[2] / complmom[1]
+        complmom = round(complmom, digits=2)
+        lam1<-complmom[1]
+        tau2<-complmom[2]
+        tau3<-complmom[3]
+        tau4<-complmom[4]
         
         #Compute AR(1) correlation coefficienct
         ar1v<-ar1(x,yearType = yearType,digits=digits)
