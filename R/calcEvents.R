@@ -8,6 +8,8 @@
 #' @param threshold Numeric threshold value defining event
 #' @param type character indicating type of event. High flags events above threshold, low flags events below threshold.
 #' @return A dataframe with columns "flow" and "event"
+#' @useDynLib EflowStats
+#' @importFrom Rcpp sourceCpp
 #' @export
 #' @examples
 #' x <- sampleData$discharge
@@ -30,7 +32,7 @@ calcEvents <- function(x,threshold,type="high") {
         
                 
         #Calculate run lengths of T of F values to classify events
-        runLengths <- rle(x$event)
+        runLengths <- rle2(x$event)
         runLengths <- data.frame(lengths = runLengths$lengths,
                                  values = runLengths$values,
                                  eventNum = NA)
