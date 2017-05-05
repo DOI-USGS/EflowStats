@@ -162,7 +162,7 @@ durationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshol
         x$events <- calcEvents(x=x$discharge,threshold=thresh,type="high")$event
         
         yearlyDurations <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                            avgDuration = length(na.omit(events))/length(unique(na.omit(events)))
+                                            avgDuration = length(na.omit(events))/n_distinct(na.omit(events))
         )
         
         #Replace NaN with 0
