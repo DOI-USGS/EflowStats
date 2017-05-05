@@ -9,7 +9,7 @@ Depends:
     R (>= 3.3)
 Imports:
     zoo,
-    lmomco,
+    lmom,
     dplyr,
     lubridate,
     RcppRoll
