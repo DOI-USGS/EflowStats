@@ -2,7 +2,6 @@ context("peak threshold")
 
 test_that("peak threshold", {
         ###load the data upfront#
-        load("data/sampleData.rda")
         load("data/peakValues.rda")
         load("data/peakThresholdOut.rda")
         x <- sampleData[c("date","discharge")]

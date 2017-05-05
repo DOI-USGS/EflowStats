@@ -2,7 +2,6 @@ context("mag7 stats")
 
 test_that("mag7 stats", {
         ###load the data upfront#
-        load("data/sampleData.rda")
         load("data/magOut.rda")
         x<-sampleData[c("date","discharge")]
         magSevenOutTest <- magnifSeven(x)
