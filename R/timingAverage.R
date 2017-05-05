@@ -69,6 +69,7 @@ timingAverage <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         #...using findInterval
         break_pts = c(.1, seq(0.25, 2.25, by=.25)) * log_meanFlow
         x$interv = findInterval(x$log_discharge, break_pts)
+        colwellMatrix = table(x$day, x$interv)
         
         #ta1.2
         XJ <- rowSums(colwellMatrix)
