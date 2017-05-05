@@ -42,4 +42,3 @@ x <- sampleData[c("date","discharge")]
 yearType = "water"
 frequencyLow(x=x,yearType=yearType)
 }
-

@@ -70,4 +70,3 @@ yearType = "water"
 floodThreshold = 1158
 frequencyHigh(x=x,yearType=yearType,floodThreshold = 1158)
 }
-

@@ -23,4 +23,3 @@ A*cos(2*pi*t) + B*sin(2*pi*t)1) Get decimal yearand returns the amplitude and ph
 x <- sampleData[c("date","discharge")]
 seasonality(x=x)
 }
-

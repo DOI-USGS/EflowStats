@@ -19,4 +19,3 @@ Given a vector of dates, calculates day of water year accounting for leap years.
 x <- seq(from=as.Date("2010-01-01"),to=as.Date("2016-01-01"),by="1 days")
 waterYearDay(x)
 }
-

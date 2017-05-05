@@ -20,4 +20,3 @@ Function to return the water year for a given date
 \examples{
 waterYear(sampleData$date)
 }
-

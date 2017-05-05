@@ -39,4 +39,3 @@ peakValues <- peakValues[c("peak_dt","peak_va")]
 peakThreshold(x,peakValues,.6,yearType="water")
 }
 }
-

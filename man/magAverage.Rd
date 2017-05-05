@@ -32,7 +32,7 @@ Descriptions of indices.
 \itemize{
 \item ma1  Mean of the daily mean flow values for the entire flow record 
 \item ma2  Median of the daily mean flow values for the entire flow record 
-\item  ma3  Mean (or median - use preference option) of the coefficients of 
+\item ma3  Mean (or median - use preference option) of the coefficients of 
 variation (standard deviation/mean) for each year. Compute the coefficient 
 of variation for each year of daily flows. Compute the mean of the annual 
 coefficients of variation 
@@ -57,4 +57,3 @@ yearType = "water"
 magAverage(x=x,yearType=yearType,drainArea=drainArea)
 
 }
-

@@ -64,4 +64,3 @@ yearType = "water"
 floodThreshold = 1158
 timingAverage(x=x,yearType = yearType,floodThreshold =floodThreshold)
 }
-
