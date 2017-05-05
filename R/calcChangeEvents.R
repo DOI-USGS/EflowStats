@@ -29,7 +29,7 @@ calcChangeEvents <- function(x) {
         changeDir <- changeDir_forward
         changeDir[is.na(changeDir)] <- changeDir_backward[is.na(changeDir)]
         
-        runLengths <- rle(changeDir)
+        runLengths <- rle2(changeDir)
         
         runLengths <- data.frame(lengths = runLengths$lengths,
                                  values = runLengths$values,

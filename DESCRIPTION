@@ -12,7 +12,8 @@ Imports:
     lmom,
     dplyr,
     lubridate,
-    RcppRoll
+    RcppRoll,
+    Rcpp
 Suggests:
     xtable,
     knitr,
@@ -30,3 +31,4 @@ Copyright: This software is in the public domain because it contains materials
     official USGS copyright policy at
     http://www.usgs.gov/visual-id/credit_usgs.html#copyright
 RoxygenNote: 6.0.1
+LinkingTo: Rcpp
