@@ -8,6 +8,7 @@
 #' @param threshold Numeric threshold value defining event
 #' @param type character indicating type of event. High flags events above threshold, low flags events below threshold.
 #' @return A dataframe with columns "flow" and "event"
+#' @importFrom stats median
 #' @export
 #' @examples
 #' x <- sampleData$discharge

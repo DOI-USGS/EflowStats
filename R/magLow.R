@@ -43,6 +43,7 @@
 #' @importFrom lubridate year
 #' @importFrom zoo na.approx
 #' @importFrom RcppRoll roll_min
+#' @importFrom stats median na.omit sd
 #' @import dplyr
 #' @export
 #' @examples

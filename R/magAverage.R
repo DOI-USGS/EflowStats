@@ -31,6 +31,7 @@
 #' @return A data.frame flow statistics
 #' @import dplyr
 #' @importFrom lubridate year
+#' @importFrom stats median quantile sd
 #' @export
 #' @examples
 #' x <- sampleData[c("date","discharge")]
