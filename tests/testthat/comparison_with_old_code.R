@@ -63,15 +63,25 @@ for(site_dir in list.dirs(flow_dir)) {
 
 unlink(flow_dir, recursive = TRUE)
 
-differences <- data.frame(matrix(nrow = length(good_sites), ncol = ncol(old_results)))
-row.names(differences) <- good_sites
-colnames(differences) <- names(old_results)
+differences <- data.frame(matrix(ncol = length(good_sites), nrow = ncol(old_results)))
+row.names(differences) <- names(old_results)
+colnames(differences) <- good_sites
+percent_differences <- differences
 
-for(site in good_sites) {
-        for(statN in names(old_results)) {
+for(statN in names(old_results)) {
+        for(site in good_sites) {
                 try(
-                        differences[site,statN] <- 
+                        differences[statN,site] <- 
                                 old_results[site,statN] - new_results[site,statN], silent = TRUE
                         )
+                try(
+                        percent_differences[statN,site] <- 
+                                round(100*((old_results[site,statN] - new_results[site,statN]) / 
+                                mean(old_results[site,statN], new_results[site,statN])),digits = 0), silent = TRUE
+                )
+        }
+        percdiff <- mean(unlist(percent_differences[statN,]),na.rm = TRUE)
+        if( !is.nan(percdiff) && percdiff > 0.1) {
+                print(paste(statN, "found to be", percdiff, "percent different"))
         }
 }
