@@ -56,6 +56,7 @@
 #' @importFrom lubridate year
 #' @importFrom lubridate month
 #' @importFrom RcppRoll roll_mean
+#' @importFrom stats na.omit quantile sd
 #' @import dplyr
 #' @export
 #' @examples

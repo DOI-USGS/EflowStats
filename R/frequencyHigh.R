@@ -45,6 +45,7 @@
 #' @return A data.frame of flow statistics
 #' @importFrom lubridate year
 #' @importFrom lubridate month
+#' @importFrom stats median na.omit quantile sd
 #' @import dplyr
 #' @export
 #' @examples

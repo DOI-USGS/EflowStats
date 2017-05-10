@@ -13,6 +13,7 @@
 #' interval (60th percentile, \code{perc=0.6}) as input to the regression equation, predict the log10 of the average daily flow. The 
 #' threshold is 10 to the log10 (average daily flow) power (cubic feet per second). for the 5-year recurrence interval 
 #' (80th percentile, \code{perc=0.8}), used by indices TL3 and TL4, follow the same process, inputing a different 'perc' value.
+#' @importFrom stats na.omit quantile
 #' @export
 #' @examples
 #' \dontrun{

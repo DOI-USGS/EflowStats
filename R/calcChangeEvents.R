@@ -7,6 +7,7 @@
 #' 
 #' @param x A vector of flow values, should be sorted chronologically.
 #' @return A dataframe with columns "flow" and "event"
+#' @importFrom stats na.omit
 #' @export
 #' @examples
 #' x <- sampleData$discharge
