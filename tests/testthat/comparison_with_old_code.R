@@ -51,7 +51,7 @@ for(site_dir in list.dirs(flow_dir)) {
                                                               peak_data[c("peak_dt","peak_va")])
                                 new_results[site_no,] <- hitStats(flow_data_clean,
                                                       drainArea=das[site_no][[1]],
-                                                      floodThreshold=flood_thresh,pref = "median")$statistic
+                                                      floodThreshold=flood_thresh,pref = "mean")$statistic
                         } else {
                                 new_results[site_no,] <- hitStats(flow_data_clean,
                                                       drainArea=das[site_no][[1]])$statistic
