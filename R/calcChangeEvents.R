@@ -7,6 +7,8 @@
 #' 
 #' @param x A vector of flow values, should be sorted chronologically.
 #' @return A dataframe with columns "flow" and "event"
+#' @useDynLib EflowStats
+#' @importFrom Rcpp sourceCpp
 #' @export
 #' @examples
 #' x <- sampleData$discharge
@@ -16,8 +18,8 @@ calcChangeEvents <- function(x) {
         diffDays <- diff(x, lag = 1, 
                          differences = 1)
         
-        changeDir <- ifelse(diffDays <0, "fall", 
-                            ifelse(diffDays ==0, NA, "rise"))
+        changeDir <- ifelse(diffDays <0, -1, #fall
+                            ifelse(diffDays ==0, NA, 1)) #rise
         
         #fill NAs with previous event number
         #This has to be done twice for the front and back ends
@@ -28,8 +30,8 @@ calcChangeEvents <- function(x) {
         
         changeDir <- changeDir_forward
         changeDir[is.na(changeDir)] <- changeDir_backward[is.na(changeDir)]
-        
-        runLengths <- rle(changeDir)
+
+        runLengths <- rle2(changeDir)
         
         runLengths <- data.frame(lengths = runLengths$lengths,
                                  values = runLengths$values,
