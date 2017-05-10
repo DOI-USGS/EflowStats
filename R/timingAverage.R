@@ -87,11 +87,11 @@ timingAverage <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         ta2 <- 100*(1-(HxY/log10(11)))
         
         #ta3
-        countsYearMon <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                          counts = length(discharge[discharge>floodThreshold])
+        countsYearMon <- dplyr::summarize_(dplyr::group_by_(x,"year_val","month_val"),
+                                          counts = ~length(discharge[discharge>floodThreshold])
                                           )
         
-        countsYearMon <- dplyr::arrange(countsYearMon,year_val,month_val)
+        countsYearMon <- dplyr::arrange_(countsYearMon,"year_val","month_val")
         rollSum <- RcppRoll::roll_sum(countsYearMon$counts,n=2)
         ta3 <- max(rollSum)/sum(countsYearMon$counts)
         

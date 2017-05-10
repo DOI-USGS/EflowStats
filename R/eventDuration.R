@@ -38,8 +38,8 @@ eventDuration <- function(x,threshold,aggType = "average",type="high",pref="mean
         
         flowEvents <- na.omit(flowEvents)
         
-        eventDurations <- dplyr::summarize(dplyr::group_by(flowEvents,event),
-                                           duration = length(event)
+        eventDurations <- dplyr::summarize_(dplyr::group_by_(flowEvents,"event"),
+                                           duration = ~length(event)
         )
         
         if(nrow(eventDurations) > 0)

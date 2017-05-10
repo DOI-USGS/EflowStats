@@ -61,14 +61,16 @@ dataCheck <- function(x,yearType) {
         #check for complete years
         x$leapYear <- is.leapyear(as.numeric(as.character(x$year_val)))
         
-        fullYearCheck <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                          completeYear = 
-                                                  if(!any(leapYear)){
-                                                          ifelse(length(day) == 365,T,F)
-                                                  } else if (any(leapYear))
-                                                  {
-                                                          ifelse(length(day) == 366,T,F)
-                                                  }
+        dots <- list(~if(!any(leapYear)){
+                ifelse(length(day) == 365,T,F)
+        } else if (any(leapYear))
+        {
+                ifelse(length(day) == 366,T,F)
+        })
+        
+        fullYearCheck <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                          .dots = setNames(dots, "completeYear") 
+                                                  
         )
         
         x$leapYear <- NULL

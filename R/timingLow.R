@@ -40,9 +40,9 @@ timingLow <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold=N
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)
 
-        flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         minFlow = min(discharge),
-                                         minFlowJulDay = min(day[discharge==min(discharge)])
+        flowSum_year <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                         minFlow = ~min(discharge),
+                                         minFlowJulDay = ~min(day[discharge==min(discharge)])
         )
         
         #tl1
@@ -74,20 +74,20 @@ timingLow <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold=N
         #2) events in months from different years are not counted in the total number of events in any 2 momnth period.
         if(!is.null(floodThreshold))
         {
-        countsYearMon <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                          eventCount = max(calcEvents(discharge,
+        countsYearMon <- dplyr::summarize_(dplyr::group_by_(x,"year_val","month_val"),
+                                          eventCount = ~max(calcEvents(discharge,
                                                                       threshold=floodThreshold,
                                                                       type="low")$event,na.rm=TRUE)
         )
         
         
-        countsYearMon <- dplyr::arrange(countsYearMon,year_val,month_val)
+        countsYearMon <- dplyr::arrange_(countsYearMon,"year_val","month_val")
         rollSum <- RcppRoll::roll_sum(countsYearMon$eventCount,n=2,na.rm=TRUE)
         tl3 <- max(rollSum)/sum(countsYearMon$eventCount)
         
         #tl4
-        yearlyRatios <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         ratio = length(discharge[discharge>floodThreshold])/
+        yearlyRatios <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                         ratio = ~length(discharge[discharge>floodThreshold])/
                                                  max(lubridate::yday(date)))
         
         tl4 <- max(yearlyRatios$ratio)

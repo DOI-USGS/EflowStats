@@ -97,18 +97,18 @@ durationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshol
         x$roll90Mean <- RcppRoll::roll_mean(x$discharge,n=90L,fill=NA)
         
         #Calculate max and medians by month and year for statistics
-        flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         maxFlow = max(discharge),
-                                         medFlow = median(discharge))
-        flowSum_yearMon <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                            maxFlow = max(discharge),
-                                            medFlow = median(discharge),
-                                            meanFlow = mean(discharge))
-        maxRollingMean <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                           maxRoll3Mean = max(roll3Mean,na.rm=TRUE),
-                                           maxRoll7Mean = max(roll7Mean,na.rm=TRUE),
-                                           maxRoll30Mean = max(roll30Mean,na.rm=TRUE),
-                                           maxRoll90Mean = max(roll90Mean,na.rm=TRUE)
+        flowSum_year <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                         maxFlow = ~max(discharge),
+                                         medFlow = ~median(discharge))
+        flowSum_yearMon <- dplyr::summarize_(dplyr::group_by_(x,"year_val","month_val"),
+                                            maxFlow = ~max(discharge),
+                                            medFlow = ~median(discharge),
+                                            meanFlow = ~mean(discharge))
+        maxRollingMean <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                           maxRoll3Mean = ~max(roll3Mean,na.rm=TRUE),
+                                           maxRoll7Mean = ~max(roll7Mean,na.rm=TRUE),
+                                           maxRoll30Mean = ~max(roll30Mean,na.rm=TRUE),
+                                           maxRoll90Mean = ~max(roll90Mean,na.rm=TRUE)
         )
         medFlow <- median(x$discharge)
         
@@ -161,9 +161,9 @@ durationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshol
         
         #Define events as sustained flows above the high flow threshold
         x$events <- calcEvents(x=x$discharge,threshold=thresh,type="high")$event
-        
-        yearlyDurations <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                            avgDuration = length(na.omit(events))/n_distinct(na.omit(events))
+
+        yearlyDurations <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                            .dots = list(avgDuration = ~length(na.omit(events))/n_distinct(na.omit(events)))
         )
         
         #Replace NaN with 0
@@ -189,22 +189,22 @@ durationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshol
                 #Define events as sustained flows above the high flow threshold
                 
                 ###This may not be doing what it should be since the event duration gets artificially cut short at teh beginning and end of the year
-                dh22 <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         duration = eventDuration(discharge,
+                dh22 <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                         .dots = list(duration = ~eventDuration(discharge,
                                                                   threshold=floodThreshold,
                                                                   type="low",
                                                                   aggType = "average",
-                                                                  pref="median"))
-                dh23 <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         maxDuration = eventDuration(discharge,
+                                                                  pref="median")))
+                dh23 <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                         .dots = list(maxDuration = ~eventDuration(discharge,
                                                                          threshold=floodThreshold,
                                                                          type="high",
-                                                                         aggType="max"))
-                dh24 <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         maxDuration = eventDuration(discharge,
+                                                                         aggType="max")))
+                dh24 <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                         .dots = list(maxDuration = ~eventDuration(discharge,
                                                                          threshold=floodThreshold,
                                                                          type="low",
-                                                                     aggType="max"))
+                                                                     aggType="max")))
                 if(pref=="mean")
                 {
                         dh22 <- mean(dh22$duration)

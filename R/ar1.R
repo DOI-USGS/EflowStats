@@ -22,8 +22,8 @@ ar1 <- function(x,yearType="water",digits=3) {
         
         x$month_val <- lubridate::month(x$date)
         
-        flowSum_Mon <- dplyr::summarize(dplyr::group_by(x,month_val),
-                                        meanFlow = mean(discharge))
+        flowSum_Mon <- dplyr::summarize_(dplyr::group_by_(x,"month_val"),
+                                        meanFlow = ~mean(discharge))
         
         x <- dplyr::left_join(x,flowSum_Mon,by="month_val")
         x$dsQ <- x$discharge-x$meanFlow

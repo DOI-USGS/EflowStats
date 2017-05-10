@@ -66,9 +66,9 @@ peakThreshold <- function(x,peakValues,perc=0.6,yearType = "water") {
         
         if(any(duplicated(peakValues$year_val))) {
                 warning("peakValues data frame contains multiple peak values for one or more years. Only the maximum annual value will be retained.")
-                temp <- dplyr::summarize(dplyr::group_by(peakValues,year_val),
-                                         date = date[peakQ == max(peakQ)],
-                                         peakQ = max(peakQ))
+                temp <- dplyr::summarize_(dplyr::group_by_(peakValues,"year_val"),
+                                         date = ~date[peakQ == max(peakQ)],
+                                         peakQ = ~max(peakQ))
                 peakValues <- dplyr::left_join(peakValues["date"],temp, by="date")
                 peakValues <- na.omit(peakValues)
         }
