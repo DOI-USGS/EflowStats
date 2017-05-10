@@ -5,17 +5,6 @@
 
 using namespace Rcpp;
 
-// mean1
-double mean1(NumericVector x);
-RcppExport SEXP EflowStats_mean1(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(mean1(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rle2
 List rle2(NumericVector x);
 RcppExport SEXP EflowStats_rle2(SEXP xSEXP) {
@@ -24,28 +13,6 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(rle2(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// var1
-double var1(NumericVector x);
-RcppExport SEXP EflowStats_var1(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(var1(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// var2
-double var2(NumericVector x);
-RcppExport SEXP EflowStats_var2(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(var2(x));
     return rcpp_result_gen;
 END_RCPP
 }

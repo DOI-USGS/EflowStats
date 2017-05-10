@@ -1,3 +1,4 @@
+// Taken from https://github.com/hadley/adv-r/blob/master/extras/cpp/rle.cpp
 #include <Rcpp.h>
 #include <algorithm>
 using namespace Rcpp;
