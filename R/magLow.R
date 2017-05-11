@@ -43,6 +43,7 @@
 #' @importFrom lubridate year
 #' @importFrom zoo na.approx
 #' @importFrom RcppRoll roll_min
+#' @importFrom stats median na.omit sd setNames
 #' @import dplyr
 #' @export
 #' @examples
@@ -60,27 +61,27 @@ magLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",..
         
         
         #Calculate max and medians by month and year for statistics
-        flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         minFlow = min(discharge),
-                                         medFlow = median(discharge),
-                                         meanFlow = mean(discharge))
+        flowSum_year <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                         minFlow = ~min(discharge),
+                                         medFlow = ~median(discharge),
+                                         meanFlow = ~mean(discharge))
         
-        flowSum_yearMon <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                            minFlow = min(discharge),
-                                            medFlow = median(discharge))
+        flowSum_yearMon <- dplyr::summarize_(dplyr::group_by_(x,"year_val","month_val"),
+                                            minFlow = ~min(discharge),
+                                            medFlow = ~median(discharge))
         medFlow <- median(x$discharge)
         
         #ml1-12 indices
         if(pref == "mean")
         {
-                ml1.12 <- dplyr::summarize(dplyr::group_by(flowSum_yearMon,month_val),
-                                           statistic = mean(minFlow))
+                ml1.12 <- dplyr::summarize_(dplyr::group_by_(flowSum_yearMon,"month_val"),
+                                           statistic = ~mean(minFlow))
         } else {
-                ml1.12 <- dplyr::summarize(dplyr::group_by(flowSum_yearMon,month_val),
-                                           statistic = median(minFlow))
+                ml1.12 <- dplyr::summarize_(dplyr::group_by_(flowSum_yearMon,"month_val"),
+                                           statistic = ~median(minFlow))
         }
         ml1.12$month_val <- as.character(paste0("ml",ml1.12$month_val))
-        ml1.12 <- dplyr::rename(ml1.12,indice=month_val)
+        ml1.12 <- dplyr::rename_(ml1.12,.dots = setNames("month_val", c("indice")))
         
         ml1.12 <- ml1.12$statistic
         
@@ -95,8 +96,8 @@ magLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",..
 
         
         #ml17-18
-        bfibyyear <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                      bfi = bfi(discharge))
+        bfibyyear <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                      bfi = ~bfi(discharge))
         
         if (pref == "mean") {
                 ml17 <- mean(bfibyyear$bfi)
@@ -129,8 +130,8 @@ magLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",..
         x<-na.omit(x)
         
         ##Calculate mins for each block
-        blockMins <- dplyr::summarize(dplyr::group_by(x,block),
-                                      minFlow = min(discharge))
+        blockMins <- dplyr::summarize_(dplyr::group_by_(x,"block"),
+                                      minFlow = ~min(discharge))
         
         ##Calculate 3 day rolling minimum for blocks
         block3min <- RcppRoll::roll_min(blockMins$minFlow,n=3,by=1,align = "center")

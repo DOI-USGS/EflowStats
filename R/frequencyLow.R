@@ -20,6 +20,7 @@
 #' @return A data.frame of flow statistics
 #' @importFrom lubridate year
 #' @importFrom lubridate month
+#' @importFrom stats median na.omit quantile sd
 #' @import dplyr
 #' @export
 #' @examples
@@ -37,9 +38,9 @@ frequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         
         #fl1.2
         #Pick out events for each year
-        yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+        yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                    {
-                                           calcEvents(.$discharge,
+                                           ~calcEvents(.$discharge,
                                                       threshold = quantile(x$discharge,probs=0.25,type=6),
                                                       type="low")
                                    }
@@ -49,8 +50,8 @@ frequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         yearlyCounts$event[is.na(yearlyCounts$event)] <- 0
 
         #Get number of events each year
-        yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                         numEvents = max(event))
+        yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                         numEvents = ~max(event))
         
         if(pref=="mean") {
                 fl1 <- mean(yearlyCounts$numEvents)
@@ -62,9 +63,9 @@ frequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         
         #fl3
         #Pick out events for each year
-        yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+        yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                    {
-                                           calcEvents(.$discharge,
+                                           ~calcEvents(.$discharge,
                                                       threshold = 0.05*mean(x$discharge),
                                                       type="low")
                                    }
@@ -74,8 +75,8 @@ frequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         if(nrow(yearlyCounts) > 0)
         {
                 #Get number of events each year
-                yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                                 numEvents = max(event))
+                yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                                 numEvents = ~max(event))
                 if(pref=="mean") {
                         fl3 <- mean(yearlyCounts$numEvents)
                 } else {

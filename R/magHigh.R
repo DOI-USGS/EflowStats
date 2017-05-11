@@ -47,6 +47,7 @@
 #' @return A data.frame of flow statistics
 #' @importFrom lubridate year
 #' @importFrom lubridate month
+#' @importFrom stats median na.omit quantile sd
 #' @import dplyr
 #' @export
 #' @examples
@@ -64,22 +65,22 @@ magHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",.
         
         
         #Calculate max and medians by month and year for statistics
-        flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         maxFlow = max(discharge),
-                                         medFlow = median(discharge))
-        flowSum_yearMon <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                            maxFlow = max(discharge),
-                                            medFlow = median(discharge))
+        flowSum_year <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                         maxFlow = ~max(discharge),
+                                         medFlow = ~median(discharge))
+        flowSum_yearMon <- dplyr::summarize_(dplyr::group_by_(x,"year_val","month_val"),
+                                            maxFlow = ~max(discharge),
+                                            medFlow = ~median(discharge))
         medFlow <- median(x$discharge)
         
         #mh1-12 indices
         if(pref == "mean")
         {
-                mh1.12 <- dplyr::summarize(dplyr::group_by(flowSum_yearMon,month_val),
-                                           statistic = mean(maxFlow))
+                mh1.12 <- dplyr::summarize_(dplyr::group_by_(flowSum_yearMon,"month_val"),
+                                           statistic = ~mean(maxFlow))
         } else {
-                mh1.12 <- dplyr::summarize(dplyr::group_by(flowSum_yearMon,month_val),
-                                           statistic = median(maxFlow))
+                mh1.12 <- dplyr::summarize_(dplyr::group_by_(flowSum_yearMon,"month_val"),
+                                           statistic = ~median(maxFlow))
         }
         mh1.12$month_val <- as.character(paste0("mh",mh1.12$month_val))
         mh1.12 <- mh1.12$statistic
@@ -162,8 +163,8 @@ magHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",.
         
         #Calculate the 24-27 statistics
         mh24.27 <- lapply(eventsList,function(x,...){
-                eventMax <- dplyr::group_by(x[c("flow","event")],event)
-                eventMax <- dplyr::summarize(eventMax,maxQ = max(flow))
+                eventMax <- dplyr::group_by_(x[c("flow","event")],"event")
+                eventMax <- dplyr::summarize_(eventMax,maxQ = ~max(flow))
                 eventMax <- na.omit(eventMax)
                 mean(eventMax$maxQ)/thresholdMed
         })

@@ -56,6 +56,7 @@
 #' @importFrom lubridate year
 #' @importFrom lubridate month
 #' @importFrom RcppRoll roll_mean
+#' @importFrom stats na.omit quantile sd
 #' @import dplyr
 #' @export
 #' @examples
@@ -77,19 +78,19 @@ durationLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         x$roll90Mean <- RcppRoll::roll_mean(x$discharge,n=90L,fill=NA)
         
         #Calculate max and medians by month and year for statistics
-        flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         minFlow = min(discharge),
-                                         medFlow = median(discharge))
-        flowSum_yearMon <- dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                            minFlow = min(discharge),
-                                            medFlow = median(discharge),
-                                            meanFlow = mean(discharge),
-                                            totalFlow = sum(discharge))
-        minRollingMean <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                           minRoll3Mean = min(roll3Mean),
-                                           minRoll7Mean = min(roll7Mean),
-                                           minRoll30Mean = min(roll30Mean),
-                                           minRoll90Mean = min(roll90Mean)
+        flowSum_year <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                          minFlow = ~min(discharge),
+                                          medFlow = ~median(discharge))
+        flowSum_yearMon <- dplyr::summarize_(dplyr::group_by_(x,"year_val","month_val"),
+                                             minFlow = ~min(discharge),
+                                             medFlow = ~median(discharge),
+                                             meanFlow = ~mean(discharge),
+                                             totalFlow = ~sum(discharge))
+        minRollingMean <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                            minRoll3Mean = ~min(roll3Mean),
+                                            minRoll7Mean = ~min(roll7Mean),
+                                            minRoll30Mean = ~min(roll30Mean),
+                                            minRoll90Mean = ~min(roll90Mean)
         )
         medFlow <- median(x$discharge)
         
@@ -140,8 +141,8 @@ durationLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         #Define events as sustained flows below the low flow threshold
         x$events <- calcEvents(x=x$discharge,threshold=thresh,type="low")$event
 
-        yearlyDurations <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                            avgDuration = length(na.omit(events))/length(unique(na.omit(events)))
+        yearlyDurations <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                             avgDuration = ~length(na.omit(events))/length(unique(na.omit(events)))
         )
         
         #Replace NaN with 0
@@ -152,8 +153,8 @@ durationLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         dl17 <- (sd(yearlyDurations$avgDuration)*100)/mean(yearlyDurations$avgDuration)
         
         #dl18.19
-        yearlyNoFlow <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         noFlowDays = length(discharge[discharge == 0]))
+        yearlyNoFlow <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                          noFlowDays = ~length(discharge[discharge == 0]))
         if (pref == "mean") {
                 dl18 <- mean(yearlyNoFlow$noFlowDays)
         } else {

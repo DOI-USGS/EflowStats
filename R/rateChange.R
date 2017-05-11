@@ -31,6 +31,7 @@
 #' @return A data.frame of flow statistics
 #' @importFrom lubridate year
 #' @importFrom lubridate month
+#' @importFrom stats median sd
 #' @import dplyr
 #' @export
 #' @examples
@@ -87,12 +88,12 @@ rateChange <- function(x,yearType = "water",digits=3,pref="mean",...) {
         #ra8.9
         
         #calculate number of events per year
-        yearlyEvents <- dplyr::do(dplyr::group_by(x,year_val),
+        yearlyEvents <- dplyr::do_(dplyr::group_by_(x,"year_val"),
                                   {
-                                          calcChangeEvents(.$discharge)
+                                          ~calcChangeEvents(.$discharge)
                                   })
-        numYearlyEvents <- dplyr::summarize(dplyr::group_by(yearlyEvents,year_val),
-                                            numEvents = max(event,na.rm=T))
+        numYearlyEvents <- dplyr::summarize_(dplyr::group_by_(yearlyEvents,"year_val"),
+                                            numEvents = ~max(event,na.rm=T))
         
         ra8 <- mean(numYearlyEvents$numEvents)
         ra9 <- sd(numYearlyEvents$numEvents)/mean(numYearlyEvents$numEvents)*100

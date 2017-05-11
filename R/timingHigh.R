@@ -37,9 +37,9 @@ timingHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold=
         x$month_val <- lubridate::month(x$date)
         #x$jul_day <- lubridate::yday(x$date)
         
-        flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                            maxFlow = max(discharge),
-                                         maxFlowJulDay = min(day[discharge==max(discharge)])
+        flowSum_year <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                            maxFlow = ~max(discharge),
+                                         maxFlowJulDay = ~min(day[discharge==max(discharge)])
                                          )
         
         #th1
@@ -69,8 +69,8 @@ timingHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold=
         #th3
         if(!is.null(floodThreshold))
         {
-        dailyMaxFlow <- dplyr::summarize(dplyr::group_by(x,day),
-                                         maxFlow = max(discharge))
+        dailyMaxFlow <- dplyr::summarize_(dplyr::group_by_(x,"day"),
+                                         maxFlow = ~max(discharge))
         
         nonFloodEvents <- eventDuration(dailyMaxFlow$maxFlow,
                                         threshold=floodThreshold,

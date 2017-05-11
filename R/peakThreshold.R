@@ -13,6 +13,7 @@
 #' interval (60th percentile, \code{perc=0.6}) as input to the regression equation, predict the log10 of the average daily flow. The 
 #' threshold is 10 to the log10 (average daily flow) power (cubic feet per second). for the 5-year recurrence interval 
 #' (80th percentile, \code{perc=0.8}), used by indices TL3 and TL4, follow the same process, inputing a different 'perc' value.
+#' @importFrom stats na.omit quantile
 #' @export
 #' @examples
 #' \dontrun{
@@ -65,9 +66,9 @@ peakThreshold <- function(x,peakValues,perc=0.6,yearType = "water") {
         
         if(any(duplicated(peakValues$year_val))) {
                 warning("peakValues data frame contains multiple peak values for one or more years. Only the maximum annual value will be retained.")
-                temp <- dplyr::summarize(dplyr::group_by(peakValues,year_val),
-                                         date = date[peakQ == max(peakQ)],
-                                         peakQ = max(peakQ))
+                temp <- dplyr::summarize_(dplyr::group_by_(peakValues,"year_val"),
+                                         date = ~date[peakQ == max(peakQ)],
+                                         peakQ = ~max(peakQ))
                 peakValues <- dplyr::left_join(peakValues["date"],temp, by="date")
                 peakValues <- na.omit(peakValues)
         }

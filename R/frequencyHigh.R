@@ -45,6 +45,7 @@
 #' @return A data.frame of flow statistics
 #' @importFrom lubridate year
 #' @importFrom lubridate month
+#' @importFrom stats median na.omit quantile sd
 #' @import dplyr
 #' @export
 #' @examples
@@ -60,8 +61,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         x$month_val <- lubridate::month(x$date)
         
         #Calculate min by year for statistics
-        flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         minFlow = min(discharge))
+        flowSum_year <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                         minFlow = ~min(discharge))
         
         
         medFlow <- median(x$discharge)
@@ -69,9 +70,9 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         #fh1.2 #This differs from original EflowStats because of bug in fh1.2 where the qfiletempf dataframe was not ordered on date
         percentiles <- quantile(x$discharge,probs=0.75,type=6)
         #Pick out events for each year
-        yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+        yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                    {
-                                           calcEvents(.$discharge,
+                                           ~calcEvents(.$discharge,
                                                       threshold = percentiles["75%"],
                                                       type="high")
                                    }
@@ -81,8 +82,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         yearlyCounts$event[is.na(yearlyCounts$event)] <- 0
 
         #Get number of events each year
-        yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                         numEvents = max(event))
+        yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                         numEvents = ~max(event))
         
         if(pref=="mean") {
                 fh1 <- mean(yearlyCounts$numEvents)
@@ -94,8 +95,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         
         #fh3
         x$highFlow <- ifelse(x$discharge>3*medFlow,TRUE,FALSE)
-        highFlowCount <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                          numDays = length(highFlow[highFlow==TRUE]))
+        highFlowCount <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                          numDays = ~length(highFlow[highFlow==TRUE]))
         
         if(pref=="mean") {
                 fh3 <- mean(highFlowCount$numDays)
@@ -105,8 +106,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         
         #fh4
         x$highFlow <- ifelse(x$discharge>7*medFlow,TRUE,FALSE)
-        highFlowCount <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                          numDays = length(highFlow[highFlow==TRUE]))
+        highFlowCount <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                          numDays = ~length(highFlow[highFlow==TRUE]))
         
         if(pref=="mean") {
                 fh4 <- mean(highFlowCount$numDays)
@@ -115,9 +116,9 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         }
         
         #fh5
-        yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+        yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                    {
-                                           calcEvents(.$discharge,
+                                           ~calcEvents(.$discharge,
                                                       threshold = medFlow,
                                                       type="high")
                                    }
@@ -125,8 +126,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         yearlyCounts <- na.omit(yearlyCounts)
         
         #Get number of events each year
-        yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                         numEvents = max(event))
+        yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                         numEvents = ~max(event))
         
         if(pref=="mean") {
                 fh5 <- mean(yearlyCounts$numEvents)
@@ -135,9 +136,9 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         }
         
         #fh6
-        yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+        yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                    {
-                                           calcEvents(.$discharge,
+                                           ~calcEvents(.$discharge,
                                                       threshold = 3*medFlow,
                                                       type="high")
                                    }
@@ -147,8 +148,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         yearlyCounts$event[is.na(yearlyCounts$event)] <- 0
         
         #Get number of events each year
-        yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                         numEvents = max(event))
+        yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                         numEvents = ~max(event))
         
         if(pref=="mean") {
                 fh6 <- mean(yearlyCounts$numEvents)
@@ -157,9 +158,9 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         }
         
         #fh7
-        yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+        yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                    {
-                                           calcEvents(.$discharge,
+                                           ~calcEvents(.$discharge,
                                                       threshold = 7*medFlow,
                                                       type="high")
                                    }
@@ -169,8 +170,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         yearlyCounts$event[is.na(yearlyCounts$event)] <- 0
         
         #Get number of events each year
-        yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                         numEvents = max(event))
+        yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                         numEvents = ~max(event))
         
         if(pref=="mean") {
                 fh7 <- mean(yearlyCounts$numEvents)
@@ -179,9 +180,9 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         }
         
         #fh8
-        yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+        yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                    {
-                                           calcEvents(.$discharge,
+                                           ~calcEvents(.$discharge,
                                                       threshold = quantile(x$discharge,.75,type=6),
                                                       type="high")
                                    }
@@ -191,8 +192,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         yearlyCounts$event[is.na(yearlyCounts$event)] <- 0
         
         #Get number of events each year
-        yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                         numEvents = max(event))
+        yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                         numEvents = ~max(event))
         
         if(pref=="mean") {
                 fh8 <- mean(yearlyCounts$numEvents)
@@ -201,9 +202,9 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         }
         
         #fh9
-        yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+        yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                    {
-                                           calcEvents(.$discharge,
+                                           ~calcEvents(.$discharge,
                                                       threshold = quantile(x$discharge,.25,type=6),
                                                       type="high")
                                    }
@@ -212,8 +213,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         yearlyCounts$event[is.na(yearlyCounts$event)] <- 0
         
         #Get number of events each year
-        yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                         numEvents = max(event))
+        yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                         numEvents = ~max(event))
         
         if(pref=="mean") {
                 fh9 <- mean(yearlyCounts$numEvents)
@@ -222,9 +223,9 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         }
         
         #fh10
-        yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+        yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                    {
-                                           calcEvents(.$discharge,
+                                           ~calcEvents(.$discharge,
                                                       threshold = median(flowSum_year$minFlow),
                                                       type="high")
                                    }
@@ -232,8 +233,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         yearlyCounts <- na.omit(yearlyCounts)
         
         #Get number of events each year
-        yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                         numEvents = max(event))
+        yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                         numEvents = ~max(event))
         
         if(pref=="mean") {
                 fh10 <- mean(yearlyCounts$numEvents)
@@ -244,9 +245,9 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
         #fh11
         if(!is.null(floodThreshold))
         {
-                yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
+                yearlyCounts <-  dplyr::do_(dplyr::group_by_(x,"year_val"),
                                            {
-                                                   calcEvents(.$discharge,
+                                                   ~calcEvents(.$discharge,
                                                               threshold = floodThreshold,
                                                               type="high")
                                            }
@@ -254,8 +255,8 @@ frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThresho
                 yearlyCounts$event[is.na(yearlyCounts$event)] <- 0
                 
                 #Get number of events each year
-                yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
-                                                 numEvents = max(event))
+                yearlyCounts <- dplyr::summarize_(dplyr::group_by_(yearlyCounts,"year_val"),
+                                                 numEvents = ~max(event))
                 
                 if(pref=="mean") {
                         fh11 <- mean(yearlyCounts$numEvents)

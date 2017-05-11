@@ -31,6 +31,7 @@
 #' @return A data.frame flow statistics
 #' @import dplyr
 #' @importFrom lubridate year
+#' @importFrom stats median quantile sd
 #' @export
 #' @examples
 #' x <- sampleData[c("date","discharge")]
@@ -60,9 +61,9 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         ma2 <- medFlow
         
         #ma3
-        yearAgg <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                    meanFlow = mean.default(discharge), #ma41-45
-                                    CV = sd(discharge)/meanFlow) #ma3
+        yearAgg <- dplyr::summarize_(dplyr::group_by_(x,"year_val"),
+                                    meanFlow = ~mean.default(discharge), #ma41-45
+                                    CV = ~sd(discharge)/meanFlow) #ma3
         if(pref=="mean")
         {
                 ma3 <- mean.default(yearAgg$CV)*100
@@ -86,30 +87,30 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         
         #ma12-23
         if (pref== "mean") {
-                flowSum_month <- dplyr::summarize(dplyr::group_by(x,month_val),
-                                                  meanFlow = mean.default(discharge))
+                flowSum_month <- dplyr::summarize_(dplyr::group_by_(x,"month_val"),
+                                                  meanFlow = ~mean.default(discharge))
                 ma12.23 <- flowSum_month$meanFlow
         } else {
-                flowSum_month <- dplyr::summarize(dplyr::group_by(x,month_val),
-                                                  medianFlow = median(discharge))
+                flowSum_month <- dplyr::summarize_(dplyr::group_by_(x,"month_val"),
+                                                  medianFlow = ~median(discharge))
                 ma12.23 <- flowSum_month$medianFlow
         }
         
         #ma24-35
-        yearMonthAgg = dplyr::summarize(dplyr::group_by(x,year_val,month_val),
-                                        meanFlow = mean.default(discharge), #ma36-40
-                                        CV = sd(discharge)/meanFlow #), #ma24-35
+        yearMonthAgg = dplyr::summarize_(dplyr::group_by_(x,"year_val","month_val"),
+                                        meanFlow = ~mean.default(discharge), #ma36-40
+                                        CV = ~sd(discharge)/meanFlow #), #ma24-35
                                         #minFlow = min(discharge), #ma36-40 #UNUSED?
                                         #maxFlow = max(discharge) #ma36-40 #UNUSED?
         )
         
         if(pref == "mean") {
-                ma24.35 <- dplyr::summarize(dplyr::group_by(yearMonthAgg,month_val),
-                                            meanCV = mean.default(CV))
+                ma24.35 <- dplyr::summarize_(dplyr::group_by_(yearMonthAgg,"month_val"),
+                                            meanCV = ~mean.default(CV))
                 ma24.35 <- ma24.35$meanCV*100
         } else {
-                ma24.35 <- dplyr::summarize(dplyr::group_by(yearMonthAgg,month_val),
-                                            medianCV = median(CV))
+                ma24.35 <- dplyr::summarize_(dplyr::group_by_(yearMonthAgg,"month_val"),
+                                            medianCV = ~median(CV))
                 ma24.35 <- ma24.35$medianCV*100
         }
         
