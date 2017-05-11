@@ -14,3 +14,11 @@
 #'   \item{jul_val}{day of year}
 #' }
 NULL
+
+# dplyr NSE variables to kill notes in check.
+month_val <- discharge <- leapYear <- day <- 
+        year_val <- roll3Mean <- roll7Mean <- 
+        roll30Mean <- roll90Mean <- events <- 
+        . <- highFlow <- CV <- block <- 
+        peakQ <- flow <- maxFlow <-  
+        minFlow <- event <- ".dplyr.var"
