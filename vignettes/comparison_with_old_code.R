@@ -2,6 +2,7 @@
 library(readr)
 library(dataRetrieval)
 library(EflowStats)
+library(DT)
 data_folder <- system.file("extdata/old_code_example", package = "EflowStats")
 
 old_results <- suppressMessages(as.data.frame(read_delim(file.path(data_folder,"HATindices2008_tsv.txt"), 
@@ -87,5 +88,30 @@ for(statN in names(old_results)) {
 }
 percent_differences <- as.matrix(percent_differences)
 percent_differences[which(percent_differences == -Inf)] <- NA
-percent_differences
+percent_differences[which(percent_differences == Inf)] <- NA
+percent_differences[which(is.nan(percent_differences))] <- NA
+differences <- as.matrix(differences)
+differences[which(differences == -Inf)] <- NA
+differences[which(differences == Inf)] <- NA
+differences[which(is.nan(differences))] <- NA
+
+## ----message=FALSE, echo=TRUE, eval=TRUE, warning=FALSE------------------
+deffs <- read.table(system.file("extdata/statistic_deffs.tsv", package = "EflowStats"), sep = "\t", stringsAsFactors = FALSE)
+exps <- read.table(system.file("extdata/difference_explanation.tsv", package = "EflowStats"), sep = "\t", stringsAsFactors = FALSE)
+summary_table <- data.frame(matrix(nrow = nrow(differences), ncol = (7)))
+names(summary_table) <- c( "Mean", "Min %", "Max %", "Deffinition", "Old Eflow Method", "New Eflow Method", "Explanation" )
+row.names(summary_table) <- row.names(differences)
+summary_table$Mean <- round(rowMeans(differences, na.rm = TRUE), 2)
+summary_table$`Min %` <- apply(percent_differences, 1, min, na.rm = TRUE)
+summary_table$`Max %` <- apply(percent_differences, 1, max, na.rm = TRUE)
+summary_table[,"Deffinition"] <- unlist(deffs[1,1:171])
+for(r in rownames(summary_table)) {
+        try(summary_table[r,]$`Old Eflow Method` <- 
+            exps[which(grepl(paste0( r, ","), exps$Indices)),]$`Original.method`, silent = TRUE)
+        try(summary_table[r,]$`New Eflow Method` <- 
+            exps[which(grepl(paste0( r, ","), exps$Indices)),]$`New.method`, silent = TRUE)
+        try(summary_table[r,]$Explanation <- 
+            exps[which(grepl(paste0( r, ","), exps$Indices)),]$`Issue.description`, silent = TRUE)
+}
+datatable(data.frame(summary_table, stringsAsFactors = FALSE), options = list(autoWidth = TRUE,columnDefs = list(list(width = '300px', targets = c(4, 5, 6, 7))), pageLength = 200), width = 1200)
 
