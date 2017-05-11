@@ -47,7 +47,7 @@ rateChange <- function(x,yearType = "water",digits=3,pref="mean",...) {
         diffDays <- diff(x$discharge, lag = 1, 
                          differences = 1)
         riseValues <- diffDays[diffDays >0]
-        fallValues <- abs(diffDays[diffDays <0])
+        fallValues <- diffDays[diffDays <0]
         
         #ra1.2
         if (pref == "mean") {
@@ -82,7 +82,7 @@ rateChange <- function(x,yearType = "water",digits=3,pref="mean",...) {
         fallLogQ <- diffLogQ[diffLogQ <0]
         
         ra6 <- median(abs(riseLogQ))
-        ra7 <- median(abs(fallLogQ))
+        ra7 <- median(fallLogQ)
         
         #ra8.9
         
