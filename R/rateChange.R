@@ -31,6 +31,7 @@
 #' @return A data.frame of flow statistics
 #' @importFrom lubridate year
 #' @importFrom lubridate month
+#' @importFrom stats median sd
 #' @import dplyr
 #' @export
 #' @examples

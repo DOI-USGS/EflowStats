@@ -12,6 +12,7 @@
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
 #' @param trim Logical. Events that start or end at the beginning or end of the record are dropped if \code{TRUE} because an accurate duration can't be calculated if teh start or end time is unknown.
 #' @return A numeric of the mean event duration in units of number of rows if average = TRUE. Otherwise, returns a datafarme of durations for each event.
+#' @importFrom stats median na.omit
 #' @import dplyr
 #' @export
 #' @examples
