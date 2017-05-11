@@ -1,0 +1,91 @@
+## ----message=FALSE, echo=TRUE, eval=TRUE---------------------------------
+library(readr)
+library(dataRetrieval)
+library(EflowStats)
+data_folder <- system.file("extdata/old_code_example", package = "EflowStats")
+
+old_results <- suppressMessages(as.data.frame(read_delim(file.path(data_folder,"HATindices2008_tsv.txt"), 
+                                        delim = "\t", na = "NC"), 
+                             stringsAsFactors = FALSE))
+
+old_results[,1] <- as.character(gsub(" observed", "", old_results[,1]))
+
+row.names(old_results) <- old_results[,1]
+colnames(old_results) <- tolower(names(old_results))
+old_results["site"] <- NULL
+
+flow_dir <- file.path(data_folder, "flow_data")
+
+unzip(file.path(data_folder, "ObservedStreamflowByBasin.zip"),exdir = flow_dir, overwrite = TRUE)
+
+## ----message=FALSE, echo=TRUE, eval=FALSE--------------------------------
+#  das <- list()
+#  for(site in list.dirs(flow_dir, full.names = FALSE)) {
+#    if(nchar(site)>0) {
+#      das[site] <- readNWISsite(siteNumber = site)$drain_area_va
+#    }
+#  }
+
+## ----message=FALSE, echo=FALSE, eval=TRUE--------------------------------
+das <- readRDS(file.path(data_folder, "drainage_areas.rds"))
+
+## ----message=FALSE, echo=TRUE, eval=TRUE, warning=FALSE------------------
+new_results <- old_results
+new_results[1:nrow(new_results), 1:ncol(new_results)] <- NA
+good_sites <- list()
+
+for(site_dir in list.dirs(flow_dir)) {
+  flow_files <- list.files(site_dir, pattern = "*.txt")
+  if(length(flow_files) > 0){
+    flow_data <- suppressMessages(importRDB1(file.path(site_dir, flow_files[1])))
+    site_no <- flow_data$site_no[1]
+    flow_data_clean <- dataCheck(flow_data[3:4],yearType="water")
+
+    if(length(flow_files)>1) {
+      peak_data <- suppressMessages(importRDB1(file.path(site_dir, flow_files[2])))
+    } else { peak_data <- NULL }
+    
+    if(!(flow_data_clean == FALSE)) {
+      good_sites <- c(good_sites, site_no)
+      if(!is.null(peak_data)) {
+        flood_thresh <- peakThreshold(flow_data_clean[c("date","discharge")],
+                                      peak_data[c("peak_dt","peak_va")])
+        new_results[site_no,] <- hitStats(flow_data_clean,
+                                          drainArea=das[site_no][[1]],
+                                          floodThreshold=flood_thresh,
+                                          pref = "mean")$statistic
+        print(paste("Calculated statistics with threshold for site", site_no))
+      } else {
+        new_results[site_no,] <- hitStats(flow_data_clean,
+                                          drainArea=das[site_no][[1]])$statistic
+        print(paste("Calculated statistics without threshold for site", site_no))
+      }
+    }
+  }
+}
+
+## ----message=FALSE, echo=TRUE, eval=TRUE, warning=FALSE------------------
+unlink(flow_dir, recursive = TRUE) # deleting unziped files.
+
+differences <- data.frame(matrix(ncol = length(good_sites), nrow = ncol(old_results)))
+row.names(differences) <- names(old_results)
+colnames(differences) <- good_sites
+percent_differences <- differences
+
+for(statN in names(old_results)) {
+  for(site in good_sites) {
+    try(
+      differences[statN,site] <- 
+        old_results[site,statN] - new_results[site,statN], silent = TRUE
+    )
+    try(
+      percent_differences[statN,site] <- 
+        abs(round(100*((old_results[site,statN] - new_results[site,statN]) / 
+                     mean(old_results[site,statN], new_results[site,statN])),digits = 0)), silent = TRUE
+    )
+  }
+}
+percent_differences <- as.matrix(percent_differences)
+percent_differences[which(percent_differences == -Inf)] <- NA
+percent_differences
+

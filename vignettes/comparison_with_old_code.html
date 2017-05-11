@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="David Blodgett" />
+
+
+<title>Comparison with HIP output</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Comparison with HIP output</h1>
+<h4 class="author"><em>David Blodgett</em></h4>
+<h4 class="date"><em>10 May, 2017</em></h4>
+
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>EflowStats is a reimplementation of the Hydrologic Index Tool (HIT) that is part of the <a href="https://pubs.er.usgs.gov/publication/ofr20061093"><em>Hydroecological Integrity Assessment Process</em></a> software. This Vignette demonstrates that EflowStats reproduces the values generated by the HIT. The results from the HIT were provided from a 2006 New Jersey environmental flows assessment project. (Find out if Jonathan has a reference.)</p>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>The data for this demonstration is stored within the EflowStats package “extdata” directory. First, we load required packages, load the old results, clean things up a bit, and unzip the streamflow data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(readr)
+<span class="kw">library</span>(dataRetrieval)
+<span class="kw">library</span>(EflowStats)
+data_folder &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata/old_code_example&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;EflowStats&quot;</span>)
+
+old_results &lt;-<span class="st"> </span><span class="kw">suppressMessages</span>(<span class="kw">as.data.frame</span>(<span class="kw">read_delim</span>(<span class="kw">file.path</span>(data_folder,<span class="st">&quot;HATindices2008_tsv.txt&quot;</span>), 
+                                        <span class="dt">delim =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">na =</span> <span class="st">&quot;NC&quot;</span>), 
+                             <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>))
+
+old_results[,<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="kw">gsub</span>(<span class="st">&quot; observed&quot;</span>, <span class="st">&quot;&quot;</span>, old_results[,<span class="dv">1</span>]))
+
+<span class="kw">row.names</span>(old_results) &lt;-<span class="st"> </span>old_results[,<span class="dv">1</span>]
+<span class="kw">colnames</span>(old_results) &lt;-<span class="st"> </span><span class="kw">tolower</span>(<span class="kw">names</span>(old_results))
+old_results[<span class="st">&quot;site&quot;</span>] &lt;-<span class="st"> </span><span class="ot">NULL</span>
+
+flow_dir &lt;-<span class="st"> </span><span class="kw">file.path</span>(data_folder, <span class="st">&quot;flow_data&quot;</span>)
+
+<span class="kw">unzip</span>(<span class="kw">file.path</span>(data_folder, <span class="st">&quot;ObservedStreamflowByBasin.zip&quot;</span>),<span class="dt">exdir =</span> flow_dir, <span class="dt">overwrite =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Now we have you observed streamflow from the 2006 study unzipped and the results from that study available in a <code>data.frame</code> with statistic ids as column names and site ids as row names. Now we can get drainage area from an NWIS service.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">das &lt;-<span class="st"> </span><span class="kw">list</span>()
+<span class="cf">for</span>(site <span class="cf">in</span> <span class="kw">list.dirs</span>(flow_dir, <span class="dt">full.names =</span> <span class="ot">FALSE</span>)) {
+  <span class="cf">if</span>(<span class="kw">nchar</span>(site)<span class="op">&gt;</span><span class="dv">0</span>) {
+    das[site] &lt;-<span class="st"> </span><span class="kw">readNWISsite</span>(<span class="dt">siteNumber =</span> site)<span class="op">$</span>drain_area_va
+  }
+}</code></pre></div>
+<p>Now we have everything we need to run statistics for sites with enough data. The code below sets up an empty new results table</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_results &lt;-<span class="st"> </span>old_results
+new_results[<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(new_results), <span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(new_results)] &lt;-<span class="st"> </span><span class="ot">NA</span>
+good_sites &lt;-<span class="st"> </span><span class="kw">list</span>()
+
+<span class="cf">for</span>(site_dir <span class="cf">in</span> <span class="kw">list.dirs</span>(flow_dir)) {
+  flow_files &lt;-<span class="st"> </span><span class="kw">list.files</span>(site_dir, <span class="dt">pattern =</span> <span class="st">&quot;*.txt&quot;</span>)
+  <span class="cf">if</span>(<span class="kw">length</span>(flow_files) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>){
+    flow_data &lt;-<span class="st"> </span><span class="kw">suppressMessages</span>(<span class="kw">importRDB1</span>(<span class="kw">file.path</span>(site_dir, flow_files[<span class="dv">1</span>])))
+    site_no &lt;-<span class="st"> </span>flow_data<span class="op">$</span>site_no[<span class="dv">1</span>]
+    flow_data_clean &lt;-<span class="st"> </span><span class="kw">dataCheck</span>(flow_data[<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>],<span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>)
+
+    <span class="cf">if</span>(<span class="kw">length</span>(flow_files)<span class="op">&gt;</span><span class="dv">1</span>) {
+      peak_data &lt;-<span class="st"> </span><span class="kw">suppressMessages</span>(<span class="kw">importRDB1</span>(<span class="kw">file.path</span>(site_dir, flow_files[<span class="dv">2</span>])))
+    } <span class="cf">else</span> { peak_data &lt;-<span class="st"> </span><span class="ot">NULL</span> }
+    
+    <span class="cf">if</span>(<span class="op">!</span>(flow_data_clean <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>)) {
+      good_sites &lt;-<span class="st"> </span><span class="kw">c</span>(good_sites, site_no)
+      <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.null</span>(peak_data)) {
+        flood_thresh &lt;-<span class="st"> </span><span class="kw">peakThreshold</span>(flow_data_clean[<span class="kw">c</span>(<span class="st">&quot;date&quot;</span>,<span class="st">&quot;discharge&quot;</span>)],
+                                      peak_data[<span class="kw">c</span>(<span class="st">&quot;peak_dt&quot;</span>,<span class="st">&quot;peak_va&quot;</span>)])
+        new_results[site_no,] &lt;-<span class="st"> </span><span class="kw">hitStats</span>(flow_data_clean,
+                                          <span class="dt">drainArea=</span>das[site_no][[<span class="dv">1</span>]],
+                                          <span class="dt">floodThreshold=</span>flood_thresh,
+                                          <span class="dt">pref =</span> <span class="st">&quot;mean&quot;</span>)<span class="op">$</span>statistic
+        <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Calculated statistics with threshold for site&quot;</span>, site_no))
+      } <span class="cf">else</span> {
+        new_results[site_no,] &lt;-<span class="st"> </span><span class="kw">hitStats</span>(flow_data_clean,
+                                          <span class="dt">drainArea=</span>das[site_no][[<span class="dv">1</span>]])<span class="op">$</span>statistic
+        <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Calculated statistics without threshold for site&quot;</span>, site_no))
+      }
+    }
+  }
+}</code></pre></div>
+<pre><code>## [1] &quot;Calculated statistics without threshold for site 01399190&quot;
+## [1] &quot;Calculated statistics without threshold for site 01399200&quot;
+## [1] &quot;Calculated statistics with threshold for site 01400932&quot;
+## [1] &quot;Calculated statistics without threshold for site 01401500&quot;
+## [1] &quot;Calculated statistics without threshold for site 01403060&quot;
+## [1] &quot;Calculated statistics without threshold for site 01404000&quot;
+## [1] &quot;Calculated statistics with threshold for site 01406000&quot;</code></pre>
+<p>Now that we have our new results for 7 sites, we can delete the unzipped flow files and look at our results. Note that more sites are in the project results from 2006, but we are only comparing results for sites with complete flow records where no filling is required.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unlink</span>(flow_dir, <span class="dt">recursive =</span> <span class="ot">TRUE</span>) <span class="co"># deleting unziped files.</span>
+
+differences &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="kw">matrix</span>(<span class="dt">ncol =</span> <span class="kw">length</span>(good_sites), <span class="dt">nrow =</span> <span class="kw">ncol</span>(old_results)))
+<span class="kw">row.names</span>(differences) &lt;-<span class="st"> </span><span class="kw">names</span>(old_results)
+<span class="kw">colnames</span>(differences) &lt;-<span class="st"> </span>good_sites
+percent_differences &lt;-<span class="st"> </span>differences
+
+<span class="cf">for</span>(statN <span class="cf">in</span> <span class="kw">names</span>(old_results)) {
+  <span class="cf">for</span>(site <span class="cf">in</span> good_sites) {
+    <span class="kw">try</span>(
+      differences[statN,site] &lt;-<span class="st"> </span>
+<span class="st">        </span>old_results[site,statN] <span class="op">-</span><span class="st"> </span>new_results[site,statN], <span class="dt">silent =</span> <span class="ot">TRUE</span>
+    )
+    <span class="kw">try</span>(
+      percent_differences[statN,site] &lt;-<span class="st"> </span>
+<span class="st">        </span><span class="kw">abs</span>(<span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>((old_results[site,statN] <span class="op">-</span><span class="st"> </span>new_results[site,statN]) <span class="op">/</span><span class="st"> </span>
+<span class="st">                     </span><span class="kw">mean</span>(old_results[site,statN], new_results[site,statN])),<span class="dt">digits =</span> <span class="dv">0</span>)), <span class="dt">silent =</span> <span class="ot">TRUE</span>
+    )
+  }
+}
+percent_differences &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(percent_differences)
+percent_differences[<span class="kw">which</span>(percent_differences <span class="op">==</span><span class="st"> </span><span class="op">-</span><span class="ot">Inf</span>)] &lt;-<span class="st"> </span><span class="ot">NA</span>
+percent_differences</code></pre></div>
+<pre><code>##      01399190 01399200 01400932 01401500 01403060 01404000 01406000
+## ma1         0        0        0        0        0        0        0
+## ma2         0        0        0        0        1        0        0
+## ma3         7        8        3        3        3        9       10
+## ma4       122      170      152      433      613      306      118
+## ma5         0        0        0        0        0        0        0
+## ma6         0        0      Inf        0        0        0        0
+## ma7         0        0        0        0        0        0        0
+## ma8         0        0        0        0        0        0        0
+## ma9       159      214      110      549      847      294      139
+## ma10      131      187      106      470      637      265      112
+## ma11      122      172      108      444      590      289      113
+## ma12       10       25       32       13       17       16        1
+## ma13        9        6       28       10        2        6       13
+## ma14        6        6        7        6        6        4        3
+## ma15       14       15       44        9       13       38        2
+## ma16        4       18       28        2       27       27        8
+## ma17       22       23      172       19       66       27       33
+## ma18       18       34      304      102       71       91       68
+## ma19        7        1      768       14       42      111        0
+## ma20       23       29      404       93       88       37       35
+## ma21        8       16      316        5      101       30        7
+## ma22        9       15        9        6       13        8        8
+## ma23       41        1        9       17       28        3        9
+## ma24        6        0        2        3        7       13        2
+## ma25       12       15        1        7       11        6        1
+## ma26        9        3        4       16        6       21        2
+## ma27       23        4       17        3        4       33        4
+## ma28       18       24        9        2       13       23        5
+## ma29        4        1        1       17       11        7       26
+## ma30       21       31       NA       37        5      168       39
+## ma31       22        0       NA        5        9       68       19
+## ma32        1        1       NA       16       19       11       13
+## ma33        8       15       NA       21       11        8        4
+## ma34        1        3       13        5        4       47       17
+## ma35        1        7        7       19        0       10        5
+## ma36        0        0        0        0        2        0        0
+## ma37        0        0        0        0        3        0        0
+## ma38        0        0        0        0        5        0        0
+## ma39        0        0        0        0        1        0        0
+## ma40        0        0        0        0        9        0        0
+## ma41        0        0        0        0        0        0        0
+## ma42        0        0        0        0        1        0        1
+## ma43        0        0        0        0        2        0        1
+## ma44        0        0        0        0        3        0        1
+## ma45        0        0        2       25       38        1       22
+## ml1         1       13       70        4       18        1        4
+## ml2         5        3       36       31        9        4        6
+## ml3         3        0       15       21        3        4        2
+## ml4         6        0        3        5        7        6        4
+## ml5        19        0        9       14        5       15        2
+## ml6         7        3     1560        7       37       47        0
+## ml7        30       10      880       10       29       62       13
+## ml8         8        0     1340       12        9       62       15
+## ml9        42       10      750        2        8       27       10
+## ml10       14       11      867       17       29       11       11
+## ml11       21       32     2320        3       37        1        7
+## ml12       12        3       34        3       16        9        3
+## ml13        0        0        0        0        1        0        0
+## ml14        4        1      Inf       28        6       28       47
+## ml15        7        5      Inf       30        5       29       20
+## ml16        0        0      NaN        0        3        0        0
+## ml17       18        5       33       30       16       63       12
+## ml18       28       15       56        5        7        2        4
+## ml19        7        6      Inf       29        6       30       19
+## ml20        0        0       22        0        0        0        0
+## ml21        0        0        0        0        0        0        0
+## ml22        0        1      Inf       20        3       28       30
+## mh1        40       34       15       13       22       30       24
+## mh2        23       13       20       26       12       26       23
+## mh3        17        7        1        3       13       17        2
+## mh4        25       28      156       22       25      108        2
+## mh5         9       22       68       11       37      100       38
+## mh6        22        9      446      108      151       24       76
+## mh7        66      123     1469      189       87      883      203
+## mh8         5       10      418       21       95       71       39
+## mh9        41       72      548      357      247      171      113
+## mh10        0        1      898       46      156       86        4
+## mh11       13       22       82       13       18       55       20
+## mh12       21        3       24       45       23        4       36
+## mh13        0        0        0        0        1        0        0
+## mh14        0        0        0        0        2        0        0
+## mh15        0        0        6        0        1        0        0
+## mh16        0        0       13        0        0        0        0
+## mh17        0        0       11        0        0        0        0
+## mh18        0        0        0        0        0        0        0
+## mh19        0        0        0        0       14        0        0
+## mh20       23       16        5       12       11       22       28
+## mh21        2        1        1        1        3        1        1
+## mh22        0        0        2        0        1        0        0
+## mh23        0        0        1        0        2        0        0
+## mh24        0        0        1        0        1        0        0
+## mh25        0        0        2        0        1        0        0
+## mh26        0        0        1        0        1        0        0
+## mh27        0        0        0        0        1        0        0
+## fl1        16       10       36        6       12       10        1
+## fl2        14        9       11        7       12       11        1
+## fl3       NaN      NaN       15      Inf      Inf      NaN      NaN
+## fh1         6        4        2        3        2        4        0
+## fh2         7        4       23        3        0        3        0
+## fh3        33       46        5        3        1        9        2
+## fh4       Inf      175       11        3        2        6        6
+## fh5         5        3        0        1        1        2       14
+## fh6         4       17        4        8        5        9        0
+## fh7       Inf       25        5        4        4        0        2
+## fh8         6        4        2        3        2        4        0
+## fh9        16       12       25        5        7       18        1
+## fh10       18       12       50      156      142       21        6
+## fh11       NA       NA       NA       NA       NA       NA       NA
+## dl1         0        2      Inf       19        3       29       31
+## dl2         5        5      Inf        7        2       62       27
+## dl3         4        2      Inf        6        2       73        0
+## dl4         2       15     2625        0        5       41       13
+## dl5        15       25       51       20       14       44        0
+## dl6         0        0        0        0        0        0        0
+## dl7         5        6       77        4        0        1        9
+## dl8         2        5       35        8        0        4       21
+## dl9         4        8        7       27        4        4       14
+## dl10       38       40       43        6        8       22       20
+## dl11        0        0        0        0        1        0        0
+## dl12        2        7       12       13        1       18        4
+## dl13        6       14       25       14        6       10       10
+## dl14        0        0       78        0        0        0        0
+## dl15        0        0      100        0        1        0        0
+## dl16        0        0        6        0        1       12        0
+## dl17        0        0       31        0        1       34        0
+## dl18      NaN      NaN       29      NaN      NaN      NaN      NaN
+## dl19       NA       NA        0       NA       NA       NA       NA
+## dl20      NaN      NaN        4      NaN      NaN      NaN      NaN
+## dh1        23       16        5       12       11       22       28
+## dh2        26       13        4       19        3        2       12
+## dh3        14       11        8       13        1        1       12
+## dh4         4        9        3        8        5        2        9
+## dh5         6       10        7        7        1        0        4
+## dh6         0        0        0        0        0        0        0
+## dh7         0        0        0        0        1        8        0
+## dh8         3        2        8        0        1        3        0
+## dh9         0        1        4        1        1        1        1
+## dh10        0        2        1        0        2       30        1
+## dh11        0        0        0        0        1        0        0
+## dh12        1        1        1        1        0        1        0
+## dh13        0        0        1        0        2        1        2
+## dh14      626      635      Inf     1123     1623      824      858
+## dh15        0        0       18        0        2        0        0
+## dh16        0        0        5        0        0        0        0
+## dh17        2        4        3        1        1       18        7
+## dh18       14       24        5        4        5       10        4
+## dh19        0       47        0        3        4        6        7
+## dh20        6        7       26        1        1        5       20
+## dh21       11       14      148       20        1       36        6
+## dh22       NA       NA       NA       NA       NA       NA       NA
+## dh23       NA       NA       NA       NA       NA       NA       NA
+## dh24       NA       NA       NA       NA       NA       NA       NA
+## ta1         0        0        0        0        0        0        0
+## ta2         0        0        0        0        0        0        0
+## ta3        NA       NA       NA       NA       NA       NA       NA
+## tl1        34       34       39       34       37       43       39
+## tl2         2        1        1        1        0        0        1
+## tl3        NA       NA       NA       NA       NA       NA       NA
+## tl4        NA       NA       NA       NA       NA       NA       NA
+## th1       132      114      128      254      166       83       80
+## th2         0        0        0        0        1        0        0
+## th3        NA       NA       NA       NA       NA       NA       NA
+## ra1       250      226      651      585      720      386      330
+## ra2         0        0        0        0        0        0        0
+## ra3        53      152      605      250      382      257      407
+## ra4         0        0        0        0        0        0        0
+## ra5         0        0        0        0        0        0        0
+## ra6         0        0        0        0        0        0        0
+## ra7         0        0        0        0        1        0        0
+## ra8         1        3       21        1        1        2        0
+## ra9         1        1        1        1        0        1        1</code></pre>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
