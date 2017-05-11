@@ -31,6 +31,8 @@ unzip(file.path(data_folder, "ObservedStreamflowByBasin.zip"),exdir = flow_dir, 
 das <- readRDS(file.path(data_folder, "drainage_areas.rds"))
 
 ## ----message=FALSE, echo=TRUE, eval=TRUE, warning=FALSE------------------
+pref="mean"
+
 new_results <- old_results
 new_results[1:nrow(new_results), 1:ncol(new_results)] <- NA
 good_sites <- list()
@@ -54,11 +56,12 @@ for(site_dir in list.dirs(flow_dir)) {
         new_results[site_no,] <- hitStats(flow_data_clean,
                                           drainArea=das[site_no][[1]],
                                           floodThreshold=flood_thresh,
-                                          pref = "mean")$statistic
+                                          pref = pref)$statistic
         print(paste("Calculated statistics with threshold for site", site_no))
       } else {
         new_results[site_no,] <- hitStats(flow_data_clean,
-                                          drainArea=das[site_no][[1]])$statistic
+                                          drainArea=das[site_no][[1]],
+                                          pref=pref)$statistic
         print(paste("Calculated statistics without threshold for site", site_no))
       }
     }
