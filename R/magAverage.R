@@ -73,10 +73,9 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
                 ma3 <- median(yearAgg$CV)*100   
         }
         
-        #ma4-8 
-        percMean <- mean.default(percentiles)
-        percSD <- sd(percentiles)
-        
+        #ma4-8
+        percMean <- mean.default(percentiles_log10)
+        percSD <- sd(percentiles_log10)
         
         ma4 <- percSD/percMean*100
         ma5 <- meanFlow/medFlow
