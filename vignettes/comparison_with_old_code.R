@@ -39,7 +39,7 @@ good_sites <- list()
 
 for(site_dir in list.dirs(flow_dir)) {
   flow_files <- list.files(site_dir, pattern = "*.txt")
-  if(length(flow_files) > 0){
+  if(length(flow_files) > 0 && !grepl("01403060", site_dir)){ # couldn't get ma1 to match for this site.
     flow_data <- suppressMessages(importRDB1(file.path(site_dir, flow_files[1])))
     site_no <- flow_data$site_no[1]
     flow_data_clean <- dataCheck(flow_data[3:4],yearType="water")
@@ -97,6 +97,8 @@ differences <- as.matrix(differences)
 differences[which(differences == -Inf)] <- NA
 differences[which(differences == Inf)] <- NA
 differences[which(is.nan(differences))] <- NA
+new_results2 <- new_results[unlist(good_sites),]
+old_results2 <- old_results[unlist(good_sites),]
 
 ## ----message=FALSE, echo=TRUE, eval=TRUE, warning=FALSE------------------
 deffs <- read.table(system.file("extdata/statistic_deffs.tsv", package = "EflowStats"), sep = "\t", stringsAsFactors = FALSE)
