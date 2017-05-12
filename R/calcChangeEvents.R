@@ -17,8 +17,8 @@ calcChangeEvents <- function(x) {
         diffDays <- diff(x, lag = 1, 
                          differences = 1)
         
-        changeDir <- ifelse(diffDays <0, "fall", 
-                            ifelse(diffDays ==0, NA, "rise"))
+        changeDir <- sign(diffDays)
+        changeDir[changeDir==0] = NA
         
         #fill NAs with previous event number
         #This has to be done twice for the front and back ends
