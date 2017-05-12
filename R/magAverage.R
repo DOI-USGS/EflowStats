@@ -52,9 +52,11 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         
         # percentiles
         percentiles <- quantile(x$discharge,probs=seq(0.05,0.95,0.05),type=6)
+        percentiles_log10 <- quantile(log10(x$discharge),probs=seq(0.05,0.95,0.05),type=6)
         
         meanFlow <- mean.default(x$discharge)     
         medFlow <- percentiles["50%"]
+        medFlow_log10 <- log10(medFlow)
         
         #ma1-2
         ma1 <- meanFlow
@@ -71,19 +73,21 @@ magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
                 ma3 <- median(yearAgg$CV)*100   
         }
         
-        #ma4-11 
-        percMean <- mean.default(percentiles)
-        percSD <- sd(percentiles)
-        
+        #ma4-8
+        percMean <- mean.default(percentiles_log10)
+        percSD <- sd(percentiles_log10)
         
         ma4 <- percSD/percMean*100
         ma5 <- meanFlow/medFlow
         ma6 <- as.numeric(percentiles["90%"]/percentiles["10%"])
         ma7 <- as.numeric(percentiles["80%"]/percentiles["20%"])
         ma8 <- as.numeric(percentiles["75%"]/percentiles["25%"])
-        ma9 <- as.numeric(percentiles["90%"]-percentiles["10%"])/medFlow
-        ma10 <- as.numeric(percentiles["80%"]-percentiles["20%"])/medFlow
-        ma11 <- as.numeric(percentiles["75%"]-percentiles["25%"])/medFlow
+        
+        #ma9-11
+        
+        ma9 <- as.numeric(percentiles_log10["90%"]-percentiles_log10["10%"])/medFlow_log10
+        ma10 <- as.numeric(percentiles_log10["80%"]-percentiles_log10["20%"])/medFlow_log10
+        ma11 <- as.numeric(percentiles_log10["75%"]-percentiles_log10["25%"])/medFlow_log10
         
         #ma12-23
         if (pref== "mean") {

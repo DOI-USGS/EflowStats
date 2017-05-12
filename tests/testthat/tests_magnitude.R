@@ -44,3 +44,19 @@ test_that("magnitude high", {
         expect_equal(magHighTest,magHighTestOut)
         
 })
+
+test_that("monthly averages work as expected", {
+        
+        start <- as.Date("1980-10-01")
+        end <- as.Date("1985-09-30")
+        x <- list()
+        x$dates <- seq.Date(start, end, by = "day")
+        x$month <- lubridate::month(x$dates) # submitting month values instead of flows.
+        x <- as.data.frame(x)
+        out <- magAverage(x, yearType = "water")
+        # Expect the values returned to be the same as the month values.
+        expect_equal(unlist(out[12,]), setNames(c("ma12", 1),c("indice", "statistic")))
+        expect_equal(unlist(out[23,]), setNames(c("ma23", 12),c("indice", "statistic")))
+        
+})
+
