@@ -6,7 +6,7 @@
 #' 
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
-#' @importFrom stats lm
+#' @importFrom stats .lm.fit
 #' @return seasonality vector of seasonal factors (amplitude and phase)
 #' @examples 
 #' x <- sampleData[c("date","discharge")]
@@ -27,9 +27,10 @@ seasonality <- function(x,yearType = "water") {
         #2) Standardize flows
         std_flows<-scale(x$discharge, center = TRUE, scale = TRUE)
         #3) Use linear model to fit 
-        seasonfit<-lm(std_flows~sin(2*pi*decimal_year)+cos(2*pi*decimal_year))
-        b1<-as.vector(seasonfit$coefficients[2])
-        b2<-as.vector(seasonfit$coefficients[3]) 
+        x_mat = cbind(1, sin(2*pi*decimal_year), cos(2*pi*decimal_year))
+        seasonfit<-.lm.fit(x_mat, std_flows)
+        b1<-as.vector(coef(seasonfit)[2])
+        b2<-as.vector(coef(seasonfit)[3]) 
         #Now compute the amplitude and phase of the seasonal signal
         amplitude<-round(sqrt((b2^2)+(b1^2)),digits=2)
         #phase<-round(atan((-seasonB)/seasonA),digits=2)
