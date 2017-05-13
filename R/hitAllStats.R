@@ -7,7 +7,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param stats Character vector statistic groups. Choices are "all","hitMagAverage", "hitMagLow", "hitMagHigh", "hitFrequencyLow", "hitFrequencyHigh", "hitDurationLow", "hitDurationHigh", "hitTimingAverage", "hitTimingLow", "hitTimingHigh", "hitRateChange"     
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
-#' @param drainArea Numeric drainage area. Only required for some statistics. See details.
+#' @param drainArea Numeric drainage area. Only required for some statistics. Typically units of square miles, see details of specific statistics for more. 
 #' @param floodThreshold Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
 #' @details This function is a wrapper for the lower level functions to calculate groups of indice statistics.
 #' Desired groups of indices can be specified using the \code{stats} argument. 

@@ -18,7 +18,7 @@ hitAllStats(x, yearType = "water", stats = "all", digits = 3,
 
 \item{pref}{A character of either "mean" or "median", indicating whether to use mean or median. See details.}
 
-\item{drainArea}{Numeric drainage area. Only required for some statistics. See details.}
+\item{drainArea}{Numeric drainage area. Only required for some statistics. Typically units of square miles, see details of specific statistics for more.}
 
 \item{floodThreshold}{Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years}
 }

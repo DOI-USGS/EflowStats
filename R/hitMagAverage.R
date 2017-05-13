@@ -4,7 +4,7 @@
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
 #' @param digits A numeric. Number of digits to round indice values
-#' @param drainArea A numeric specifying the drainage area. Only required for ma41 statistic. See details.
+#' @param drainArea A numeric specifying the drainage area. Only required for ma41 statistic. Typically square miles, see details.
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
 #' @param ... Optional arguments needed for \code{hitAllStats} function
 #' @details Descriptions of indices.

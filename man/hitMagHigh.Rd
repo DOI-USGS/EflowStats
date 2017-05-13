@@ -14,7 +14,7 @@ hitMagHigh(x, yearType = "water", digits = 3, drainArea = NULL,
 
 \item{digits}{A numeric. Number of digits to round indice values}
 
-\item{drainArea}{A numeric specifying the drainage area. Only required for mh20 statistic. See details.}
+\item{drainArea}{A numeric specifying the drainage area. Only required for mh20 statistic. Typically squiare miles, see details.}
 
 \item{pref}{A character of either "mean" or "median", indicating whether to use mean or median. See details.}
 
