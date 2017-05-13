@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -69,7 +69,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction and basic workflow for EflowStats</h1>
 <h4 class="author"><em>T. Joe Mills</em></h4>
-<h4 class="date"><em>04 May, 2017</em></h4>
+<h4 class="date"><em>13 May, 2017</em></h4>
 
 
 
@@ -106,7 +106,7 @@ floodThresh &lt;-<span class="st"> </span><span class="kw">peakThreshold</span>(
 peakFlows[<span class="kw">c</span>(<span class="st">&quot;peak_dt&quot;</span>,<span class="st">&quot;peak_va&quot;</span>)])
 
 <span class="co">#Calculate all hit stats</span>
-hitStatsOut &lt;-<span class="st"> </span><span class="kw">hitStats</span>(dailyQClean,
+hitAllStatsOut &lt;-<span class="st"> </span><span class="kw">hitAllStats</span>(dailyQClean,
 <span class="dt">drainArea=</span>drainageArea,
 <span class="dt">floodThreshold=</span>floodThresh)
 
@@ -126,7 +126,7 @@ magnifStatsOut &lt;-<span class="st"> </span><span class="kw">magnifSeven</span>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
