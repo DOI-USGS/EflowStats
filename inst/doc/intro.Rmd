@@ -1,11 +1,11 @@
 ---
-title: "Introduction and basic workflow for EflowStatsLite"
+title: "Introduction and basic workflow for EflowStats"
 author: "T. Joe Mills"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{EflowStatsLite Intro}
+  %\VignetteIndexEntry{EflowStats Intro}
   \usepackage[utf8]{inputenc}
 ---
   
@@ -13,11 +13,11 @@ vignette: >
   
 ## Overview
   
-`EflowStatsLite` Is a reimplementation of the Hydrologic Index Tool (HIT; Henriksen et al, 2006) for calculating 171 hydrologic indices for stream classification analysis. Additionally, `EflowStatsLite` can calculate 7 additional statistics used for streamflow classification reffered to as the "Magnificent Seven" (MAG7, Archfield et al., 2013). Unlike the original HIT, EflowStatsLite has been redesigned to injest general hydrologic timeseries data and is not restricted to data formats used by the USGS National Water Information System.
+`EflowStats` Is a reimplementation of the Hydrologic Index Tool (HIT; Henriksen et al, 2006) for calculating 171 hydrologic indices for stream classification analysis. Additionally, `EflowStats` can calculate 7 additional statistics used for streamflow classification reffered to as the "Magnificent Seven" (MAG7, Archfield et al., 2013). Unlike the original HIT, EflowStats has been redesigned to injest general hydrologic timeseries data and is not restricted to data formats used by the USGS National Water Information System.
   
 ##A basic workflow 
   
-`EflowStatsLite` can be used with the `dataRetrieval` R package to seamlessy calculate HIT and MAG7 satistics for any USGS stream gage. 
+`EflowStats` can be used with the `dataRetrieval` R package to seamlessy calculate HIT and MAG7 satistics for any USGS stream gage. 
   
   
 ```{r message=FALSE, echo=TRUE, eval=FALSE}
@@ -47,7 +47,7 @@ floodThresh <- peakThreshold(dailyQClean[c("date","discharge")],
 peakFlows[c("peak_dt","peak_va")])
 
 #Calculate all hit stats
-hitStatsOut <- hitStats(dailyQClean,
+hitAllStatsOut <- hitAllStats(dailyQClean,
 drainArea=drainageArea,
 floodThreshold=floodThresh)
 
