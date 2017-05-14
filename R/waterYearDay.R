@@ -2,7 +2,7 @@
 #' @description Given a vector of dates, calculates day of water year accounting for leap years.
 #' @param x A vector of class date.
 #' @return A numeric vector of day of water year
-#' @importFrom lubridate year
+#' @importFrom lubridate leap_year
 #' @importFrom lubridate yday
 #' @export
 #' @examples
@@ -12,18 +12,14 @@
 
 waterYearDay <- function(x) {
         
-        x <- data.frame(date = x,
-                        jday = lubridate::yday(x))
-        
-        wyday <- ifelse(is.leapyear(lubridate::year(x$date)),
-                          ifelse(x$jday>=275,
-                                 x$jday-274,
-                                 x$jday+92),
-                          ifelse(x$jday>=274,
-                                 x$jday-273,
-                                 x$jday+92)
-        )
-        
-        return(wyday)
+        jday = lubridate::yday(x)
+        yrs_leap = lubridate::leap_year(x)
 
+        gt_lp275 = jday >= (274 + yrs_leap)
+
+        jday[gt_lp275] = jday[gt_lp275] - (273 + yrs_leap[gt_lp275])
+        jday[!gt_lp275] = jday[!gt_lp275] + 92
+
+        return(jday)
+        
 }
