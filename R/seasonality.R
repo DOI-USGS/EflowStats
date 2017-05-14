@@ -6,7 +6,7 @@
 #' 
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
-#' @importFrom stats .lm.fit
+#' @importFrom stats .lm.fit coef
 #' @return seasonality vector of seasonal factors (amplitude and phase)
 #' @examples 
 #' x <- sampleData[c("date","discharge")]
