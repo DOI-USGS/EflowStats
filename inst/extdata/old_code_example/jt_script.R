@@ -15,7 +15,7 @@ new_result <- hitAllStats(ts,
                           stats = "all", 
                           digits = 3, 
                           pref = "mean", 
-                          drainArea = 58.4) 
+                          drainArea = 56.5) 
 
 old_result <- read_delim(old_result_file, delim = "\t")
 old_result$Index <- tolower(old_result$Index)
