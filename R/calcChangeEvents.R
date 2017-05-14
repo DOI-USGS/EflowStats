@@ -23,9 +23,9 @@ calcChangeEvents <- function(x) {
         #fill NAs with previous event number
         #This has to be done twice for the front and back ends
         #because the first NAs will not be carried forward and hte last NAs will not be caried backwarsd
-        changeDir_forward <- zoo::na.locf(changeDir,na.rm=F)
+        changeDir_forward <- zoo::na.locf0(changeDir)
         
-        changeDir_backward <- zoo::na.locf(changeDir, fromLast=T,na.rm=F)
+        changeDir_backward <- zoo::na.locf0(changeDir, fromLast=T)
         
         changeDir <- changeDir_forward
         changeDir[is.na(changeDir)] <- changeDir_backward[is.na(changeDir)]
@@ -37,11 +37,11 @@ calcChangeEvents <- function(x) {
                                  eventNum = NA)
         
         #Make sequence of numbers to number events
-        events <- seq(1:length(na.omit(runLengths$values)))
+        events <- seq_along(na.omit(runLengths$values))
         
         #Number events
         runLengths$eventNum[!is.na(runLengths$values)] <- events
-        eventVector <- rep(runLengths$eventNum,runLengths$lengths)
+        eventVector <- rep.int(runLengths$eventNum,runLengths$lengths)
         eventVector <- c(NA,eventVector)
         
         changeEvents <- data.frame(flow=x,
