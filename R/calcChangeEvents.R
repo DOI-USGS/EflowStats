@@ -8,6 +8,7 @@
 #' @param x A vector of flow values, should be sorted chronologically.
 #' @return A dataframe with columns "flow" and "event"
 #' @importFrom stats na.omit
+#' @importFrom imputeTS na.locf
 #' @export
 #' @examples
 #' x <- sampleData$discharge
@@ -20,15 +21,7 @@ calcChangeEvents <- function(x) {
         changeDir <- sign(diffDays)
         changeDir[changeDir==0] = NA
         
-        #fill NAs with previous event number
-        #This has to be done twice for the front and back ends
-        #because the first NAs will not be carried forward and hte last NAs will not be caried backwarsd
-        changeDir_forward <- zoo::na.locf0(changeDir)
-        
-        changeDir_backward <- zoo::na.locf0(changeDir, fromLast=T)
-        
-        changeDir <- changeDir_forward
-        changeDir[is.na(changeDir)] <- changeDir_backward[is.na(changeDir)]
+        changeDir <- imputeTS::na.locf(changeDir, na.remaining="rev")
         
         runLengths <- rle(changeDir)
         

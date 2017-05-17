@@ -8,11 +8,11 @@ Authors@R: c( person("Joe", "Mills", role = c("aut","cre"),
 Depends:
     R (>= 3.3)
 Imports:
-    zoo,
     lmom,
     dplyr,
     lubridate,
-    RcppRoll
+    RcppRoll,
+    imputeTS
 Suggests:
     xtable,
     knitr,
