@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -13,7 +13,7 @@
 <meta name="author" content="T. Joe Mills" />
 
 
-<title>Introduction and basic workflow for EflowStatsLite</title>
+<title>Introduction and basic workflow for EflowStats</title>
 
 
 
@@ -67,19 +67,19 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<h1 class="title toc-ignore">Introduction and basic workflow for EflowStatsLite</h1>
+<h1 class="title toc-ignore">Introduction and basic workflow for EflowStats</h1>
 <h4 class="author"><em>T. Joe Mills</em></h4>
-<h4 class="date"><em>05 April, 2017</em></h4>
+<h4 class="date"><em>13 May, 2017</em></h4>
 
 
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p><code>EflowStatsLite</code> Is a reimplementation of the Hydrologic Index Tool (HIT; Henriksen et al, 2006) for calculating 171 hydrologic indices for stream classification analysis. Additionally, <code>EflowStatsLite</code> can calculate 7 additional statistics used for streamflow classification reffered to as the “Magnificent Seven” (MAG7, Archfield et al., 2013). Unlike the original HIT, EflowStatsLite has been redesigned to injest general hydrologic timeseries data and is not restricted to data formats used by the USGS National Water Information System.</p>
+<p><code>EflowStats</code> Is a reimplementation of the Hydrologic Index Tool (HIT; Henriksen et al, 2006) for calculating 171 hydrologic indices for stream classification analysis. Additionally, <code>EflowStats</code> can calculate 7 additional statistics used for streamflow classification reffered to as the “Magnificent Seven” (MAG7, Archfield et al., 2013). Unlike the original HIT, EflowStats has been redesigned to injest general hydrologic timeseries data and is not restricted to data formats used by the USGS National Water Information System.</p>
 </div>
 <div id="a-basic-workflow" class="section level2">
 <h2>A basic workflow</h2>
-<p><code>EflowStatsLite</code> can be used with the <code>dataRetrieval</code> R package to seamlessy calculate HIT and MAG7 satistics for any USGS stream gage.</p>
+<p><code>EflowStats</code> can be used with the <code>dataRetrieval</code> R package to seamlessy calculate HIT and MAG7 satistics for any USGS stream gage.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dataRetrieval)
 <span class="kw">library</span>(EflowStats)
 
@@ -94,7 +94,7 @@ dailyQClean &lt;-<span class="st"> </span><span class="kw">dataCheck</span>(dail
 
 <span class="co">#Get drainage area</span>
 siteInfo &lt;-<span class="st"> </span><span class="kw">readNWISsite</span>(<span class="dt">siteNumber =</span> <span class="st">&quot;04085427&quot;</span>)
-drainageArea &lt;-<span class="st"> </span>siteInfo$drain_area_va
+drainageArea &lt;-<span class="st"> </span>siteInfo<span class="op">$</span>drain_area_va
 
 <span class="co">#Get peak flows</span>
 peakFlows &lt;-<span class="st"> </span><span class="kw">readNWISpeak</span>(<span class="dt">siteNumber =</span> <span class="st">&quot;04085427&quot;</span>,
@@ -106,7 +106,7 @@ floodThresh &lt;-<span class="st"> </span><span class="kw">peakThreshold</span>(
 peakFlows[<span class="kw">c</span>(<span class="st">&quot;peak_dt&quot;</span>,<span class="st">&quot;peak_va&quot;</span>)])
 
 <span class="co">#Calculate all hit stats</span>
-hitStatsOut &lt;-<span class="st"> </span><span class="kw">hitStats</span>(dailyQClean,
+hitAllStatsOut &lt;-<span class="st"> </span><span class="kw">hitAllStats</span>(dailyQClean,
 <span class="dt">drainArea=</span>drainageArea,
 <span class="dt">floodThreshold=</span>floodThresh)
 
@@ -126,7 +126,7 @@ magnifStatsOut &lt;-<span class="st"> </span><span class="kw">magnifSeven</span>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

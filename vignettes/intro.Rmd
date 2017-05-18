@@ -47,7 +47,7 @@ floodThresh <- peakThreshold(dailyQClean[c("date","discharge")],
 peakFlows[c("peak_dt","peak_va")])
 
 #Calculate all hit stats
-hitStatsOut <- hitStats(dailyQClean,
+hitAllStatsOut <- hitAllStats(dailyQClean,
 drainArea=drainageArea,
 floodThreshold=floodThresh)
 
