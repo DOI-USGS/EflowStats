@@ -152,12 +152,12 @@ hitDurationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThres
         
         #dh14
         
-        quant95 <- quantile(flowSum_yearMon$meanFlow,.95,type=6)
+        quant95 <- quantile(flowSum_yearMon$meanFlow, .95, type=6, names = F)
         dh14 <- quant95/mean(flowSum_yearMon$meanFlow)
         dh14 <- unname(dh14)
         
         #dh15.16
-        thresh <- quantile(x$discharge,probs=0.75,type=6)
+        thresh <- quantile(x$discharge, probs=0.75, type=6, names = F)
         
         #Define events as sustained flows above the high flow threshold
         x$events <- calcEvents(x=x$discharge,threshold=thresh,type="high")$event
@@ -175,7 +175,8 @@ hitDurationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThres
         
         #dh17-21 #differs than EflowStats because EflowSTats calculates the mean of yearly means 
         #instead of the mean lfow duration for the entire period of record as the documentation states
-        percentiles <- quantile(x$discharge,probs=c(0.25,0.75),type=6)
+        percentiles <- quantile(x$discharge, probs=c(0.25, 0.75), type=6, names=F)
+        names(percentiles) <- c("25%", "75%")
         dh17 <-  eventDuration(x$discharge,threshold=medFlow,aggType="average")
         dh18 <-  eventDuration(x$discharge,threshold=medFlow*3,aggType="average")
         dh19 <-  eventDuration(x$discharge,threshold=medFlow*7,aggType="average")

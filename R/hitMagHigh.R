@@ -94,7 +94,9 @@ hitMagHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         
         
         #mh15-17
-        hfcrit <- quantile(x$discharge,probs=c(.9,0.99,0.75),type=6)
+        hfcrit <- quantile(x$discharge, probs = c(.9, 0.99, 0.75), type = 6, names = F)
+        names(hfcrit) <- c("90%", "99%", "75%")
+        
         mh15.17 <- c(mh15=as.numeric(hfcrit["99%"]/medFlow),
                      mh16=as.numeric(hfcrit["90%"]/medFlow),
                      mh17=as.numeric(hfcrit["75%"]/medFlow))
@@ -137,7 +139,7 @@ hitMagHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean
         #define thresholds, thresholds are further definer in next code chunk as 
         #a factor of the median (eg 3xmedian)
         thresholdMed <- median(x)
-        thresholdQuant <- quantile(x,.75,type=6)
+        thresholdQuant <- quantile(x, probs = .75,type = 6, names = F)
         
         #Identify events above designated thresholds
         eventsList <- list(mh21_24 = calcEvents(x,threshold=thresholdMed),

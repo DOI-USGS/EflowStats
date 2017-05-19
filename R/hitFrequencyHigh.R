@@ -68,7 +68,8 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         medFlow <- median(x$discharge)
         
         #fh1.2 #This differs from original EflowStats because of bug in fh1.2 where the qfiletempf dataframe was not ordered on date
-        percentiles <- quantile(x$discharge,probs=0.75,type=6)
+        percentiles <- quantile(x$discharge, probs=0.75, type=6, names = F)
+        names(percentiles) <- c("75%")
         #Pick out events for each year
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
@@ -183,7 +184,10 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
                                            calcEvents(.$discharge,
-                                                      threshold = quantile(x$discharge,.75,type=6),
+                                                      threshold = quantile(x$discharge,
+                                                                           probs = .75,
+                                                                           type = 6, 
+                                                                           names = F),
                                                       type="high")
                                    }
         )
@@ -205,7 +209,7 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
                                            calcEvents(.$discharge,
-                                                      threshold = quantile(x$discharge,.25,type=6),
+                                                      threshold = quantile(x$discharge,.25,type=6, names=F),
                                                       type="high")
                                    }
         )

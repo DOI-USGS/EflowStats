@@ -41,7 +41,10 @@ hitFrequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
                                            calcEvents(.$discharge,
-                                                      threshold = quantile(x$discharge,probs=0.25,type=6),
+                                                      threshold = quantile(x$discharge,
+                                                                           probs = 0.25,
+                                                                           type = 6, 
+                                                                           names = F),
                                                       type="low")
                                    }
         )

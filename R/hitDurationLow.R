@@ -130,13 +130,13 @@ hitDurationLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         dl12.13 <- unname(dl12.13)
         
         #dl14.15
-        quant25.10 <- quantile(x$discharge,c(.25,.1),type=6)
+        quant25.10 <- quantile(x$discharge, c(.25, .1), type = 6, names = F)
         dl14.15 <- quant25.10/median(x$discharge)
         dl14.15 <- unname(dl14.15)
         
         #dl16.17
         #define low flow threshold
-        thresh <- quantile(x$discharge,probs=0.25,type=6)
+        thresh <- quantile(x$discharge, probs = 0.25, type = 6, names = F)
         
         #Define events as sustained flows below the low flow threshold
         x$events <- calcEvents(x=x$discharge,threshold=thresh,type="low")$event
