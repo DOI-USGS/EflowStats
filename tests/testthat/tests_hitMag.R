@@ -13,6 +13,12 @@ test_that("magnitude average", {
         magAveTestOut <- readRDS("data/tests_hitMagAverage.rds")
         expect_equal(magAveTest,magAveTestOut)
         
+        expect_error(hitMagAverage(x=x,
+                                   yearType="water",
+                                   drainArea = da,
+                                   pref = "broken"),
+                     "Preference must be either mean or median")
+        
 })
 
 test_that("magnitude low", {

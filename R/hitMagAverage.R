@@ -40,12 +40,10 @@
 #' hitMagAverage(x=x,yearType=yearType,drainArea=drainArea)
 #' 
 hitMagAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",...) {
-        
-        # Check pref input
-        if(!pref %in% c("mean", "median")){ stop("Preference must be either mean or median") }
-        
+                
         #Check data inputs
         x <- dataCheck(x,yearType)
+        check_preference(pref)
         
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)

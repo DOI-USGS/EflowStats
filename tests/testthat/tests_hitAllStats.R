@@ -6,7 +6,11 @@ test_that("HIT stats", {
         
         hitOutTest <- hitAllStats(x=x,yearType="water",stats="all",pref="mean",drainArea=50)
         hitOut <- readRDS("data/tests_hitAllStats.rds")
+        
+        expect_equal(hitOutTest,hitOut)
+        
+        hitOutTest <- hitAllStats(x=x,yearType="water",stats="all",pref="median",drainArea=50)
+        hitOut <- readRDS("data/tests_hitAllStats_med.rds")
+        
         expect_equal(hitOutTest,hitOut)
 })
-
-

@@ -55,6 +55,7 @@
 hitMagLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",...) {
         #Check data inputs
         x <- dataCheck(x,yearType)
+        check_preference(pref)
         
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)

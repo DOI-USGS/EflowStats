@@ -41,6 +41,7 @@
 hitRateChange <- function(x,yearType = "water",digits=3,pref="mean",...) {
         #Check data inputs
         x <- dataCheck(x,yearType)
+        check_preference(pref)
         
         #calculate some stuff for use later
         
