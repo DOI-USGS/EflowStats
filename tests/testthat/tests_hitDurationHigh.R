@@ -21,4 +21,10 @@ test_that("duration high with peak", {
         
         expect_equal(hitDurationHighOutTest,hitDurationHighOut)
         
+        expect_equal_to_reference(hitDurationHigh(x = x,
+                                                  yearType = "water", 
+                                                  pref = "median",
+                                                  floodThreshold = peaks),
+                                  "data/tests_hitDurationHigh_peak_med.rds")
+        
 })
