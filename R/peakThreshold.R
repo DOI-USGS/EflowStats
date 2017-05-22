@@ -87,8 +87,9 @@ peakThreshold <- function(x,peakValues,perc=0.6,yearType = "water") {
         a <- dailyMean - (b*instMean)
         
         lfcrit <- quantile(peakDaily$logPeakQ,
-                           perc,
-                           type=6)
+                           probs = perc,
+                           type=6,
+                           names = F)
         
         lq167 <- a + (b*as.numeric(lfcrit))
         thresh <- 10^(lq167)

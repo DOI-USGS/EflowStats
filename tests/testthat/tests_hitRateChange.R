@@ -9,6 +9,10 @@ test_that("rate change mean", {
         hitRateChangeTestOut <- readRDS("data/tests_hitRateChange.rds")
         expect_equal(hitRateChangeTest,hitRateChangeTestOut)
         
+        x[10,2] <- 0
+        expect_warning(hitRateChange(x=x,yearType="water",pref = "mean"),
+                       "Discharge values of 0 were found, 0 values replace with 0.01 for RA6 and RA7 calculations")
+        
 })
 
 

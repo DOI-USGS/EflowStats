@@ -40,19 +40,24 @@
 #' hitMagAverage(x=x,yearType=yearType,drainArea=drainArea)
 #' 
 hitMagAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",...) {
-        
-        # Check pref input
-        if(!pref %in% c("mean", "median")){ stop("Preference must be either mean or median") }
-        
+                
         #Check data inputs
         x <- dataCheck(x,yearType)
+        check_preference(pref)
         
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)
         
         # percentiles
-        percentiles <- quantile(x$discharge,probs=seq(0.05,0.95,0.05),type=6)
-        percentiles_log10 <- quantile(log10(x$discharge),probs=seq(0.05,0.95,0.05),type=6)
+        percentile_names <- c("5%", "10%", "15%", "20%", "25%", "30%", "35%", 
+                             "40%", "45%", "50%", "55%", "60%", "65%", "70%", 
+                             "75%", "80%", "85%", "90%", "95%")
+        percentiles <- quantile(x$discharge, probs = seq(0.05, 0.95, 0.05), type = 6, names = F)
+        names(percentiles) <- percentile_names
+        percentiles_log10 <- quantile(log10(x$discharge), 
+                                      probs=seq(0.05, 0.95, 0.05), 
+                                      type=6, names = F)
+        names(percentiles_log10) <- percentile_names
         
         meanFlow <- mean.default(x$discharge)     
         medFlow <- percentiles["50%"]
@@ -122,7 +127,9 @@ hitMagAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="m
         medMonthlyFlow <- median(yearMonthAgg$meanFlow)
         meanMonthlyFlow <- mean.default(yearMonthAgg$meanFlow)
         
-        percentiles <- quantile(yearMonthAgg$meanFlow,probs=c(0.1,0.25,0.75,0.9),type=6)
+        percentiles <- quantile(yearMonthAgg$meanFlow, probs = c(0.1, 0.25, 0.75, 0.9), 
+                                type = 6, names = F)
+        names(percentiles) <- c("10%", "25%", "75%", "90%")
         
         ma36 <- (max(yearMonthAgg$meanFlow) -min(yearMonthAgg$meanFlow))/medMonthlyFlow
         
@@ -135,7 +142,9 @@ hitMagAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="m
         medYearlyFlow <- median(yearAgg$meanFlow)
         meanYearlyFlow <- mean.default(yearAgg$meanFlow)
         
-        percentiles <- quantile(yearAgg$meanFlow,probs=c(0.1,0.25,0.75,0.9),type=6)
+        percentiles <- quantile(yearAgg$meanFlow, probs = c(0.1, 0.25, 0.75, 0.9),
+                                type = 6, names = F)
+        names(percentiles) <- c("10%", "25%", "75%", "90%")
         
         if(!is.null(drainArea))
         {

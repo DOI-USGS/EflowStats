@@ -21,3 +21,17 @@ test_that("frequency Low with nwis median pref", {
         expect_equal(hitFrequencyLowTest,hitFrequencyLowTestOut)
         
 })
+
+test_that("frequency Low FL3", {
+        
+        x <- readRDS("data/tests_hitFrequencyLow_fl3_flowdata.rds")
+        
+        hitFrequencyLowTest <- hitFrequencyLow(x=x, yearType="water")
+        
+        expect_equal(hitFrequencyLowTest[3,2],4.25)
+        
+        hitFrequencyLowTest <- hitFrequencyLow(x=x, yearType="water", pref = "median")
+        
+        expect_equal(hitFrequencyLowTest[3,2],5)
+        
+})

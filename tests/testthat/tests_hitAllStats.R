@@ -2,11 +2,22 @@ context("HIT stats")
 
 test_that("HIT stats", {
 
-        x <- sampleData[c("date","discharge")]
+        expect_equal_to_reference(hitAllStats(x=sampleData[c("date","discharge")],
+                                              yearType="water",
+                                              stats="all",
+                                              pref="mean",
+                                              drainArea=50),
+                                  "data/tests_hitAllStats.rds")
         
-        hitOutTest <- hitAllStats(x=x,yearType="water",stats="all",pref="mean",drainArea=50)
-        hitOut <- readRDS("data/tests_hitAllStats.rds")
-        expect_equal(hitOutTest,hitOut)
 })
 
-
+test_that("HIT stats med", {
+        
+        expect_equal_to_reference(hitAllStats(x=sampleData[c("date","discharge")],
+                                              yearType="water",
+                                              stats="all",
+                                              pref="median",
+                                              drainArea=50),
+                                  "data/tests_hitAllStats_med.rds")
+        
+})

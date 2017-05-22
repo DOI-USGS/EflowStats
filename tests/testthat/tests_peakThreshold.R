@@ -7,7 +7,11 @@ test_that("peak threshold", {
         x <- sampleData[c("date","discharge")]
         peakThresholdOutTest <- peakThreshold(x,peakValues,.6,yearType="water")
         
-        expect_equal(peakThresholdOutTest,1499.97261553347)
+        x <- readRDS("data/sample_nwis_data.rds")
+        x <- dplyr::arrange(x, date)
+        x_cy <- x[93:1553,]
+        peakValues <- readRDS("data/sample_nwis_peakFlows.rds")
+        expect_equal(peakThreshold(x_cy,peakValues,.6,yearType="calendar"), 493.878871511825)
 })
 
 test_that("peak threshold multi year", {
@@ -24,4 +28,43 @@ test_that("peak threshold multi year", {
         
         expect_equal(peakThresholdOutTest,1499.97261553347)
         
+})
+
+test_that("peak threshold errors are as expected", {
+        peakValues <- readRDS("data/tests_peakThreshold.rds")
+        
+        x <- sampleData[c("date","discharge")]
+        peakThresholdOutTest <- peakThreshold(x,peakValues,.6,yearType="water")
+        
+        peakValues_trunc <- peakValues[1,]
+        
+        expect_error(peakThreshold(x,peakValues_trunc,.6,yearType="water"), 
+                     "peakValues must have a minimum of two annual values")
+        
+        peakValues_messed <- data.frame(list(peak_dt = as.character(peakValues$peak_dt), 
+                                             discharge = peakValues$peak_va))
+        
+        expect_error(peakThreshold(x,peakValues_messed,.6,yearType="water"),
+                     "First column of peakValues must contain a vector of class date.")
+        
+        peakValues_messed <- data.frame(list(peak_dt = peakValues$peak_dt, 
+                                             discharge = as.character(peakValues$peak_va)))
+        
+        
+        
+        expect_error(peakThreshold(x,peakValues_messed,.6,yearType="water"),
+                     "Second column of peakValues must contain a vector of class numeric.")
+        
+        peakValues_messed <- data.frame(list(peak_dt = as.character(peakValues$peak_dt), 
+                                             discharge = as.character(peakValues$peak_va)))
+        
+        expect_error(peakThreshold(x,peakValues_messed,.6,yearType="water"),
+                     c(paste0("First column of peakValues must contain a vector of class date.", 
+                              "\nSecond column of peakValues must contain a vector of class numeric.")))
+        
+        peakValues_na <- peakValues
+        peakValues_na[1,2] <- NA
+        
+        expect_error(peakThreshold(x,peakValues_na,.6,yearType="water"),
+                     "dataframe peakValues cannot contain NA values")  
 })

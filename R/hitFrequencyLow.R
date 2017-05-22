@@ -30,6 +30,7 @@
 hitFrequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         #Check data inputs
         x <- dataCheck(x,yearType)
+        check_preference(pref)
         
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)
@@ -41,7 +42,10 @@ hitFrequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
                                            calcEvents(.$discharge,
-                                                      threshold = quantile(x$discharge,probs=0.25,type=6),
+                                                      threshold = quantile(x$discharge,
+                                                                           probs = 0.25,
+                                                                           type = 6, 
+                                                                           names = F),
                                                       type="low")
                                    }
         )

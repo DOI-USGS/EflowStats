@@ -22,3 +22,9 @@ month_val <- discharge <- leapYear <- day <-
         . <- highFlow <- CV <- block <- 
         peakQ <- flow <- maxFlow <-  
         minFlow <- event <- ".dplyr.var"
+
+check_preference <- function(pref) {
+        if(!pref %in% c("mean", "median")){ 
+                stop("Preference must be either mean or median") 
+        }
+}

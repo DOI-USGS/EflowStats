@@ -19,3 +19,14 @@ test_that("numeric flood threshold", {
         
         expect_equal(hitTimingHighOutTest,hitTimingHighOut)
 })
+
+test_that("th1 specific", {
+        
+        expect_equal(hitTimingHigh(x=readRDS("data/tests_hitTimingHigh_xbar_gt_0.rds"),
+                                   yearType="water")[1,2],
+                     69.973)
+        
+        expect_equal(hitTimingHigh(x=readRDS("data/tests_hitTimingHigh_xbar_lt_0.rds"),
+                                   yearType="water")[1,2],
+                     161.122)
+})
