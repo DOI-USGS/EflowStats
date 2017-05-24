@@ -3,7 +3,7 @@
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
 #' @param digits A numeric. Number of digits to round indice values
-#' @param stats Character vector statistic groups. Choices are "all","hitMagAverage", "hitMagLow", "hitMagHigh", "hitFrequencyLow", "hitFrequencyHigh", "calc_durationLow", "calc_durationHigh", "hitTimingAverage", "hitTimingLow", "hitTimingHigh", "hitRateChange"     
+#' @param stats Character vector statistic groups. Choices are "all","hitMagAverage", "hitMagLow", "hitMagHigh", "calc_frequencyLow", "hitFrequencyHigh", "calc_durationLow", "calc_durationHigh", "hitTimingAverage", "hitTimingLow", "hitTimingHigh", "hitRateChange"     
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
 #' @param drainArea Numeric drainage area. Only required for some statistics. Typically units of square miles, see details of specific statistics for more. 
 #' @param floodThreshold Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
@@ -15,7 +15,7 @@
 #' \item hitMagAverage Indices describing magnitude of the average flow condition. \code{drainArea} argument must be specified for the ma41 statistic. 
 #' \item hitMagLow Indices describing magnitude of the low flow condition. \code{drainArea} argument must be specified for the ml22 statistic. 
 #' \item hitMagHigh Indices describing magnitude of the peak flow condition. \code{drainAre} argument must be specified for the mh20 statistic.
-#' \item hitFrequencyLow Indices describing frequency of low flow events. No additional arguments required.
+#' \item calc_frequencyLow Indices describing frequency of low flow events. No additional arguments required.
 #' \item hitFrequencyHigh Indices describing frequency of high flow events. No additional arguments required.
 #' \item calc_durationLow Indices describing duration of low flow events. No additional arguments required.
 #' \item calc_durationHigh Indices describing duration of high flow events. floodThreshold needs to be supplied. See \code{\link{calc_durationHigh}}.
@@ -35,7 +35,7 @@ calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",dr
                 hitMagAverage=hitMagAverage,
                 hitMagLow=hitMagLow,
                 hitMagHigh=hitMagHigh,
-                hitFrequencyLow=hitFrequencyLow,
+                calc_frequencyLow=calc_frequencyLow,
                 hitFrequencyHigh=hitFrequencyHigh,
                 calc_durationLow=calc_durationLow,
                 calc_durationHigh=calc_durationHigh,
@@ -49,7 +49,7 @@ calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",dr
                 stats <- c("hitMagAverage",
                            "hitMagLow",
                            "hitMagHigh",
-                           "hitFrequencyLow",
+                           "calc_frequencyLow",
                            "hitFrequencyHigh",
                            "calc_durationLow",
                            "calc_durationHigh",

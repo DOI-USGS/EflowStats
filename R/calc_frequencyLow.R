@@ -26,8 +26,8 @@
 #' @examples
 #' x <- sampleData[c("date","discharge")]
 #' yearType = "water"
-#' hitFrequencyLow(x=x,yearType=yearType)
-hitFrequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
+#' calc_frequencyLow(x=x,yearType=yearType)
+calc_frequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         #Check data inputs
         x <- validate_data(x,yearType)
         check_preference(pref)
