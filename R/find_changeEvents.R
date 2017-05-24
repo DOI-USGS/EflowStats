@@ -12,8 +12,8 @@
 #' @export
 #' @examples
 #' x <- sampleData$discharge
-#' calcChangeEvents(x)
-calcChangeEvents <- function(x) {
+#' find_changeEvents(x)
+find_changeEvents <- function(x) {
         
         diffDays <- diff(x, lag = 1, 
                          differences = 1)

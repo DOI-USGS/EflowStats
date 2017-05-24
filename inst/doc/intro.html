@@ -102,7 +102,7 @@ peakFlows &lt;-<span class="st"> </span><span class="kw">readNWISpeak</span>(<sp
 <span class="dt">endDate =</span> <span class="st">&quot;2012-9-30&quot;</span>)
 
 <span class="co">#Get flood recurence threshold</span>
-floodThresh &lt;-<span class="st"> </span><span class="kw">peakThreshold</span>(dailyQClean[<span class="kw">c</span>(<span class="st">&quot;date&quot;</span>,<span class="st">&quot;discharge&quot;</span>)],
+floodThresh &lt;-<span class="st"> </span><span class="kw">get_peakThreshold</span>(dailyQClean[<span class="kw">c</span>(<span class="st">&quot;date&quot;</span>,<span class="st">&quot;discharge&quot;</span>)],
 peakFlows[<span class="kw">c</span>(<span class="st">&quot;peak_dt&quot;</span>,<span class="st">&quot;peak_va&quot;</span>)])
 
 <span class="co">#Calculate all hit stats</span>

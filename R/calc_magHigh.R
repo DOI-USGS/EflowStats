@@ -143,10 +143,10 @@ calc_magHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
         thresholdQuant <- quantile(x, probs = .75,type = 6, names = F)
         
         #Identify events above designated thresholds
-        eventsList <- list(mh21_24 = calcEvents(x,threshold=thresholdMed),
-                           mh22_25 = calcEvents(x,threshold=thresholdMed*3),
-                           mh23_26 = calcEvents(x,threshold=thresholdMed*7),
-                           mh27 = calcEvents(x,threshold=thresholdQuant))
+        eventsList <- list(mh21_24 = find_events(x,threshold=thresholdMed),
+                           mh22_25 = find_events(x,threshold=thresholdMed*3),
+                           mh23_26 = find_events(x,threshold=thresholdMed*7),
+                           mh27 = find_events(x,threshold=thresholdQuant))
         
         #Calculate the 21-23 statistics
         thresholds <- c(thresholdMed,

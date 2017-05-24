@@ -12,10 +12,10 @@ test_that("duration high", {
 
 test_that("duration high with peak", {
         
-        peakValues <- readRDS("data/tests_peakThreshold.rds")
+        peakValues <- readRDS("data/tests_get_peakThreshold.rds")
         x<-sampleData[c("date","discharge")]
 
-        peaks <- peakThreshold(x,peakValues,.6,yearType="water")
+        peaks <- get_peakThreshold(x,peakValues,.6,yearType="water")
         calc_durationHighOutTest <- calc_durationHigh(x=x,yearType="water", floodThreshold = peaks)
         calc_durationHighOut <- readRDS("data/tests_calc_durationHigh_peak.rds")
         

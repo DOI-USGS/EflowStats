@@ -77,7 +77,7 @@ calc_timingLow <- function(x,yearType = "water",digits=3,pref="mean",floodThresh
         {
                 eventDF <- dplyr::do(dplyr::group_by(x,year_val,month_val),
                                      {
-                                             calcEvents(.$discharge,
+                                             find_events(.$discharge,
                                                         threshold=floodThreshold,
                                                         type="low") 
                                      }

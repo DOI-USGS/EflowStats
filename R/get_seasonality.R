@@ -1,18 +1,18 @@
 #' Function to compute the seasonal factors (amplitude and phase) for a given data series
 #' 
-#' This function accepts a data frame containing daily streamflow data, then computes seasonality 
+#' This function accepts a data frame containing daily streamflow data, then computes get_seasonality 
 #' variables by first standardizing flows, the fitting relation 
 #' A*cos(2*pi*t) + B*sin(2*pi*t)1) Get decimal yearand returns the amplitude and phase
 #' 
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
 #' @importFrom stats .lm.fit coef
-#' @return seasonality vector of seasonal factors (amplitude and phase)
+#' @return get_seasonality vector of seasonal factors (amplitude and phase)
 #' @examples 
 #' x <- sampleData[c("date","discharge")]
-#' seasonality(x=x)
+#' get_seasonality(x=x)
 #' @export
-seasonality <- function(x,yearType = "water") {
+get_seasonality <- function(x,yearType = "water") {
         
         #Check data inputs
         x <- validate_data(x,yearType)
@@ -44,6 +44,6 @@ seasonality <- function(x,yearType = "water") {
                 return(MaxDay)
         }
         phase <- MaxDay(b1,b2)
-        seasonalityv <- cbind(amplitude,phase)
-        return(seasonalityv)
+        get_seasonalityv <- cbind(amplitude,phase)
+        return(get_seasonalityv)
 }

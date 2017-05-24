@@ -5,7 +5,7 @@
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
 #' @param digits A numeric. Number of digits to round indice values
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
-#' @param floodThreshold Numeric value of flood threshold as the flow equivalent for a flood recurrence of 1.67 years. Can be calculated using the \code{peakThreshold} function.
+#' @param floodThreshold Numeric value of flood threshold as the flow equivalent for a flood recurrence of 1.67 years. Can be calculated using the \code{get_peakThreshold} function.
 #' @param ... Optional arguments needed for \code{calc_allHIT} function
 #' @details Descriptions of indices.
 #' \itemize{
@@ -161,7 +161,7 @@ calc_durationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThr
         thresh <- quantile(x$discharge, probs=0.75, type=6, names = F)
         
         #Define events as sustained flows above the high flow threshold
-        x$events <- calcEvents(x=x$discharge,threshold=thresh,type="high")$event
+        x$events <- find_events(x=x$discharge,threshold=thresh,type="high")$event
         
         yearlyDurations <- dplyr::summarize(dplyr::group_by(x,year_val),
                                             avgDuration = length(na.omit(events))/n_distinct(na.omit(events))
@@ -178,11 +178,11 @@ calc_durationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThr
         #instead of the mean lfow duration for the entire period of record as the documentation states
         percentiles <- quantile(x$discharge, probs=c(0.25, 0.75), type=6, names=F)
         names(percentiles) <- c("25%", "75%")
-        dh17 <-  eventDuration(x$discharge,threshold=medFlow,aggType="average")
-        dh18 <-  eventDuration(x$discharge,threshold=medFlow*3,aggType="average")
-        dh19 <-  eventDuration(x$discharge,threshold=medFlow*7,aggType="average")
-        dh20 <-  eventDuration(x$discharge,threshold=percentiles["75%"],aggType= "average")
-        dh21 <-  eventDuration(x$discharge,threshold=percentiles["25%"],aggType= "average")
+        dh17 <-  find_eventDuration(x$discharge,threshold=medFlow,aggType="average")
+        dh18 <-  find_eventDuration(x$discharge,threshold=medFlow*3,aggType="average")
+        dh19 <-  find_eventDuration(x$discharge,threshold=medFlow*7,aggType="average")
+        dh20 <-  find_eventDuration(x$discharge,threshold=percentiles["75%"],aggType= "average")
+        dh21 <-  find_eventDuration(x$discharge,threshold=percentiles["25%"],aggType= "average")
         
         #dh22
         if(!is.null(floodThreshold))
@@ -192,18 +192,18 @@ calc_durationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThr
                 
                 ###This may not be doing what it should be since the event duration gets artificially cut short at teh beginning and end of the year
                 dh22 <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         duration = eventDuration(discharge,
+                                         duration = find_eventDuration(discharge,
                                                                   threshold=floodThreshold,
                                                                   type="low",
                                                                   aggType = "average",
                                                                   pref="median"))
                 dh23 <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         maxDuration = eventDuration(discharge,
+                                         maxDuration = find_eventDuration(discharge,
                                                                          threshold=floodThreshold,
                                                                          type="high",
                                                                          aggType="max"))
                 dh24 <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                         maxDuration = eventDuration(discharge,
+                                         maxDuration = find_eventDuration(discharge,
                                                                          threshold=floodThreshold,
                                                                          type="low",
                                                                      aggType="max"))

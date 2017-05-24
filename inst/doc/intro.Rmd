@@ -43,7 +43,7 @@ startDate = "2000-10-01",
 endDate = "2012-9-30")
 
 #Get flood recurence threshold
-floodThresh <- peakThreshold(dailyQClean[c("date","discharge")],
+floodThresh <- get_peakThreshold(dailyQClean[c("date","discharge")],
 peakFlows[c("peak_dt","peak_va")])
 
 #Calculate all hit stats

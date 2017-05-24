@@ -97,19 +97,19 @@ hitMagLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean"
 
         
         #ml17-18
-        bfibyyear <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                      bfi = bfi(discharge))
+        calc_bfibyyear <- dplyr::summarize(dplyr::group_by(x,year_val),
+                                      calc_bfi = calc_bfi(discharge))
         
         if (pref == "mean") {
-                ml17 <- mean(bfibyyear$bfi)
+                ml17 <- mean(calc_bfibyyear$calc_bfi)
         } else {
-                ml17 <- median(bfibyyear$bfi)
+                ml17 <- median(calc_bfibyyear$calc_bfi)
         }
         
-        sdbfi <- sd(bfibyyear$bfi)
-        meanbfi <- mean(bfibyyear$bfi)
+        sdcalc_bfi <- sd(calc_bfibyyear$calc_bfi)
+        meancalc_bfi <- mean(calc_bfibyyear$calc_bfi)
         
-        ml18 <- (sdbfi/meanbfi)*100
+        ml18 <- (sdcalc_bfi/meancalc_bfi)*100
 
         #ml19
         ratiominmean <- (flowSum_year$minFlow/flowSum_year$meanFlow)

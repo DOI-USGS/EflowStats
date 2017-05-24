@@ -32,9 +32,9 @@ calc_magnifSeven<-function(x,yearType = "water",digits=3)  {
         #Compute AR(1) correlation coefficienct
         calc_ar1v<-calc_ar1(x,yearType = yearType,digits=digits)
         
-        seasonality_vars <- seasonality(x)
-        amplitude<-seasonality_vars[1]
-        phase<-seasonality_vars[2]
+        get_seasonality_vars <- get_seasonality(x)
+        amplitude<-get_seasonality_vars[1]
+        phase<-get_seasonality_vars[2]
         
 
         #Combine all indices into 1 dataframe and return

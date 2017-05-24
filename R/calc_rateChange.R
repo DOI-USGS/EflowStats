@@ -91,7 +91,7 @@ calc_rateChange <- function(x,yearType = "water",digits=3,pref="mean",...) {
         #calculate number of events per year
         yearlyEvents <- dplyr::do(dplyr::group_by(x,year_val),
                                   {
-                                          calcChangeEvents(.$discharge)
+                                          find_changeEvents(.$discharge)
                                   })
         numYearlyEvents <- dplyr::summarize(dplyr::group_by(yearlyEvents,year_val),
                                             numEvents = max(event))

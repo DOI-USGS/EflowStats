@@ -18,10 +18,10 @@
 #' @examples
 #' x <- sampleData$discharge
 #' threshold <- median(x,na.rm=TRUE)
-#' eventDuration(x,threshold)
-eventDuration <- function(x,threshold,aggType = "average",type="high",pref="mean",trim=FALSE) {
+#' find_eventDuration(x,threshold)
+find_eventDuration <- function(x,threshold,aggType = "average",type="high",pref="mean",trim=FALSE) {
         
-        flowEvents <- calcEvents(x=x,threshold=threshold,type=type)
+        flowEvents <- find_events(x=x,threshold=threshold,type=type)
         
         #Check if event is runs up until the beginning or end of hte period of record
         #If it does, remove the event because there is no start or end time to calculate duration
@@ -38,34 +38,34 @@ eventDuration <- function(x,threshold,aggType = "average",type="high",pref="mean
         
         flowEvents <- na.omit(flowEvents)
         
-        eventDurations <- dplyr::summarize(dplyr::group_by(flowEvents,event),
+        find_eventDurations <- dplyr::summarize(dplyr::group_by(flowEvents,event),
                                            duration = length(event)
         )
         
-        if(nrow(eventDurations) > 0)
+        if(nrow(find_eventDurations) > 0)
         {
                 if(aggType == "average")
                 {
                         if(pref=="mean")
                         {
-                                eventDurations <- mean(eventDurations$duration,na.rm=TRUE)
+                                find_eventDurations <- mean(find_eventDurations$duration,na.rm=TRUE)
                         } else if (pref=="median")
                         {
-                                eventDurations <- median(eventDurations$duration,na.rm=TRUE)
+                                find_eventDurations <- median(find_eventDurations$duration,na.rm=TRUE)
                         }
                 }
                 
                 if(aggType == "min")
                 {
-                        eventDurations <- min(eventDurations$duration,na.rm=TRUE)
+                        find_eventDurations <- min(find_eventDurations$duration,na.rm=TRUE)
                 }
                 
                 if(aggType == "max")
                 {
-                        eventDurations <- max(eventDurations$duration,na.rm=TRUE)
+                        find_eventDurations <- max(find_eventDurations$duration,na.rm=TRUE)
                 }
                 
-        } else {eventDurations <- 0}
+        } else {find_eventDurations <- 0}
         
-        return(eventDurations)
+        return(find_eventDurations)
 }

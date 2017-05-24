@@ -74,7 +74,7 @@ for(site_dir in list.dirs(flow_dir)) {
     if(!(flow_data_clean == FALSE)) {
       good_sites <- c(good_sites, site_no)
       if(!is.null(peak_data)) {
-        flood_thresh <- peakThreshold(flow_data_clean[c("date","discharge")],
+        flood_thresh <- get_peakThreshold(flow_data_clean[c("date","discharge")],
                                       peak_data[c("peak_dt","peak_va")])
         new_results[site_no,] <- calc_allHIT(flow_data_clean,
                                           drainArea=das[site_no][[1]],

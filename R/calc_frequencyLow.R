@@ -41,7 +41,7 @@ calc_frequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         #Pick out events for each year
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
-                                           calcEvents(.$discharge,
+                                           find_events(.$discharge,
                                                       threshold = quantile(x$discharge,
                                                                            probs = 0.25,
                                                                            type = 6, 
@@ -69,7 +69,7 @@ calc_frequencyLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         #Pick out events for each year
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
-                                           calcEvents(.$discharge,
+                                           find_events(.$discharge,
                                                       threshold = 0.05*mean(x$discharge),
                                                       type="low")
                                    }

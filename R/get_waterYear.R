@@ -5,8 +5,8 @@
 #' @return A vector of numeric water years for each date if \code{numeric = TRUE} otherwise an ordered factor of water years if \code{numeric = FALSE}
 #' @export
 #' @examples
-#' waterYear(sampleData$date)
-waterYear <- function(x, numeric=TRUE) {
+#' get_waterYear(sampleData$date)
+get_waterYear <- function(x, numeric=TRUE) {
         ## Coding history:
         ##    2005Jul14 DLLorenz Initial dated verion
         ##    2010Feb17 DLLorenz Added option to return numerics

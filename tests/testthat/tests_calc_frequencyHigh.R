@@ -13,10 +13,10 @@ test_that("frequency high", {
 
 test_that("frequency high with peak", {
         
-        peakValues <- readRDS("data/tests_peakThreshold.rds")
+        peakValues <- readRDS("data/tests_get_peakThreshold.rds")
         x<-sampleData[c("date","discharge")]
 
-        peaks <- peakThreshold(x,peakValues,.6,yearType="water")
+        peaks <- get_peakThreshold(x,peakValues,.6,yearType="water")
         hitFrequencyHighTest <- hitFrequencyHigh(x=x,yearType="water", floodThreshold = peaks)
         hitFrequencyHighTestOut <- readRDS("data/tests_hitFrequencyHigh_peak.rds")
         

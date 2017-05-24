@@ -1,4 +1,4 @@
-#' Function to return a specified flood threshold using data from the NWISWeb peak values service
+#' Function to return a specified flood threshold
 #' 
 #' This function calculates flood thresholds for specified recurrence intervals. 
 #' 
@@ -22,9 +22,9 @@
 #' sites<-"02178400"
 #' peakValues <- readNWISpeak(sites)
 #' peakValues <- peakValues[c("peak_dt","peak_va")]
-#' peakThreshold(x,peakValues,.6,yearType="water")
+#' get_peakThreshold(x,peakValues,.6,yearType="water")
 #' }
-peakThreshold <- function(x,peakValues,perc=0.6,yearType = "water") {
+get_peakThreshold <- function(x,peakValues,perc=0.6,yearType = "water") {
         
         #Check x data input
         x <- validate_data(x,yearType)
@@ -59,7 +59,7 @@ peakThreshold <- function(x,peakValues,perc=0.6,yearType = "water") {
         
         if(yearType == "water")
         {
-                peakValues$year_val <- waterYear(peakValues$date)
+                peakValues$year_val <- get_waterYear(peakValues$date)
         } else {
                 peakValues$year_val <- lubridate::year(peakValues$date)
         }

@@ -51,8 +51,8 @@ validate_data <- function(x,yearType) {
         ###Get water year value
         if(yearType == "water")
         {
-                x$year_val <- waterYear(x$date,numeric=T)
-                x$day <- waterYearDay(x$date)
+                x$year_val <- get_waterYear(x$date,numeric=T)
+                x$day <- get_waterYearDay(x$date)
         } else {
                 x$year_val <- lubridate::year(x$date)
                 x$day <- lubridate::yday(x$date)

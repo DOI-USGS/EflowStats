@@ -140,7 +140,7 @@ calc_durationLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         thresh <- quantile(x$discharge, probs = 0.25, type = 6, names = F)
         
         #Define events as sustained flows below the low flow threshold
-        x$events <- calcEvents(x=x$discharge,threshold=thresh,type="low")$event
+        x$events <- find_events(x=x$discharge,threshold=thresh,type="low")$event
 
         yearlyDurations <- dplyr::summarize(dplyr::group_by(x,year_val),
                                             avgDuration = length(na.omit(events))/length(unique(na.omit(events)))

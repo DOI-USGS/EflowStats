@@ -7,10 +7,10 @@
 #' @export
 #' @examples
 #' x <- seq(from=as.Date("2010-01-01"),to=as.Date("2016-01-01"),by="1 days")
-#' waterYearDay(x)
+#' get_waterYearDay(x)
 
 
-waterYearDay <- function(x) {
+get_waterYearDay <- function(x) {
         
         year_day <- lubridate::yday(x)
         yrs_leap <- lubridate::leap_year(x)

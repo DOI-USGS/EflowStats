@@ -73,7 +73,7 @@ calc_timingHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThres
         dailyMaxFlow <- dplyr::summarize(dplyr::group_by(x,day),
                                          maxFlow = max(discharge))
         
-        nonFloodEvents <- eventDuration(dailyMaxFlow$maxFlow,
+        nonFloodEvents <- find_eventDuration(dailyMaxFlow$maxFlow,
                                         threshold=floodThreshold,
                                         aggType = "none",
                                         type="low",

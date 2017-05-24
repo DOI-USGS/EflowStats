@@ -74,7 +74,7 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         #Pick out events for each year
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
-                                           calcEvents(.$discharge,
+                                           find_events(.$discharge,
                                                       threshold = percentiles["75%"],
                                                       type="high")
                                    }
@@ -120,7 +120,7 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         #fh5
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
-                                           calcEvents(.$discharge,
+                                           find_events(.$discharge,
                                                       threshold = medFlow,
                                                       type="high")
                                    }
@@ -140,7 +140,7 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         #fh6
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
-                                           calcEvents(.$discharge,
+                                           find_events(.$discharge,
                                                       threshold = 3*medFlow,
                                                       type="high")
                                    }
@@ -162,7 +162,7 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         #fh7
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
-                                           calcEvents(.$discharge,
+                                           find_events(.$discharge,
                                                       threshold = 7*medFlow,
                                                       type="high")
                                    }
@@ -184,7 +184,7 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         #fh8
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
-                                           calcEvents(.$discharge,
+                                           find_events(.$discharge,
                                                       threshold = quantile(x$discharge,
                                                                            probs = .75,
                                                                            type = 6, 
@@ -209,7 +209,7 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         #fh9
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
-                                           calcEvents(.$discharge,
+                                           find_events(.$discharge,
                                                       threshold = quantile(x$discharge,.25,type=6, names=F),
                                                       type="high")
                                    }
@@ -230,7 +230,7 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         #fh10
         yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                    {
-                                           calcEvents(.$discharge,
+                                           find_events(.$discharge,
                                                       threshold = median(flowSum_year$minFlow),
                                                       type="high")
                                    }
@@ -252,7 +252,7 @@ hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThre
         {
                 yearlyCounts <-  dplyr::do(dplyr::group_by(x,year_val),
                                            {
-                                                   calcEvents(.$discharge,
+                                                   find_events(.$discharge,
                                                               threshold = floodThreshold,
                                                               type="high")
                                            }

@@ -13,8 +13,8 @@
 #' @examples
 #' x <- sampleData$discharge
 #' threshold <- median(x,na.rm=TRUE)
-#' calcEvents(x,threshold)
-calcEvents <- function(x,threshold,type="high") {
+#' find_events(x,threshold)
+find_events <- function(x,threshold,type="high") {
         
         x <- data.frame(flow = x)
         
