@@ -38,7 +38,7 @@ calc_magnifSeven<-function(x,yearType = "water",digits=3)  {
         
 
         #Combine all indices into 1 dataframe and return
-        magnif7 <- data.frame(indice = c("lam1","tau2","tau3","tau4","calc_ar1","amplitude","phase"),
+        magnif7 <- data.frame(indice = c("lam1","tau2","tau3","tau4","ar1","amplitude","phase"),
                             statistic = c(lam1,tau2,tau3,tau4,calc_ar1v,amplitude,phase),
                             stringsAsFactors = F)
 

@@ -26,13 +26,13 @@ test_that("magnitude low", {
         x<-readRDS("data/sample_nwis_data.rds")
         da <- readRDS("data/sample_nwis_da.rds")
         
-        hitMagLowTest <- hitMagLow(x=x,
+        calc_magLowTest <- calc_magLow(x=x,
                                  yearType="water",
                                  drainArea = da,
                                  pref = "mean")
         
-        hitMagLowTestOut <- readRDS("data/tests_hitMagLow.rds")
-        expect_equal(hitMagLowTest,hitMagLowTestOut)
+        calc_magLowTestOut <- readRDS("data/tests_calc_magLow.rds")
+        expect_equal(calc_magLowTest,calc_magLowTestOut)
         
 })
 

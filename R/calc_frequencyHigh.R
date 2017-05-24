@@ -52,8 +52,8 @@
 #' x <- sampleData[c("date","discharge")]
 #' yearType = "water"
 #' floodThreshold = 1158
-#' hitFrequencyHigh(x=x,yearType=yearType,floodThreshold = 1158)
-hitFrequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold = NULL,...) {
+#' calc_frequencyHigh(x=x,yearType=yearType,floodThreshold = 1158)
+calc_frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold = NULL,...) {
         #Check data inputs
         x <- validate_data(x,yearType)
         check_preference(pref)
