@@ -18,7 +18,7 @@ ar1 <- function(x,yearType="water",digits=3) {
         #First, deseasonalize the time series using the long-term monthly means
         #ds.timeseries<-deseason(data)  
         
-        x <- dataCheck(x,yearType=yearType)
+        x <- validate_data(x,yearType=yearType)
         
         x$month_val <- lubridate::month(x$date)
         

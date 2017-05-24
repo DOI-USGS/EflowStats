@@ -15,7 +15,7 @@
 magnifSeven<-function(x,yearType = "water",digits=3)  {
         
         #Check data inputs
-        x <- dataCheck(x,yearType)
+        x <- validate_data(x,yearType)
         
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)

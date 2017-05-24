@@ -1,5 +1,3 @@
-#' hitAllStats
-#' 
 #' Function to calculate all 171 biologically relevant hydrologic indice statistics described in the USGS Hydrologic Index Tool
 #' 
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.

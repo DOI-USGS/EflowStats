@@ -27,7 +27,7 @@
 peakThreshold <- function(x,peakValues,perc=0.6,yearType = "water") {
         
         #Check x data input
-        x <- dataCheck(x,yearType)
+        x <- validate_data(x,yearType)
         
         #Check peakValues data input
         if (nrow(peakValues)<=1) {

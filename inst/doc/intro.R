@@ -9,7 +9,7 @@
 #  endDate = "2012-9-30")
 #  
 #  #Check data for completeness
-#  dailyQClean <- dataCheck(dailyQ[c("Date","X_00060_00003")],yearType="water")
+#  dailyQClean <- validate_data(dailyQ[c("Date","X_00060_00003")],yearType="water")
 #  
 #  #Get drainage area
 #  siteInfo <- readNWISsite(siteNumber = "04085427")

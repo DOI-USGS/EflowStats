@@ -1,4 +1,4 @@
-#' dataCheck Discharge timeseries screening
+#' validate_data Discharge timeseries screening
 #' @description Function to check dataframe inputs for appropriate data classes and screen for missing values.
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
@@ -6,11 +6,11 @@
 #' @examples
 #' x <- sampleData[c("date","discharge")]
 #' yearType = "water"
-#' dataCheck(x=x,yearType=yearType)
+#' validate_data(x=x,yearType=yearType)
 #' @export
-dataCheck <- function(x,yearType) {
+validate_data <- function(x,yearType) {
         
-        #Just grab first two columns incase it has been run through dataCheck already
+        #Just grab first two columns incase it has been run through validate_data already
         x <- x[,1:2]
         
         # Class variables

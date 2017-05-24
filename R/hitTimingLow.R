@@ -35,7 +35,7 @@
 #' hitTimingLow(x=x,yearType=yearType,floodThreshold=floodThreshold)
 hitTimingLow <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold=NULL,...) {
         #Check data inputs
-        x <- dataCheck(x,yearType)
+        x <- validate_data(x,yearType)
         check_preference(pref)
         
         #calculate some stuff for use later

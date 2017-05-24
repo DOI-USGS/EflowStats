@@ -90,7 +90,7 @@ dailyQ &lt;-<span class="st"> </span><span class="kw">readNWISdv</span>(<span cl
 <span class="dt">endDate =</span> <span class="st">&quot;2012-9-30&quot;</span>)
 
 <span class="co">#Check data for completeness</span>
-dailyQClean &lt;-<span class="st"> </span><span class="kw">dataCheck</span>(dailyQ[<span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>,<span class="st">&quot;X_00060_00003&quot;</span>)],<span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>)
+dailyQClean &lt;-<span class="st"> </span><span class="kw">validate_data</span>(dailyQ[<span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>,<span class="st">&quot;X_00060_00003&quot;</span>)],<span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>)
 
 <span class="co">#Get drainage area</span>
 siteInfo &lt;-<span class="st"> </span><span class="kw">readNWISsite</span>(<span class="dt">siteNumber =</span> <span class="st">&quot;04085427&quot;</span>)

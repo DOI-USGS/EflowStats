@@ -2,7 +2,7 @@
 % Please edit documentation in R/hitAllStats.R
 \name{hitAllStats}
 \alias{hitAllStats}
-\title{hitAllStats}
+\title{Function to calculate all 171 biologically relevant hydrologic indice statistics described in the USGS Hydrologic Index Tool}
 \usage{
 hitAllStats(x, yearType = "water", stats = "all", digits = 3,
   pref = "mean", drainArea = NULL, floodThreshold = NULL)

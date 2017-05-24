@@ -65,7 +65,7 @@ for(site_dir in list.dirs(flow_dir)) {
   if(length(flow_files) > 0 && !grepl("01403060", site_dir)){ # couldn't get ma1 to match for this site.
     flow_data <- suppressMessages(importRDB1(file.path(site_dir, flow_files[1])))
     site_no <- flow_data$site_no[1]
-    flow_data_clean <- dataCheck(flow_data[3:4],yearType="water")
+    flow_data_clean <- validate_data(flow_data[3:4],yearType="water")
 
     if(length(flow_files)>1) {
       peak_data <- suppressMessages(importRDB1(file.path(site_dir, flow_files[2])))
