@@ -37,9 +37,9 @@
 #' x <- sampleData[c("date","discharge")]
 #' drainArea <- 50
 #' yearType = "water"
-#' hitMagAverage(x=x,yearType=yearType,drainArea=drainArea)
+#' calc_magAverage(x=x,yearType=yearType,drainArea=drainArea)
 #' 
-hitMagAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",...) {
+calc_magAverage <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",...) {
                 
         #Check data inputs
         x <- validate_data(x,yearType)

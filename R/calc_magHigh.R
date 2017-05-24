@@ -54,9 +54,9 @@
 #' x <- sampleData[c("date","discharge")]
 #' drainArea <- 50
 #' yearType = "water"
-#' hitMagHigh(x=x,yearType=yearType,drainArea=drainArea)
+#' calc_magHigh(x=x,yearType=yearType,drainArea=drainArea)
 #' 
-hitMagHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",...) {
+calc_magHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mean",...) {
         #Check data inputs
         x <- validate_data(x,yearType)
         check_preference(pref)

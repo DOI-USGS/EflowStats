@@ -3,7 +3,7 @@
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
 #' @param digits A numeric. Number of digits to round indice values
-#' @param stats Character vector statistic groups. Choices are "all","hitMagAverage", "hitMagLow", "hitMagHigh", "calc_frequencyLow", "hitFrequencyHigh", "calc_durationLow", "calc_durationHigh", "hitTimingAverage", "hitTimingLow", "hitTimingHigh", "hitRateChange"     
+#' @param stats Character vector statistic groups. Choices are "all","calc_magAverage", "hitMagLow", "calc_magHigh", "calc_frequencyLow", "hitFrequencyHigh", "calc_durationLow", "calc_durationHigh", "hitTimingAverage", "hitTimingLow", "hitTimingHigh", "calc_rateChange"     
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
 #' @param drainArea Numeric drainage area. Only required for some statistics. Typically units of square miles, see details of specific statistics for more. 
 #' @param floodThreshold Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
@@ -12,9 +12,9 @@
 #' Different arguments are required depending on indices selected and are described below.
 #' Detailed descriptions of the indices and \code{pref} argument behavior are provided in the documentation for individual indice group functions
 #' \itemize{
-#' \item hitMagAverage Indices describing magnitude of the average flow condition. \code{drainArea} argument must be specified for the ma41 statistic. 
+#' \item calc_magAverage Indices describing magnitude of the average flow condition. \code{drainArea} argument must be specified for the ma41 statistic. 
 #' \item hitMagLow Indices describing magnitude of the low flow condition. \code{drainArea} argument must be specified for the ml22 statistic. 
-#' \item hitMagHigh Indices describing magnitude of the peak flow condition. \code{drainAre} argument must be specified for the mh20 statistic.
+#' \item calc_magHigh Indices describing magnitude of the peak flow condition. \code{drainAre} argument must be specified for the mh20 statistic.
 #' \item calc_frequencyLow Indices describing frequency of low flow events. No additional arguments required.
 #' \item hitFrequencyHigh Indices describing frequency of high flow events. No additional arguments required.
 #' \item calc_durationLow Indices describing duration of low flow events. No additional arguments required.
@@ -22,7 +22,7 @@
 #' \item hitTimingAverage Indices describing timing of average flow events. No additional arguments required.
 #' \item hitTimingLow Indices describing timing of low flow events. No additional arguments required.
 #' \item hitTimingHigh Indices describing timing of high flow events. No additional arguments required.
-#' \item hitRateChange Indices describing rate of change of flow. No additional arguments required.
+#' \item calc_rateChange Indices describing rate of change of flow. No additional arguments required.
 #' }
 #' @export
 #' @examples
@@ -32,9 +32,9 @@ calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",dr
         
 
         statsFuns <- list(
-                hitMagAverage=hitMagAverage,
+                calc_magAverage=calc_magAverage,
                 hitMagLow=hitMagLow,
-                hitMagHigh=hitMagHigh,
+                calc_magHigh=calc_magHigh,
                 calc_frequencyLow=calc_frequencyLow,
                 hitFrequencyHigh=hitFrequencyHigh,
                 calc_durationLow=calc_durationLow,
@@ -42,13 +42,13 @@ calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",dr
                 hitTimingAverage=hitTimingAverage,
                 hitTimingLow=hitTimingLow,
                 hitTimingHigh=hitTimingHigh,
-                hitRateChange=hitRateChange)
+                calc_rateChange=calc_rateChange)
         
         if("all" %in% stats)
         {
-                stats <- c("hitMagAverage",
+                stats <- c("calc_magAverage",
                            "hitMagLow",
-                           "hitMagHigh",
+                           "calc_magHigh",
                            "calc_frequencyLow",
                            "hitFrequencyHigh",
                            "calc_durationLow",
@@ -56,7 +56,7 @@ calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",dr
                            "hitTimingAverage",
                            "hitTimingLow",
                            "hitTimingHigh",
-                           "hitRateChange")
+                           "calc_rateChange")
         }
         
         statsOut <- lapply(statsFuns[stats], do.call, list(x=x,

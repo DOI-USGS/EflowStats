@@ -5,15 +5,15 @@ test_that("magnitude average", {
         x<-readRDS("data/sample_nwis_data.rds")
         da <- readRDS("data/sample_nwis_da.rds")
         
-        magAveTest <- hitMagAverage(x=x,
+        magAveTest <- calc_magAverage(x=x,
                                  yearType="water",
                                  drainArea = da,
                                  pref = "mean")
         
-        magAveTestOut <- readRDS("data/tests_hitMagAverage.rds")
+        magAveTestOut <- readRDS("data/tests_calc_magAverage.rds")
         expect_equal(magAveTest,magAveTestOut)
         
-        expect_error(hitMagAverage(x=x,
+        expect_error(calc_magAverage(x=x,
                                    yearType="water",
                                    drainArea = da,
                                    pref = "broken"),
@@ -41,12 +41,12 @@ test_that("magnitude high", {
         x<-readRDS("data/sample_nwis_data.rds")
         da <- readRDS("data/sample_nwis_da.rds")
         
-        magHighTest <- hitMagHigh(x=x,
+        magHighTest <- calc_magHigh(x=x,
                              yearType="water",
                              drainArea = da,
                              pref = "mean")
         
-        magHighTestOut <- readRDS("data/tests_hitMagHigh.rds")
+        magHighTestOut <- readRDS("data/tests_calc_magHigh.rds")
         expect_equal(magHighTest,magHighTestOut)
         
 })
@@ -59,7 +59,7 @@ test_that("monthly averages work as expected", {
         x$dates <- seq.Date(start, end, by = "day")
         x$month <- lubridate::month(x$dates) # submitting month values instead of flows.
         x <- as.data.frame(x)
-        out <- hitMagAverage(x, yearType = "water")
+        out <- calc_magAverage(x, yearType = "water")
         # Expect the values returned to be the same as the month values.
         expect_equal(unlist(out[12,]), setNames(c("ma12", 1),c("indice", "statistic")))
         expect_equal(unlist(out[23,]), setNames(c("ma23", 12),c("indice", "statistic")))
