@@ -79,9 +79,9 @@
 #' @examples
 #' x <- sampleData[c("date","discharge")]
 #' yearType = "water"
-#' hitDurationHigh(x=x,yearType=yearType)
+#' calc_durationHigh(x=x,yearType=yearType)
 #' 
-hitDurationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold = NULL,...) {
+calc_durationHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold = NULL,...) {
         
         #Check data inputs
         x <- validate_data(x,yearType)

@@ -62,9 +62,9 @@
 #' @examples
 #' x <- sampleData[c("date","discharge")]
 #' yearType = "water"
-#' hitDurationLow(x=x,yearType=yearType)
+#' calc_durationLow(x=x,yearType=yearType)
 #' 
-hitDurationLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
+calc_durationLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
         #Check data inputs
         x <- validate_data(x,yearType)
         check_preference(pref)
