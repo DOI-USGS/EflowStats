@@ -11,8 +11,8 @@
 #' @export
 #' @examples
 #' x<-sampleData[c("date","discharge")]
-#' magSeven <- magnifSeven(x)
-magnifSeven<-function(x,yearType = "water",digits=3)  {
+#' magSeven <- calc_magnifSeven(x)
+calc_magnifSeven<-function(x,yearType = "water",digits=3)  {
         
         #Check data inputs
         x <- validate_data(x,yearType)
@@ -30,7 +30,7 @@ magnifSeven<-function(x,yearType = "water",digits=3)  {
         tau4<-complmom[4]
         
         #Compute AR(1) correlation coefficienct
-        ar1v<-ar1(x,yearType = yearType,digits=digits)
+        calc_ar1v<-calc_ar1(x,yearType = yearType,digits=digits)
         
         seasonality_vars <- seasonality(x)
         amplitude<-seasonality_vars[1]
@@ -38,8 +38,8 @@ magnifSeven<-function(x,yearType = "water",digits=3)  {
         
 
         #Combine all indices into 1 dataframe and return
-        magnif7 <- data.frame(indice = c("lam1","tau2","tau3","tau4","ar1","amplitude","phase"),
-                            statistic = c(lam1,tau2,tau3,tau4,ar1v,amplitude,phase),
+        magnif7 <- data.frame(indice = c("lam1","tau2","tau3","tau4","calc_ar1","amplitude","phase"),
+                            statistic = c(lam1,tau2,tau3,tau4,calc_ar1v,amplitude,phase),
                             stringsAsFactors = F)
 
         magnif7$statistic <- round(magnif7$statistic,digits=digits)

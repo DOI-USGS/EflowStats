@@ -28,8 +28,8 @@
 #' x <- sampleData[c("date","discharge")]
 #' yearType = "water"
 #' floodThreshold = 1158
-#' hitTimingHigh(x=x,yearType=yearType,floodThreshold=floodThreshold)
-hitTimingHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold=NULL,...) {
+#' calc_timingHigh(x=x,yearType=yearType,floodThreshold=floodThreshold)
+calc_timingHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold=NULL,...) {
         #Check data inputs
         x <- validate_data(x,yearType)
         check_preference(pref)

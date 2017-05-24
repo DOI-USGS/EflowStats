@@ -1,4 +1,4 @@
-#' AR1 correlation coefficient
+#' calc_ar1 correlation coefficient
 #' 
 #' @description Function to compute the AR(1) correlation coefficient for a given timeseries of discharge
 #' 
@@ -9,12 +9,12 @@
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
 #' @param digits A numeric. Number of digits to round indice values
 #' @importFrom stats ar
-#' @return ar1 AR(1) correlation coefficient
+#' @return calc_ar1 AR(1) correlation coefficient
 #' @export
 #' @examples
 #' x <- sampleData[c("date","discharge")]
-#' ar1(x)
-ar1 <- function(x,yearType="water",digits=3) {
+#' calc_ar1(x)
+calc_ar1 <- function(x,yearType="water",digits=3) {
         #First, deseasonalize the time series using the long-term monthly means
         #ds.timeseries<-deseason(data)  
         
@@ -31,6 +31,6 @@ ar1 <- function(x,yearType="water",digits=3) {
         #Fit AR(1) model to deseasonalized data but first standardize deseasonlized time series
         ds_std_flows<-scale(x$dsQ, center = TRUE, scale = TRUE)
         armdl<-ar(ds_std_flows, aic = FALSE, order.max = 1, method="yule-walker")
-        ar1<-round(armdl$ar,digits=digits)
-        return(ar1)
+        calc_ar1<-round(armdl$ar,digits=digits)
+        return(calc_ar1)
 }

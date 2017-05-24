@@ -30,6 +30,6 @@
 #  floodThreshold=floodThresh)
 #  
 #  #Calculate mag7 stats
-#  magnifStatsOut <- magnifSeven(dailyQClean,yearType="water",digits=3)
+#  magnifStatsOut <- calc_magnifSeven(dailyQClean,yearType="water",digits=3)
 #  
 

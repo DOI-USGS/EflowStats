@@ -3,7 +3,7 @@
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
 #' @param digits A numeric. Number of digits to round indice values
-#' @param stats Character vector statistic groups. Choices are "all","calc_magAverage", "hitMagLow", "calc_magHigh", "calc_frequencyLow", "hitFrequencyHigh", "calc_durationLow", "calc_durationHigh", "hitTimingAverage", "hitTimingLow", "hitTimingHigh", "calc_rateChange"     
+#' @param stats Character vector statistic groups. Choices are "all","calc_magAverage", "hitMagLow", "calc_magHigh", "calc_frequencyLow", "hitFrequencyHigh", "calc_durationLow", "calc_durationHigh", "calc_timingAverage", "calc_timingLow", "calc_timingHigh", "calc_rateChange"     
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
 #' @param drainArea Numeric drainage area. Only required for some statistics. Typically units of square miles, see details of specific statistics for more. 
 #' @param floodThreshold Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
@@ -19,9 +19,9 @@
 #' \item hitFrequencyHigh Indices describing frequency of high flow events. No additional arguments required.
 #' \item calc_durationLow Indices describing duration of low flow events. No additional arguments required.
 #' \item calc_durationHigh Indices describing duration of high flow events. floodThreshold needs to be supplied. See \code{\link{calc_durationHigh}}.
-#' \item hitTimingAverage Indices describing timing of average flow events. No additional arguments required.
-#' \item hitTimingLow Indices describing timing of low flow events. No additional arguments required.
-#' \item hitTimingHigh Indices describing timing of high flow events. No additional arguments required.
+#' \item calc_timingAverage Indices describing timing of average flow events. No additional arguments required.
+#' \item calc_timingLow Indices describing timing of low flow events. No additional arguments required.
+#' \item calc_timingHigh Indices describing timing of high flow events. No additional arguments required.
 #' \item calc_rateChange Indices describing rate of change of flow. No additional arguments required.
 #' }
 #' @export
@@ -39,9 +39,9 @@ calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",dr
                 hitFrequencyHigh=hitFrequencyHigh,
                 calc_durationLow=calc_durationLow,
                 calc_durationHigh=calc_durationHigh,
-                hitTimingAverage=hitTimingAverage,
-                hitTimingLow=hitTimingLow,
-                hitTimingHigh=hitTimingHigh,
+                calc_timingAverage=calc_timingAverage,
+                calc_timingLow=calc_timingLow,
+                calc_timingHigh=calc_timingHigh,
                 calc_rateChange=calc_rateChange)
         
         if("all" %in% stats)
@@ -53,9 +53,9 @@ calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",dr
                            "hitFrequencyHigh",
                            "calc_durationLow",
                            "calc_durationHigh",
-                           "hitTimingAverage",
-                           "hitTimingLow",
-                           "hitTimingHigh",
+                           "calc_timingAverage",
+                           "calc_timingLow",
+                           "calc_timingHigh",
                            "calc_rateChange")
         }
         

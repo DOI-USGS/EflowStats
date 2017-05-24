@@ -44,8 +44,8 @@
 #' x <- sampleData[c("date","discharge")]
 #' yearType = "water"
 #' floodThreshold = 1158
-#' hitTimingAverage(x=x,yearType = yearType,floodThreshold =floodThreshold)
-hitTimingAverage <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold=NULL,...) {
+#' calc_timingAverage(x=x,yearType = yearType,floodThreshold =floodThreshold)
+calc_timingAverage <- function(x,yearType = "water",digits=3,pref="mean",floodThreshold=NULL,...) {
         #Check data inputs
         x <- validate_data(x,yearType)
         check_preference(pref)
