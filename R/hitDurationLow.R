@@ -5,7 +5,7 @@
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
 #' @param digits A numeric. Number of digits to round indice values
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
-#' @param ... Optional arguments needed for \code{hitAllStats} function
+#' @param ... Optional arguments needed for \code{calc_allHIT} function
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item dl1 Annual minimum daily flow. Compute the minimum 1-day average flow for each year. DL1 is the mean 

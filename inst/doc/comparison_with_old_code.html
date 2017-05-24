@@ -135,13 +135,13 @@ good_sites &lt;-<span class="st"> </span><span class="kw">list</span>()
       <span class="cf">if</span>(<span class="op">!</span><span class="kw">is.null</span>(peak_data)) {
         flood_thresh &lt;-<span class="st"> </span><span class="kw">peakThreshold</span>(flow_data_clean[<span class="kw">c</span>(<span class="st">&quot;date&quot;</span>,<span class="st">&quot;discharge&quot;</span>)],
                                       peak_data[<span class="kw">c</span>(<span class="st">&quot;peak_dt&quot;</span>,<span class="st">&quot;peak_va&quot;</span>)])
-        new_results[site_no,] &lt;-<span class="st"> </span><span class="kw">hitAllStats</span>(flow_data_clean,
+        new_results[site_no,] &lt;-<span class="st"> </span><span class="kw">calc_allHIT</span>(flow_data_clean,
                                           <span class="dt">drainArea=</span>das[site_no][[<span class="dv">1</span>]],
                                           <span class="dt">floodThreshold=</span>flood_thresh,
                                           <span class="dt">pref =</span> pref)<span class="op">$</span>statistic
         <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Calculated statistics with threshold for site&quot;</span>, site_no))
       } <span class="cf">else</span> {
-        new_results[site_no,] &lt;-<span class="st"> </span><span class="kw">hitAllStats</span>(flow_data_clean,
+        new_results[site_no,] &lt;-<span class="st"> </span><span class="kw">calc_allHIT</span>(flow_data_clean,
                                           <span class="dt">drainArea=</span>das[site_no][[<span class="dv">1</span>]],
                                           <span class="dt">pref=</span>pref)<span class="op">$</span>statistic
         <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;Calculated statistics without threshold for site&quot;</span>, site_no))

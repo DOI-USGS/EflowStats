@@ -27,8 +27,8 @@
 #' @export
 #' @examples
 #' x <- sampleData[c("date","discharge")]
-#' hitAllStats(x=x,yearType="water",stats="all",pref="mean",drainArea=50)
-hitAllStats <- function(x,yearType = "water",stats="all",digits=3,pref="mean",drainArea=NULL,floodThreshold = NULL) {
+#' calc_allHIT(x=x,yearType="water",stats="all",pref="mean",drainArea=50)
+calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",drainArea=NULL,floodThreshold = NULL) {
         
 
         statsFuns <- list(

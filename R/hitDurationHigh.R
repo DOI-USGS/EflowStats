@@ -6,7 +6,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
 #' @param floodThreshold Numeric value of flood threshold as the flow equivalent for a flood recurrence of 1.67 years. Can be calculated using the \code{peakThreshold} function.
-#' @param ... Optional arguments needed for \code{hitAllStats} function
+#' @param ... Optional arguments needed for \code{calc_allHIT} function
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item dh1 Annual maximum daily flow. Compute the maximum of a 1-day moving average flow for each year. dh1 is the 

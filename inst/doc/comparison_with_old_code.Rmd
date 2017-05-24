@@ -76,13 +76,13 @@ for(site_dir in list.dirs(flow_dir)) {
       if(!is.null(peak_data)) {
         flood_thresh <- peakThreshold(flow_data_clean[c("date","discharge")],
                                       peak_data[c("peak_dt","peak_va")])
-        new_results[site_no,] <- hitAllStats(flow_data_clean,
+        new_results[site_no,] <- calc_allHIT(flow_data_clean,
                                           drainArea=das[site_no][[1]],
                                           floodThreshold=flood_thresh,
                                           pref = pref)$statistic
         print(paste("Calculated statistics with threshold for site", site_no))
       } else {
-        new_results[site_no,] <- hitAllStats(flow_data_clean,
+        new_results[site_no,] <- calc_allHIT(flow_data_clean,
                                           drainArea=das[site_no][[1]],
                                           pref=pref)$statistic
         print(paste("Calculated statistics without threshold for site", site_no))

@@ -15,7 +15,7 @@ hitRateChange(x, yearType = "water", digits = 3, pref = "mean", ...)
 
 \item{pref}{A character of either "mean" or "median", indicating whether to use mean or median. See details.}
 
-\item{...}{Optional arguments needed for \code{hitAllStats} function}
+\item{...}{Optional arguments needed for \code{calc_allHIT} function}
 }
 \value{
 A data.frame of flow statistics

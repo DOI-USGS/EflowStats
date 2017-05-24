@@ -5,7 +5,7 @@
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
 #' @param digits A numeric. Number of digits to round indice values
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
-#' @param ... Optional arguments needed for \code{hitAllStats} function
+#' @param ... Optional arguments needed for \code{calc_allHIT} function
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item ra1; Rise rate. Compute the change in flow for days in which the change is positive for the entire flow record. 

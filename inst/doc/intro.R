@@ -25,7 +25,7 @@
 #  peakFlows[c("peak_dt","peak_va")])
 #  
 #  #Calculate all hit stats
-#  hitAllStatsOut <- hitAllStats(dailyQClean,
+#  calc_allHITOut <- calc_allHIT(dailyQClean,
 #  drainArea=drainageArea,
 #  floodThreshold=floodThresh)
 #  

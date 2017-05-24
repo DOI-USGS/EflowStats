@@ -6,7 +6,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param drainArea A numeric specifying the drainage area. Only required for ma41 statistic. Typically square miles, see details.
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
-#' @param ... Optional arguments needed for \code{hitAllStats} function
+#' @param ... Optional arguments needed for \code{calc_allHIT} function
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item ma1  Mean of the daily mean flow values for the entire flow record 

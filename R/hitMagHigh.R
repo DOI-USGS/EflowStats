@@ -6,7 +6,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param drainArea A numeric specifying the drainage area. Only required for mh20 statistic. Typically squiare miles, see details.
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
-#' @param ... Optional arguments needed for \code{hitAllStats} function
+#' @param ... Optional arguments needed for \code{calc_allHIT} function
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item mh1_12  Requires pref argument to be either "mean" or "median" specifying monthly aggregation function. 

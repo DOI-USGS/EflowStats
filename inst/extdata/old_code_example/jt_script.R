@@ -10,7 +10,7 @@ ts$discharge <- as.numeric(ts$discharge)
 ts <- as.data.frame(ts)
 
 ts <- validate_data(ts, yearType = "water")
-new_result <- hitAllStats(ts, 
+new_result <- calc_allHIT(ts, 
                           yearType = "water", 
                           stats = "all", 
                           digits = 3, 

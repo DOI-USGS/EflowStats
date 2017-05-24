@@ -6,7 +6,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
 #' @param floodThreshold Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
-#' @param ... Optional arguments needed for \code{hitAllStats} function
+#' @param ... Optional arguments needed for \code{calc_allHIT} function
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item fh1 High flood pulse count. Compute the average number of flow events with flows above a threshold equal to 

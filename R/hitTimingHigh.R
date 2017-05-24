@@ -6,7 +6,7 @@
 #' @param digits A numeric. Number of digits to round indice values
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
 #' @param floodThreshold Numeric flood threshold as the flow equivalent for a flood recurrence of 1.67 years
-#' @param ... Optional arguments needed for \code{hitAllStats} function
+#' @param ... Optional arguments needed for \code{calc_allHIT} function
 #' @details Descriptions of indices.
 #' \itemize{
 #' \item  th1 Julian date of annual maximum. Determine the Julian date that the maximum flow occurs for each year. 
