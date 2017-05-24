@@ -9,8 +9,8 @@ ts$date <- as.Date(ts$date, format = "%m/%d/%Y")
 ts$discharge <- as.numeric(ts$discharge)
 ts <- as.data.frame(ts)
 
-ts <- dataCheck(ts, yearType = "water")
-new_result <- hitAllStats(ts, 
+ts <- validate_data(ts, yearType = "water")
+new_result <- calc_allHIT(ts, 
                           yearType = "water", 
                           stats = "all", 
                           digits = 3, 
