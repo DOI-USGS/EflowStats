@@ -19,7 +19,7 @@ calcChangeEvents <- function(x) {
                          differences = 1)
         
         changeDir <- sign(diffDays)
-        changeDir[changeDir==0] = NA
+        changeDir[changeDir==0] <- NA
         
         changeDir <- imputeTS::na.locf(changeDir, na.remaining="rev")
         
@@ -35,7 +35,14 @@ calcChangeEvents <- function(x) {
         #Number events
         runLengths$eventNum[!is.na(runLengths$values)] <- events
         eventVector <- rep.int(runLengths$eventNum,runLengths$lengths)
-        eventVector <- c(NA,eventVector)
+
+        #substract 1 event from event vector to make it start at 0 since there is no knowledge of the
+        #flow before the start of the record
+        eventVector <- eventVector - 1
+        
+        #Fill in first dropped entry with a 0 event to max length of flow
+        eventVector <- c(0,eventVector)
+        
         
         changeEvents <- data.frame(flow=x,
                                    event=eventVector)

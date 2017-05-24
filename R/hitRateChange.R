@@ -49,7 +49,7 @@ hitRateChange <- function(x,yearType = "water",digits=3,pref="mean",...) {
         diffDays <- diff(x$discharge, lag = 1, 
                          differences = 1)
         riseValues <- diffDays[diffDays >0]
-        fallValues <- diffDays[diffDays <0]
+        fallValues <- abs(diffDays[diffDays <0])
         
         #ra1.2
         if (pref == "mean") {
@@ -81,7 +81,7 @@ hitRateChange <- function(x,yearType = "water",digits=3,pref="mean",...) {
         diffLogQ <- diff(logQ, lag = 1, 
                          differences = 1)
         riseLogQ <- diffLogQ[diffLogQ >0]
-        fallLogQ <- diffLogQ[diffLogQ <0]
+        fallLogQ <- abs(diffLogQ[diffLogQ <0])
         
         ra6 <- median(abs(riseLogQ))
         ra7 <- median(fallLogQ)
@@ -94,7 +94,7 @@ hitRateChange <- function(x,yearType = "water",digits=3,pref="mean",...) {
                                           calcChangeEvents(.$discharge)
                                   })
         numYearlyEvents <- dplyr::summarize(dplyr::group_by(yearlyEvents,year_val),
-                                            numEvents = max(event,na.rm=T))
+                                            numEvents = max(event))
         
         ra8 <- mean(numYearlyEvents$numEvents)
         ra9 <- sd(numYearlyEvents$numEvents)/mean(numYearlyEvents$numEvents)*100
