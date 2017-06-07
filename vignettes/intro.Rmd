@@ -26,10 +26,9 @@ library(EflowStats)
 
 #Get some data
 dailyQ <- readNWISdv(siteNumber = "04085427",
-parameterCd = "00060",
-startDate = "2000-10-01",
-endDate = "2012-9-30")
-
+                     parameterCd = "00060",
+                     startDate = "2000-10-01",
+                     endDate = "2012-9-30")
 #Check data for completeness
 dailyQClean <- validate_data(dailyQ[c("Date","X_00060_00003")],yearType="water")
 
@@ -39,10 +38,20 @@ drainageArea <- siteInfo$drain_area_va
 
 #Get peak flows
 peakFlows <- readNWISpeak(siteNumber = "04085427",
-startDate = "2000-10-01",
-endDate = "2012-9-30")
+                          startDate = "2000-10-01",
+                          endDate = "2012-9-30")
+
+```
+
+Users with their own time series data can use the package as long as the data can be coreced into a `data.frame` with dates of class "Date" in the first column, and stream flow values of class "Numeric" in the second. The code below shows steps to calculate all hydrologic indices available from the package.
+
+```{r message=FALSE, echo=TRUE, eval=FALSE}
+
+#Check data for completeness
+dailyQClean <- dataCheck(dailyQ[c("Date", "X_00060_00003")], yearType="water")
 
 #Get flood recurence threshold
+
 floodThresh <- get_peakThreshold(dailyQClean[c("date","discharge")],
 peakFlows[c("peak_dt","peak_va")])
 
@@ -54,9 +63,10 @@ floodThreshold=floodThresh)
 #Calculate mag7 stats
 magnifStatsOut <- calc_magnifSeven(dailyQClean,yearType="water",digits=3)
 
+
 ```
 
-
+Deffinitions of the statistics calculated by EflowStats can be found in Henriksen et al, 2006 and Archfield et al., 2013 as well as in the package function documentation. Users who have used the hydroecological integrity assessment process software or previous versions of EflowStats may find slight differences in the output of the latest package. The package has undergone extensive review and every effort has been made to ensure faithful reproduction of the statistics as defined in Henriksen et al, 2006. Users interested in records of correspondence between the old package and the new package are directed to the summary in [this issue](https://github.com/USGS-R/EflowStats/issues/132) and the history of review documented in [other closed issues.](https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed)
 
 ##References
 Henriksen, J. A., Heasley, J., Kennen, J.G., and Niewsand, S. 2006, Users’ manual for the hydroecological
