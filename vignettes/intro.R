@@ -7,6 +7,9 @@
 #                       parameterCd = "00060",
 #                       startDate = "2000-10-01",
 #                       endDate = "2012-9-30")
+ 
+#  #Check data for completeness
+#  dailyQClean <- validate_data(dailyQ[c("Date","X_00060_00003")],yearType="water")
 #  
 #  #Get drainage area
 #  siteInfo <- readNWISsite(siteNumber = "04085427")
@@ -24,15 +27,16 @@
 #  dailyQClean <- dataCheck(dailyQ[c("Date", "X_00060_00003")], yearType="water")
 #  
 #  #Get flood recurence threshold
-#  floodThresh <- peakThreshold(dailyQClean[c("date", "discharge")],
-#                               peakFlows[c("peak_dt", "peak_va")])
+
+#  floodThresh <- get_peakThreshold(dailyQClean[c("date","discharge")],
+#  peakFlows[c("peak_dt","peak_va")])
 #  
 #  #Calculate all hit stats
-#  hitAllStatsOut <- hitAllStats(dailyQClean,
-#                                drainArea=drainageArea,
-#                                floodThreshold=floodThresh)
+#  calc_allHITOut <- calc_allHIT(dailyQClean,
+#  drainArea=drainageArea,
+#  floodThreshold=floodThresh)
 #  
 #  #Calculate mag7 stats
-#  magnifStatsOut <- magnifSeven(dailyQClean, yearType="water", digits=3)
+#  magnifStatsOut <- calc_magnifSeven(dailyQClean,yearType="water",digits=3)
 #  
 

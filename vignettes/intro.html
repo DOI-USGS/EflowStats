@@ -85,9 +85,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <span class="co">#Get some data</span>
 dailyQ &lt;-<span class="st"> </span><span class="kw">readNWISdv</span>(<span class="dt">siteNumber =</span> <span class="st">&quot;04085427&quot;</span>,
-                     <span class="dt">parameterCd =</span> <span class="st">&quot;00060&quot;</span>,
-                     <span class="dt">startDate =</span> <span class="st">&quot;2000-10-01&quot;</span>,
-                     <span class="dt">endDate =</span> <span class="st">&quot;2012-9-30&quot;</span>)
+
+<span class="dt">parameterCd =</span> <span class="st">&quot;00060&quot;</span>,
+<span class="dt">startDate =</span> <span class="st">&quot;2000-10-01&quot;</span>,
+<span class="dt">endDate =</span> <span class="st">&quot;2012-9-30&quot;</span>)
+
+<span class="co">#Check data for completeness</span>
+dailyQClean &lt;-<span class="st"> </span><span class="kw">validate_data</span>(dailyQ[<span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>,<span class="st">&quot;X_00060_00003&quot;</span>)],<span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>)
 
 <span class="co">#Get drainage area</span>
 siteInfo &lt;-<span class="st"> </span><span class="kw">readNWISsite</span>(<span class="dt">siteNumber =</span> <span class="st">&quot;04085427&quot;</span>)
@@ -102,17 +106,18 @@ peakFlows &lt;-<span class="st"> </span><span class="kw">readNWISpeak</span>(<sp
 dailyQClean &lt;-<span class="st"> </span><span class="kw">dataCheck</span>(dailyQ[<span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>, <span class="st">&quot;X_00060_00003&quot;</span>)], <span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>)
 
 <span class="co">#Get flood recurence threshold</span>
-floodThresh &lt;-<span class="st"> </span><span class="kw">peakThreshold</span>(dailyQClean[<span class="kw">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;discharge&quot;</span>)],
-                             peakFlows[<span class="kw">c</span>(<span class="st">&quot;peak_dt&quot;</span>, <span class="st">&quot;peak_va&quot;</span>)])
+
+floodThresh &lt;-<span class="st"> </span><span class="kw">get_peakThreshold</span>(dailyQClean[<span class="kw">c</span>(<span class="st">&quot;date&quot;</span>,<span class="st">&quot;discharge&quot;</span>)],
+peakFlows[<span class="kw">c</span>(<span class="st">&quot;peak_dt&quot;</span>,<span class="st">&quot;peak_va&quot;</span>)])
 
 <span class="co">#Calculate all hit stats</span>
-hitAllStatsOut &lt;-<span class="st"> </span><span class="kw">hitAllStats</span>(dailyQClean,
-                              <span class="dt">drainArea=</span>drainageArea,
-                              <span class="dt">floodThreshold=</span>floodThresh)
+calc_allHITOut &lt;-<span class="st"> </span><span class="kw">calc_allHIT</span>(dailyQClean,
+<span class="dt">drainArea=</span>drainageArea,
+<span class="dt">floodThreshold=</span>floodThresh)
 
 <span class="co">#Calculate mag7 stats</span>
-magnifStatsOut &lt;-<span class="st"> </span><span class="kw">magnifSeven</span>(dailyQClean, <span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>, <span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
-<p>Deffinitions of the statistics calculated by EflowStats can be found in Henriksen et al, 2006 and Archfield et al., 2013 as well as in the package function documentation. Users who have used the hydroecological integrity assessment process software or previous versions of EflowStats may find slight differences in the output of the latest package. The package has undergone extensive review and every effort has been made to ensure faithful reproduction of the statistics as defined in Henriksen et al, 2006. Users interested in records of correspondence between the old package and the new package are directed to the summary in <a href="https://github.com/USGS-R/EflowStats/issues/132">this issue</a> and the history of review documented in <a href="https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed">other closed issues.</a></p>
+magnifStatsOut &lt;-<span class="st"> </span><span class="kw">calc_magnifSeven</span>(dailyQClean,<span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>,<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
+
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
