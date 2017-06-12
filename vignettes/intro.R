@@ -7,7 +7,6 @@
 #                       parameterCd = "00060",
 #                       startDate = "2000-10-01",
 #                       endDate = "2012-9-30")
- 
 #  #Check data for completeness
 #  dailyQClean <- validate_data(dailyQ[c("Date","X_00060_00003")],yearType="water")
 #  
@@ -27,7 +26,7 @@
 #  dailyQClean <- dataCheck(dailyQ[c("Date", "X_00060_00003")], yearType="water")
 #  
 #  #Get flood recurence threshold
-
+#  
 #  floodThresh <- get_peakThreshold(dailyQClean[c("date","discharge")],
 #  peakFlows[c("peak_dt","peak_va")])
 #  
@@ -38,5 +37,6 @@
 #  
 #  #Calculate mag7 stats
 #  magnifStatsOut <- calc_magnifSeven(dailyQClean,yearType="water",digits=3)
+#  
 #  
 

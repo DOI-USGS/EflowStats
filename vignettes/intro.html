@@ -69,39 +69,37 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Introduction and basic workflow for EflowStats</h1>
 <h4 class="author"><em>T. Joe Mills</em></h4>
-<h4 class="date"><em>22 May, 2017</em></h4>
+<h4 class="date"><em>12 June, 2017</em></h4>
 
 
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p><code>EflowStats</code> Is a reimplementation of the Hydrologic Index Tool (HIT; Henriksen et al, 2006) for calculating 171 hydrologic indices for stream classification analysis. Additionally, <code>EflowStats</code> can calculate 7 additional statistics used for streamflow classification reffered to as the “Magnificent Seven” (MAG7, Archfield et al., 2013). Unlike the original HIT, EflowStats has been redesigned to injest general hydrologic timeseries data and is not restricted to data formats used by the USGS National Water Information System.</p>
+<p><code>EflowStats</code> is a reimplementation of the Hydrologic Index Tool (HIT; Henriksen et al, 2006) for calculating 171 hydrologic indices for stream classification analysis. Additionally, <code>EflowStats</code> can calculate 7 additional statistics used for streamflow classification referred to as the “Magnificent Seven” (MAG7, Archfield et al., 2013). Unlike the original HIT, EflowStats has been redesigned to ingest general hydrologic timeseries data and is not restricted to data formats used by the USGS National Water Information System.</p>
 </div>
 <div id="a-basic-workflow" class="section level2">
 <h2>A basic workflow</h2>
-<p><code>EflowStats</code> can be used with the <code>dataRetrieval</code> R package to seamlessy calculate HIT and MAG7 satistics for any USGS stream gage.</p>
+<p><code>EflowStats</code> can be used with the <code>dataRetrieval</code> R package to seamlessly calculate HIT and MAG7 statistics for any USGS stream gage.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dataRetrieval)
 <span class="kw">library</span>(EflowStats)
 
 <span class="co">#Get some data</span>
 dailyQ &lt;-<span class="st"> </span><span class="kw">readNWISdv</span>(<span class="dt">siteNumber =</span> <span class="st">&quot;04085427&quot;</span>,
-
-<span class="dt">parameterCd =</span> <span class="st">&quot;00060&quot;</span>,
-<span class="dt">startDate =</span> <span class="st">&quot;2000-10-01&quot;</span>,
-<span class="dt">endDate =</span> <span class="st">&quot;2012-9-30&quot;</span>)
-
+                     <span class="dt">parameterCd =</span> <span class="st">&quot;00060&quot;</span>,
+                     <span class="dt">startDate =</span> <span class="st">&quot;2000-10-01&quot;</span>,
+                     <span class="dt">endDate =</span> <span class="st">&quot;2012-9-30&quot;</span>)
 <span class="co">#Check data for completeness</span>
 dailyQClean &lt;-<span class="st"> </span><span class="kw">validate_data</span>(dailyQ[<span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>,<span class="st">&quot;X_00060_00003&quot;</span>)],<span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>)
 
 <span class="co">#Get drainage area</span>
 siteInfo &lt;-<span class="st"> </span><span class="kw">readNWISsite</span>(<span class="dt">siteNumber =</span> <span class="st">&quot;04085427&quot;</span>)
-drainageArea &lt;-<span class="st"> </span>siteInfo<span class="op">$</span>drain_area_va
+drainageArea &lt;-<span class="st"> </span>siteInfo$drain_area_va
 
 <span class="co">#Get peak flows</span>
 peakFlows &lt;-<span class="st"> </span><span class="kw">readNWISpeak</span>(<span class="dt">siteNumber =</span> <span class="st">&quot;04085427&quot;</span>,
                           <span class="dt">startDate =</span> <span class="st">&quot;2000-10-01&quot;</span>,
                           <span class="dt">endDate =</span> <span class="st">&quot;2012-9-30&quot;</span>)</code></pre></div>
-<p>Users with their own time series data can use the package as long as the data can be coreced into a <code>data.frame</code> with dates of class “Date” in the first column, and stream flow values of class “Numeric” in the second. The code below shows steps to calculate all hydrologic indices available from the package.</p>
+<p>Users with their own time series data can use the package as long as the data can be coerced into a <code>data.frame</code> with dates of class <em>Date</em> in the first column, and stream flow values of class <em>Numeric</em> in the second. The code below shows steps to calculate all hydrologic indices available from the package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Check data for completeness</span>
 dailyQClean &lt;-<span class="st"> </span><span class="kw">dataCheck</span>(dailyQ[<span class="kw">c</span>(<span class="st">&quot;Date&quot;</span>, <span class="st">&quot;X_00060_00003&quot;</span>)], <span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>)
 
@@ -117,7 +115,7 @@ calc_allHITOut &lt;-<span class="st"> </span><span class="kw">calc_allHIT</span>
 
 <span class="co">#Calculate mag7 stats</span>
 magnifStatsOut &lt;-<span class="st"> </span><span class="kw">calc_magnifSeven</span>(dailyQClean,<span class="dt">yearType=</span><span class="st">&quot;water&quot;</span>,<span class="dt">digits=</span><span class="dv">3</span>)</code></pre></div>
-
+<p>Definitions of the statistics calculated by EflowStats can be found in Henriksen et al, 2006 and Archfield et al., 2013 as well as in the package function documentation. Users who have used the hydroecological integrity assessment process software or previous versions of EflowStats (&lt;v1.0) may find slight differences in the output of the new package (&gt;v1.0). The package has undergone extensive review and every effort has been made to ensure faithful reproduction of the statistics as defined in Henriksen et al, 2006. Users interested in records of correspondence between the old package (&lt;v1.0) and the new package (&gt;v1.0) are directed to the summary in the <a href="packageDiscrepencies.html">Package Discrepancies vignette</a>. Additionally, a comparison with output from the old package and the new package can be found at <a href="https://github.com/USGS-R/EflowStats/issues/132">this issue</a> and the history of review documented in <a href="https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed">other closed issues.</a>.</p>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>
