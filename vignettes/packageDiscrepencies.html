@@ -31,14 +31,14 @@
 
 <h1 class="title toc-ignore">Package discrepencies</h1>
 <h4 class="author"><em>T. Joe Mills</em></h4>
-<h4 class="date"><em>12 June, 2017</em></h4>
+<h4 class="date"><em>13 June, 2017</em></h4>
 
 
 
-<p>This vignette summarizes discrepancies between the statistic calculations in the new (&gt;v1.0) and the old (&lt;v1.0) EflowStats packages. In general, the authors of the new EflowStats package focused primarily on ensuring that the statistics were calculated according to the definitions stated in Henriksen et al, 2006, rather than on reproducing output from previous package versions or the original HITHAT software. This process uncovered a number of issues with the old EflowStats statistics as well as some statistics calculated in the original HITHAT software (Henriksen et al, 2006). A record of this process can be found in the <a href="https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed">Closed issues</a> page of the GitHub repository for this package.</p>
+<p>This vignette summarizes discrepancies between the statistic calculations in the new (&gt;v1.0) and the old (&lt;v1.0) EflowStats packages. In general, the authors focused on ensuring that the statistics were calculated according to the definitions stated in Henriksen et al, 2006, rather than on reproducing output from previous package versions or the original HITHAT software. This process uncovered a number of issues with both the old EflowStats (&gt;v1.0) statistics and the original HITHAT software (Henriksen et al, 2006). A record of this process can be found in the <a href="https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed">Closed issues</a> page of the EflowStats GitHub repository.</p>
 <div id="issues-in-original-hithat-software" class="section level2">
 <h2>Issues in original HITHAT software</h2>
-<p>The original HITHAT software contained two bugs in the code that affected a number of the statistics. One bug involved the calculation of monthly means where a single monthly value was returned rather than the mean. This bug affects many statistics that rely on monthly means, such as the MA12-23 statistics. A similar bug was found with 7-day rolling mean calculations and influenced the ML17-18 statistics.</p>
+<p>The original HITHAT software contained two bugs in the code that affected a number of the statistics. One involved the calculation of summary monthly statistics where a single month statistic was returned rather than the period of record summary for that month. This bug affects many statistics that rely on monthly period of record summaries, such as the MA12-23 statistics. A similar bug was found with 7-day rolling mean calculations and influenced the ML17-18 statistics.</p>
 </div>
 <div id="old-eflowstats-package-issues" class="section level2">
 <h2>Old EflowStats package issues</h2>
@@ -60,7 +60,7 @@
 <div id="general-changes-in-the-new-eflowstats" class="section level2">
 <h2>General changes in the new EflowStats</h2>
 <p>The majority of the statistics calculated by EflowStats require the data to be sorted in chronological order. The old EflowStats package did not check if the data were sorted appropriately. The new EflowStats package now sorts the data in chronological order by default.</p>
-<p>Leap years were not handled appropriately in neither the original HITHAT software nor the old EflowStats package. In both cases, the 366th day of the year was removed during leap years rather than February 29th. This can have an affect on a number of the statistics, albeit small in most cases. The new package now appropriately handles leap years and omits February 29th for statistics that rely on a 365 day year.</p>
+<p>Leap years were not handled appropriately in the original HITHAT software or the old EflowStats package. In both cases, the 366th day of the year was removed during leap years rather than February 29th. This can have an affect on a number of the statistics, albeit small in most cases. The new package now appropriately handles leap years and omits February 29th for statistics that rely on a 365 day year.</p>
 <p>To calculate the maximum number of events in a given two month period, the old EflowStats package used fixed 2 month blocks. A more appropriate method is to use a 2-month rolling window. The new EflowStats package uses a 2-month rolling window to calculate statistics that rely on determining the number of events in any given 2 month window, such as the TL3 and TA3 statistics.</p>
 </div>
 
