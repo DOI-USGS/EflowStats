@@ -63,12 +63,13 @@ calc_timingLow <- function(x,yearType = "water",digits=3,pref="mean",floodThresh
                              # arctan returns -90 -> 0 -> 90 but we should return
                              # 90 -> 180 -> 270 so add 180 to output.
                 tl1_temp <- (atan(ybar/xbar)*180/pi)+180
-        } else if (xbar==0 && ybar>0) {
+        } else if (xbar==0 && ybar>0) { # discontinuity
                 tl1_temp <- 90
-        } else if (xbar==0 && ybar<0) {
+        } else if (xbar==0 && ybar<0) { # discontinuity
                 tl1_temp <- 270
         }
         
+        # if tl1_temp is negative from above (for 270 or 3pi/2 to 360 or 2pi degrees) just add 360.
         tl1_temp <- ifelse(tl1_temp<0,tl1_temp+360,tl1_temp)
         tl1 <- round(tl1_temp*365.25/360)
         
