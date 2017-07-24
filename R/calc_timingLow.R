@@ -59,7 +59,9 @@ calc_timingLow <- function(x,yearType = "water",digits=3,pref="mean",floodThresh
         ybar <- mean(flowSum_year$mdata)
         if (xbar>0) { # if x component is greater than 0, just return the angle.
                 tl1_temp <- atan(ybar/xbar)*180/pi
-        } else if (xbar<0) { # if x component is less than 0, arctan returns less than 180 but days should be 
+        } else if (xbar<0) { # if x component is less than 0 (angles pi/2 to 3pi/2), 
+                             # arctan returns -90 -> 0 -> 90 but we should return
+                             # 90 -> 180 -> 270 so add 180 to output.
                 tl1_temp <- (atan(ybar/xbar)*180/pi)+180
         } else if (xbar==0 && ybar>0) {
                 tl1_temp <- 90
