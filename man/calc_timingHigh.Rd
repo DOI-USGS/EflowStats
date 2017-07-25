@@ -40,6 +40,8 @@ components and convert to a date.
 flow is less than the 1.67-year flood threshold and also occurs in all years. Accumulate nonflood days that 
 span all years. TH3 is maximum length of those flood-free periods divided by 365.  
 }
+Note: In these definitions, “Julian date” should be interpreted as the count of days starting with 1 on January 
+first of a given year, ending at 365 or 366 on December 31st.
 }
 \examples{
 x <- sampleData[c("date","discharge")]

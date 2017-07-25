@@ -19,6 +19,8 @@
 #' flow is less than the 1.67-year flood threshold and also occurs in all years. Accumulate nonflood days that 
 #' span all years. TH3 is maximum length of those flood-free periods divided by 365.  
 #' }
+#' Note: In these definitions, “Julian date” should be interpreted as the count of days starting with 1 on January 
+#' first of a given year, ending at 365 or 366 on December 31st.
 #' @return A data.frame of flow statistics
 #' @importFrom lubridate year
 #' @importFrom lubridate month
@@ -36,30 +38,33 @@ calc_timingHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThres
         
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)
-        #x$jul_day <- lubridate::yday(x$date)
+        x$calendar_day <- lubridate::yday(x$date)
         
+        # Calculate max flow value and calendat day of max flow for every year.
         flowSum_year <- dplyr::summarize(dplyr::group_by(x,year_val),
                                             maxFlow = max(discharge),
-                                         maxFlowJulDay = min(day[discharge==max(discharge)])
+                                         maxFlowJulDay = min(calendar_day[discharge==max(discharge)])
                                          )
         
-        #th1
+        #th1 Convert the max flow julian day to psuedo-radians and take cos (x) and sin (y). 
         flowSum_year$np <- cos(flowSum_year$maxFlowJulDay*2*pi/365.25)
         flowSum_year$mdata <- sin(flowSum_year$maxFlowJulDay*2*pi/365.25)
 
+        # Average accross all years.
         xbar <- mean(flowSum_year$np)
         ybar <- mean(flowSum_year$mdata)
-        if (xbar>0) {
+        if (xbar>0) { # if x component is greater than 0, just return the angle.
                 th1_temp <- atan(ybar/xbar)*180/pi
-        } else if (xbar<0) {
-                th1_temp <- (atan(ybar/xbar)*180/pi)+180
+        } else if (xbar<0) {# if x component is less than 0 (angles pi/2 to 3pi/2), arctan returns -90 -> 0 -> 90 
+                th1_temp <- (atan(ybar/xbar)*180/pi)+180 # but we should return 90 -> 180 -> 270 so add 180 to output.
         } else if (xbar==0 && ybar>0) {
                 th1_temp <- 90
         } else if (xbar==0 && ybar<0) {
                 th1_temp <- 270
         }
         
-        th1_temp <- ifelse(th1_temp<0,th1_temp+360,th1_temp)
+        # if th1_temp is negative from above (for 270 or 3pi/2 to 360 or 2pi degrees) just add 360.
+        th1_temp <- ifelse(th1_temp<0,th1_temp+360,th1_temp) 
         th1 <- th1_temp*365.25/360
         
         #th2
