@@ -7,7 +7,7 @@ Calculates a suite of ecological flow statistics and fundamental properties of d
 | [![travis](https://travis-ci.org/USGS-R/EflowStats.svg?branch=master)](https://travis-ci.org/USGS-R/EflowStats) | [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/USGS-R/EflowStats?branch=master&svg=true)](https://ci.appveyor.com/project/USGS-R/EflowStats) | [![Coverage Status](https://coveralls.io/repos/github/USGS-R/EflowStats/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/EflowStats?branch=master) | [![status](https://img.shields.io/badge/USGS-Research-blue.svg)](https://owi.usgs.gov/R/packages.html#research) |
 
 ## !!!NOTICE!!!
-There have been major revisions to `EflowStats` since version 4.1.1! [Review the intro vignette](https://cdn.rawgit.com/USGS-R/EflowStats/9507f714/inst/doc/intro.html) for how to use the package and a brief description of changes [in this vignette.](https://cdn.rawgit.com/USGS-R/EflowStats/9507f714/inst/doc/packageDiscrepencies.html)
+There have been major revisions to `EflowStats` since version 4.1.1! [Review the intro vignette](https://cdn.rawgit.com/USGS-R/EflowStats/9507f714/inst/doc/intro.html) for how to use the package and a brief description of changes [in this vignette.](https://cdn.rawgit.com/USGS-R/EflowStats/707bec71/inst/doc/packageDiscrepencies.html)
 
 ### Code of Conduct
 
