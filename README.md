@@ -9,6 +9,38 @@ Calculates a suite of ecological flow statistics and fundamental properties of d
 ## !!!NOTICE!!!
 There have been major revisions to `EflowStats` since version 4.1.1! [Review the intro vignette](https://cdn.rawgit.com/USGS-R/EflowStats/9507f714/inst/doc/intro.html) for how to use the package and a brief description of changes [in this vignette.](https://cdn.rawgit.com/USGS-R/EflowStats/707bec71/inst/doc/packageDiscrepencies.html)
 
+### Installation
+
+EflowStats is available from the Geological Survey R Archive Network (GRAN).  The preferred install method alters your R profile so GRAN works just like CRAN. 
+
+```
+rprofile_path = file.path(Sys.getenv("HOME"), ".Rprofile")
+write('\noptions(repos=c(getOption(\'repos\'),
+    CRAN=\'https://cloud.r-project.org\',
+    USGS=\'https://owi.usgs.gov/R\'))\n',
+      rprofile_path, 
+      append =  TRUE)
+
+cat('Your Rprofile has been updated to include GRAN.
+    Please restart R for changes to take effect.')
+```
+Once you've restarted R, you can do:  
+`install.packages("EflowStats")`  
+And you can update with:  
+`update.packages()`  
+
+It is also possible to install without add GRAN to your rprofile, but automatic package updates will not be installed with `update.packages()`.  
+```
+install.packages("smwrData", repos=c("https://owi.usgs.gov/R",getOption("repos")))
+```
+More details are available at the [GRAN web page.](https://owi.usgs.gov/R/gran.html)
+
+To install the latest and greatest build use the following code:
+
+```r
+devtools::install_github("USGS-R/EflowStats")
+```
+
 ### Code of Conduct
 
 We want to encourage a warm, welcoming, and safe environment for contributing to this project. See the [code of conduct](https://github.com/USGS-R/EflowStats/blob/master/CONDUCT.md) for more information.
@@ -26,15 +58,6 @@ The Water Mission Area of the USGS has supported the development and maintenance
 ### Overview
 
 The `EflowStats` package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with U.S. Geological Survey (USGS) National Water Information System (NWIS) data. This package is intended to be an update of the previously existing USGS National Hydrologic Assessment Tool (NAHAT) program with additional statistics previously published by Archfield et al (Archfield).
-
-
-### Installation
-
-To install the latest build of this package use the following code:
-
-```r
-devtools::install_github("USGS-R/EflowStats")
-```
 
 ### References
 
