@@ -28,3 +28,10 @@ check_preference <- function(pref) {
                 stop("Preference must be either mean or median") 
         }
 }
+
+.onAttach <- function(libname, pkgname) {
+        packageStartupMessage(paste(strwrap(
+                'USGS Research Package: 
+                https://owi.usgs.gov/R/packages.html#research'),
+                collapse='\n'))
+}

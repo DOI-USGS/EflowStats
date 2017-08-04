@@ -18,3 +18,4 @@ test_stats_huc12_modeled_performance.R
 appveyor.yml
 EflowStats.bbl
 ^appveyor\.yml$
+CONDUCT.md

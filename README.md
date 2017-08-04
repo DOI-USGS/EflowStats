@@ -1,20 +1,32 @@
-EflowStats
-===========
+# `EflowStats`
 
-Linux Tests: [![travis](https://travis-ci.org/USGS-R/EflowStats.svg?branch=master)](https://travis-ci.org/USGS-R/EflowStats)
-
-Windows Tests: [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/USGS-R/EflowStats?branch=master&svg=true)](https://ci.appveyor.com/project/USGS-R/EflowStats)
-
-Code Coverage: [![Coverage Status](https://coveralls.io/repos/github/USGS-R/EflowStats/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/EflowStats?branch=master)
-
-ACHTUNG!
-----------
-There have been major revisions to `EflowStats`!. Please see issues listed in table below.
-Currently under development. Careful scrutiny of output is required and output may change at any time.
-
-Overview
-----------
 Calculates a suite of ecological flow statistics and fundamental properties of daily streamflow for a given set of data. 
+
+|Linux|Windows| Test Coverage | USGS Status |
+|----------|------------|------------|------------|
+| [![travis](https://travis-ci.org/USGS-R/EflowStats.svg?branch=master)](https://travis-ci.org/USGS-R/EflowStats) |
+| [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/USGS-R/EflowStats?branch=master&svg=true)](https://ci.appveyor.com/project/USGS-R/EflowStats) |
+| Code Coverage: [![Coverage Status](https://coveralls.io/repos/github/USGS-R/EflowStats/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/EflowStats?branch=master) |
+| [![status](https://img.shields.io/badge/USGS-Research-blue.svg)](https://owi.usgs.gov/R/packages.html#research) |
+
+## !!!NOTICE!!!
+There have been major revisions to `EflowStats` since version 4.1.1!. [Review the latest [vignette](https://cdn.rawgit.com/USGS-R/EflowStats/9507f714/inst/doc/intro.html) for how to use the package and a brief description of changes [in this vignette.]((https://cdn.rawgit.com/USGS-R/EflowStats/9507f714/inst/doc/packageDiscrepencies.html))
+
+### Code of Conduct
+
+We want to encourage a warm, welcoming, and safe environment for contributing to this project. See the [code of conduct](https://github.com/USGS-R/EflowStats/blob/master/CONDUCT.md) for more information.
+
+### Reporting bugs
+
+Please consider reporting bugs and asking questions on the [Issues page.](https://github.com/USGS-R/EGRET/issues)
+
+### Package Support
+
+The Water Mission Area of the USGS has supported the development and maintenance of the `EflowStats` R-package. Further maintenance is expected to be stable until further notice. Resources are available primarily for maintenance and responding to user questions. Priorities on the development of new features are determined by the `EflowStats` development team.
+
+![USGS](http://usgs-r.github.io/images/usgs.png)
+
+### Overview
 
 The `EflowStats` package was created to simplify the process of generating hydrologic indicator statistics using daily streamflow records. It has been specifically designed to work seamlessly with U.S. Geological Survey (USGS) National Water Information System (NWIS) data. This package is intended to be an update of the previously existing USGS National Hydrologic Assessment Tool (NAHAT) program with additional statistics previously published by Archfield et al (Archfield).
 
