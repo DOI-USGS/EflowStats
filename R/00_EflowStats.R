@@ -21,7 +21,8 @@ month_val <- discharge <- leapYear <- day <-
         roll30Mean <- roll90Mean <- events <- 
         . <- highFlow <- CV <- block <- 
         peakQ <- flow <- maxFlow <-  
-        minFlow <- event <- ".dplyr.var"
+        minFlow <- event <- calendar_day <- 
+        ".dplyr.var"
 
 check_preference <- function(pref) {
         if(!pref %in% c("mean", "median")){ 
