@@ -29,9 +29,9 @@ Once you've restarted R, you can do:
 And you can update with:  
 `update.packages()`  
 
-It is also possible to install without add GRAN to your rprofile, but automatic package updates will not be installed with `update.packages()`.  
+It is also possible to install without adding GRAN to your rprofile, but automatic package updates will not be installed with `update.packages()`.  
 ```
-install.packages("smwrData", repos=c("https://owi.usgs.gov/R",getOption("repos")))
+install.packages("EflowStats", repos=c("https://owi.usgs.gov/R",getOption("repos")))
 ```
 More details are available at the [GRAN web page.](https://owi.usgs.gov/R/gran.html)
 
