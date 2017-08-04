@@ -9,7 +9,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-This vignette summarizes discrepancies between the statistic calculations in the new (>v1.0) and the old (<v1.0) EflowStats packages. In general, the authors focused on ensuring that the statistics were calculated according to the definitions stated in Henriksen et al, 2006, rather than on reproducing output from previous package versions or the original HITHAT software. This process uncovered a number of issues with both the old EflowStats (>v1.0) statistics and the original HITHAT software (Henriksen et al, 2006). A record of this process can be found in the [Closed issues](https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed) page of the EflowStats GitHub repository.
+This vignette summarizes discrepancies between the statistic calculations in the new (>v5.0.0) and the old (<v5.0.0) EflowStats packages. In general, the authors focused on ensuring that the statistics were calculated according to the definitions stated in Henriksen et al, 2006, rather than on reproducing output from previous package versions or the original HITHAT software. This process uncovered a number of issues with both the old EflowStats (>v5.0.0) statistics and the original HITHAT software (Henriksen et al, 2006). A record of this process can be found in the [Closed issues](https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed) page of the EflowStats GitHub repository.
 
 ## Issues in original HITHAT software
 
@@ -17,7 +17,7 @@ The original HITHAT software contained two bugs in the code that affected a numb
 
 ## Old EflowStats package issues
 
-There are a number of discrepancies between the new (v>1.0) and old (v<1.0) EflowStats packages. A list of these by statistic is provided below, but any additional changes to the EflowStats statistics in subsequent versions (>1.0) will be documented in the package _NEWS_ file. 
+There are a number of discrepancies between the new (v>5.0.0) and old (v<5.0.0) EflowStats packages. A list of these by statistic is provided below, but any additional changes to the EflowStats statistics in subsequent versions (>5.0.0) will be documented in the package _NEWS_ file. 
 
 ### DH and DL statistics
 
@@ -29,7 +29,7 @@ A second change affects the DH12-21 statistics. The original documentation in He
 Two bugs in the old EflowStats code affect some of the MA statistics. One minor issue caused incorrect rounding for the MA24-35 statistics and has been corrected in the new package. Another bug miscalculated the coefficient of variation and affected the MA3 statistic. This has been corrected in the new package.
 
 ### Magnificent Seven statistics
-The AR1 coefficient was miscalculated in the old EflowStats package. A bug in the old package caused some of the data to become disordered in time, which substantially influenced the calculation of the AR1 statistic. This has been fixed in the new package (>v1.0). Additionally, the phase calculation in the old EflowStats package was returned in radians, which was not very useful for interpretation. Thus, the value is now returned in units of days in the new (>v1.0) package.
+The AR1 coefficient was miscalculated in the old EflowStats package. A bug in the old package caused some of the data to become disordered in time, which substantially influenced the calculation of the AR1 statistic. This has been fixed in the new package (>v5.0.0). Additionally, the phase calculation in the old EflowStats package was returned in radians, which was not very useful for interpretation. Thus, the value is now returned in units of days in the new (>v5.0.0) package.
 
 ## General changes in the new EflowStats
 
