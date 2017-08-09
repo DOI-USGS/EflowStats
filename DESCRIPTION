@@ -4,7 +4,7 @@ Title: Hydrologic Indicator and Alteration Stats
 Version: 5.0.0
 Date: 2017-08-04
 Authors@R: c( person("Joe", "Mills", role = c("aut"),
-    email = "tjmillsco@gmail.com"),
+    email = "jmills@ucar.edu"),
               person("David", "Blodgett", role = c("aut","cre"),
     email = "dblodgett@usgs.gov"))
 Depends:
