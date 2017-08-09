@@ -4,7 +4,7 @@ Title: Returns Hydrologic Indicator stats for a given set of data
 Version: 1.0
 Date: 2017-04-04
 Authors@R: c( person("Joe", "Mills", role = c("aut","cre"),
-    email = "tjmillsco@gmail.com"),
+    email = "jmills@ucar.edu"),
               person("David", "Blodgett", role = c("aut"),
     email = "dblodgett@usgs.gov"))
 Depends:
