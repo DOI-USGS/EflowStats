@@ -31,18 +31,18 @@
 
 <h1 class="title toc-ignore">Package discrepencies</h1>
 <h4 class="author"><em>T. Joe Mills</em></h4>
-<h4 class="date"><em>13 June, 2017</em></h4>
+<h4 class="date"><em>04 August, 2017</em></h4>
 
 
 
-<p>This vignette summarizes discrepancies between the statistic calculations in the new (&gt;v1.0) and the old (&lt;v1.0) EflowStats packages. In general, the authors focused on ensuring that the statistics were calculated according to the definitions stated in Henriksen et al, 2006, rather than on reproducing output from previous package versions or the original HITHAT software. This process uncovered a number of issues with both the old EflowStats (&gt;v1.0) statistics and the original HITHAT software (Henriksen et al, 2006). A record of this process can be found in the <a href="https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed">Closed issues</a> page of the EflowStats GitHub repository.</p>
+<p>This vignette summarizes discrepancies between the statistic calculations in the new (&gt;v5.0.0) and the old (&lt;v5.0.0) EflowStats packages. In general, the authors focused on ensuring that the statistics were calculated according to the definitions stated in Henriksen et al, 2006, rather than on reproducing output from previous package versions or the original HITHAT software. This process uncovered a number of issues with both the old EflowStats (&gt;v5.0.0) statistics and the original HITHAT software (Henriksen et al, 2006). A record of this process can be found in the <a href="https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed">Closed issues</a> page of the EflowStats GitHub repository.</p>
 <div id="issues-in-original-hithat-software" class="section level2">
 <h2>Issues in original HITHAT software</h2>
 <p>The original HITHAT software contained two bugs in the code that affected a number of the statistics. One involved the calculation of summary monthly statistics where a single month statistic was returned rather than the period of record summary for that month. This bug affects many statistics that rely on monthly period of record summaries, such as the MA12-23 statistics. A similar bug was found with 7-day rolling mean calculations and influenced the ML17-18 statistics.</p>
 </div>
 <div id="old-eflowstats-package-issues" class="section level2">
 <h2>Old EflowStats package issues</h2>
-<p>There are a number of discrepancies between the new (v&gt;1.0) and old (v&lt;1.0) EflowStats packages. A list of these by statistic is provided below, but any additional changes to the EflowStats statistics in subsequent versions (&gt;1.0) will be documented in the package <em>NEWS</em> file.</p>
+<p>There are a number of discrepancies between the new (v&gt;5.0.0) and old (v&lt;5.0.0) EflowStats packages. A list of these by statistic is provided below, but any additional changes to the EflowStats statistics in subsequent versions (&gt;5.0.0) will be documented in the package <em>NEWS</em> file.</p>
 <div id="dh-and-dl-statistics" class="section level3">
 <h3>DH and DL statistics</h3>
 <p>There are two changes to the method for calculatings means that affect many of the DH and DL statistics. First, rolling means in the old EflowStats package were calculated on a yearly basis. This makes little sense because rolling means are influenced when the windowing period approaches the beginning or end of the record. By splitting the period of record on year values, it compounds the “edge of record” issue by creating edges for every yearly time series rather than just at the beginning and end of the period of record. The bias can be substantial for longer window (30 and 90-day) rolling means. Thus, rolling means are calculated in the new EflowStats on the entire period of record before splitting the record into yearly time series for subsequent calculations.</p>
@@ -54,7 +54,7 @@
 </div>
 <div id="magnificent-seven-statistics" class="section level3">
 <h3>Magnificent Seven statistics</h3>
-<p>The AR1 coefficient was miscalculated in the old EflowStats package. A bug in the old package caused some of the data to become disordered in time, which substantially influenced the calculation of the AR1 statistic. This has been fixed in the new package (&gt;v1.0). Additionally, the phase calculation in the old EflowStats package was returned in radians, which was not very useful for interpretation. Thus, the value is now returned in units of days in the new (&gt;v1.0) package.</p>
+<p>The AR1 coefficient was miscalculated in the old EflowStats package. A bug in the old package caused some of the data to become disordered in time, which substantially influenced the calculation of the AR1 statistic. This has been fixed in the new package (&gt;v5.0.0). Additionally, the phase calculation in the old EflowStats package was returned in radians, which was not very useful for interpretation. Thus, the value is now returned in units of days in the new (&gt;v5.0.0) package.</p>
 </div>
 </div>
 <div id="general-changes-in-the-new-eflowstats" class="section level2">

@@ -44,6 +44,8 @@ number of low flow events.
 threshold as the ratio of number of days to 365 or 366 (leap year) for each year. TL4 is the maximum of the yearly 
 ratios.
 }
+Note: In these definitions, "Julian date" should be interpreted as the count of days starting with 1 on January 
+first of a given year, ending at 365 or 366 on December 31st.
 }
 \examples{
 x <- sampleData[c("date","discharge")]
