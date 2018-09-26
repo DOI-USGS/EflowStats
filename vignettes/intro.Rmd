@@ -20,7 +20,7 @@ vignette: >
 `EflowStats` can be used with the `dataRetrieval` R package to seamlessly calculate HIT and MAG7 statistics for any USGS stream gage. 
   
   
-```{r message=FALSE, echo=TRUE, eval=FALSE}
+```{r message=FALSE, echo=TRUE, eval=TRUE}
 library(dataRetrieval)
 library(EflowStats)
 
@@ -45,10 +45,10 @@ peakFlows <- readNWISpeak(siteNumber = "04085427",
 
 Users with their own time series data can use the package as long as the data can be coerced into a `data.frame` with dates of class _Date_ in the first column, and stream flow values of class _Numeric_ in the second. The code below shows steps to calculate all hydrologic indices available from the package.
 
-```{r message=FALSE, echo=TRUE, eval=FALSE}
+```{r message=FALSE, echo=TRUE, eval=TRUE}
 
 #Check data for completeness
-dailyQClean <- dataCheck(dailyQ[c("Date", "X_00060_00003")], yearType="water")
+dailyQClean <- validate_data(dailyQ[c("Date", "X_00060_00003")], yearType="water")
 
 #Get flood recurence threshold
 
@@ -62,8 +62,6 @@ floodThreshold=floodThresh)
 
 #Calculate mag7 stats
 magnifStatsOut <- calc_magnifSeven(dailyQClean,yearType="water",digits=3)
-
-
 ```
 
 
