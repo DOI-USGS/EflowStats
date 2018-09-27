@@ -1,8 +1,20 @@
 #' validate_data Discharge timeseries screening
-#' @description Function to check dataframe inputs for appropriate data classes and screen for missing values.
-#' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
-#' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
-#' @return a data.frame with rows sorted by date.
+#' @description Function to check dataframe inputs for appropriate data 
+#' classes and screen for missing values.
+#' @param x A dataframe containing a vector of date values in the first 
+#' column and vector of numeric flow values in the second column.
+#' @param yearType A charcter of either "water" or "calendar" indicating 
+#' whether to use water years or calendar years, respectively.
+#' @return data.frame with rows sorted by date. Boolean FALSE if data is not
+#' found to be valid. (See details)
+#' @details Checks performed ensure the data is valid for use with other 
+#' EflowStats functions. 
+#' #' \enumerate{
+#'   \item First column must be of class `Date`.
+#'   \item Second must be of class `numeric`.
+#'   \item `yearType` input must be either "water" or "calendar". 
+#'   \item Every year as defined by the `yearType` input must be complete.
+#' }
 #' @examples
 #' x <- sampleData[c("date","discharge")]
 #' yearType = "water"
