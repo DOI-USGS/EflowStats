@@ -32,7 +32,7 @@ calc_magnifSeven<-function(x,yearType = "water",digits=3)  {
         #Compute AR(1) correlation coefficienct
         calc_ar1v<-calc_ar1(x,yearType = yearType,digits=digits)
         
-        get_seasonality_vars <- get_seasonality(x)
+        get_seasonality_vars <- get_seasonality(x, yearType = yearType)
         amplitude<-get_seasonality_vars[1]
         phase<-get_seasonality_vars[2]
         
