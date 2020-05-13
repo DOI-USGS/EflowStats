@@ -11,34 +11,15 @@ There have been major revisions to `EflowStats` since version 4.1.1! [Review the
 
 ### Installation
 
-EflowStats is available from the Geological Survey R Archive Network (GRAN).  The preferred install method alters your R profile so GRAN works just like CRAN. 
-
+To install the latest release of EflowStats see [releases](https://github.com/USGS-R/EflowStats/releases) to find the latest version and use:
+```r
+remotes::install_github("USGS-R/EflowStats@v5.0.1")
 ```
-rprofile_path = file.path(Sys.getenv("HOME"), ".Rprofile")
-write('\noptions(repos=c(getOption(\'repos\'),
-    CRAN=\'https://cloud.r-project.org\',
-    USGS=\'https://owi.usgs.gov/R\'))\n',
-      rprofile_path, 
-      append =  TRUE)
-
-cat('Your Rprofile has been updated to include GRAN.
-    Please restart R for changes to take effect.')
-```
-Once you've restarted R, you can do:  
-`install.packages("EflowStats")`  
-And you can update with:  
-`update.packages()`  
-
-It is also possible to install without adding GRAN to your rprofile, but automatic package updates will not be installed with `update.packages()`.  
-```
-install.packages("EflowStats", repos=c("https://owi.usgs.gov/R",getOption("repos")))
-```
-More details are available at the [GRAN web page.](https://owi.usgs.gov/R/gran.html)
 
 To install the latest and greatest build use the following code:
 
 ```r
-devtools::install_github("USGS-R/EflowStats")
+remotes::install_github("USGS-R/EflowStats")
 ```
 
 ### Code of Conduct
