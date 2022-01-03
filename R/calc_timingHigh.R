@@ -83,7 +83,12 @@ calc_timingHigh <- function(x,yearType = "water",digits=3,pref="mean",floodThres
                                         aggType = "none",
                                         type="low",
                                         trim = FALSE)
-        maxDuration <- max(nonFloodEvents$duration)
+        if(is.data.frame(nonFloodEvents)){
+                maxDuration <- max(nonFloodEvents$duration)
+        }else{
+                #Case when all flows are greater than floodThreshold
+                maxDuration <- 0
+        }
         th3 <- maxDuration/365
         } else(th3 <- NA)
         #output results
