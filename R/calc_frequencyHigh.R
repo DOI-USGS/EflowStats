@@ -125,7 +125,8 @@ calc_frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodTh
                                                       type="high")
                                    }
         )
-        yearlyCounts <- na.omit(yearlyCounts)
+        #Replace NAs with 0 so years with 0 events are counted
+        yearlyCounts$event[is.na(yearlyCounts$event)] <- 0
         
         #Get number of events each year
         yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
@@ -235,7 +236,8 @@ calc_frequencyHigh <- function(x,yearType = "water",digits=3,pref="mean",floodTh
                                                       type="high")
                                    }
         )
-        yearlyCounts <- na.omit(yearlyCounts)
+        #Replace NAs with 0 so years with 0 events are counted
+        yearlyCounts$event[is.na(yearlyCounts$event)] <- 0
         
         #Get number of events each year
         yearlyCounts <- dplyr::summarize(dplyr::group_by(yearlyCounts,year_val),
