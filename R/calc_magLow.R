@@ -91,9 +91,9 @@ calc_magLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mea
         
         
         #ml14-16
-        ml14 <- mean(flowSum_year$minFlow/flowSum_year$medFlow)
-        ml15 <- mean(flowSum_year$minFlow/flowSum_year$meanFlow)
-        ml16 <- median(flowSum_year$minFlow/flowSum_year$medFlow)
+        ml14 <- mean(flowSum_year$minFlow/flowSum_year$medFlow, na.rm = TRUE)
+        ml15 <- mean(flowSum_year$minFlow/flowSum_year$meanFlow, na.rm = TRUE)
+        ml16 <- median(flowSum_year$minFlow/flowSum_year$medFlow, na.rm = TRUE)
 
         
         #ml17-18
@@ -101,22 +101,22 @@ calc_magLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mea
                                       calc_bfi = calc_bfi(discharge))
         
         if (pref == "mean") {
-                ml17 <- mean(calc_bfibyyear$calc_bfi)
+                ml17 <- mean(calc_bfibyyear$calc_bfi, na.rm = TRUE)
         } else {
-                ml17 <- median(calc_bfibyyear$calc_bfi)
+                ml17 <- median(calc_bfibyyear$calc_bfi, na.rm = TRUE)
         }
         
-        sdcalc_bfi <- sd(calc_bfibyyear$calc_bfi)
-        meancalc_bfi <- mean(calc_bfibyyear$calc_bfi)
+        sdcalc_bfi <- sd(calc_bfibyyear$calc_bfi, na.rm = TRUE)
+        meancalc_bfi <- mean(calc_bfibyyear$calc_bfi, na.rm = TRUE)
         
         ml18 <- (sdcalc_bfi/meancalc_bfi)*100
 
         #ml19
         ratiominmean <- (flowSum_year$minFlow/flowSum_year$meanFlow)
         if (pref == "mean") {
-                ml19 <- mean(ratiominmean)*100
+                ml19 <- mean(ratiominmean, na.rm = TRUE)*100
         } else {
-                ml19 <- median(ratiominmean)*100
+                ml19 <- median(ratiominmean, na.rm = TRUE)*100
         }
 
         
