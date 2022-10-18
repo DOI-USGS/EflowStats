@@ -13,7 +13,7 @@ get_waterYear <- function(x, numeric=TRUE) {
         ##    2011Jun07 DLLorenz Conversion to R
         ##    2012Aug11 DLLorenz Integer fixes
         ##    2013Feb15 DLLorenz Prep for gitHub
-        ##    2016Aug12 Joe Mills stole this from smwrBase
+        ##    2016Aug12 Joe Mills copied this from smwrBase
         x <- as.POSIXlt(x)
         yr <- x$year + 1900L
         mn <- x$mon + 1L
