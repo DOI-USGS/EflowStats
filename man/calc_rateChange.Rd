@@ -4,8 +4,7 @@
 \alias{calc_rateChange}
 \title{Indices describing rate of change of flow.}
 \usage{
-calc_rateChange(x, yearType = "water", digits = 3, pref = "mean",
-  ...)
+calc_rateChange(x, yearType = "water", digits = 3, pref = "mean", ...)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}

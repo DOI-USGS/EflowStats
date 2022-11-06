@@ -4,8 +4,7 @@
 \alias{calc_frequencyLow}
 \title{Indices describing frequency of low flow events.}
 \usage{
-calc_frequencyLow(x, yearType = "water", digits = 3, pref = "mean",
-  ...)
+calc_frequencyLow(x, yearType = "water", digits = 3, pref = "mean", ...)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}

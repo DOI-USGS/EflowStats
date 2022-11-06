@@ -129,8 +129,7 @@ calc_magHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
                         mh20 <- mean(flowSum_year$maxFlow)/drainArea
                         
                 }        
-        } else(mh20 <- data.frame(indice = "mh20",
-                                  statistic = NA)
+        } else(mh20 <- NA
         )
         
         ###########################
@@ -184,15 +183,15 @@ calc_magHigh <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="me
         
         #Combine all indices into 1 dataframe and return
         mhOut <- data.frame(indice = c(paste0("mh",1:27)),
-                              statistic = c(mh1.12,
-                                            mh13,
-                                            mh14,
-                                            mh15.17,
-                                            mh18,
-                                            mh19,
-                                            mh20,
-                                            mh21.27),
-                              stringsAsFactors = F
+                            statistic = as.numeric(c(mh1.12,
+                                                     mh13,
+                                                     mh14,
+                                                     mh15.17,
+                                                     mh18,
+                                                     mh19,
+                                                     mh20,
+                                                     mh21.27)),
+                            stringsAsFactors = F
         )
         
         #Round to specified digits
