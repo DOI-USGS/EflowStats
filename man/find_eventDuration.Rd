@@ -4,8 +4,14 @@
 \alias{find_eventDuration}
 \title{Function to decompose a flow series into high flow events defined as flows above a given threshold.}
 \usage{
-find_eventDuration(x, threshold, aggType = "average", type = "high",
-  pref = "mean", trim = FALSE)
+find_eventDuration(
+  x,
+  threshold,
+  aggType = "average",
+  type = "high",
+  pref = "mean",
+  trim = FALSE
+)
 }
 \arguments{
 \item{x}{A vector of numeric flow values}

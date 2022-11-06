@@ -4,8 +4,14 @@
 \alias{calc_timingAverage}
 \title{Indices describing timing of average flow events.}
 \usage{
-calc_timingAverage(x, yearType = "water", digits = 3, pref = "mean",
-  floodThreshold = NULL, ...)
+calc_timingAverage(
+  x,
+  yearType = "water",
+  digits = 3,
+  pref = "mean",
+  floodThreshold = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}

@@ -4,8 +4,14 @@
 \alias{calc_magAverage}
 \title{Indices describing magnitude of the average flow condition.}
 \usage{
-calc_magAverage(x, yearType = "water", digits = 3, drainArea = NULL,
-  pref = "mean", ...)
+calc_magAverage(
+  x,
+  yearType = "water",
+  digits = 3,
+  drainArea = NULL,
+  pref = "mean",
+  ...
+)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}

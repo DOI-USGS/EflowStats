@@ -4,8 +4,14 @@
 \alias{calc_timingLow}
 \title{Indices describing timing of low flow events.}
 \usage{
-calc_timingLow(x, yearType = "water", digits = 3, pref = "mean",
-  floodThreshold = NULL, ...)
+calc_timingLow(
+  x,
+  yearType = "water",
+  digits = 3,
+  pref = "mean",
+  floodThreshold = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}
