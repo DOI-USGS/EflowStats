@@ -4,8 +4,14 @@
 \alias{calc_durationHigh}
 \title{Indices describing duration of high flow events.}
 \usage{
-calc_durationHigh(x, yearType = "water", digits = 3, pref = "mean",
-  floodThreshold = NULL, ...)
+calc_durationHigh(
+  x,
+  yearType = "water",
+  digits = 3,
+  pref = "mean",
+  floodThreshold = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}

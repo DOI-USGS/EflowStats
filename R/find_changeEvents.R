@@ -9,7 +9,7 @@
 #' @param x A vector of flow values, should be sorted chronologically.
 #' @return A dataframe with columns "flow" and "event"
 #' @importFrom stats na.omit
-#' @importFrom imputeTS na.locf
+#' @importFrom imputeTS na_locf
 #' @export
 #' @examples
 #' x <- sampleData$discharge
@@ -27,7 +27,7 @@ find_changeEvents <- function(x) {
                 changeEvents <- data.frame(flow = x,
                                            event = 0)
         }else{
-                changeDir <- imputeTS::na.locf(changeDir, na.remaining="rev")
+                changeDir <- na_locf(changeDir, na_remaining="rev")
                 
                 runLengths <- rle(changeDir)
                 

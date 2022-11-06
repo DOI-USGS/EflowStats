@@ -41,7 +41,7 @@
 #' }
 #' @return A data.frame of flow statistics
 #' @importFrom lubridate year
-#' @importFrom imputeTS na.interpolation
+#' @importFrom imputeTS na_interpolation
 #' @importFrom RcppRoll roll_min
 #' @importFrom stats median na.omit sd
 #' @import dplyr
@@ -155,7 +155,7 @@ calc_magLow <- function(x,yearType = "water",digits=3,drainArea = NULL,pref="mea
         }
         
         ##Approximate NA values using linear interpolation
-        blockMins$baseflow <- imputeTS::na.interpolation(blockMins$baseflow)
+        blockMins$baseflow <- na_interpolation(blockMins$baseflow)
         
         
         totalFlow <- sum(x$discharge)

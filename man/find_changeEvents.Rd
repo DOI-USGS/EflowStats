@@ -20,6 +20,7 @@ This function accepts a vector of flow values, tests if each value in the flow v
 is greater or less than the preceding value of flow, and classifies the flow vector into events. An event
 is defined as when a change in flow from one day to the next changes direction, e.g. rising limb to falling limb. 
 If there is no change in flow from one day to the next it is considered part of the preceding event.
+If there is no change in flow for the whole timeseries, the timeseries is assigned event 0.
 }
 \examples{
 x <- sampleData$discharge
