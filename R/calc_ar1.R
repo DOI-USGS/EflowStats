@@ -6,7 +6,8 @@
 #' correlation coefficient
 #' 
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
-#' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
+#' @param yearType A character of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
+#' @param wyMonth The month of the year in which the water year starts.
 #' @param digits A numeric. Number of digits to round indice values
 #' @importFrom stats ar
 #' @return calc_ar1 AR(1) correlation coefficient
@@ -14,11 +15,11 @@
 #' @examples
 #' x <- sampleData[c("date","discharge")]
 #' calc_ar1(x)
-calc_ar1 <- function(x,yearType="water",digits=3) {
+calc_ar1 <- function(x,yearType="water",wyMonth=10L,digits=3) {
         #First, deseasonalize the time series using the long-term monthly means
         #ds.timeseries<-deseason(data)  
         
-        x <- validate_data(x,yearType=yearType)
+        x <- validate_data(x,yearType=yearType,wyMonth=wyMonth)
         
         x$month_val <- lubridate::month(x$date)
         
