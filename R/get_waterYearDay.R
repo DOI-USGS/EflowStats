@@ -7,10 +7,10 @@
 #' @importFrom lubridate yday
 #' @export
 #' @examples
-#x <- seq(from=as.Date("2010-01-01"),to=as.Date("2016-01-01"),by="1 days")
-#year_day <- get_waterYearDay(x, 2L)
-#write.csv(year_day,"year_day_2.csv",row.names=FALSE)
+#' x <- seq(from=as.Date("2010-01-01"),to=as.Date("2016-01-01"),by="1 days")
+#' year_day <- get_waterYearDay(x, 2L)
 
+#write.csv(year_day,"year_day_2.csv",row.names=FALSE)
 #year_day_old <- get_waterYearDay_old(x)
 #write.csv(year_day_old,"year_day_old.csv",row.names=FALSE)
 #write.csv(x,"dates.csv",row.names=FALSE)
