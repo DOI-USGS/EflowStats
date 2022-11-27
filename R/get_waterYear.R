@@ -7,7 +7,6 @@
 #' @export
 #' @examples
 #' get_waterYear(sampleData$date)
-x <- seq(from=as.Date("2010-01-01"),to=as.Date("2016-01-01"),by="1 days")
 
 get_waterYear <- function(x, wyMonth=10L, numeric=TRUE) {
         ## Coding history:
