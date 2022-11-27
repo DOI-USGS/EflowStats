@@ -4,10 +4,12 @@
 \alias{get_waterYearDay}
 \title{Day of water year}
 \usage{
-get_waterYearDay(x)
+get_waterYearDay(x, wyMonth = 10L)
 }
 \arguments{
 \item{x}{A vector of class date.}
+
+\item{wyMonth}{A value of class integer}
 }
 \value{
 A numeric vector of day of water year
@@ -17,5 +19,5 @@ Given a vector of dates, calculates day of water year accounting for leap years.
 }
 \examples{
 x <- seq(from=as.Date("2010-01-01"),to=as.Date("2016-01-01"),by="1 days")
-get_waterYearDay(x)
+year_day <- get_waterYearDay(x, 2L)
 }

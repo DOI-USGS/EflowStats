@@ -4,7 +4,7 @@
 \alias{get_peakThreshold}
 \title{Function to return a specified flood threshold}
 \usage{
-get_peakThreshold(x, peakValues, perc = 0.6, yearType = "water")
+get_peakThreshold(x, peakValues, perc = 0.6, yearType = "water", wyMonth = 10L)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column 
@@ -17,6 +17,8 @@ column and vector of numeric annual peak flow values in the second column.}
 
 \item{yearType}{A charcter of either "water" or "calendar" indicating whether 
 to use water years or calendar years, respectively.}
+
+\item{wyMonth}{The month of the year in which the water year starts.}
 }
 \value{
 thresh numeric containing the flood threshold for recurence interval 
