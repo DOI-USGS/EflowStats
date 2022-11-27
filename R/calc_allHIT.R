@@ -2,6 +2,7 @@
 #' 
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
+#' @param wyMonth The month of the year in which the water year starts.
 #' @param digits A numeric. Number of digits to round indice values
 #' @param stats Character vector statistic groups. Choices are "all","calc_magAverage", "calc_magLow", "calc_magHigh", "calc_frequencyLow", "calc_frequencyHigh", "calc_durationLow", "calc_durationHigh", "calc_timingAverage", "calc_timingLow", "calc_timingHigh", "calc_rateChange"     
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
@@ -28,7 +29,7 @@
 #' @examples
 #' x <- sampleData[c("date","discharge")]
 #' calc_allHIT(x=x,yearType="water",stats="all",pref="mean",drainArea=50)
-calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",drainArea=NULL,floodThreshold = NULL) {
+calc_allHIT <- function(x,yearType="water",wyMonth=10L,stats="all",digits=3,pref="mean",drainArea=NULL,floodThreshold = NULL) {
         
 
         statsFuns <- list(
@@ -61,6 +62,7 @@ calc_allHIT <- function(x,yearType = "water",stats="all",digits=3,pref="mean",dr
         
         statsOut <- lapply(statsFuns[stats], do.call, list(x=x,
                                                            yearType=yearType,
+                                                           wyMonth=wyMonth,
                                                            digits=digits,
                                                            pref=pref,
                                                            drainArea=drainArea,
