@@ -11,10 +11,11 @@
 #'   \item `wyMonth`input must be of class `integer`. 
 #' }
 #' @examples
+#' x <- sampleData[, c('date', 'discharge')]
+#' cut_dataToWaterYear(x,10L)
 #' @export
 
-#x <- sampleData[, c('date', 'discharge')]
-#y <- cut_dataToWaterYear(x,10L)
+
 
 cut_dataToWaterYear <- function(x,wyMonth=10L) {
   ###rename dataframe for convenient use inside function
