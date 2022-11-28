@@ -21,4 +21,5 @@ Function to return the water year for a given date
 }
 \examples{
 get_waterYear(sampleData$date)
+
 }

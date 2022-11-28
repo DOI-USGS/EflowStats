@@ -7,7 +7,7 @@
 #' @export
 #' @examples
 #' get_waterYear(sampleData$date)
-
+#' 
 get_waterYear <- function(x, wyMonth=10L, numeric=TRUE) {
         ## Coding history:
         ##    2005Jul14 DLLorenz Initial dated verion

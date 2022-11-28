@@ -81,4 +81,5 @@ drainArea <- 50
 yearType = "water"
 calc_magHigh(x=x,yearType=yearType,drainArea=drainArea)
 
+
 }
