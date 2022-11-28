@@ -6,7 +6,10 @@ Date: 2017-08-04
 Authors@R: c( person("Joe", "Mills", role = c("aut"),
     email = "jmills@ucar.edu"),
               person("David", "Blodgett", role = c("aut","cre"),
-    email = "dblodgett@usgs.gov"))
+    email = "dblodgett@usgs.gov"),
+              person("Jens", "Kiesel", role = c("ctb"),
+    email = "jkiesel@hydrology.uni-kiel.de")
+    )
 Depends:
     R (>= 3.3)
 Imports:
