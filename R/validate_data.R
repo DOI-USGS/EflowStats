@@ -5,7 +5,8 @@
 #' column and vector of numeric flow values in the second column.
 #' @param yearType A character of either "water" or "calendar" indicating 
 #' whether to use water years or calendar years, respectively.
-#' @param wyMonth The month of the year in which the water year starts.
+#' @param wyMonth A numeric. The month of the year in which the water year starts 
+#' (1=January, 12=December). The water year begins on the first day of wyMonth.
 #' @return data.frame with rows sorted by date. Boolean FALSE if data is not
 #' found to be valid. (See details)
 #' @details Checks performed ensure the data is valid for use with other 

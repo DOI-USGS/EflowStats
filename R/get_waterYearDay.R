@@ -1,7 +1,9 @@
 #' Day of water year
 #' @description Given a vector of dates, calculates day of water year accounting for leap years.
 #' @param x A vector of class date.
-#' @param wyMonth A value of class integer
+#' @param wyMonth A numeric. The month of the year in which the water year starts 
+#' (1=January, 12=December). The water year begins on the first day of wyMonth.
+
 #' @return A numeric vector of day of water year
 #' @importFrom lubridate leap_year
 #' @importFrom lubridate yday

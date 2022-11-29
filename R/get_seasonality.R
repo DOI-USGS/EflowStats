@@ -6,7 +6,8 @@
 #' 
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
-#' @param wyMonth The month of the year in which the water year starts.
+#' @param wyMonth A numeric. The month of the year in which the water year starts 
+#' (1=January, 12=December). The water year begins on the first day of wyMonth.
 #' @importFrom stats .lm.fit coef
 #' @return get_seasonality vector of seasonal factors (amplitude and phase)
 #' @examples 

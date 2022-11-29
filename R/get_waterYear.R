@@ -2,7 +2,8 @@
 #' 
 #' @param x A date vector
 #' @param numeric Logical. Return values are numeric vector or vector of ordered factors
-#' @param wyMonth A value of class integer
+#' @param wyMonth A numeric. The month of the year in which the water year starts 
+#' (1=January, 12=December). The water year begins on the first day of wyMonth.
 #' @return A vector of numeric water years for each date if \code{numeric = TRUE} otherwise an ordered factor of water years if \code{numeric = FALSE}
 #' @export
 #' @examples

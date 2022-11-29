@@ -8,7 +8,8 @@
 #' column and vector of numeric annual peak flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether 
 #' to use water years or calendar years, respectively.
-#' @param wyMonth The month of the year in which the water year starts.
+#' @param wyMonth A numeric. The month of the year in which the water year starts 
+#' (1=January, 12=December). The water year begins on the first day of wyMonth.
 #' @param perc value containing the desired percentile to be calculated
 #' @return thresh numeric containing the flood threshold for recurence interval 
 #' specified by \code{perc}

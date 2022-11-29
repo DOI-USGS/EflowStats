@@ -7,7 +7,8 @@
 #' 
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A character of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
-#' @param wyMonth The month of the year in which the water year starts.
+#' @param wyMonth A numeric. The month of the year in which the water year starts 
+#' (1=January, 12=December). The water year begins on the first day of wyMonth.
 #' @param digits A numeric. Number of digits to round indice values
 #' @importFrom stats ar
 #' @return calc_ar1 AR(1) correlation coefficient
