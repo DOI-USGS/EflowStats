@@ -34,8 +34,8 @@ cut_dataToWaterYear <- function(x,wyMonth=10L) {
   ndays_last_year <- nrow(x[x$year_val == last_year,])
   
   # get the target number of days (depends if water year is in a leap year or not)
-  ndays_first_year_target <- ifelse(lubridate::leap_year(as.Date(paste(first_year,"01","01", sep = "-"))), 366, 365)
-  ndays_last_year_target <- ifelse(lubridate::leap_year(as.Date(paste(last_year,"01","01", sep = "-"))), 366, 365)
+  ndays_first_year_target <- ifelse(lubridate::leap_year(first_year), 366, 365)
+  ndays_last_year_target <- ifelse(lubridate::leap_year(last_year), 366, 365)
   
   # remove the first and last year if number of days is less than target number
   if(ndays_first_year < ndays_first_year_target){
