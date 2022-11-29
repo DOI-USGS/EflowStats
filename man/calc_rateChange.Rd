@@ -18,7 +18,8 @@ calc_rateChange(
 
 \item{yearType}{A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.}
 
-\item{wyMonth}{The month of the year in which the water year starts.}
+\item{wyMonth}{A numeric. The month of the year in which the water year starts 
+(1=January, 12=December). The water year begins on the first day of wyMonth.}
 
 \item{digits}{A numeric. Number of digits to round indice values}
 

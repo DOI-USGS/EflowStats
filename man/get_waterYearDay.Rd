@@ -9,7 +9,8 @@ get_waterYearDay(x, wyMonth = 10L)
 \arguments{
 \item{x}{A vector of class date.}
 
-\item{wyMonth}{A value of class integer}
+\item{wyMonth}{A numeric. The month of the year in which the water year starts 
+(1=January, 12=December). The water year begins on the first day of wyMonth.}
 }
 \value{
 A numeric vector of day of water year
