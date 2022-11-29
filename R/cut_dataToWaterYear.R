@@ -1,7 +1,8 @@
 #' Cuts the discharge time series to full water years
-#' @param x A dataframe containing a vector of date values in the first 
+#' @param x data.frame containing a vector of date values in the first 
 #' column and vector of numeric flow values in the second column.
-#' @param wyMonth The month of the year in which the water year starts. The water year begins on the first day of wyMonth.
+#' @param wyMonth integer month of the year in which the water year starts. 
+#' The water year begins on the first day of wyMonth.
 #' @return data.frame in original structure, but cut to full water years
 #' @details To ensure the input data is valid for use with other 
 #' EflowStats functions. 
@@ -14,9 +15,7 @@
 #' x <- sampleData[, c('date', 'discharge')]
 #' cut_dataToWaterYear(x,10L)
 #' @export
-
-
-
+#' 
 cut_dataToWaterYear <- function(x,wyMonth=10L) {
   ###rename dataframe for convenient use inside function
   old_names <- colnames(x)
