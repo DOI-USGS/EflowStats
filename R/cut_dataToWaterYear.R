@@ -19,6 +19,7 @@
 
 cut_dataToWaterYear <- function(x,wyMonth=10L) {
   ###rename dataframe for convenient use inside function
+  old_names <- colnames(x)
   names(x) <- c("date","discharge")
   
   ###Order by date
@@ -27,15 +28,15 @@ cut_dataToWaterYear <- function(x,wyMonth=10L) {
   
   # get first and last water year integer of time series
   first_year <- x$year_val[1]
-  last_year <- x$year_val[length(x[,1])]
+  last_year <- x$year_val[nrow(x)]
   
   # get the current days of the first and last water year of time series
-  ndays_first_year <- length(x[x$year_val == first_year,][,1])
-  ndays_last_year <- length(x[x$year_val == last_year,][,1])
+  ndays_first_year <- nrow(x[x$year_val == first_year,])
+  ndays_last_year <- nrow(x[x$year_val == last_year,])
   
   # get the target number of days (depends if water year is in a leap year or not)
-  ndays_first_year_target <- ifelse(((first_year %% 4 == 0) & (first_year %% 100 != 0)) | (first_year %% 400 == 0), 366, 365)
-  ndays_last_year_target <- ifelse(((last_year %% 4 == 0) & (last_year %% 100 != 0)) | (last_year %% 400 == 0), 366, 365)
+  ndays_first_year_target <- ifelse(lubridate::leap_year(as.Date(paste(first_year,"01","01", sep = "-"))), 366, 365)
+  ndays_last_year_target <- ifelse(lubridate::leap_year(as.Date(paste(last_year,"01","01", sep = "-"))), 366, 365)
   
   # remove the first and last year if number of days is less than target number
   if(ndays_first_year < ndays_first_year_target){
@@ -44,5 +45,8 @@ cut_dataToWaterYear <- function(x,wyMonth=10L) {
   if(ndays_last_year < ndays_last_year_target){
     x <- x[x$year_val != last_year,]  # remove the last year if it does not have complete data
   }
+  # clean up the column names
+  x$year_val <- NULL
+  names(x) <- old_names
   return(x)
 }
