@@ -10,8 +10,8 @@ cut_dataToWaterYear(x, wyMonth = 10L)
 \item{x}{data.frame containing a vector of date values in the first 
 column and vector of numeric flow values in the second column.}
 
-\item{wyMonth}{integer month of the year in which the water year starts. 
-The water year begins on the first day of wyMonth.}
+\item{wyMonth}{A numeric. The month of the year in which the water year starts 
+(1=January, 12=December). The water year begins on the first day of wyMonth.}
 }
 \value{
 data.frame in original structure, but cut to full water years

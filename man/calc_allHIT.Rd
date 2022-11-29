@@ -18,9 +18,10 @@ calc_allHIT(
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}
 
-\item{yearType}{A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.}
+\item{yearType}{A character of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.}
 
-\item{wyMonth}{The month of the year in which the water year starts.}
+\item{wyMonth}{A numeric. The month of the year in which the water year starts 
+(1=January, 12=December). The water year begins on the first day of wyMonth.}
 
 \item{stats}{Character vector statistic groups. Choices are "all","calc_magAverage", "calc_magLow", "calc_magHigh", "calc_frequencyLow", "calc_frequencyHigh", "calc_durationLow", "calc_durationHigh", "calc_timingAverage", "calc_timingLow", "calc_timingHigh", "calc_rateChange"}
 

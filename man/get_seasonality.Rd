@@ -11,7 +11,8 @@ get_seasonality(x, yearType = "water", wyMonth = 10L)
 
 \item{yearType}{A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.}
 
-\item{wyMonth}{The month of the year in which the water year starts.}
+\item{wyMonth}{A numeric. The month of the year in which the water year starts 
+(1=January, 12=December). The water year begins on the first day of wyMonth.}
 }
 \value{
 get_seasonality vector of seasonal factors (amplitude and phase)
