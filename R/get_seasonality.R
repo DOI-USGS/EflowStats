@@ -6,16 +6,18 @@
 #' 
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
 #' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
+#' @param wyMonth A numeric. The month of the year in which the water year starts 
+#' (1=January, 12=December). The water year begins on the first day of wyMonth.
 #' @importFrom stats .lm.fit coef
 #' @return get_seasonality vector of seasonal factors (amplitude and phase)
 #' @examples 
 #' x <- sampleData[c("date","discharge")]
 #' get_seasonality(x=x)
 #' @export
-get_seasonality <- function(x,yearType = "water") {
+get_seasonality <- function(x,yearType = "water",wyMonth=10L) {
         
         #Check data inputs
-        x <- validate_data(x,yearType)
+        x <- validate_data(x,yearType=yearType,wyMonth=wyMonth)
         
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)

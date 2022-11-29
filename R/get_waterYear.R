@@ -2,11 +2,14 @@
 #' 
 #' @param x A date vector
 #' @param numeric Logical. Return values are numeric vector or vector of ordered factors
+#' @param wyMonth A numeric. The month of the year in which the water year starts 
+#' (1=January, 12=December). The water year begins on the first day of wyMonth.
 #' @return A vector of numeric water years for each date if \code{numeric = TRUE} otherwise an ordered factor of water years if \code{numeric = FALSE}
 #' @export
 #' @examples
 #' get_waterYear(sampleData$date)
-get_waterYear <- function(x, numeric=TRUE) {
+#' 
+get_waterYear <- function(x, wyMonth=10L, numeric=TRUE) {
         ## Coding history:
         ##    2005Jul14 DLLorenz Initial dated verion
         ##    2010Feb17 DLLorenz Added option to return numerics
@@ -18,7 +21,7 @@ get_waterYear <- function(x, numeric=TRUE) {
         yr <- x$year + 1900L
         mn <- x$mon + 1L
         ## adjust for water year
-        yr <- yr + ifelse(mn < 10L, 0L, 1L)
+        yr <- yr + ifelse(mn < wyMonth, 0L, 1L)
         if(numeric)
                 return(yr)
         ordered(yr)

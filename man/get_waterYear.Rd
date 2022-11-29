@@ -4,10 +4,12 @@
 \alias{get_waterYear}
 \title{Function to return the water year for a given date}
 \usage{
-get_waterYear(x, numeric = TRUE)
+get_waterYear(x, wyMonth = 10L, numeric = TRUE)
 }
 \arguments{
 \item{x}{A date vector}
+
+\item{wyMonth}{A value of class integer}
 
 \item{numeric}{Logical. Return values are numeric vector or vector of ordered factors}
 }
@@ -19,4 +21,5 @@ Function to return the water year for a given date
 }
 \examples{
 get_waterYear(sampleData$date)
+
 }

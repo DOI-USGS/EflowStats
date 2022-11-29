@@ -7,6 +7,7 @@
 calc_magAverage(
   x,
   yearType = "water",
+  wyMonth = 10L,
   digits = 3,
   drainArea = NULL,
   pref = "mean",
@@ -17,6 +18,8 @@ calc_magAverage(
 \item{x}{A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.}
 
 \item{yearType}{A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.}
+
+\item{wyMonth}{The month of the year in which the water year starts.}
 
 \item{digits}{A numeric. Number of digits to round indice values}
 

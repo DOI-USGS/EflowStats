@@ -2,7 +2,9 @@
 #' @description Calculates 24 indices used to describe the duration of low flow conditions. 
 #' See Table X in the EflowStats package vignette for a full description of indices.   
 #' @param x A dataframe containing a vector of date values in the first column and vector of numeric flow values in the second column.
-#' @param yearType A charcter of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
+#' @param yearType A character of either "water" or "calendar" indicating whether to use water years or calendar years, respectively.
+#' @param wyMonth A numeric. The month of the year in which the water year starts 
+#' (1=January, 12=December). The water year begins on the first day of wyMonth.
 #' @param digits A numeric. Number of digits to round indice values
 #' @param pref A character of either "mean" or "median", indicating whether to use mean or median. See details.
 #' @param ... Optional arguments needed for \code{calc_allHIT} function
@@ -64,9 +66,9 @@
 #' yearType = "water"
 #' calc_durationLow(x=x,yearType=yearType)
 #' 
-calc_durationLow <- function(x,yearType = "water",digits=3,pref="mean",...) {
+calc_durationLow <- function(x,yearType = "water",wyMonth=10L,digits=3,pref="mean",...) {
         #Check data inputs
-        x <- validate_data(x,yearType)
+        x <- validate_data(x,yearType=yearType,wyMonth=wyMonth)
         check_preference(pref)
         
         #calculate some stuff for use later

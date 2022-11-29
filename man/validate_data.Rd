@@ -4,14 +4,16 @@
 \alias{validate_data}
 \title{validate_data Discharge timeseries screening}
 \usage{
-validate_data(x, yearType)
+validate_data(x, yearType, wyMonth = 10L)
 }
 \arguments{
 \item{x}{A dataframe containing a vector of date values in the first 
 column and vector of numeric flow values in the second column.}
 
-\item{yearType}{A charcter of either "water" or "calendar" indicating 
+\item{yearType}{A character of either "water" or "calendar" indicating 
 whether to use water years or calendar years, respectively.}
+
+\item{wyMonth}{The month of the year in which the water year starts.}
 }
 \value{
 data.frame with rows sorted by date. Boolean FALSE if data is not
