@@ -38,6 +38,8 @@ get_peakThreshold <- function(x,peakValues,perc=0.6,yearType = "water",wyMonth=1
   #Check x data input
   x <- validate_data(x,yearType=yearType,wyMonth=wyMonth)
   
+  if(isFALSE(x)) stop("input data not valid")
+  
   #Check peakValues data input
   if (nrow(peakValues)<=1) {
     stop("peakValues must have a minimum of two annual values")
