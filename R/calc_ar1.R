@@ -22,6 +22,8 @@ calc_ar1 <- function(x,yearType="water",wyMonth=10L,digits=3) {
         
         x <- validate_data(x,yearType=yearType,wyMonth=wyMonth)
         
+        if(isFALSE(x)) stop("input data not valid")
+        
         x$month_val <- lubridate::month(x$date)
         
         flowSum_Mon <- dplyr::summarize(dplyr::group_by(x,month_val),

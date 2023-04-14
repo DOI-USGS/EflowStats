@@ -9,7 +9,7 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-This vignette summarizes discrepancies between the statistic calculations in the new (>v5.0.0) and the old (<v5.0.0) EflowStats packages. In general, the authors focused on ensuring that the statistics were calculated according to the definitions stated in Henriksen et al, 2006, rather than on reproducing output from previous package versions or the original HITHAT software. This process uncovered a number of issues with both the old EflowStats (>v5.0.0) statistics and the original HITHAT software (Henriksen et al, 2006). A record of this process can be found in the [Closed issues](https://github.com/USGS-R/EflowStats/issues?q=is%3Aissue+is%3Aclosed) page of the EflowStats GitHub repository.
+This vignette summarizes discrepancies between the statistic calculations in the new (>v5.0.0) and the old (<v5.0.0) EflowStats packages. In general, the authors focused on ensuring that the statistics were calculated according to the definitions stated in Henriksen et al, 2006, rather than on reproducing output from previous package versions or the original HITHAT software. This process uncovered a number of issues with both the old EflowStats (>v5.0.0) statistics and the original HITHAT software (Henriksen et al, 2006). A record of this process can be found in the [Closed issues](https://github.com/DOI-USGS/EflowStats/issues?q=is%3Aissue+is%3Aclosed) page of the EflowStats GitHub repository.
 
 ## Issues in original HITHAT software
 
