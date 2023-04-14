@@ -9,24 +9,24 @@ properties of daily streamflow for a given set of data.
 ### Installation
 
 To install the latest release of EflowStats see
-[releases](https://github.com/USGS-R/EflowStats/releases) to find the
+[releases](https://github.com/doi-usgs/EflowStats/releases) to find the
 latest version and use:
 
 ``` r
-remotes::install_github("USGS-R/EflowStats@v5.0.3")
+remotes::install_github("doi-usgs/EflowStats@v5.1.1")
 ```
 
 ### Code of Conduct
 
 We want to encourage a warm, welcoming, and safe environment for
 contributing to this project. See the [code of
-conduct](https://github.com/USGS-R/EflowStats/blob/master/CONDUCT.md)
+conduct](https://github.com/DOI-USGS/EflowStats/blob/master/CONDUCT.md)
 for more information.
 
 ### Reporting bugs
 
 Please consider reporting bugs and asking questions on the [Issues
-page.](https://github.com/USGS-R/EflowStats/issues)
+page.](https://github.com/DOI-USGS/EflowStats/issues)
 
 ### Package Support
 
@@ -37,7 +37,7 @@ primarily for maintenance and responding to user questions. Priorities
 on the development of new features are determined by the `EflowStats`
 development team.
 
-![USGS](http://usgs-r.github.io/images/usgs.png)
+![USGS](https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/images/usgs_icon_social_Water_Resources.png)
 
 ### Overview
 
