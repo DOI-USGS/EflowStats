@@ -1,7 +1,7 @@
 Package: EflowStats
 Type: Package
 Title: Hydrologic Indicator and Alteration Stats
-Version: 5.1.0
+Version: 5.1.1
 Date: 2017-08-04
 Authors@R: c( person("Joe", "Mills", role = c("aut"),
     email = "jmills@ucar.edu"),
@@ -46,5 +46,5 @@ Copyright: This software is in the public domain because it contains materials
     the United States Department of Interior. For more information, see the
     official USGS copyright policy at
     http://www.usgs.gov/visual-id/credit_usgs.html#copyright
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Encoding: UTF-8

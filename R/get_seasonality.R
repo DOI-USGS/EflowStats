@@ -19,6 +19,8 @@ get_seasonality <- function(x,yearType = "water",wyMonth=10L) {
         #Check data inputs
         x <- validate_data(x,yearType=yearType,wyMonth=wyMonth)
         
+        if(isFALSE(x)) stop("input data not valid")
+        
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)
         

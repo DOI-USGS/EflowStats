@@ -61,6 +61,9 @@
 calc_magHigh <- function(x,yearType = "water",wyMonth=10L,digits=3,drainArea = NULL,pref="mean",...) {
         #Check data inputs
         x <- validate_data(x,yearType=yearType,wyMonth=wyMonth)
+        
+        if(isFALSE(x)) stop("input data not valid")
+        
         check_preference(pref)
         
         #calculate some stuff for use later
