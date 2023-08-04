@@ -42,8 +42,8 @@ get_waterYear <- function(x, wyMonth=10L, numeric=TRUE) {
           # The first of February of a time series initiates a new
           # water year and if the time series contains a leap year,
           # the year for February must be kept as the current year
-          # (with the function, February 2000 would be assigned
-          #  water year 2001)
+          # (with the original function yr<-yr+ifelse(mn<wyMonth,0L,1L), 
+          #  February 2000 would be assigned water year 2001)
           yr <- yr - ifelse(mn < wyMonth, 1L, 0L)
         }else{
           # If the water year starts in March (or later):
