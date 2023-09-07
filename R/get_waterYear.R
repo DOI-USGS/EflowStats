@@ -38,7 +38,8 @@ get_waterYear <- function(x, wyMonth=10L, numeric=TRUE) {
     yr <- yr - ifelse(mn < wyMonth, 1L, 0L)
   }else{
     # If the water year is supposed to start in Jul-Dec (e.g. September):
-    # yr for Jan-August must be the current year, 
+    # yr for Jan-August must be the current calendar year, 
+
     # yr for Sep-Dec must be the next year 
     yr <- yr + ifelse(mn < wyMonth, 0L, 1L) 
   }
