@@ -26,7 +26,8 @@ get_waterYear <- function(x, wyMonth=10L, numeric=TRUE) {
     # it is most intuitive that the water year value should be the calendar 
     # year with the most dates in the water year. Jan.-Jun. would be assigned
     # the previous year as the water year value and Jul.-Dec. would be assigned
-    # the current year as the water year value.
+    # the current calendar year as the water year value.
+
     
     # If the water year is supposed to start in Jan-Jun (e.g. April):
     # yr for Jan-Mar must be the previous year, 
