@@ -31,7 +31,8 @@ get_waterYear <- function(x, wyMonth=10L, numeric=TRUE) {
 
     
     # If the water year is supposed to start in Jan-Jun (e.g. April):
-    # yr for Jan-Mar must be the previous year, 
+    # yr for Jan-Mar must be the previous calendar year, 
+
     # yr for Apr-Dec must be the current year 
     yr <- yr - ifelse(mn < wyMonth, 1L, 0L)
   }else{
