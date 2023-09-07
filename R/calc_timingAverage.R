@@ -57,17 +57,31 @@ calc_timingAverage <- function(x,yearType = "water",wyMonth=10L,digits=3,pref="m
         
         #calculate some stuff for use later
         x$month_val <- lubridate::month(x$date)
+        x$dayom_val <- lubridate::mday(x$date)
         meanFlow <- mean(x$discharge)
         
         ###Remove leap year data to calculate Colwell matrix
         #Remove feb29th for Colwell matrix
-        x <- x[!(x$month_val == 2 &
-                         yday(x$date) == 29),]
+        #x <- x[!(x$month_val == 2 &
+        #                 yday(x$date) == 29),]
+        # I think the lubridate yday function is wrong here - it does not 
+        # return the day of the month, but the day of the year.
+        
+        # remove all February 29th from the time series
+        x <- x[!((x$month_val == 2) & (x$dayom_val == 29)),]
+
         
         #Get a new julian day value that does not count leap years
-        x$day[is.leapyear(x$year_val) & 
-                      x$day > 152] <- x$day[is.leapyear(x$year_val) & 
-                                                            x$day > 152] - 1
+        #x$day[is.leapyear(x$year_val) & 
+        #              x$day > 152] <- x$day[is.leapyear(x$year_val) & 
+        #                                                    x$day > 152] - 1
+        
+        # after removing the 29th of Feb, we can count the rows sequentially 
+        # for each unique water year
+        # https://stackoverflow.com/a/46613159
+        x$day <- sequence(rle(x$year_val)$lengths)
+        
+        
         #Calculate the colwell matrix... 
         log_meanFlow = log10(meanFlow)
         x$log_discharge = log10(x$discharge)
