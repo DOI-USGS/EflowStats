@@ -11,6 +11,7 @@
 #' #' \enumerate{
 #'   \item First column must be of class `Date`.
 #'   \item Second must be of class `numeric`.
+#'   \item `yearType` input must be either "water" or "calendar". 
 #'   \item `wyMonth`input must be of class `integer`. 
 #' }
 #' @examples
