@@ -1,7 +1,7 @@
 test_that("cut water year", {
   x <- sampleData[, c('date', 'discharge')]
   
-  cut <- cut_dataToWaterYear(x, 8)
+  cut <- cut_dataToWaterYear(x, 'water', 8)
   
   expect_equal(cut$date[1], structure(15187, class = "Date"))  
   
@@ -13,7 +13,7 @@ test_that("cut water year", {
   
   expect_equal(nrow(cut), 366)
   
-  cut <- cut_dataToWaterYear(x, 11)
+  cut <- cut_dataToWaterYear(x, 'water', 11)
   
   expect_equal(cut$date[1], structure(14914, class = "Date"))  
   
