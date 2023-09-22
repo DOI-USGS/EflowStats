@@ -1,0 +1,83 @@
+## Overview
+
+`EflowStats` is a reimplementation of the Hydrologic Index Tool (HIT;
+Henriksen et al, 2006) for calculating 171 hydrologic indices for stream
+classification analysis. Additionally, `EflowStats` can calculate 7
+additional statistics used for streamflow classification referred to as
+the “Magnificent Seven” (MAG7, Archfield et al., 2013). Unlike the
+original HIT, EflowStats has been redesigned to ingest general
+hydrologic timeseries data and is not restricted to data formats used by
+the USGS National Water Information System.
+
+\##A basic workflow
+
+`EflowStats` can be used with the `dataRetrieval` R package to
+seamlessly calculate HIT and MAG7 statistics for any USGS stream gage.
+
+    library(dataRetrieval)
+    library(EflowStats)
+
+    #Get some data
+    dailyQ <- readNWISdv(siteNumber = "04085427",
+                         parameterCd = "00060",
+                         startDate = "2000-10-01",
+                         endDate = "2012-9-30")
+    #Check data for completeness
+    dailyQClean <- validate_data(dailyQ[c("Date","X_00060_00003")],yearType="water")
+
+    #Get drainage area
+    siteInfo <- readNWISsite(siteNumber = "04085427")
+    drainageArea <- siteInfo$drain_area_va
+
+    #Get peak flows
+    peakFlows <- readNWISpeak(siteNumber = "04085427",
+                              startDate = "2000-10-01",
+                              endDate = "2012-9-30")
+
+Users with their own time series data can use the package as long as the
+data can be coerced into a `data.frame` with dates of class *Date* in
+the first column, and stream flow values of class *Numeric* in the
+second. The code below shows steps to calculate all hydrologic indices
+available from the package.
+
+    #Check data for completeness
+    dailyQClean <- validate_data(dailyQ[c("Date", "X_00060_00003")], yearType="water")
+
+    #Get flood recurence threshold
+
+    floodThresh <- get_peakThreshold(dailyQClean[c("date","discharge")],
+    peakFlows[c("peak_dt","peak_va")])
+
+    #Calculate all hit stats
+    calc_allHITOut <- calc_allHIT(dailyQClean,
+    drainArea=drainageArea,
+    floodThreshold=floodThresh)
+
+    #Calculate mag7 stats
+    magnifStatsOut <- calc_magnifSeven(dailyQClean,yearType="water",digits=3)
+
+Definitions of the statistics calculated by EflowStats can be found in
+Henriksen et al, 2006 and Archfield et al., 2013 as well as in the
+package function documentation. Users who have used the hydroecological
+integrity assessment process software or previous versions of EflowStats
+(&lt;v1.0) may find slight differences in the output of the new package
+(&gt;v1.0). The package has undergone extensive review and every effort
+has been made to ensure faithful reproduction of the statistics as
+defined in Henriksen et al, 2006. Users interested in records of
+correspondence between the old package (&lt;v1.0) and the new package
+(&gt;v1.0) are directed to the summary in the [Package Discrepancies
+vignette](packageDiscrepencies.html). Additionally, a comparison with
+output from the old package and the new package can be found at [this
+issue](https://github.com/DOI-USGS/EflowStats/issues/132) and the
+history of review documented in [other closed
+issues.](https://github.com/DOI-USGS/EflowStats/issues?q=is%3Aissue+is%3Aclosed).
+
+\##References Henriksen, J. A., Heasley, J., Kennen, J.G., and Niewsand,
+S. 2006, Users’ manual for the hydroecological integrity assessment
+process software (including the New Jersey Assessment Tools): U.S.
+Geological Survey, Biological Resources Discipline, Open File Report
+2006-1093, 71 p. 
+
+Archfield, S.A., J.G. Kennen, D.M. Carlisle, and D.M. Wolock. 2013. An
+Objective and Parsimonious Approach for Classifying Natural Flow Regimes
+at a Continental Scale. River Res. Applic. doi: 10.1002/rra.2710

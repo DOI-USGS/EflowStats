@@ -1,0 +1,91 @@
+This vignette summarizes discrepancies between the statistic
+calculations in the new (&gt;v5.0.0) and the old (&lt;v5.0.0) EflowStats
+packages. In general, the authors focused on ensuring that the
+statistics were calculated according to the definitions stated in
+Henriksen et al, 2006, rather than on reproducing output from previous
+package versions or the original HITHAT software. This process uncovered
+a number of issues with both the old EflowStats (&gt;v5.0.0) statistics
+and the original HITHAT software (Henriksen et al, 2006). A record of
+this process can be found in the [Closed
+issues](https://github.com/DOI-USGS/EflowStats/issues?q=is%3Aissue+is%3Aclosed)
+page of the EflowStats GitHub repository.
+
+## Issues in original HITHAT software
+
+The original HITHAT software contained two bugs in the code that
+affected a number of the statistics. One involved the calculation of
+summary monthly statistics where a single month statistic was returned
+rather than the period of record summary for that month. This bug
+affects many statistics that rely on monthly period of record summaries,
+such as the MA12-23 statistics. A similar bug was found with 7-day
+rolling mean calculations and influenced the ML17-18 statistics.
+
+## Old EflowStats package issues
+
+There are a number of discrepancies between the new (v&gt;5.0.0) and old
+(v&lt;5.0.0) EflowStats packages. A list of these by statistic is
+provided below, but any additional changes to the EflowStats statistics
+in subsequent versions (&gt;5.0.0) will be documented in the package
+*NEWS* file.
+
+### DH and DL statistics
+
+There are two changes to the method for calculatings means that affect
+many of the DH and DL statistics. First, rolling means in the old
+EflowStats package were calculated on a yearly basis. This makes little
+sense because rolling means are influenced when the windowing period
+approaches the beginning or end of the record. By splitting the period
+of record on year values, it compounds the “edge of record” issue by
+creating edges for every yearly time series rather than just at the
+beginning and end of the period of record. The bias can be substantial
+for longer window (30 and 90-day) rolling means. Thus, rolling means are
+calculated in the new EflowStats on the entire period of record before
+splitting the record into yearly time series for subsequent
+calculations.
+
+A second change affects the DH12-21 statistics. The original
+documentation in Henriksen et al, 2006 states that the mean should be
+calculated for the entire period of record. The old EflowStats package
+calculated the mean of yearly means for the period of record rather than
+the mean of the entire record. The new EflowStats package calculates the
+mean of the period of record as the original documentation states.
+
+### MA statistics
+
+Two bugs in the old EflowStats code affect some of the MA statistics.
+One minor issue caused incorrect rounding for the MA24-35 statistics and
+has been corrected in the new package. Another bug miscalculated the
+coefficient of variation and affected the MA3 statistic. This has been
+corrected in the new package.
+
+### Magnificent Seven statistics
+
+The AR1 coefficient was miscalculated in the old EflowStats package. A
+bug in the old package caused some of the data to become disordered in
+time, which substantially influenced the calculation of the AR1
+statistic. This has been fixed in the new package (&gt;v5.0.0).
+Additionally, the phase calculation in the old EflowStats package was
+returned in radians, which was not very useful for interpretation. Thus,
+the value is now returned in units of days in the new (&gt;v5.0.0)
+package.
+
+## General changes in the new EflowStats
+
+The majority of the statistics calculated by EflowStats require the data
+to be sorted in chronological order. The old EflowStats package did not
+check if the data were sorted appropriately. The new EflowStats package
+now sorts the data in chronological order by default.
+
+Leap years were not handled appropriately in the original HITHAT
+software or the old EflowStats package. In both cases, the 366th day of
+the year was removed during leap years rather than February 29th. This
+can have an affect on a number of the statistics, albeit small in most
+cases. The new package now appropriately handles leap years and omits
+February 29th for statistics that rely on a 365 day year.
+
+To calculate the maximum number of events in a given two month period,
+the old EflowStats package used fixed 2 month blocks. A more appropriate
+method is to use a 2-month rolling window. The new EflowStats package
+uses a 2-month rolling window to calculate statistics that rely on
+determining the number of events in any given 2 month window, such as
+the TL3 and TA3 statistics.
