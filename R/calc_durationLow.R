@@ -93,10 +93,10 @@ calc_durationLow <- function(x,yearType = "water",wyMonth=10L,digits=3,pref="mea
                                             meanFlow = mean(discharge),
                                             totalFlow = sum(discharge))
         minRollingMean <- dplyr::summarize(dplyr::group_by(x,year_val),
-                                           minRoll3Mean = min(roll3Mean),
-                                           minRoll7Mean = min(roll7Mean),
-                                           minRoll30Mean = min(roll30Mean),
-                                           minRoll90Mean = min(roll90Mean)
+                                           minRoll3Mean = min(roll3Mean,na.rm=TRUE),
+                                           minRoll7Mean = min(roll7Mean,na.rm=TRUE),
+                                           minRoll30Mean = min(roll30Mean,na.rm=TRUE),
+                                           minRoll90Mean = min(roll90Mean,na.rm=TRUE)
         )
         medFlow <- median(x$discharge)
         
