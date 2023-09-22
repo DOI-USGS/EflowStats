@@ -1,7 +1,7 @@
 Package: EflowStats
 Type: Package
 Title: Hydrologic Indicator and Alteration Stats
-Version: 5.1.1
+Version: 5.2.0
 Date: 2017-08-04
 Authors@R: c( person("Joe", "Mills", role = c("aut"),
     email = "jmills@ucar.edu"),

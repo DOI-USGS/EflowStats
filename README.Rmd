@@ -22,8 +22,10 @@ Calculates a suite of ecological flow statistics and fundamental properties of d
 To install the latest release of EflowStats see [releases](https://github.com/doi-usgs/EflowStats/releases) to find the latest version and use:
 
 ```{r, eval = FALSE}
-remotes::install_github("doi-usgs/EflowStats@v5.1.1")
+remotes::install_github("doi-usgs/EflowStats@v5.2.0")
 ```
+
+### [Documentation](docs/Reference_Manual_EflowStats.md)
 
 ### Code of Conduct
 

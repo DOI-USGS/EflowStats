@@ -13,8 +13,10 @@ To install the latest release of EflowStats see
 latest version and use:
 
 ``` r
-remotes::install_github("doi-usgs/EflowStats@v5.1.1")
+remotes::install_github("doi-usgs/EflowStats@v5.2.0")
 ```
+
+### [Documentation](docs/Reference_Manual_EflowStats.md)
 
 ### Code of Conduct
 
@@ -37,7 +39,12 @@ primarily for maintenance and responding to user questions. Priorities
 on the development of new features are determined by the `EflowStats`
 development team.
 
-![USGS](https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/images/usgs_icon_social_Water_Resources.png)
+<figure>
+<img
+src="https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/s3fs-public/media/images/usgs_icon_social_Water_Resources.png"
+alt="USGS" />
+<figcaption aria-hidden="true">USGS</figcaption>
+</figure>
 
 ### Overview
 
