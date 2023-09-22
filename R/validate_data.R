@@ -73,7 +73,8 @@ validate_data <- function(x,yearType,wyMonth=10L) {
         }
         
         #check for complete years
-        x$leapYear <- is.leapyear(as.numeric(as.character(x$year_val)))
+        x$leapYear <- is.leapyear(as.numeric(as.character(x$year_val)),
+                                  yearType, wyMonth)
         
         fullYearCheck <- dplyr::summarize(dplyr::group_by(x,year_val),
                                           completeYear = 
