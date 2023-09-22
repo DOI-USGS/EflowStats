@@ -19,3 +19,7 @@ appveyor.yml
 EflowStats.bbl
 ^appveyor\.yml$
 CONDUCT.md
+code.json
+DISCLAIMER.md
+LICENSE.md
+README.Rmd
